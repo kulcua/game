@@ -2,7 +2,7 @@
 #include <algorithm>
 
 
-#include "debug.h"
+#include "Utils.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"

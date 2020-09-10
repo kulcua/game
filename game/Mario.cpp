@@ -1,5 +1,5 @@
 #include <algorithm>
-#include "debug.h"
+#include "Utils.h"
 
 #include "Mario.h"
 #include "Game.h"
@@ -107,11 +107,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			} // if Goomba
-			else if (dynamic_cast<CPortal*>(e->obj))
+			/*else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame::GetInstance()->SwitchScene(p->GetSceneId());
-			}
+			}*/
 		}
 	}
 

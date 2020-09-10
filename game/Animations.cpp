@@ -1,5 +1,5 @@
 #include "Animations.h"
-#include "debug.h"
+#include "Utils.h"
 
 CAnimationSets *CAnimationSets::__instance = NULL;
 

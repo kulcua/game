@@ -2,9 +2,10 @@
 #include <fstream>
 
 #include "PlayScene.h"
-#include "debug.h"
+#include "Utils.h"
 #include "Sprites.h"
 #include "Portal.h"
+#include "Maps.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define SCENE_SECTION_ANIMATIONS 4
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_OBJECTS	6
+#define SCENE_SECTION_MAPS	7
 
 #define OBJECT_TYPE_MARIO	0
 #define OBJECT_TYPE_BRICK	1
@@ -173,6 +175,24 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	objects.push_back(obj);
 }
 
+void CPlayScene::_ParseSection_MAPS(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 8) return;
+
+	int id = atoi(tokens[0].c_str());
+	wstring path_img = ToWSTR(tokens[1]);
+	int R = atoi(tokens[2].c_str());
+	int G = atoi(tokens[3].c_str());
+	int B = atoi(tokens[4].c_str());
+	int width = atoi(tokens[5].c_str());
+	int height = atoi(tokens[6].c_str());
+	wstring path_txt = ToWSTR(tokens[7]);
+
+	CMaps::GetInstance()->Add(id, path_img.c_str(), width, height, path_txt.c_str(), D3DCOLOR_XRGB(R, G, B));
+}
+
 void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
@@ -203,6 +223,9 @@ void CPlayScene::Load()
 		if (line == "[OBJECTS]") {
 			section = SCENE_SECTION_OBJECTS; continue;
 		}
+		if (line == "[MAP]") {
+			section = SCENE_SECTION_MAPS; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		//
@@ -215,6 +238,7 @@ void CPlayScene::Load()
 		case SCENE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
+		case SCENE_SECTION_MAPS: _ParseSection_MAPS(line); break;
 		}
 	}
 
@@ -250,11 +274,16 @@ void CPlayScene::Update(DWORD dt)
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetScreenWidth() / 2;
 	cy -= game->GetScreenHeight() / 2;
-	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
+	if (cx < 0)
+	{
+		cx = 0;
+	}
+	CGame::GetInstance()->SetCamPos(cx, cy);
 }
 
 void CPlayScene::Render()
 {
+	CMaps::GetInstance()->DrawMap();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }

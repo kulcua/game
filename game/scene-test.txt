@@ -78,15 +78,24 @@
 0	17	115	1
 
 # BRICK 
-1	0	135	22
-1	0	150	22
-1	16	150	22
-1	32	150	22
-1	100	150	22
-1	115	150	22
-1	130	150	22
+#1	0	135	22
+#1	0	150	22
+#1	16	150	22
+#1	32	150	22
+#1	100	150	22
+#1	115	150	22
+#1	130	150	22
+
+#brick test
+1	175	351	22
 
 # --- SCENE PORTAL ----
 # type	l	t	ani_set_id	r	b	scene_id
 50	115	98	0	148	150	1
 
+#ground test
+50	0	415	0	623	431	1
+
+[MAP]
+#id	filePath.bmp	r	g	b	width	height	filePath.txt
+80000	map\map1.bmp	255	255	255	1280	448	map\map1.txt

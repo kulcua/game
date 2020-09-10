@@ -1,6 +1,6 @@
 #include <Windows.h>
 
-#include "debug.h"
+#include "Utils.h"
 
 void DebugOut(wchar_t* fmt, ...)
 {

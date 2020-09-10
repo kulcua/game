@@ -2,7 +2,7 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "debug.h"
+#include "Utils.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"
@@ -17,8 +17,8 @@
 #define MAIN_WINDOW_TITLE L"Game"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 2816
+#define SCREEN_HEIGHT 656
 
 #define MAX_FRAME_RATE 120
 

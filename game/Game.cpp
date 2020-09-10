@@ -1,7 +1,7 @@
 #include <fstream>
 
 #include "Game.h"
-#include "debug.h"
+#include "Utils.h"
 
 CGame* CGame::__instance = NULL;
 
