@@ -6,10 +6,12 @@
 
 #include "Goomba.h"
 #include "Portal.h"
+#include "BigBox.h"
+#include "Ground.h"
 
 CMario::CMario(float x, float y) : CGameObject()
 {
-	level = MARIO_LEVEL_BIG;
+	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
 	SetState(MARIO_STATE_IDLE);
 
@@ -24,8 +26,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
+	if (x <= 15) //when mario collise with border x
+		x = 15;
+
 	// Simple fall down
-	vy += MARIO_GRAVITY * dt;
+	if (isOnBox == false && isGrounded == false)
+	{
+		vy += MARIO_GRAVITY * dt;
+	}
+	//else if (isGrounded == true) vy = 0.0f;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -75,6 +84,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
+			float l_mario, t_mario, r_mario, b_mario;
+			GetBoundingBox(l_mario, t_mario, r_mario, b_mario);
+
+			float l_obj, t_obj, r_obj, b_obj;
+
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
 			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
@@ -107,11 +121,34 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			} // if Goomba
+			else if (dynamic_cast<CGround*>(e->obj))
+			{
+				vy = 0.0f;	
+				isGrounded = true; //error when isOnBox
+			}
 			/*else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame::GetInstance()->SwitchScene(p->GetSceneId());
 			}*/
+			//else if (dynamic_cast<CBigBox*>(e->obj))
+			//{
+			//	CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
+			//	box->GetBoundingBox(l_obj, t_obj, r_obj, b_obj);
+			//	if (AABB(l_mario, t_mario, r_mario, b_mario, l_obj, t_obj, r_obj, b_obj))
+			//	{
+			//		if (e->ny > 0) //va cham dung dau mario
+			//		{
+			//			vy = 0;
+			//			isOnBox = true;
+			//			y = b_obj;
+			//		}
+			//		if (x < l_obj || x > r_obj) // xet ra khoi hop va cham
+			//		{
+			//			isOnBox = false;
+			//		}
+			//	}				
+			//}
 		}
 	}
 
@@ -124,34 +161,20 @@ void CMario::Render()
 	int ani = -1;
 	if (state == MARIO_STATE_DIE)
 		ani = MARIO_ANI_DIE;
-	else
-		if (level == MARIO_LEVEL_BIG)
-		{
+	else if (level == MARIO_LEVEL_SMALL)
+	{
+		if (vy == 0)
 			if (vx == 0)
-			{
-				if (nx > 0) ani = MARIO_ANI_BIG_IDLE_RIGHT;
-				else ani = MARIO_ANI_BIG_IDLE_LEFT;
-			}
-			else if (vx > 0)
-				ani = MARIO_ANI_BIG_WALKING_RIGHT;
-			else ani = MARIO_ANI_BIG_WALKING_LEFT;
-		}
-		else if (level == MARIO_LEVEL_SMALL)
-		{
-			if (vx == 0)
-			{
-				if (nx > 0) ani = MARIO_ANI_SMALL_IDLE_RIGHT;
-				else ani = MARIO_ANI_SMALL_IDLE_LEFT;
-			}
-			else if (vx > 0)
-				ani = MARIO_ANI_SMALL_WALKING_RIGHT;
-			else ani = MARIO_ANI_SMALL_WALKING_LEFT;
-		}
-
+				ani = MARIO_ANI_SMALL_IDLE_LEFT;
+			else
+				ani = MARIO_ANI_SMALL_WALKING_LEFT;
+		else ani = MARIO_ANI_SMALL_JUMP;
+	}
+	//DebugOut(L"vy: %f", vy);
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
-	animation_set->at(ani)->Render(x, y, alpha);
+	animation_set->at(ani)->Render(x, y, nx, alpha);
 
 	RenderBoundingBox();
 }
@@ -173,6 +196,7 @@ void CMario::SetState(int state)
 	case MARIO_STATE_JUMP:
 		// TODO: need to check if Mario is *current* on a platform before allowing to jump again
 		vy = -MARIO_JUMP_SPEED_Y;
+		isGrounded = false;
 		break;
 	case MARIO_STATE_IDLE:
 		vx = 0;

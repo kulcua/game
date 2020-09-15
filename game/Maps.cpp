@@ -13,15 +13,19 @@ CMaps* CMaps::GetInstance()
 	return __instance;
 }
 
-void CMaps::Add(int id, LPCWSTR path_img, int width, int height, LPCWSTR path_txt, D3DCOLOR transparentColor)
+void CMaps::Add(int id, LPCWSTR path_img, int width, int height,
+	int num_tile_x, int num_tile_y, LPCWSTR path_txt, D3DCOLOR transparentColor)
 {
 	//doc tung so tile trong file txt va luu mang
 	ifstream inp(path_txt, ios::in);
 	max_map_x = width / TILE_SIZE;
 	max_map_y = height / TILE_SIZE;
 
-	for (int i = 0; i < 10; i++)
-		for (int j = 0; j < 44; j++)
+	this->num_tile_x = num_tile_x;
+	this->num_tile_y = num_tile_y;
+
+	for (int i = 0; i < num_tile_y; i++)
+		for (int j = 0; j < num_tile_x; j++)
 		{
 			inp >> tile[i][j];
 		}
@@ -44,12 +48,12 @@ void CMaps::Add(int id, LPCWSTR path_img, int width, int height, LPCWSTR path_tx
 	}		
 }
 
-void CMaps::DrawMap()
+void CMaps::Render()
 {
-	for (int i = 0; i < 10; i++)
-		for (int j = 0; j < 44; j++)
+	for (int i = 0; i < num_tile_y; i++)
+		for (int j = 0; j < num_tile_x; j++)
 		{
-			CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE);
+			CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE, NULL);
 		}
 }
 

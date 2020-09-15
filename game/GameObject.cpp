@@ -22,6 +22,11 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	dy = vy * dt;
 }
 
+bool CGameObject::AABB(float l_a, float t_a, float r_a, float b_a, float l_b, float t_b, float r_b, float b_b)
+{
+	return (l_a < r_b && r_a > l_b && t_a < b_b && b_a > t_b);
+}
+
 //Extension of original SweptAABB to deal with two moving objects
 LPCOLLISIONEVENT CGameObject::SweptAABBEx(LPGAMEOBJECT coO)
 {
@@ -135,7 +140,7 @@ void CGameObject::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
+	CGame::GetInstance()->Draw(x, y, nx, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
 }
 
 CGameObject::~CGameObject()

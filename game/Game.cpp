@@ -59,14 +59,33 @@ void CGame::Init(HWND hWnd)
 }
 
 //Utility function to wrap LPD3DXSPRITE::Draw 
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+void CGame::Draw(float x, float y, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
 	D3DXVECTOR3 p(floor(x - cam_x), floor(y - cam_y), 0);
+	
 	RECT r;
 	r.left = left;
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
+
+	D3DXMATRIX newtrans;
+	D3DXVECTOR2 rotation;
+
+	//lat animation bang cach nhan vs matrix 2x2 => nhan posX voi -1
+	if (nx > 0)
+	{	
+		rotation = D3DXVECTOR2(-1, 1);	
+	}
+	else {
+		rotation = D3DXVECTOR2(1, 1);
+	}
+
+	D3DXVECTOR2 center = D3DXVECTOR2(p.x + (right - left) / 2, p.y + (bottom - top) / 2);
+	//center point of obj
+	D3DXMatrixTransformation2D(&newtrans, &center, 0, &rotation, NULL, 0, NULL);
+	spriteHandler->SetTransform(&newtrans);
+	
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 
@@ -206,7 +225,7 @@ void CGame::SweptAABB(
 	float bl = dx > 0 ? ml : ml + dx;
 	float bt = dy > 0 ? mt : mt + dy;
 	float br = dx > 0 ? mr + dx : mr;
-	float bb = dy > 0 ? mb + dy : mb; //tinh sai nen loi mario
+	float bb = dy > 0 ? mb + dy : mb; 
 
 	if (br<sl || bl>sr || bb<st || bt>sb) return;
 

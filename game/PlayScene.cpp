@@ -6,6 +6,8 @@
 #include "Sprites.h"
 #include "Portal.h"
 #include "Maps.h"
+#include "BigBox.h"
+#include "Ground.h"
 
 using namespace std;
 
@@ -27,10 +29,13 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define SCENE_SECTION_OBJECTS	6
 #define SCENE_SECTION_MAPS	7
 
-#define OBJECT_TYPE_MARIO	0
+#define OBJECT_TYPE_MARIO	0	//set object nhan dang file txt
 #define OBJECT_TYPE_BRICK	1
 #define OBJECT_TYPE_GOOMBA	2
 #define OBJECT_TYPE_KOOPAS	3
+
+#define OBJECT_TYPE_BIGBOX	10
+#define OBJECT_TYPE_GROUND	20
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -153,6 +158,21 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
+	case OBJECT_TYPE_BIGBOX:
+	{
+		float r = atof(tokens[4].c_str());
+		float b = atof(tokens[5].c_str());
+		obj = new CBigBox(x, y, r, b);
+	}
+	break;
+	case OBJECT_TYPE_GROUND:
+	{
+		float r = atof(tokens[4].c_str());
+		float b = atof(tokens[5].c_str());
+		int scene_id = atoi(tokens[6].c_str());
+		obj = new CGround(x, y, r, b);
+	}
+	break;
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = atof(tokens[4].c_str());
@@ -179,7 +199,7 @@ void CPlayScene::_ParseSection_MAPS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 8) return;
+	if (tokens.size() < 10) return;
 
 	int id = atoi(tokens[0].c_str());
 	wstring path_img = ToWSTR(tokens[1]);
@@ -188,9 +208,12 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	int B = atoi(tokens[4].c_str());
 	int width = atoi(tokens[5].c_str());
 	int height = atoi(tokens[6].c_str());
-	wstring path_txt = ToWSTR(tokens[7]);
+	int num_tile_x = atoi(tokens[7].c_str());
+	int num_tile_y = atoi(tokens[8].c_str());
+	wstring path_txt = ToWSTR(tokens[9]);
 
-	CMaps::GetInstance()->Add(id, path_img.c_str(), width, height, path_txt.c_str(), D3DCOLOR_XRGB(R, G, B));
+	CMaps::GetInstance()->Add(id, path_img.c_str(), width, height,
+		num_tile_x, num_tile_y, path_txt.c_str(), D3DCOLOR_XRGB(R, G, B));
 }
 
 void CPlayScene::Load()
@@ -273,17 +296,15 @@ void CPlayScene::Update(DWORD dt)
 
 	CGame* game = CGame::GetInstance();
 	cx -= game->GetScreenWidth() / 2;
-	cy -= game->GetScreenHeight() / 2;
-	if (cx < 0)
-	{
-		cx = 0;
-	}
+	cy -= game->GetScreenHeight() /2;
+	if (cx < 0)	cx = 0;
+	if (cy < 0)	cy = 0;
 	CGame::GetInstance()->SetCamPos(cx, cy);
 }
 
 void CPlayScene::Render()
 {
-	CMaps::GetInstance()->DrawMap();
+	CMaps::GetInstance()->Render();
 	for (int i = 0; i < objects.size(); i++)
 		objects[i]->Render();
 }

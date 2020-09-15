@@ -14,17 +14,19 @@
 #define MARIO_STATE_JUMP			300
 #define MARIO_STATE_DIE				400
 
-#define MARIO_ANI_BIG_IDLE_RIGHT		0
-#define MARIO_ANI_BIG_IDLE_LEFT			1
-#define MARIO_ANI_SMALL_IDLE_RIGHT		2
-#define MARIO_ANI_SMALL_IDLE_LEFT			3
+//#define MARIO_ANI_BIG_IDLE_RIGHT		0
+//#define MARIO_ANI_BIG_IDLE_LEFT			1
+//#define MARIO_ANI_SMALL_IDLE_RIGHT		2
+#define MARIO_ANI_SMALL_IDLE_LEFT			0 //3
+		
+//#define MARIO_ANI_BIG_WALKING_RIGHT			4
+//#define MARIO_ANI_BIG_WALKING_LEFT			5
+//#define MARIO_ANI_SMALL_WALKING_RIGHT		6
+#define MARIO_ANI_SMALL_WALKING_LEFT		1 //7
 
-#define MARIO_ANI_BIG_WALKING_RIGHT			4
-#define MARIO_ANI_BIG_WALKING_LEFT			5
-#define MARIO_ANI_SMALL_WALKING_RIGHT		6
-#define MARIO_ANI_SMALL_WALKING_LEFT		7
+#define MARIO_ANI_SMALL_JUMP	2
 
-#define MARIO_ANI_DIE				8
+#define MARIO_ANI_DIE				3 //8
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
@@ -45,8 +47,11 @@ class CMario : public CGameObject
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
+
+	bool isOnBox = false;
+	bool isGrounded = false;
 public:
-	CMario(float x = 0.0f, float y = 420.0f);
+	CMario(float x = 0.0f, float y = 0.0f);
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();

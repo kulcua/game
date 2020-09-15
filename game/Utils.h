@@ -9,7 +9,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
-
+#include <d3dx9.h>
 
 using namespace std;
 
@@ -19,4 +19,6 @@ vector<string> split(string line, string delimeter = "\t");
 wstring ToWSTR(string st);
 
 LPCWSTR ToLPCWSTR(string st);
+
+//void MultipleMatrix(D3DXVECTOR3 &p);
 
