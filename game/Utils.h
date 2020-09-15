@@ -20,5 +20,3 @@ wstring ToWSTR(string st);
 
 LPCWSTR ToLPCWSTR(string st);
 
-//void MultipleMatrix(D3DXVECTOR3 &p);
-

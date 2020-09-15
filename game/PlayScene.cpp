@@ -326,7 +326,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer(); //[!?] lay con tro tro toi player o scene hien tai
 	switch (KeyCode)
 	{
-	case DIK_SPACE:
+	case DIK_S:
 		mario->SetState(MARIO_STATE_JUMP);
 		break;
 	case DIK_A: // reset

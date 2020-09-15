@@ -61,24 +61,3 @@ LPCWSTR ToLPCWSTR(string st)
 	// delete wcstring   // << can I ? 
 	return w->c_str();
 }
-
-//void MultipleMatrix(D3DXVECTOR3 &p)
-//{
-//	int sum;
-//	//khoi tao ma tran trung gian transform p
-//	D3DXMATRIX ret;
-//	D3DXMatrixIdentity(&ret);
-//	ret(0, 0) = -1;	//flip x
-//	ret(3, 0) = p.x * 2; //dich x 1 doan 2x
-//	
-//	//phep nhan ma tran
-//	for (int i = 0; i <= 2; i++) {
-//		for (int j = 0; j <= 2; j++) {
-//			sum = 0;
-//			for (int k = 0; k <= 2; k++) {
-//				sum = sum + a[i][k] * b[k][j];
-//			}
-//			c[i][j] = sum;
-//		}
-//	}
-//}

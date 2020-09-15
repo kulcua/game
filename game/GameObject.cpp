@@ -22,9 +22,15 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	dy = vy * dt;
 }
 
-bool CGameObject::AABB(float l_a, float t_a, float r_a, float b_a, float l_b, float t_b, float r_b, float b_b)
+bool CGameObject::AABB(CGameObject *obj)
 {
-	return (l_a < r_b && r_a > l_b && t_a < b_b && b_a > t_b);
+	float al, at, ar, ab;
+	this->GetBoundingBox(al, at, ar, ab);
+
+	float bl, bt, br, bb;
+	obj->GetBoundingBox(bl, bt, br, bb);
+
+	return !(ar < bl || al > br || at > bb || ab < bt);
 }
 
 //Extension of original SweptAABB to deal with two moving objects

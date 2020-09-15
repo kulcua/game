@@ -30,11 +30,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x = 15;
 
 	// Simple fall down
-	if (isOnBox == false && isGrounded == false)
+	CollisionWithBox(coObjects);
+
+	if (isGrounded == false && isOnBox == false)
 	{
 		vy += MARIO_GRAVITY * dt;
 	}
-	//else if (isGrounded == true) vy = 0.0f;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -43,7 +44,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// turn off collision when die 
 	if (state != MARIO_STATE_DIE)
-		CalcPotentialCollisions(coObjects, coEvents);
+		CalcPotentialCollisions(coObjects, coEvents); //sweptAABBEx in here so must use another function for AABB
 
 	// reset untouchable timer if untouchable time has passed
 	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
@@ -84,11 +85,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			float l_mario, t_mario, r_mario, b_mario;
-			GetBoundingBox(l_mario, t_mario, r_mario, b_mario);
-
-			float l_obj, t_obj, r_obj, b_obj;
-
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
 			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
@@ -121,39 +117,55 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			} // if Goomba
+
 			else if (dynamic_cast<CGround*>(e->obj))
 			{
 				vy = 0.0f;	
-				isGrounded = true; //error when isOnBox
+				isGrounded = true; 
+				//isOnBox = false;//error when isOnBox
 			}
+
 			/*else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
 				CGame::GetInstance()->SwitchScene(p->GetSceneId());
 			}*/
-			//else if (dynamic_cast<CBigBox*>(e->obj))
-			//{
-			//	CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
-			//	box->GetBoundingBox(l_obj, t_obj, r_obj, b_obj);
-			//	if (AABB(l_mario, t_mario, r_mario, b_mario, l_obj, t_obj, r_obj, b_obj))
-			//	{
-			//		if (e->ny > 0) //va cham dung dau mario
-			//		{
-			//			vy = 0;
-			//			isOnBox = true;
-			//			y = b_obj;
-			//		}
-			//		if (x < l_obj || x > r_obj) // xet ra khoi hop va cham
-			//		{
-			//			isOnBox = false;
-			//		}
-			//	}				
-			//}
+
+			else if (dynamic_cast<CBigBox*>(e->obj))
+			{
+				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
+				if (e->ny != 0)
+				{
+					y = box->y + 6; //6 la khoang cach tu bbox -> box that
+					vy = 0;
+					isOnBox = true;
+					if (AABB(box))
+					{
+						if (x < box->left || x > box->right)
+
+							isOnBox = false;
+					}
+				}					
+			}
 		}
 	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void CMario::CollisionWithBox(vector<LPGAMEOBJECT>* coObjects)
+{
+	for (int i = 0; i < coObjects->size(); i++)
+	{
+		if (AABB(coObjects->at(i)))
+		{
+			y = coObjects->at(i)->y + 6;
+			vy = 0;
+			isOnBox = true;
+		}
+		else isOnBox = false;
+	}
 }
 
 void CMario::Render()
@@ -228,7 +240,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CMario::Reset()
 {
 	SetState(MARIO_STATE_IDLE);
-	SetLevel(MARIO_LEVEL_BIG);
+	SetLevel(MARIO_LEVEL_SMALL);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
 }
