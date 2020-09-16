@@ -28,10 +28,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (x <= 15) //when mario collise with border x
 		x = 15;
-
-	// Simple fall down
+	
 	CollisionWithBox(coObjects);
 
+	// Simple fall down
 	if (isGrounded == false && isOnBox == false)
 	{
 		vy += MARIO_GRAVITY * dt;
@@ -122,7 +122,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				vy = 0.0f;	
 				isGrounded = true; 
-				//isOnBox = false;//error when isOnBox
 			}
 
 			/*else if (dynamic_cast<CPortal*>(e->obj))
@@ -132,20 +131,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}*/
 
 			else if (dynamic_cast<CBigBox*>(e->obj))
-			{
-				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
+			{				
+				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);		
 				if (e->ny != 0)
 				{
-					y = box->y + 6; //6 la khoang cach tu bbox -> box that
-					vy = 0;
+					float l, t, r, b;
+					box->GetBoundingBox(l, t, r, b);
+					float l1, t1, r1, b1;
+					this->GetBoundingBox(l1, t1, r1, b1);
+					float width = b1 - t1;
+					//DebugOut(L"[sweptaabb] %f ~ %f\n", y, b);
+					vy = 0.0f;
+					y = b - width + 8; //6 la khoang cach tu bbox -> box that	
 					isOnBox = true;
-					if (AABB(box))
-					{
-						if (x < box->left || x > box->right)
-
-							isOnBox = false;
-					}
-				}					
+				}
+				//if (x == box->left || x == box->right)
+				//	isOnBox = false;
 			}
 		}
 	}
@@ -155,17 +156,21 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 void CMario::CollisionWithBox(vector<LPGAMEOBJECT>* coObjects)
-{
-	for (int i = 0; i < coObjects->size(); i++)
+{	
+	int count = 0; //check xem co box nao bi overlapping ko
+	for (int i = 0; i < coObjects->size(); i++) //need filter to box
 	{
-		if (AABB(coObjects->at(i)))
+		if (dynamic_cast<CBigBox*>(coObjects->at(i)))
 		{
-			y = coObjects->at(i)->y + 6;
-			vy = 0;
-			isOnBox = true;
+			if (AABB(coObjects->at(i)))
+			{
+				count++;
+			}	
 		}
-		else isOnBox = false;
 	}
+	if (count == 0)
+		isOnBox = false;
+	else isOnBox = true;
 }
 
 void CMario::Render()
@@ -182,7 +187,7 @@ void CMario::Render()
 				ani = MARIO_ANI_SMALL_WALKING_LEFT;
 		else ani = MARIO_ANI_SMALL_JUMP;
 	}
-	//DebugOut(L"vy: %f", vy);
+	//DebugOut(L"vy: %f \n", vy);
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
@@ -209,6 +214,7 @@ void CMario::SetState(int state)
 		// TODO: need to check if Mario is *current* on a platform before allowing to jump again
 		vy = -MARIO_JUMP_SPEED_Y;
 		isGrounded = false;
+		//isOnBox = false;
 		break;
 	case MARIO_STATE_IDLE:
 		vx = 0;
