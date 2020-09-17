@@ -3,7 +3,7 @@
 
 #define MARIO_WALKING_SPEED		0.1f 
 //0.1f
-#define MARIO_JUMP_SPEED_Y		0.4f
+#define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_DEFLECT_SPEED 0.2f
 #define MARIO_GRAVITY			0.002f
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
@@ -48,8 +48,9 @@ class CMario : public CGameObject
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 
-	bool isOnBox = false;
+	//bool isOnBox = false;
 	bool isGrounded = false;
+
 public:
 	CMario(float x = 0.0f, float y = 0.0f);
 
@@ -60,7 +61,7 @@ public:
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 
-	void CollisionWithBox(vector<LPGAMEOBJECT> *coObjects);
+	//void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);
 	
 	void Reset();
 

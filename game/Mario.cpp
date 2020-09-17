@@ -29,13 +29,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (x <= 15) //when mario collise with border x
 		x = 15;
 	
-	CollisionWithBox(coObjects);
+	//CollisionAABB(coObjects);
 
 	// Simple fall down
-	if (isGrounded == false && isOnBox == false)
-	{
-		vy += MARIO_GRAVITY * dt;
-	}
+	vy += MARIO_GRAVITY * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -78,8 +75,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
-
-
 		//
 		// Collision logic with other objects
 		//
@@ -120,8 +115,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			else if (dynamic_cast<CGround*>(e->obj))
 			{
-				vy = 0.0f;	
-				isGrounded = true; 
+				if (e->ny)
+					isGrounded = true;
 			}
 
 			/*else if (dynamic_cast<CPortal*>(e->obj))
@@ -132,21 +127,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{				
-				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);		
-				if (e->ny != 0)
-				{
-					float l, t, r, b;
-					box->GetBoundingBox(l, t, r, b);
-					float l1, t1, r1, b1;
-					this->GetBoundingBox(l1, t1, r1, b1);
-					float width = b1 - t1;
-					//DebugOut(L"[sweptaabb] %f ~ %f\n", y, b);
-					vy = 0.0f;
-					y = b - width + 8; //6 la khoang cach tu bbox -> box that	
-					isOnBox = true;
-				}
-				//if (x == box->left || x == box->right)
-				//	isOnBox = false;
+				if (e->ny)
+					isGrounded = true;
+				else
+					x += dx;
+			}
+
+			else if (dynamic_cast<CBrick*>(e->obj))
+			{
+				if (e->ny)
+					isGrounded = true;
 			}
 		}
 	}
@@ -155,23 +145,37 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void CMario::CollisionWithBox(vector<LPGAMEOBJECT>* coObjects)
-{	
-	int count = 0; //check xem co box nao bi overlapping ko
-	for (int i = 0; i < coObjects->size(); i++) //need filter to box
-	{
-		if (dynamic_cast<CBigBox*>(coObjects->at(i)))
-		{
-			if (AABB(coObjects->at(i)))
-			{
-				count++;
-			}	
-		}
-	}
-	if (count == 0)
-		isOnBox = false;
-	else isOnBox = true;
-}
+//void CMario::CollisionAABB(vector<LPGAMEOBJECT>* coObjects)
+//{	
+//	int box = 0; //check xem co box nao bi overlapping ko
+//	int ground = 0;
+//
+//	for (int i = 0; i < coObjects->size(); i++) //need filter to box
+//	{
+//		if (dynamic_cast<CBigBox*>(coObjects->at(i)))
+//		{
+//			if (AABB(coObjects->at(i)))
+//			{
+//				box++;
+//			}	
+//		}
+//		else if (dynamic_cast<CGround*>(coObjects->at(i)))
+//		{
+//			if (AABB(coObjects->at(i)))
+//			{
+//				ground++;
+//			}
+//		}
+//	}
+//
+//	if ((box != 0 && isOnBox) || box == 0) //neu co overlap ma k swept thi thoi
+//	{
+//		isOnBox = false;
+//	}
+//		
+//	if (ground == 0 && isGrounded) //neu ko con va cham thi reset isGround
+//		isGrounded = false;
+//}
 
 void CMario::Render()
 {
@@ -180,14 +184,14 @@ void CMario::Render()
 		ani = MARIO_ANI_DIE;
 	else if (level == MARIO_LEVEL_SMALL)
 	{
-		if (vy == 0)
-			if (vx == 0)
-				ani = MARIO_ANI_SMALL_IDLE_LEFT;
-			else
-				ani = MARIO_ANI_SMALL_WALKING_LEFT;
-		else ani = MARIO_ANI_SMALL_JUMP;
+		if (vx == 0)
+			ani = MARIO_ANI_SMALL_IDLE_LEFT;
+		else
+			ani = MARIO_ANI_SMALL_WALKING_LEFT;
+		if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
 	}
-	//DebugOut(L"vy: %f \n", vy);
+	if (vy != 0)
+		DebugOut(L"state: %d \n", state);
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
@@ -211,10 +215,12 @@ void CMario::SetState(int state)
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
+		if (isGrounded)
+		{
+			vy = -MARIO_JUMP_SPEED_Y;
+			isGrounded = false;
+		}
 		// TODO: need to check if Mario is *current* on a platform before allowing to jump again
-		vy = -MARIO_JUMP_SPEED_Y;
-		isGrounded = false;
-		//isOnBox = false;
 		break;
 	case MARIO_STATE_IDLE:
 		vx = 0;

@@ -7,8 +7,6 @@ CBigBox::CBigBox(float l, float t, float r, float b)
 	width = r - l + 1;
 	height = b - t + 1;
 	nx = NULL; //gan bang null cho khoi chay lung tung
-	left = l;
-	right = r;
 }
 
 void CBigBox::Render()
