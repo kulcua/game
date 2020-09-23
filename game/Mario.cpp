@@ -93,7 +93,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
 					{
-						DebugOut(L"y die");
 						goomba->StartDieTime();
 						goomba->SetState(GOOMBA_STATE_DIE);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
@@ -136,7 +135,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 					isGrounded = true;
 				else
+				{
+					//DebugOut(L"mario dx: %f x: %f\n", dx, x);
 					x += dx;
+				}				
 			}
 
 			else if (dynamic_cast<CBrick*>(e->obj))
@@ -191,9 +193,9 @@ void CMario::Render()
 	else if (level == MARIO_LEVEL_SMALL)
 	{
 		if (vx == 0)
-			ani = MARIO_ANI_SMALL_IDLE_LEFT;
+			ani = MARIO_ANI_SMALL_IDLE;
 		else
-			ani = MARIO_ANI_SMALL_WALKING_LEFT;
+			ani = MARIO_ANI_SMALL_WALKING;
 		if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
 	}
 

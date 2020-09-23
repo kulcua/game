@@ -56,10 +56,14 @@ public:
 
 	DWORD dt;
 
+	DWORD die_time_start;
+
 	LPANIMATION_SET animation_set;
 
 public:
 	bool die;
+	void StartDieTime() { die = true; die_time_start = GetTickCount(); }
+
 	void SetPosition(float x, float y) { this->x = x; this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx; this->y = y; }
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
