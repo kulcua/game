@@ -1,6 +1,7 @@
 # id	file_path	transparent_color_r	g	b
 [TEXTURES]
 0	textures\mario1.png	68	145	190
+10	textures\enemies.png	3	26	110
 20	textures\misc.png	176	224	248
 
 # id	left	top	right	bottom	texture_id
@@ -16,6 +17,12 @@
 10015	37	16	53	32	0
 #die 
 10099	307 	16	324	32	0
+
+#GOOMBA
+30001	5	14	21	29	10
+30002	25	14	41	29	10
+#die
+30003	45	21	61	29	10
 
 #QUESTION BRICK
 40001	300	117	316	133	20
@@ -36,6 +43,12 @@
 #die
 599	10099	100
 
+# ==== GOOMBA  =========
+# walk
+701	30001	100	30002	100
+# die
+702	30003	100
+
 # ==== QUESTION BRICK =========
 602	40001	1000	40001	100	40002	100	40003	100	40004	100
 
@@ -45,6 +58,10 @@
 [ANIMATION_SETS]
 # MARIO
 1	400	401	402	599
+
+# GOOMBA
+3	701	702
+
 # QUESTION BRICK 
 22	602
 
@@ -55,13 +72,17 @@
 0	100	350	1
 
 #BRICK
-1	175	352	22
+1	176	352	22
 1	192	352	22
 1	224	304	22
 1	240	304	22
 1	416	320	22
 1	656	384	22
 1	704	352	22
+
+#GOOMBA
+2	224	401	3
+2	528	401	3
 
 # --- HIDEN OBJECT ----
 # type	l	t	ani_set_id	r	b	scene_id
@@ -73,7 +94,7 @@
 20	624	400	0	1088	432	1
 
 #PIPE
-20	354	369	0	383	416	1
+20	354	369	0	381	416	1
 
 #BOX
 #pink 

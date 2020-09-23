@@ -9,6 +9,8 @@
 #include "BigBox.h"
 #include "Ground.h"
 
+#define BORDER_X 15
+
 CMario::CMario(float x, float y) : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
@@ -26,8 +28,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
-	if (x <= 15) //when mario collise with border x
-		x = 15;
+	if (x <= BORDER_X) //when mario collise with border x
+		x = BORDER_X;
 	
 	//CollisionAABB(coObjects);
 
@@ -91,6 +93,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
 					{
+						DebugOut(L"y die");
+						goomba->StartDieTime();
 						goomba->SetState(GOOMBA_STATE_DIE);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
@@ -107,7 +111,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 								StartUntouchable();
 							}
 							else
-								SetState(MARIO_STATE_DIE);
+							{
+								SetState(MARIO_STATE_DIE);	
+							}		
 						}
 					}
 				}
@@ -190,14 +196,13 @@ void CMario::Render()
 			ani = MARIO_ANI_SMALL_WALKING_LEFT;
 		if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
 	}
-	if (vy != 0)
-		DebugOut(L"state: %d \n", state);
+
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
 	animation_set->at(ani)->Render(x, y, nx, alpha);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CMario::SetState(int state)

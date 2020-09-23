@@ -1,8 +1,12 @@
 #include "Goomba.h"
+#include "Utils.h"
+
+#define GOOMBA_DIE_TIME 500
 
 CGoomba::CGoomba()
 {
 	SetState(GOOMBA_STATE_WALKING);
+	die = false;
 }
 
 void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -19,31 +23,41 @@ void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObject)
 {
-	CGameObject::Update(dt, coObject);
-
-	//TO-DO: make sure Goomba can interact with the world and to each of them too!
-
-	x += dx;
-	y += dy;
-
-	if (vx < 0 && x < 0)
+	if (!die)
 	{
-		x = 0; vx = -vx;
+		CGameObject::Update(dt, coObject);
+
+		//TO-DO: make sure Goomba can interact with the world and to each of them too!
+
+		x += dx;
+		y += dy;
+
+		if (vx < 0 && x < 0)
+		{
+			x = 0; vx = -vx;
+		}
+
+		if (vx > 0 && x > 290)
+		{
+			x = 290; vx = -vx;
+		}
 	}
-		
-	if (vx > 0 && x > 290)
-	{
-		x = 290; vx = -vx;
-	}	
+	else return;
 }
 
 void CGoomba::Render()
 {
-	int ani = GOOMBA_ANI_WALKING;
-	if (state == GOOMBA_STATE_DIE)
+	int ani;
+	if (!die)
+	{
+		ani = GOOMBA_ANI_WALKING;	
+		animation_set->at(ani)->Render(x, y, nx);
+	}
+	else if (GetTickCount() - die_time_start <= GOOMBA_DIE_TIME)
+	{
 		ani = GOOMBA_ANI_DIE;
-
-	animation_set->at(ani)->Render(x, y, nx);
+		animation_set->at(ani)->Render(x, y, nx);
+	}
 	//RenderBoundingBox();
 }
 

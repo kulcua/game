@@ -48,7 +48,6 @@ class CMario : public CGameObject
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 
-	//bool isOnBox = false;
 	bool isGrounded = false;
 
 public:

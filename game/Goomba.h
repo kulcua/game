@@ -15,12 +15,15 @@
 
 class CGoomba: public CGameObject
 {
+	DWORD die_time_start;
+	 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObject);
 	virtual void Render();
 
 public:
 	CGoomba();
+	void StartDieTime() { die = true; die_time_start = GetTickCount(); }
 	virtual void SetState(int state);
 };
 
