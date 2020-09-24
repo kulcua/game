@@ -31,6 +31,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 
 #define OBJECT_TYPE_MARIO	0	//set object nhan dang file txt
 #define OBJECT_TYPE_BRICK	1
+#define OBJECT_TYPE_ITEM	11
 #define OBJECT_TYPE_GOOMBA	2
 #define OBJECT_TYPE_KOOPAS	3
 
@@ -156,7 +157,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
-	case OBJECT_TYPE_BRICK: obj = new CBrick(); break;
+	case OBJECT_TYPE_BRICK:
+	{
+		ItemType item = (ItemType)atoi(tokens[4].c_str());;
+		obj = new CBrick(item, y);
+	} 
+	break;
+	//case OBJECT_TYPE_ITEM:  obj = new CItem(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
 	case OBJECT_TYPE_BIGBOX:
 	{

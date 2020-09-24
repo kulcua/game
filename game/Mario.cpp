@@ -8,6 +8,7 @@
 #include "Portal.h"
 #include "BigBox.h"
 #include "Ground.h"
+#include "Item.h"
 
 #define BORDER_X 15
 
@@ -93,7 +94,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
 					{
-						goomba->StartDieTime();
 						goomba->SetState(GOOMBA_STATE_DIE);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
@@ -143,8 +143,19 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
-				if (e->ny)
+				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+				if (e->ny < 0)
+				{
 					isGrounded = true;
+				}
+				if (brick->GetState() != BRICK_STATE_DIE)
+				{
+					if (e->ny > 0)
+					{
+						brick->SetState(BRICK_STATE_DIE);
+						DebugOut(L"brick die vy: %f\n", vy);
+					}
+				}
 			}
 		}
 	}
