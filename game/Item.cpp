@@ -19,14 +19,18 @@
 //		break;
 //	}
 //}
+CItem::CItem()
+{
+	SetState(ITEM_STATE_DISABLE);
+}
 
 void CItem::Render()
 {
-	//int ani;
-	//if state brick truyen vo la gi thi render item state do
-	animation_set->at(0)->Render(x, y, NULL);
-	DebugOut(L"item");
-	//RenderBoundingBox();
+	if (state == ITEM_STATE_ENABLE)
+	{
+		animation_set->at(0)->Render(x, y, NULL);
+	}
+	RenderBoundingBox();
 }
 
 void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)

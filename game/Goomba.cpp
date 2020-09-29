@@ -1,6 +1,7 @@
 #include "Goomba.h"
 #include "Utils.h"
 #include "Ground.h"
+#include "Pipe.h"
 
 #define GOOMBA_DIE_TIME 200
 
@@ -74,6 +75,13 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						vx = -vx;
 					}			
 				}
+				else if (dynamic_cast<CPipe*>(e->obj))
+				{
+					if (e->nx)
+					{
+						vx = -vx;
+					}
+				}
 				else
 				{
 					x += dx;
@@ -81,21 +89,8 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 		}
-
 		// clean up collision events
 		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-		//x += dx;
-		//y += dy;
-
-		//if (vx < 0 && x < 0)
-		//{
-		//	x = 0; vx = -vx;
-		//}
-
-		//if (vx > 0 && x > 290)
-		//{
-		//	x = 290; vx = -vx;
-		//}
 	}
 	else return;
 }

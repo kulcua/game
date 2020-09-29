@@ -60,7 +60,7 @@ public:
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 
-	//void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);
+	void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);
 	
 	void Reset();
 

@@ -8,6 +8,9 @@
 #include "Maps.h"
 #include "BigBox.h"
 #include "Ground.h"
+#include "Item.h"
+#include "Plant.h"
+#include "Pipe.h"
 
 using namespace std;
 
@@ -34,7 +37,9 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define OBJECT_TYPE_ITEM	11
 #define OBJECT_TYPE_GOOMBA	2
 #define OBJECT_TYPE_KOOPAS	3
+#define OBJECT_TYPE_PLANT	6
 
+#define OBJECT_TYPE_PIPE	66
 #define OBJECT_TYPE_BIGBOX	10
 #define OBJECT_TYPE_GROUND	20
 
@@ -146,6 +151,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	switch (object_type)
 	{
 	case OBJECT_TYPE_MARIO:
+	{
 		if (player != NULL)
 		{
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
@@ -155,16 +161,27 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object created!\n");
+	}
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK:
 	{
-		ItemType item = (ItemType)atoi(tokens[4].c_str());;
-		obj = new CBrick(item, y);
+		int typeItem = atoi(tokens[4].c_str()); //coin 25
+		DebugOut(L"item ani: %d\n", typeItem);
+		obj = new CBrick(typeItem, y);
+
+		/*CItem* item = new CItem();
+		item->SetPosition(x, y);
+
+		LPANIMATION_SET ani_set = animation_sets->Get(typeItem);
+
+		item->SetAnimationSet(ani_set);
+		objects.push_back(item);*/
 	} 
 	break;
 	//case OBJECT_TYPE_ITEM:  obj = new CItem(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
+	case OBJECT_TYPE_PLANT: obj = new CPlant(); break;
 	case OBJECT_TYPE_BIGBOX:
 	{
 		float r = atof(tokens[4].c_str());
@@ -178,6 +195,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		float b = atof(tokens[5].c_str());
 		int scene_id = atoi(tokens[6].c_str());
 		obj = new CGround(x, y, r, b);
+	}
+	break;
+	case OBJECT_TYPE_PIPE:
+	{
+		int spriteId = atoi(tokens[4].c_str());
+		obj = new CPipe(x, y, spriteId);
 	}
 	break;
 	case OBJECT_TYPE_PORTAL:
@@ -200,6 +223,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
+	DebugOut(L"obj id: %d ani: %d\n", object_type, ani_set_id);
 }
 
 void CPlayScene::_ParseSection_MAPS(string line)

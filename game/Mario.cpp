@@ -9,6 +9,7 @@
 #include "BigBox.h"
 #include "Ground.h"
 #include "Item.h"
+#include "Pipe.h"
 
 #define BORDER_X 15
 
@@ -83,6 +84,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
+			//DebugOut(L" size obj: %d\n", coEventsResult.size());
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
 			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
@@ -124,6 +126,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					isGrounded = true;
 			}
 
+			else if (dynamic_cast<CPipe*>(e->obj))
+			{
+				if (e->ny)
+					isGrounded = true;
+			}
+
 			/*else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
@@ -148,15 +156,25 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					isGrounded = true;
 				}
-				if (brick->GetState() != BRICK_STATE_DIE)
+				if (brick->GetState() != BRICK_STATE_DISABLE)
 				{
 					if (e->ny > 0)
 					{
-						brick->SetState(BRICK_STATE_DIE);
-						DebugOut(L"brick die vy: %f\n", vy);
+						brick->SetState(BRICK_STATE_DISABLE);
+						DebugOut(L"brick\n");
 					}
 				}
 			}
+			//else if (dynamic_cast<CItem*>(e->obj))
+			//{
+			//	CItem* item = dynamic_cast<CItem*>(e->obj);
+			//	if (e->ny > 0)
+			//	{
+			//		item->SetState(ITEM_STATE_ENABLE);
+			//		y += dy;
+			//	}
+			//	DebugOut(L"item\n");
+			//}
 		}
 	}
 
@@ -171,29 +189,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 //
 //	for (int i = 0; i < coObjects->size(); i++) //need filter to box
 //	{
-//		if (dynamic_cast<CBigBox*>(coObjects->at(i)))
+//		if (dynamic_cast<CItem*>(coObjects->at(i)))
 //		{
+//			CItem* item = dynamic_cast<CItem*>(coObjects->at(i));
 //			if (AABB(coObjects->at(i)))
 //			{
-//				box++;
+//				item->SetState(ITEM_STATE_ENABLE);
+//				y += dy;
 //			}	
 //		}
-//		else if (dynamic_cast<CGround*>(coObjects->at(i)))
-//		{
-//			if (AABB(coObjects->at(i)))
-//			{
-//				ground++;
-//			}
-//		}
 //	}
-//
-//	if ((box != 0 && isOnBox) || box == 0) //neu co overlap ma k swept thi thoi
-//	{
-//		isOnBox = false;
-//	}
-//		
-//	if (ground == 0 && isGrounded) //neu ko con va cham thi reset isGround
-//		isGrounded = false;
 //}
 
 void CMario::Render()

@@ -2,7 +2,10 @@
 #include "GameObject.h"
 
 #define ITEM_BBOX_WIDTH  16
-#define ITEM_BBOX_HEIGHT 16
+#define ITEM_BBOX_HEIGHT 20
+
+#define ITEM_STATE_DISABLE 0
+#define ITEM_STATE_ENABLE	1
 
 #define ITEM_GRAVITY	0.002f
 
@@ -18,9 +21,9 @@ enum ItemType {
 
 class CItem :public CGameObject
 {
-	ItemType type;
+	//ItemType type;
 public:
-	CItem(ItemType type) { this->type = type; };
+	CItem();
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
