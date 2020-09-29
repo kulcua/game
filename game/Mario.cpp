@@ -13,6 +13,14 @@
 
 #define BORDER_X 15
 
+//CMario* CMario::__instance = NULL;
+//
+//CMario* CMario::GetInstance()
+//{
+//	if (__instance == NULL) __instance = new CMario();
+//	return __instance;
+//}
+
 CMario::CMario(float x, float y) : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
@@ -128,7 +136,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			else if (dynamic_cast<CPipe*>(e->obj))
 			{
-				if (e->ny)
+				if (e->ny < 0)
 					isGrounded = true;
 			}
 
@@ -144,7 +152,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					isGrounded = true;
 				else
 				{
-					//DebugOut(L"mario dx: %f x: %f\n", dx, x);
 					x += dx;
 				}				
 			}

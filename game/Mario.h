@@ -14,19 +14,10 @@
 #define MARIO_STATE_JUMP			300
 #define MARIO_STATE_DIE				400
 
-//#define MARIO_ANI_BIG_IDLE_RIGHT		0
-//#define MARIO_ANI_BIG_IDLE_LEFT			1
-//#define MARIO_ANI_SMALL_IDLE_RIGHT		2
-#define MARIO_ANI_SMALL_IDLE			0 //3
-		
-//#define MARIO_ANI_BIG_WALKING_RIGHT			4
-//#define MARIO_ANI_BIG_WALKING_LEFT			5
-//#define MARIO_ANI_SMALL_WALKING_RIGHT		6
-#define MARIO_ANI_SMALL_WALKING		1 //7
-
+#define MARIO_ANI_SMALL_IDLE		0 
+#define MARIO_ANI_SMALL_WALKING		1
 #define MARIO_ANI_SMALL_JUMP	2
-
-#define MARIO_ANI_DIE				3 //8
+#define MARIO_ANI_DIE			3 
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
@@ -49,7 +40,7 @@ class CMario : public CGameObject
 	float start_y;
 
 	bool isGrounded = false;
-
+	//static CMario* __instance;
 public:
 	CMario(float x = 0.0f, float y = 0.0f);
 
@@ -65,5 +56,6 @@ public:
 	void Reset();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	//static CMario* GetInstance();
 };
 
