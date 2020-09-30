@@ -19,11 +19,11 @@ class CBrick: public CGameObject
 	float start_y;
 public:
 	CBrick(int type, float y);
+
 	int GetItemType() { return type; }
-	//turn off update when die
 	void SetState(int state);
+
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
-

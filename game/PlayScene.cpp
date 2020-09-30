@@ -11,6 +11,7 @@
 #include "Item.h"
 #include "Plant.h"
 #include "Pipe.h"
+#include "FireBall.h"
 
 using namespace std;
 
@@ -310,13 +311,39 @@ void CPlayScene::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
+		if (dynamic_cast<CPlant*>(objects[i]))
+		{
+			CPlant* plant = dynamic_cast<CPlant*>(objects[i]);
+			if (plant->fireball)
+			{
+				CFireBall* fireball = new CFireBall(plant);
+				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+				LPANIMATION_SET ani_set = animation_sets->Get(FIREBAL_ANI_ID);
+				fireball->SetAnimationSet(ani_set);
+
+				objects.push_back(fireball);
+			}
+		}
 		coObject.push_back(objects[i]);
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
+		//if (dynamic_cast<CPlant*>(objects[i]))
+		//{
+		//	CPlant* plant = dynamic_cast<CPlant*>(objects[i]);
+		//	if (plant->GetState() == PLANT_STATE_SHOOT)
+		//	{
+		//		DebugOut(L"fireee\n");
+		//		CFireBall* fireball = new CFireBall(plant);
+		//		objects.push_back(fireball);
+		//	}
+		//}
 		objects[i]->Update(dt, &coObject);
 	}
+
+	//DebugOut(L"size: %d\n", objects.size());
+	//DebugOut(L"coO size: %d\n", coObject.size());
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;

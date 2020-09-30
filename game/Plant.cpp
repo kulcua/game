@@ -8,8 +8,9 @@ CPlant::CPlant(CGameObject *player) {
 	SetState(PLANT_STATE_ENABLE);
 	die = false;
 	shoot = false;
-	nx = -1;
+	fireball = false;
 	this->player = player;
+	vy = -PLANT_SPEED;
 }
 
 void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -18,6 +19,11 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		CGameObject::Update(dt, coObjects);
 		
+		if (fireball)
+		{
+			fireball = false;
+		}
+
 		//xet nx va huong ban theo x y cua Mario
 		float x_mario, y_mario;
 		player->GetPosition(x_mario, y_mario);
@@ -59,7 +65,7 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (!shoot)
 		{
-			if (pipe == 0)
+			if (pipe == 0) //ko con aabb voi pipe
 			{
 				vy = 0.0f;
 				StartShootTime();
@@ -94,18 +100,6 @@ void CPlant::Render()
 	}
 	animation_set->at(ani)->Render(x, y, nx);
 	//RenderBoundingBox();
-}
-
-void CPlant::SetState(int state)
-{
-	CGameObject::SetState(state);
-	switch (state)
-	{
-	case PLANT_STATE_ENABLE:
-		vy = -PLANT_SPEED;
-	default:
-		break;
-	}
 }
 
 void CPlant::GetBoundingBox(float& l, float& t, float& r, float& b)
