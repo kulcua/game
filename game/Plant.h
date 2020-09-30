@@ -25,8 +25,10 @@ class CPlant : public CGameObject
 	virtual void Render();
 	bool shoot;
 	DWORD shoot_time_start;
+	CGameObject *player;
+	bool isUp;
 public:
-	CPlant();
+	CPlant(CGameObject *player);
 	void StartShootTime() { shoot = true; shoot_time_start = GetTickCount(); }
 	virtual void SetState(int state);
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
