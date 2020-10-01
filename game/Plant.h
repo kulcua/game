@@ -22,10 +22,10 @@ class CPlant : public CGameObject
 	virtual void Render();	
 	DWORD shoot_time_start;
 	CGameObject *player;
-	bool isUp;
 	bool shoot;
 	
 public:
+	bool isUp;
 	bool fireball; //check ban only 1 vien dan
 	CPlant(CGameObject *player);
 	void StartShootTime() {

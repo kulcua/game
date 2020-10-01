@@ -316,7 +316,7 @@ void CPlayScene::Update(DWORD dt)
 			CPlant* plant = dynamic_cast<CPlant*>(objects[i]);
 			if (plant->fireball)
 			{
-				CFireBall* fireball = new CFireBall(plant);
+				CFireBall* fireball = new CFireBall(player, plant);
 				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 				LPANIMATION_SET ani_set = animation_sets->Get(FIREBAL_ANI_ID);
 				fireball->SetAnimationSet(ani_set);

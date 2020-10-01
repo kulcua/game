@@ -1,12 +1,11 @@
 #include "FireBall.h"
 #include "Utils.h"
 
-CFireBall::CFireBall(CGameObject* plant)
+CFireBall::CFireBall(CMario* player, CPlant *plant)
 {
-	float x_plant, y_plant;
-	plant->GetPosition(x_plant, y_plant);
-	SetPosition(x_plant, y_plant);
-	nx = plant->nx;
+	this->player = player;
+	this->plant = plant;		
+	SetPosition(plant->x, plant->y);
 }
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -15,12 +14,28 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		CGameObject::Update(dt, coObjects);
 
+		float x_mario, y_mario, x_plant, y_plant;
+
+		player->GetPosition(x_mario, y_mario);
+		plant->GetPosition(x_plant, y_plant);
+
+		nx = plant->nx;
+
+		if (plant->isUp)
+			vy = -FIREBALL_SPEED;
+		else
+			vy = FIREBALL_SPEED;
+
+		if (abs(x_mario - x_plant) < FIREBALL_CHECK_X)
+			vx = FIREBALL_SPEED * nx;
+		else
+			vx = FIREBALL_SPEED * nx * 2;
+
 		x += dx;
 		y += dy;
 
-		if (nx < 0)
-			vx = -FIREBALL_SPEED;
-		else vx = FIREBALL_SPEED;
+		if (abs(y_mario - y) > FIREBALL_CHECK_Y)
+			die = true;
 	}
 }
 
