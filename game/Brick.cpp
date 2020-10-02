@@ -1,9 +1,8 @@
 #include "Brick.h"
 #include "Utils.h"
 
-CBrick::CBrick(int type, float y)
+CBrick::CBrick(float y)
 {
-	this->type = type;
 	start_y = y; //save y
 }
 

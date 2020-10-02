@@ -15,12 +15,9 @@
 
 class CBrick: public CGameObject
 {
-	int type;
 	float start_y;
 public:
-	CBrick(int type, float y);
-
-	int GetItemType() { return type; }
+	CBrick(float y);
 	void SetState(int state);
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

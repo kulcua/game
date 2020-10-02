@@ -19,6 +19,10 @@
 #define MARIO_ANI_SMALL_JUMP	2
 #define MARIO_ANI_DIE			3 
 
+#define MARIO_ANI_BIG_IDLE		4
+#define MARIO_ANI_BIG_WALKING		5
+#define MARIO_ANI_BIG_JUMP	6
+
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
 
@@ -40,7 +44,6 @@ class CMario : public CGameObject
 	float start_y;
 
 	bool isGrounded = false;
-	//static CMario* __instance;
 public:
 	CMario(float x = 0.0f, float y = 0.0f);
 
@@ -56,6 +59,5 @@ public:
 	void Reset();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	//static CMario* GetInstance();
 };
 

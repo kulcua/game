@@ -167,20 +167,18 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK:
 	{
-		int typeItem = atoi(tokens[4].c_str()); //coin 25
-		DebugOut(L"item ani: %d\n", typeItem);
-		obj = new CBrick(typeItem, y);
+		obj = new CBrick(y);
 
-		/*CItem* item = new CItem();
+		int typeItem = atoi(tokens[4].c_str()); //coin 25
+		CItem* item = new CItem(typeItem, player);
 		item->SetPosition(x, y);
 
 		LPANIMATION_SET ani_set = animation_sets->Get(typeItem);
 
 		item->SetAnimationSet(ani_set);
-		objects.push_back(item);*/
+		objects.push_back(item);
 	} 
 	break;
-	//case OBJECT_TYPE_ITEM:  obj = new CItem(); break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
 	case OBJECT_TYPE_PLANT: obj = new CPlant(player); break;
 	case OBJECT_TYPE_BIGBOX:
@@ -318,10 +316,19 @@ void CPlayScene::Update(DWORD dt)
 			{
 				CFireBall* fireball = new CFireBall(player, plant);
 				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-				LPANIMATION_SET ani_set = animation_sets->Get(FIREBAL_ANI_ID);
+				LPANIMATION_SET ani_set = animation_sets->Get(FIREBALL_ANI_ID);
 				fireball->SetAnimationSet(ani_set);
 
 				objects.push_back(fireball);
+			}
+		}
+		if (dynamic_cast<CBrick*>(objects[i]))
+		{
+			CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
+			if (brick->GetState() == BRICK_STATE_DISABLE)
+			{
+				CItem* item = dynamic_cast<CItem*>(objects[i - 1]);
+				item->isEnable = true;
 			}
 		}
 		coObject.push_back(objects[i]);
@@ -329,21 +336,8 @@ void CPlayScene::Update(DWORD dt)
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		//if (dynamic_cast<CPlant*>(objects[i]))
-		//{
-		//	CPlant* plant = dynamic_cast<CPlant*>(objects[i]);
-		//	if (plant->GetState() == PLANT_STATE_SHOOT)
-		//	{
-		//		DebugOut(L"fireee\n");
-		//		CFireBall* fireball = new CFireBall(plant);
-		//		objects.push_back(fireball);
-		//	}
-		//}
 		objects[i]->Update(dt, &coObject);
 	}
-
-	//DebugOut(L"size: %d\n", objects.size());
-	//DebugOut(L"coO size: %d\n", coObject.size());
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;

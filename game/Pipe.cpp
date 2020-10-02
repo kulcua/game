@@ -11,8 +11,8 @@ CPipe::CPipe(float x, float y, int spriteId)
 
 void CPipe::Render()
 {
-	CSprites::GetInstance()->Get(spriteId)->Draw(x, y, NULL);
-	//RenderBoundingBox();
+	//CSprites::GetInstance()->Get(spriteId)->Draw(x, y, NULL);
+	RenderBoundingBox();
 }
 
 void CPipe::GetBoundingBox(float& l, float& t, float& r, float& b)

@@ -29,9 +29,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		CGameObject::Update(dt, coObjects);
 
-		if (x < 0) //coll with boundx
-			vy = -vy;
-
 		vector<LPCOLLISIONEVENT> coEvents;
 		vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -85,7 +82,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else
 				{
 					x += dx;
-					//DebugOut(L"not ground dx: %f x: %f\n", dx, x);
 				}
 			}
 		}

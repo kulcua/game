@@ -10,13 +10,13 @@ void CKoopas::GetBoundingBox(float& l, float& t, float& r, float& b)
 	l = x;
 	t = y;
 	r = x + KOOPAS_BBOX_WIDTH;
-	if (state == KOOPAS_STATE_DIE)
+	if (state != KOOPAS_STATE_DIE)
 	{
-		b = y + KOOPAS_BBOX_HEIGHT_DIE;
+		b = y + KOOPAS_BBOX_HEIGHT;
 	}
 	else
 	{
-		b = y + KOOPAS_BBOX_HEIGHT;
+		b = y + KOOPAS_BBOX_HEIGHT_DIE;
 	}
 }
 
@@ -29,28 +29,32 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	x += dx;
 	y += dy;
 
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
+	if (vx < 0 && x < 510) {
+		x = 510; vx = -vx;
+		nx = 1;
 	}
 
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
+	if (vx > 0 && x > 600) {
+		x = 600; vx = -vx;
+		nx = -1;
 	}
 }
 
 void CKoopas::Render()
 {
-	int ani = KOOPAS_ANI_WALKING_LEFT;
+	int ani;
 	if (state == KOOPAS_STATE_DIE)
 	{
 		ani = KOOPAS_ANI_DIE;
 	}
-	else if (vx > 0) ani = KOOPAS_ANI_WALKING_RIGHT;
-	else if (vx <= 0) ani = KOOPAS_ANI_WALKING_LEFT;
+	else if (state == KOOPAS_STATE_BALL)
+		ani = KOOPAS_ANI_BALL;
+	else
+		ani = KOOPAS_ANI_WALKING;
 
 	animation_set->at(ani)->Render(x, y, nx);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CKoopas::SetState(int state)
@@ -59,11 +63,19 @@ void CKoopas::SetState(int state)
 	switch (state)
 	{
 	case KOOPAS_STATE_DIE:
-		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE + 1;
+		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE;
 		vx = 0;
 		vy = 0;
 		break;
+	
+	case KOOPAS_STATE_BALL:
+		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE;
+		vx = 0;
+		vy = 0;
+		break;
+
 	case KOOPAS_STATE_WALKING:
 		vx = KOOPAS_WALKING_SPEED;
+		break;
 	}
 }

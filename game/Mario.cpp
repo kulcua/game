@@ -9,17 +9,10 @@
 #include "BigBox.h"
 #include "Ground.h"
 #include "Item.h"
+#include "Koopas.h"
 #include "Pipe.h"
 
 #define BORDER_X 15
-
-//CMario* CMario::__instance = NULL;
-//
-//CMario* CMario::GetInstance()
-//{
-//	if (__instance == NULL) __instance = new CMario();
-//	return __instance;
-//}
 
 CMario::CMario(float x, float y) : CGameObject()
 {
@@ -92,7 +85,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		//
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			//DebugOut(L" size obj: %d\n", coEventsResult.size());
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
 			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
@@ -172,16 +164,28 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
-			//else if (dynamic_cast<CItem*>(e->obj))
-			//{
-			//	CItem* item = dynamic_cast<CItem*>(e->obj);
-			//	if (e->ny > 0)
-			//	{
-			//		item->SetState(ITEM_STATE_ENABLE);
-			//		y += dy;
-			//	}
-			//	DebugOut(L"item\n");
-			//}
+			else if (dynamic_cast<CItem*>(e->obj))
+			{
+				CItem* item = dynamic_cast<CItem*>(e->obj);
+				if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
+				{
+					SetLevel(MARIO_LEVEL_BIG);
+					y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+					item->die = true;
+				}
+			}
+			else if (dynamic_cast<CKoopas*>(e->obj))
+			{
+				CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
+				if (koopas->GetState() != KOOPAS_STATE_BALL) {
+					if (e->ny < 0)
+					{
+						koopas->SetState(KOOPAS_STATE_BALL);
+					}
+				}
+				else
+					koopas->vx = KOOPAS_BALL_SPEED;
+			}
 		}
 	}
 
@@ -220,6 +224,14 @@ void CMario::Render()
 		else
 			ani = MARIO_ANI_SMALL_WALKING;
 		if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
+	}
+	else if (level == MARIO_LEVEL_BIG)
+	{
+		if (vx == 0)
+			ani = MARIO_ANI_BIG_IDLE;
+		else
+			ani = MARIO_ANI_BIG_WALKING;
+		if (!isGrounded) ani = MARIO_ANI_BIG_JUMP;
 	}
 
 	int alpha = 255;
