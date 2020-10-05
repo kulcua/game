@@ -7,21 +7,25 @@
 #define MARIO_JUMP_DEFLECT_SPEED 0.2f
 #define MARIO_GRAVITY			0.002f
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
+#define MARIO_ACCELERATION		0.0001f //gia toc
 
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
 #define MARIO_STATE_WALKING_LEFT	200
 #define MARIO_STATE_JUMP			300
 #define MARIO_STATE_DIE				400
+#define MARIO_STATE_STOP			500
 
 #define MARIO_ANI_SMALL_IDLE		0 
 #define MARIO_ANI_SMALL_WALKING		1
 #define MARIO_ANI_SMALL_JUMP	2
-#define MARIO_ANI_DIE			3 
+#define MARIO_ANI_SMALL_STOP	3
+#define MARIO_ANI_DIE			4 
 
-#define MARIO_ANI_BIG_IDLE		4
-#define MARIO_ANI_BIG_WALKING		5
-#define MARIO_ANI_BIG_JUMP	6
+#define MARIO_ANI_BIG_IDLE		5
+#define MARIO_ANI_BIG_WALKING		6
+#define MARIO_ANI_BIG_JUMP	7
+#define MARIO_ANI_BIG_STOP	8
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
@@ -43,8 +47,10 @@ class CMario : public CGameObject
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 
+	float a;
 	bool isGrounded = false;
 public:
+	bool isStop;
 	CMario(float x = 0.0f, float y = 0.0f);
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
