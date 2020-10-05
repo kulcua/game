@@ -172,7 +172,7 @@
 #ITEM: 25 = coin, 26 = red_mushroom
 
 # MARIO
-0	306	350	1
+0	482	308	1
 
 #BRICK
 #[4] ani coin
@@ -201,7 +201,7 @@
 66	368	400	0	60004
 
 #KOOPAS
-3	577	358	70
+3	577	350	70
 
 # --- HIDEN OBJECT ----
 # type	l	t	ani_set_id	r	b	scene_id

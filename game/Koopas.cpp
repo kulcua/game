@@ -1,4 +1,9 @@
 #include "Koopas.h"
+#include "Brick.h"
+#include "Ground.h"
+#include "BigBox.h"
+#include "Utils.h"
+#include "Pipe.h"
 
 CKoopas::CKoopas()
 {
@@ -10,7 +15,7 @@ void CKoopas::GetBoundingBox(float& l, float& t, float& r, float& b)
 	l = x;
 	t = y;
 	r = x + KOOPAS_BBOX_WIDTH;
-	if (state != KOOPAS_STATE_DIE)
+	if (state == KOOPAS_STATE_WALKING)
 	{
 		b = y + KOOPAS_BBOX_HEIGHT;
 	}
@@ -22,21 +27,83 @@ void CKoopas::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt, coObjects);
+	if (!die)
+	{
+		DebugOut(L"vx: %f vy: %f\n", vx, vy);
+		CGameObject::Update(dt, coObjects);
 
-	// TO-DO: make sure Koopas can interact with the world and to each of them too!
+		vy += KOOPAS_GRAVITY * dt;
 
-	x += dx;
-	y += dy;
+		if (state != KOOPAS_STATE_BALL)
+		{
+			if (vx < 0 && x < 510)
+			{
+				x = 510;
+				vx = -vx;
+				nx = 1;
+				DebugOut(L"left\n");
+			}
 
-	if (vx < 0 && x < 510) {
-		x = 510; vx = -vx;
-		nx = 1;
-	}
+			if (vx > 0 && x > 600) {
+				x = 600;
+				vx = -vx;
+				nx = -1;
+				DebugOut(L"right\n");
+			}
+		}
+		vector<LPCOLLISIONEVENT> coEvents;
+		vector<LPCOLLISIONEVENT> coEventsResult;
 
-	if (vx > 0 && x > 600) {
-		x = 600; vx = -vx;
-		nx = -1;
+		coEvents.clear();
+		CalcPotentialCollisions(coObjects, coEvents);
+
+		if (coEvents.size() == 0)
+		{
+			x += dx;
+			y += dy;
+		}
+		else
+		{
+			float min_tx, min_ty, nx = 0, ny;
+			float rdx = 0;
+			float rdy = 0;
+
+			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+			x += min_tx * dx + nx * 0.4f;
+			y += min_ty * dy + ny * 0.4f;
+
+			if (ny != 0) vy = 0;
+
+			for (UINT i = 0; i < coEventsResult.size(); i++)
+			{
+				LPCOLLISIONEVENT e = coEventsResult[i];
+
+				if (dynamic_cast<CBrick*>(e->obj))
+				{
+					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+					brick->SetState(BRICK_STATE_DISABLE);
+					if (e->nx)
+						vx = -vx;
+				}
+				else if (dynamic_cast<CGround*>(e->obj))
+				{
+					if (e->nx)
+						vx = -vx;
+				}
+				else if (dynamic_cast<CPipe*>(e->obj))
+				{
+					if (e->nx)
+						vx = -vx;
+				}
+				else if (dynamic_cast<CBigBox*>(e->obj))
+				{
+					x += dx;
+				}
+			}
+
+		}
+		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
 }
 
@@ -64,16 +131,11 @@ void CKoopas::SetState(int state)
 	{
 	case KOOPAS_STATE_DIE:
 		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE;
-		vx = 0;
-		vy = 0;
 		break;
-	
 	case KOOPAS_STATE_BALL:
 		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE;
 		vx = 0;
-		vy = 0;
 		break;
-
 	case KOOPAS_STATE_WALKING:
 		vx = KOOPAS_WALKING_SPEED;
 		break;

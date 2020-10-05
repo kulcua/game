@@ -31,14 +31,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
-	DebugOut(L"vx: %f a: %f\n", vx, a);
-
 	if (x <= BORDER_X) //when mario collise with border x
 		x = BORDER_X;
 
 	// Simple fall down
 	vy += MARIO_GRAVITY * dt;
 	
+	//set gia toc cho mario
 	if (vx == 0)
 	{
 		SetState(MARIO_STATE_IDLE);
@@ -92,8 +91,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		//if (rdx != 0 && rdx!=dx)
-		//	x += nx*abs(rdx); 
+		if (rdx != 0 && rdx!=dx)
+			x += nx*abs(rdx); 
 
 		// block every object first!
 		x += min_tx * dx + nx * 0.4f;
@@ -246,7 +245,7 @@ void CMario::Render()
 		else
 			ani = MARIO_ANI_SMALL_WALKING;
 		if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
-		if (isStop) ani = MARIO_ANI_SMALL_STOP;
+		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_SMALL_STOP;
 	}
 	else if (level == MARIO_LEVEL_BIG)
 	{
@@ -255,14 +254,13 @@ void CMario::Render()
 		else
 			ani = MARIO_ANI_BIG_WALKING;
 		if (!isGrounded) ani = MARIO_ANI_BIG_JUMP;
-		if (isStop) ani = MARIO_ANI_BIG_STOP;
+		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_BIG_STOP;
 	}
 
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 
 	animation_set->at(ani)->Render(x, y, nx, alpha);
-
 	//RenderBoundingBox();
 }
 
@@ -275,12 +273,10 @@ void CMario::SetState(int state)
 	case MARIO_STATE_WALKING_RIGHT:
 		vx = MARIO_WALKING_SPEED;
 		nx = 1;
-		isStop = false;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		vx = -MARIO_WALKING_SPEED;
 		nx = -1;
-		isStop = false;
 		break;
 	case MARIO_STATE_JUMP:
 		if (isGrounded)
@@ -290,8 +286,7 @@ void CMario::SetState(int state)
 		}
 		// TODO: need to check if Mario is *current* on a platform before allowing to jump again
 		break;
-	case MARIO_STATE_IDLE:
-		isStop = false;
+	case MARIO_STATE_IDLE:	
 		vx = 0;
 		break;
 	case MARIO_STATE_DIE:

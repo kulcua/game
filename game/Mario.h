@@ -7,7 +7,7 @@
 #define MARIO_JUMP_DEFLECT_SPEED 0.2f
 #define MARIO_GRAVITY			0.002f
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
-#define MARIO_ACCELERATION		0.0001f //gia toc
+#define MARIO_ACCELERATION		0.0002f //gia toc
 
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
@@ -50,7 +50,6 @@ class CMario : public CGameObject
 	float a;
 	bool isGrounded = false;
 public:
-	bool isStop;
 	CMario(float x = 0.0f, float y = 0.0f);
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);

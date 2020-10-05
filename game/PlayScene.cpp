@@ -397,14 +397,14 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
 		if (mario->vx < 0)
-			mario->isStop = true;
+			mario->SetState(MARIO_STATE_STOP);
 		else
 			mario->SetState(MARIO_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
 		if (mario->vx > 0)
-			mario->isStop = true;
+			mario->SetState(MARIO_STATE_STOP);
 		else
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
 	}
