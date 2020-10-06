@@ -382,8 +382,48 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_S:
 		mario->SetState(MARIO_STATE_JUMP);
 		break;
-	case DIK_A: // reset
+	case DIK_F1: // reset
 		mario->Reset();
+		break;
+	case DIK_F2:
+		mario->SetLevel(MARIO_LEVEL_BIG);
+		mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+		break;
+	case DIK_F3:
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
+		mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+		break;
+	case DIK_DOWN:
+		if (mario->GetLevel() != MARIO_LEVEL_SMALL)
+		{
+			mario->isSit = true;
+			if (mario->GetLevel() == MARIO_LEVEL_BIG)
+				mario->y += MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+				mario->y += MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+		}	
+		break;
+	case DIK_A:
+		mario->isRun = true;
+		break;
+	}
+}
+
+void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
+{
+	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+	switch (KeyCode)
+	{
+	case DIK_DOWN:
+		mario->isSit = false;
+		if (mario->GetLevel() == MARIO_LEVEL_BIG)
+			mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+		else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+			mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+		break;
+	case DIK_A:
+		mario->isRun = false;
 		break;
 	}
 }
@@ -408,6 +448,4 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 		else
 			mario->SetState(MARIO_STATE_WALKING_LEFT);
 	}
-	/*else
-		mario->SetState(MARIO_STATE_IDLE);*/
 }

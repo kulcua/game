@@ -205,7 +205,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 				else
-					koopas->vx = KOOPAS_BALL_SPEED;
+					koopas->vx = KOOPAS_BALL_SPEED * this->nx;
 			}
 		}
 	}
@@ -244,7 +244,10 @@ void CMario::Render()
 			ani = MARIO_ANI_SMALL_IDLE;
 		else
 			ani = MARIO_ANI_SMALL_WALKING;
+
 		if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
+		else if (isRun) ani = MARIO_ANI_SMALL_RUN;
+
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_SMALL_STOP;
 	}
 	else if (level == MARIO_LEVEL_BIG)
@@ -253,8 +256,25 @@ void CMario::Render()
 			ani = MARIO_ANI_BIG_IDLE;
 		else
 			ani = MARIO_ANI_BIG_WALKING;
+
 		if (!isGrounded) ani = MARIO_ANI_BIG_JUMP;
+		else if (isRun) ani = MARIO_ANI_BIG_RUN;
+		else if (isSit) ani = MARIO_ANI_BIG_SIT;
+		
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_BIG_STOP;
+	}
+	else if (level == MARIO_LEVEL_RACCOON)
+	{
+		if (vx == 0)
+			ani = MARIO_ANI_RACCOON_IDLE;
+		else
+			ani = MARIO_ANI_RACCOON_WALKING;
+
+		if (!isGrounded) ani = MARIO_ANI_RACCOON_JUMP;
+		else if (isRun) ani = MARIO_ANI_RACCOON_RUN;
+		else if (isSit) ani = MARIO_ANI_RACCOON_SIT;
+
+		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_RACCOON_STOP;
 	}
 
 	int alpha = 255;
@@ -271,11 +291,17 @@ void CMario::SetState(int state)
 	switch (state)
 	{
 	case MARIO_STATE_WALKING_RIGHT:
-		vx = MARIO_WALKING_SPEED;
+		if (isRun)
+			vx = MARIO_RUN_SPEED;
+		else
+			vx = MARIO_WALKING_SPEED;
 		nx = 1;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
-		vx = -MARIO_WALKING_SPEED;
+		if (isRun)
+			vx = -MARIO_RUN_SPEED;
+		else
+			vx = -MARIO_WALKING_SPEED;
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
@@ -284,7 +310,6 @@ void CMario::SetState(int state)
 			vy = -MARIO_JUMP_SPEED_Y;
 			isGrounded = false;
 		}
-		// TODO: need to check if Mario is *current* on a platform before allowing to jump again
 		break;
 	case MARIO_STATE_IDLE:	
 		vx = 0;
@@ -305,11 +330,18 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		right = x + MARIO_BIG_BBOX_WIDTH;
 		bottom = y + MARIO_BIG_BBOX_HEIGHT;
 	}
+	else if (level == MARIO_LEVEL_RACCOON)
+	{
+		right = x + MARIO_RACCOON_BBOX_WIDTH;
+		bottom = y + MARIO_RACCOON_BBOX_HEIGHT;
+	}
 	else
 	{
 		right = x + MARIO_SMALL_BBOX_WIDTH;
 		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
 	}
+
+	if (isSit) bottom = y + MARIO_SIT_BBOX_HEIGHT;
 }
 
 //Reset Mario status to the beginning state of a scene

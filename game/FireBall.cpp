@@ -26,7 +26,7 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 			vy = FIREBALL_SPEED;
 
-		if (abs(x_mario - x_plant) < FIREBALL_CHECK_X)
+		if (abs(x_mario - x_plant) < FIREBALL_CHECK_POS_SHOOT_X)
 			vx = FIREBALL_SPEED * nx;
 		else
 			vx = FIREBALL_SPEED * nx * 2;
@@ -34,7 +34,7 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 
-		if (abs(y_mario - y) > FIREBALL_CHECK_Y)
+		if (abs(y_mario - y) > FIREBALL_CHECK_Y || abs(x_plant - x_mario) > FIREBALL_CHECK_X)
 			die = true;
 	}
 }

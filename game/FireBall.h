@@ -7,7 +7,8 @@
 #define FIREBALL_HEIGHT 9
 #define FIREBALL_SPEED 0.06f
 #define FIREBALL_ANI_ID 62
-#define FIREBALL_CHECK_X 72
+#define FIREBALL_CHECK_POS_SHOOT_X 72
+#define FIREBALL_CHECK_X 150
 #define FIREBALL_CHECK_Y 150
 
 class CFireBall : public CGameObject

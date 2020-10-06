@@ -4,6 +4,7 @@
 #include "BigBox.h"
 #include "Utils.h"
 #include "Pipe.h"
+#include "Goomba.h"
 
 CKoopas::CKoopas()
 {
@@ -29,7 +30,6 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!die)
 	{
-		DebugOut(L"vx: %f vy: %f\n", vx, vy);
 		CGameObject::Update(dt, coObjects);
 
 		vy += KOOPAS_GRAVITY * dt;
@@ -41,14 +41,12 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				x = 510;
 				vx = -vx;
 				nx = 1;
-				DebugOut(L"left\n");
 			}
 
 			if (vx > 0 && x > 600) {
 				x = 600;
 				vx = -vx;
 				nx = -1;
-				DebugOut(L"right\n");
 			}
 		}
 		vector<LPCOLLISIONEVENT> coEvents;
@@ -99,6 +97,11 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else if (dynamic_cast<CBigBox*>(e->obj))
 				{
 					x += dx;
+				}
+				else if (dynamic_cast<CGoomba*>(e->obj))
+				{
+					CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+					goomba->SetState(GOOMBA_STATE_DIE);
 				}
 			}
 
