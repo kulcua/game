@@ -4,7 +4,8 @@
 CFireBall::CFireBall(CMario* player, CPlant *plant)
 {
 	this->player = player;
-	this->plant = plant;		
+	this->plant = plant;
+
 	SetPosition(plant->x, plant->y);
 }
 

@@ -7,6 +7,11 @@
 
 CItem::CItem(int type, CMario *mario)
 {
+	//if (type == ITEM_STATE_RED_MUSHROOM) //if item sinh ra theo level mario
+	//{
+	//	type = ITEM_STATE_RED_MUSHROOM + (mario->GetLevel() - 1);
+	//	DebugOut(L"level: %d\n", mario->GetLevel());
+	//}
 	this->type = type;
 	isEnable = false;
 	this->mario = mario;
@@ -42,6 +47,37 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CollisionAABB(coObjects);
 			}
 		}
+		else if (state == ITEM_STATE_LEAF)
+		{
+			if (GetTickCount() - fly_time_start > ITEM_LEAF_TIME)
+			{
+				vy = ITEM_LEAF_DROP_SPEED;
+			}
+
+			if (vx == 0)
+			{
+				nx = -nx;
+				vx = -ITEM_LEAF_VX * nx;
+			}
+			else
+			{
+				float a;
+				if (vx > 0)
+				{
+					a = -MARIO_ACCELERATION;
+					vx += a * dt;
+					if (vx < 0)
+						vx = 0;
+				}
+				else
+				{
+					a = MARIO_ACCELERATION;
+					vx += a * dt;
+					if (vx > 0)
+						vx = 0;
+				}
+			}
+		}
 
 		vector<LPCOLLISIONEVENT> coEvents;
 		vector<LPCOLLISIONEVENT> coEventsResult;
@@ -69,7 +105,6 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (nx != 0) vx = 0;
 			if (ny != 0) vy = 0;
 
-			//DebugOut(L"vx: %f\n", vx);
 			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
 				LPCOLLISIONEVENT e = coEventsResult[i];
@@ -78,13 +113,23 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (e->nx)
 					{
 						vx = -ITEM_RED_MR_VX;
-						DebugOut(L"vooo\n");
 					}
 				}
-				//else
-				//{
-				//	x += dx;
-				//}
+				else if (dynamic_cast<CGround*>(e->obj))
+				{
+					if (state == ITEM_STATE_LEAF)
+					{
+						die = true;
+					}
+				}
+				else if (dynamic_cast<CBrick*>(e->obj))
+				{
+					if (state == ITEM_STATE_LEAF)
+					{
+						x += dx;
+						y += dy;
+					}
+				}
 			}
 		}
 
@@ -97,24 +142,42 @@ void CItem::CollisionAABB(vector<LPGAMEOBJECT>* coObjects)
 	int brick = 0;
 	for (int i = 0; i < coObjects->size(); i++) //need filter to box
 	{
-		//tinh toan khi vang khoi brick
 		if (dynamic_cast<CBrick*>(coObjects->at(i)))
-		{
-			if (AABB(coObjects->at(i)))
+			if (state == ITEM_STATE_RED_MUSHROOM)
 			{
-				brick++;
+				//tinh toan khi vang khoi brick
+				if (AABB(coObjects->at(i)))
+				{
+					brick++;
+				}
 			}
-		}
-	}	
-	DebugOut(L"aabb\n");
-	if (brick == 0)
-	{
-		isGravity = true;
-		outBrick = true;
-		vx = -ITEM_RED_MR_VX;
 	}
-	else {
-		isGravity = false;
+	//	else if (state == ITEM_STATE_LEAF)
+	//	{
+	//		if (dynamic_cast<CGround*>(coObjects->at(i)))
+	//		{
+	//			if (AABB(coObjects->at(i)))
+	//			{
+	//				die = true;
+	//				DebugOut(L"die\n");
+	//				break;
+	//			}
+	//		}
+	//	}
+	//}	
+	//DebugOut(L"aabb\n");
+	//set dieu kien sau khi check aabb
+	if (state == ITEM_STATE_RED_MUSHROOM)
+	{
+		if (brick == 0)
+		{
+			isGravity = true;
+			outBrick = true;
+			vx = -ITEM_RED_MR_VX;
+		}
+		else {
+			isGravity = false;
+		}
 	}
 }
 
@@ -122,7 +185,7 @@ void CItem::Render()
 {
 	if (isEnable && !die)
 	{
-		animation_set->at(0)->Render(x, y, NULL);
+		animation_set->at(0)->Render(x, y, nx);
 	}
 	//RenderBoundingBox();
 }
@@ -142,9 +205,22 @@ void CItem::SetState(int state)
 		isGravity = false;
 		//nx = -mario->nx;
 		break;
+	case ITEM_STATE_LEAF:
+		StartFlying();
+		vx = ITEM_LEAF_VX;
+		isGravity = false;
+		break;
 	default:
 		break;
 	}
+}
+
+void CItem::StartFlying()
+{ 
+	isFlying = true; 
+	fly_time_start = GetTickCount(); 
+	if (state == ITEM_STATE_LEAF)
+		vy = -ITEM_COIN_JUMP_SPEED;
 }
 
 void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)

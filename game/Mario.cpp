@@ -38,21 +38,21 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += MARIO_GRAVITY * dt;
 	
 	//set gia toc cho mario
-	if (vx == 0)
+	if (vx == 0 && state != MARIO_STATE_DIE)
 	{
 		SetState(MARIO_STATE_IDLE);
 	}
 	else {
 		if (vx > 0)
 		{
-			a = -MARIO_ACCELERATION;
+			a = -ITEM_LEAF_A;
 			vx += a * dt;
 			if (vx < 0)
 				vx = 0;
 		}
 		else
 		{
-			a = MARIO_ACCELERATION;
+			a = ITEM_LEAF_A;
 			vx += a * dt;
 			if (vx > 0)
 				vx = 0;
@@ -139,19 +139,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			} // if Goomba
-
 			else if (dynamic_cast<CGround*>(e->obj))
 			{
 				if (e->ny)
 					isGrounded = true;
 			}
-
 			else if (dynamic_cast<CPipe*>(e->obj))
 			{
 				if (e->ny < 0)
 					isGrounded = true;
 			}
-
 			/*else if (dynamic_cast<CPortal*>(e->obj))
 			{
 				CPortal* p = dynamic_cast<CPortal*>(e->obj);
@@ -167,7 +164,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					x += dx;
 				}				
 			}
-
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
@@ -180,7 +176,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny > 0)
 					{
 						brick->SetState(BRICK_STATE_DISABLE);
-						DebugOut(L"brick\n");
 					}
 				}
 			}
@@ -189,8 +184,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CItem* item = dynamic_cast<CItem*>(e->obj);
 				if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
 				{
-					SetLevel(MARIO_LEVEL_BIG);
+					SetLevel(level + 1);
 					y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+					item->die = true;
+				}
+				else if (item->GetState() == ITEM_STATE_LEAF)
+				{
+					SetLevel(level + 1);
+					y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
 					item->die = true;
 				}
 			}
@@ -205,7 +206,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 				else
-					koopas->vx = KOOPAS_BALL_SPEED * this->nx;
+					koopas->vx = KOOPAS_BALL_SPEED;// *this->nx;
 			}
 		}
 	}

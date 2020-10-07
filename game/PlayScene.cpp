@@ -339,6 +339,9 @@ void CPlayScene::Update(DWORD dt)
 		objects[i]->Update(dt, &coObject);
 	}
 
+	//DebugOut(L"size coo: %d\n", coObject.size());
+	//DebugOut(L"size: %d\n", objects.size());
+
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
 

@@ -9,12 +9,13 @@
 #define FIREBALL_ANI_ID 62
 #define FIREBALL_CHECK_POS_SHOOT_X 72
 #define FIREBALL_CHECK_X 150
-#define FIREBALL_CHECK_Y 150
+#define FIREBALL_CHECK_Y 120
 
 class CFireBall : public CGameObject
 {
 	CMario* player;
 	CPlant* plant;
+	
 public:
 	CFireBall(CMario *player, CPlant*plant);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
