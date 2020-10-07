@@ -335,8 +335,6 @@ void CPlayScene::Update(DWORD dt)
 
 				LPANIMATION_SET ani_set = animation_sets->Get(type);
 				item->SetAnimationSet(ani_set);
-				item->isEnable = true;
-
 				objects.push_back(item);	
 			}
 		}

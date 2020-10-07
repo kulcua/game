@@ -13,13 +13,12 @@ CItem::CItem(int type, CMario *mario)
 	//	DebugOut(L"level: %d\n", mario->GetLevel());
 	//}
 	this->type = type;
-	isEnable = false;
 	this->mario = mario;
 }
 
 void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!die && isEnable)
+	if (!die)
 	{
 		CGameObject::Update(dt, coObjects);
 
@@ -183,7 +182,7 @@ void CItem::CollisionAABB(vector<LPGAMEOBJECT>* coObjects)
 
 void CItem::Render()
 {
-	if (isEnable && !die)
+	if (!die)
 	{
 		animation_set->at(0)->Render(x, y, nx);
 	}
@@ -203,7 +202,6 @@ void CItem::SetState(int state)
 	case ITEM_STATE_RED_MUSHROOM:
 		vy = -ITEM_RED_MR_VY;
 		isGravity = false;
-		//nx = -mario->nx;
 		break;
 	case ITEM_STATE_LEAF:
 		StartFlying();
@@ -225,11 +223,8 @@ void CItem::StartFlying()
 
 void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
-	if (isEnable)
-	{
-		l = x;
-		t = y;
-		r = x + ITEM_BBOX_WIDTH;
-		b = y + ITEM_BBOX_HEIGHT;
-	}
+	l = x;
+	t = y;
+	r = x + ITEM_BBOX_WIDTH;
+	b = y + ITEM_BBOX_HEIGHT;
 }

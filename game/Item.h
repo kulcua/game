@@ -34,7 +34,6 @@ class CItem :public CGameObject
 	bool outBrick = false;
 
 public:
-	bool isEnable;
 	CItem(int type, CMario *mario);
 	void SetState(int state);
 	void CollisionAABB(vector<LPGAMEOBJECT>* coObjects);
