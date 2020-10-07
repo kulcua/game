@@ -167,16 +167,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_BRICK:
 	{
-		obj = new CBrick(y);
-
-		int typeItem = atoi(tokens[4].c_str()); //coin 25
-		CItem* item = new CItem(typeItem, player);
-		item->SetPosition(x, y);
-
-		LPANIMATION_SET ani_set = animation_sets->Get(typeItem);
-
-		item->SetAnimationSet(ani_set);
-		objects.push_back(item);
+		int typeItem = atoi(tokens[4].c_str()); //coin 25, level 26
+		obj = new CBrick(y, typeItem);
 	} 
 	break;
 	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
@@ -325,10 +317,27 @@ void CPlayScene::Update(DWORD dt)
 		if (dynamic_cast<CBrick*>(objects[i]))
 		{
 			CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
-			if (brick->GetState() == BRICK_STATE_DISABLE)
+			if (brick->GetState() == BRICK_STATE_DISABLE && !brick->dropItem)
 			{
-				CItem* item = dynamic_cast<CItem*>(objects[i - 1]);
+				brick->dropItem = true;
+				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+
+				int type = brick->GetTypeItem();
+
+				if (type == ITEM_STATE_RED_MUSHROOM) //check neu item set theo level 1
+				{
+					type += player->GetLevel() - 1; //-1 de lay level mario can upgrade theo item
+				}
+
+				CItem* item = new CItem(type, player);
+
+				item->SetPosition(brick->x, brick->y);
+
+				LPANIMATION_SET ani_set = animation_sets->Get(type);
+				item->SetAnimationSet(ani_set);
 				item->isEnable = true;
+
+				objects.push_back(item);	
 			}
 		}
 		coObject.push_back(objects[i]);

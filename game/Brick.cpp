@@ -1,14 +1,16 @@
 #include "Brick.h"
 #include "Utils.h"
 
-CBrick::CBrick(float y)
+CBrick::CBrick(float y, int type)
 {
 	start_y = y; //save y
+	this->typeItem = type;
 }
 
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
+
 	if (y < start_y)
 	{
 		y++; //cong ve vi tri cu cua y

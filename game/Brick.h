@@ -16,10 +16,12 @@
 class CBrick: public CGameObject
 {
 	float start_y;
+	int typeItem;
 public:
-	CBrick(float y);
+	bool dropItem = false;
+	CBrick(float y, int type);
 	void SetState(int state);
-
+	int GetTypeItem() { return typeItem; }
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
