@@ -1,9 +1,7 @@
 #include <algorithm>
 #include "Utils.h"
-
 #include "Mario.h"
 #include "Game.h"
-
 #include "Goomba.h"
 #include "Portal.h"
 #include "BigBox.h"
@@ -45,20 +43,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else {
 		if (vx > 0)
 		{
-			a = -ITEM_LEAF_A;
+			a = -MARIO_ACCELERATION;
 			vx += a * dt;
 			if (vx < 0)
 				vx = 0;
 		}
 		else
 		{
-			a = ITEM_LEAF_A;
+			a = MARIO_ACCELERATION;
 			vx += a * dt;
 			if (vx > 0)
 				vx = 0;
 		}
 	}
 	
+	//CollisionAABB(coObjects);
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -73,6 +73,18 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
+	}
+
+	if (abs(x - start_x_run) > MARIO_RUN_DIMENSION && isRun)
+	{
+		start_x_run = 0;
+		run = false;
+		isPreFly = true;
+	}
+
+	if (isGrounded)
+	{
+		isFly = false;
 	}
 
 	// No collision occured, proceed normally
@@ -217,19 +229,23 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 //void CMario::CollisionAABB(vector<LPGAMEOBJECT>* coObjects)
 //{	
-//	int box = 0; //check xem co box nao bi overlapping ko
-//	int ground = 0;
-//
 //	for (int i = 0; i < coObjects->size(); i++) //need filter to box
 //	{
 //		if (dynamic_cast<CItem*>(coObjects->at(i)))
 //		{
 //			CItem* item = dynamic_cast<CItem*>(coObjects->at(i));
-//			if (AABB(coObjects->at(i)))
+//			if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
 //			{
-//				item->SetState(ITEM_STATE_ENABLE);
-//				y += dy;
-//			}	
+//				SetLevel(level + 1);
+//				y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+//				item->die = true;
+//			}
+//			else if (item->GetState() == ITEM_STATE_LEAF)
+//			{
+//				SetLevel(level + 1);
+//				y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
+//				item->die = true;
+//			}
 //		}
 //	}
 //}
@@ -246,9 +262,12 @@ void CMario::Render()
 		else
 			ani = MARIO_ANI_SMALL_WALKING;
 
-		if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
-		else if (isRun) ani = MARIO_ANI_SMALL_RUN;
+		//if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
+		if (run) ani = MARIO_ANI_SMALL_RUN;
+		if (isPreFly) ani = MARIO_ANI_SMALL_PRE_FLY;
 
+		if(!isGrounded && !isFly) ani = MARIO_ANI_SMALL_JUMP;
+		if (isFly)	ani = MARIO_ANI_SMALL_FLY; 
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_SMALL_STOP;
 	}
 	else if (level == MARIO_LEVEL_BIG)
@@ -259,9 +278,11 @@ void CMario::Render()
 			ani = MARIO_ANI_BIG_WALKING;
 
 		if (!isGrounded) ani = MARIO_ANI_BIG_JUMP;
-		else if (isRun) ani = MARIO_ANI_BIG_RUN;
-		else if (isSit) ani = MARIO_ANI_BIG_SIT;
-		
+		if (run) ani = MARIO_ANI_BIG_RUN;
+		if (isSit) ani = MARIO_ANI_BIG_SIT;
+		if (isPreFly) ani = MARIO_ANI_BIG_PRE_FLY;
+		if (isFly)	ani = MARIO_ANI_BIG_FLY;
+
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_BIG_STOP;
 	}
 	else if (level == MARIO_LEVEL_RACCOON)
@@ -272,8 +293,10 @@ void CMario::Render()
 			ani = MARIO_ANI_RACCOON_WALKING;
 
 		if (!isGrounded) ani = MARIO_ANI_RACCOON_JUMP;
-		else if (isRun) ani = MARIO_ANI_RACCOON_RUN;
-		else if (isSit) ani = MARIO_ANI_RACCOON_SIT;
+		if (run) ani = MARIO_ANI_RACCOON_RUN;
+		if (isSit) ani = MARIO_ANI_RACCOON_SIT;
+		if (isPreFly) ani = MARIO_ANI_RACCOON_PRE_FLY;
+		if (isFly)	ani = MARIO_ANI_RACCOON_FLY;
 
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_RACCOON_STOP;
 	}
@@ -282,6 +305,7 @@ void CMario::Render()
 	if (untouchable) alpha = 128;
 
 	animation_set->at(ani)->Render(x, y, nx, alpha);
+	//DebugOut(L"state: %d ani: %d\n", state, ani);
 	//RenderBoundingBox();
 }
 
@@ -293,24 +317,34 @@ void CMario::SetState(int state)
 	{
 	case MARIO_STATE_WALKING_RIGHT:
 		if (isRun)
+		{
+			StartRun();
 			vx = MARIO_RUN_SPEED;
+		}
 		else
 			vx = MARIO_WALKING_SPEED;
 		nx = 1;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
 		if (isRun)
+		{
+			StartRun();
 			vx = -MARIO_RUN_SPEED;
+		}	
 		else
 			vx = -MARIO_WALKING_SPEED;
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
-		if (isGrounded)
+		if (isFly)
 		{
 			vy = -MARIO_JUMP_SPEED_Y;
-			isGrounded = false;
 		}
+		else if (isGrounded)
+		{
+			vy = -MARIO_JUMP_SPEED_Y;	
+		}
+		isGrounded = false;
 		break;
 	case MARIO_STATE_IDLE:	
 		vx = 0;

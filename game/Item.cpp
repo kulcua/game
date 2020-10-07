@@ -7,11 +7,6 @@
 
 CItem::CItem(int type, CMario *mario)
 {
-	//if (type == ITEM_STATE_RED_MUSHROOM) //if item sinh ra theo level mario
-	//{
-	//	type = ITEM_STATE_RED_MUSHROOM + (mario->GetLevel() - 1);
-	//	DebugOut(L"level: %d\n", mario->GetLevel());
-	//}
 	this->type = type;
 	this->mario = mario;
 }
@@ -63,14 +58,14 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				float a;
 				if (vx > 0)
 				{
-					a = -MARIO_ACCELERATION;
+					a = -ITEM_LEAF_A;
 					vx += a * dt;
 					if (vx < 0)
 						vx = 0;
 				}
 				else
 				{
-					a = MARIO_ACCELERATION;
+					a = ITEM_LEAF_A;
 					vx += a * dt;
 					if (vx > 0)
 						vx = 0;

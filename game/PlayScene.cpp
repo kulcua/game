@@ -390,6 +390,10 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_S:
+		if (mario->isPreFly)
+		{
+			mario->isFly = true;
+		}
 		mario->SetState(MARIO_STATE_JUMP);
 		break;
 	case DIK_F1: // reset
@@ -434,6 +438,8 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 		break;
 	case DIK_A:
 		mario->isRun = false;
+		mario->isPreFly = false;
+		mario->run = false;
 		break;
 	}
 }

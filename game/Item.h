@@ -17,7 +17,7 @@
 
 #define ITEM_STATE_LEAF	27
 #define ITEM_LEAF_VX 0.08f
-#define ITEM_LEAF_A	0.001f
+#define ITEM_LEAF_A	0.0001f
 #define ITEM_LEAF_DROP_SPEED	0.01f
 #define ITEM_LEAF_TIME	50
 

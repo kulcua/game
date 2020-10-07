@@ -2,22 +2,20 @@
 #include "GameObject.h"
 
 #define MARIO_WALKING_SPEED		0.08f 
-#define MARIO_RUN_SPEED			0.1f 
-//0.1f
+#define MARIO_RUN_SPEED			0.15f 
 #define MARIO_JUMP_SPEED_Y		0.5f
 #define MARIO_JUMP_DEFLECT_SPEED 0.2f
 #define MARIO_GRAVITY			0.002f
 #define MARIO_DIE_DEFLECT_SPEED	 0.5f
-#define MARIO_ACCELERATION		0.0002f //gia toc
+#define MARIO_ACCELERATION		0.0002f
+#define MARIO_FLY_SPEED_Y		0.5f
 
 #define MARIO_STATE_IDLE			0
 #define MARIO_STATE_WALKING_RIGHT	100
 #define MARIO_STATE_WALKING_LEFT	200
 #define MARIO_STATE_SIT				300
 #define MARIO_STATE_JUMP			400
-#define MARIO_STATE_PRE_FLY			500
-#define MARIO_STATE_FLY				600
-#define MARIO_STATE_STOP			700
+#define MARIO_STATE_STOP			500
 #define MARIO_STATE_DIE				999
 
 #define MARIO_ANI_SMALL_IDLE		0 
@@ -64,6 +62,7 @@
 #define MARIO_SMALL_BBOX_HEIGHT 15
 
 #define MARIO_UNTOUCHABLE_TIME 5000
+#define MARIO_RUN_DIMENSION 180
 
 class CMario : public CGameObject
 {
@@ -71,15 +70,20 @@ class CMario : public CGameObject
 	int untouchable;
 	DWORD untouchable_start;
 
+	float start_x_run;
+
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 
 	float a;
-	bool isGrounded = false;
+	bool isGrounded;
 
 public:
-	bool isSit = false;
-	bool isRun = false;
+	bool isSit;
+	bool isRun; //check run o keyboard -> doi van toc run
+	bool run; //check run hay prefly
+	bool isPreFly;
+	bool isFly;
 
 	CMario(float x = 0.0f, float y = 0.0f);
 
@@ -89,7 +93,11 @@ public:
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	int GetLevel() { return level; }
+
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+	void StartRun() {
+		if (!run) { run = true;	start_x_run = x; }
+	}
 
 	void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);
 	
