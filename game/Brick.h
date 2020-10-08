@@ -12,6 +12,7 @@
 #define BRICK_ANI_DISABLE	1
 
 #define BRICK_JUMP_DEFLECT_Y 8.0f
+#define BRICK_DROP_SPEED_Y	0.0002f
 
 class CBrick: public CGameObject
 {

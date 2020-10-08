@@ -21,6 +21,9 @@
 #define ITEM_LEAF_DROP_SPEED	0.01f
 #define ITEM_LEAF_TIME	50
 
+#define ITEM_STATE_LEVEL_MIN 26
+#define ITEM_STATE_LEVEL_MAX 27
+
 class CItem :public CGameObject
 {
 	int type;

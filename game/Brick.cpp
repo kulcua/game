@@ -13,6 +13,7 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (y < start_y)
 	{
+		//vy += BRICK_DROP_SPEED_Y * dt;  
 		y++; //cong ve vi tri cu cua y
 	}
 }

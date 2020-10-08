@@ -75,14 +75,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		untouchable = 0;
 	}
 
-	if (abs(x - start_x_run) > MARIO_RUN_DIMENSION && isRun)
+	if (GetTickCount() - run_start > MARIO_RUN_TIME && run)
 	{
-		start_x_run = 0;
+		run_start = 0;
 		run = false;
 		isPreFly = true;
 	}
 
-	if (isGrounded)
+	//DebugOut(L"start_x: %f x:%f\n", start_x_run, x);
+
+	if (isGrounded || !isPreFly)
 	{
 		isFly = false;
 	}
@@ -194,18 +196,20 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CItem*>(e->obj))
 			{
 				CItem* item = dynamic_cast<CItem*>(e->obj);
-				if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
+				if (level < MARIO_LEVEL_MAX)
 				{
-					SetLevel(level + 1);
-					y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
-					item->die = true;
+					if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
+					{
+						SetLevel(level + 1);
+						y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+					}
+					else if (item->GetState() == ITEM_STATE_LEAF)
+					{
+						SetLevel(level + 1);
+						y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
+					}
 				}
-				else if (item->GetState() == ITEM_STATE_LEAF)
-				{
-					SetLevel(level + 1);
-					y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
-					item->die = true;
-				}
+				item->die = true;
 			}
 			else if (dynamic_cast<CKoopas*>(e->obj))
 			{
@@ -218,7 +222,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 				else
+				{
 					koopas->vx = KOOPAS_BALL_SPEED;// *this->nx;
+					if (e->nx)
+						SetState(MARIO_STATE_KICK);
+				}
 			}
 		}
 	}
@@ -262,13 +270,17 @@ void CMario::Render()
 		else
 			ani = MARIO_ANI_SMALL_WALKING;
 
-		//if(!isGrounded) ani = MARIO_ANI_SMALL_JUMP;
 		if (run) ani = MARIO_ANI_SMALL_RUN;
 		if (isPreFly) ani = MARIO_ANI_SMALL_PRE_FLY;
-
 		if(!isGrounded && !isFly) ani = MARIO_ANI_SMALL_JUMP;
 		if (isFly)	ani = MARIO_ANI_SMALL_FLY; 
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_SMALL_STOP;
+		//if (state == MARIO_STATE_KICK) ani = MARIO_ANI_SMALL_KICK;
+		if (state == MARIO_STATE_KICK)
+		{
+			ani = MARIO_ANI_SMALL_KICK;
+			DebugOut(L"KICK\n");
+		}
 	}
 	else if (level == MARIO_LEVEL_BIG)
 	{
@@ -284,6 +296,12 @@ void CMario::Render()
 		if (isFly)	ani = MARIO_ANI_BIG_FLY;
 
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_BIG_STOP;
+		if (state == MARIO_STATE_KICK)
+		{
+			ani = MARIO_ANI_BIG_KICK;
+			DebugOut(L"KICK\n");
+		}
+		//if (state == MARIO_STATE_KICK) ani = MARIO_ANI_BIG_KICK;
 	}
 	else if (level == MARIO_LEVEL_RACCOON)
 	{
@@ -297,8 +315,13 @@ void CMario::Render()
 		if (isSit) ani = MARIO_ANI_RACCOON_SIT;
 		if (isPreFly) ani = MARIO_ANI_RACCOON_PRE_FLY;
 		if (isFly)	ani = MARIO_ANI_RACCOON_FLY;
-
+		
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_RACCOON_STOP;
+		if (state == MARIO_STATE_KICK)
+		{
+			ani = MARIO_ANI_RACCOON_KICK;
+			DebugOut(L"KICK\n");
+		}
 	}
 
 	int alpha = 255;
@@ -322,7 +345,10 @@ void CMario::SetState(int state)
 			vx = MARIO_RUN_SPEED;
 		}
 		else
+		{
 			vx = MARIO_WALKING_SPEED;
+			isPreFly = false;
+		}
 		nx = 1;
 		break;
 	case MARIO_STATE_WALKING_LEFT:
@@ -332,18 +358,22 @@ void CMario::SetState(int state)
 			vx = -MARIO_RUN_SPEED;
 		}	
 		else
+		{
+			isPreFly = false;
 			vx = -MARIO_WALKING_SPEED;
+		}
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
 		if (isFly)
 		{
-			vy = -MARIO_JUMP_SPEED_Y;
-		}
+			if (level == MARIO_LEVEL_RACCOON)
+				vy = -MARIO_FLY_SPEED_Y;
+			else if (isGrounded)
+				vy = -MARIO_JUMP_SPEED_Y;
+		}	
 		else if (isGrounded)
-		{
 			vy = -MARIO_JUMP_SPEED_Y;	
-		}
 		isGrounded = false;
 		break;
 	case MARIO_STATE_IDLE:	

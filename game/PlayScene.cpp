@@ -48,6 +48,9 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 
 #define MAX_SCENE_LINE 1024
 
+#define CAM_BOTTOM_CHECK 200
+#define CAM_TOP_CHECK 40 //chua 1 khoang de mario o giua camera/ vi tri dep
+
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
 	vector<string> tokens = split(line);
@@ -103,6 +106,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	}
 
 	CAnimations::GetInstance()->Add(ani_id, ani);
+	//DebugOut(L"ani: %d\n", ani_id);
 }
 
 void CPlayScene::_ParseSection_ANIMATION_SETS(string line)
@@ -214,7 +218,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	obj->SetAnimationSet(ani_set);
 	objects.push_back(obj);
-	DebugOut(L"obj id: %d ani: %d\n", object_type, ani_set_id);
+	//DebugOut(L"obj id: %d ani: %d\n", object_type, ani_set_id);
 }
 
 void CPlayScene::_ParseSection_MAPS(string line)
@@ -327,6 +331,8 @@ void CPlayScene::Update(DWORD dt)
 				if (type == ITEM_STATE_RED_MUSHROOM) //check neu item set theo level 1
 				{
 					type += player->GetLevel() - 1; //-1 de lay level mario can upgrade theo item
+					if (type > ITEM_STATE_LEVEL_MAX)
+						type = ITEM_STATE_LEVEL_MAX;
 				}
 
 				CItem* item = new CItem(type, player);
@@ -357,12 +363,30 @@ void CPlayScene::Update(DWORD dt)
 	player->GetPosition(cx, cy);
 
 	CGame* game = CGame::GetInstance();
+
 	cx -= game->GetScreenWidth() / 2;
-	//cy -= game->GetScreenHeight() /2;
-	cy = game->GetScreenHeight() - 70; //screenwidth hardcode
-	if (cx < 0)	cx = 0;
-	//if (cy < 0)	cy = 0;
+
+	if (cy != CAM_BOTTOM_CHECK) //< or > cambottom deu set ve pos bottom
+	{
+		if (player->GetLevel() != MARIO_LEVEL_RACCOON)
+			cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK; //check pos mario & set cung pos cam tai do khi cam ko di chuyen
+		else { //neu la raccoon
+			if (cy > CAM_BOTTOM_CHECK)
+				cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK;
+			else
+				cy -= game->GetScreenHeight() / 2;
+			if (cy < CAM_TOP_CHECK)
+			{
+				cy = CAM_TOP_CHECK;
+			}
+		}
+	}
+		
+	if (cx < 0)	
+		cx = 0;
+
 	CGame::GetInstance()->SetCamPos(cx, cy);
+	//DebugOut(L"cx: %f cy: %f\n", cx, cy);
 }
 
 void CPlayScene::Render()
@@ -385,7 +409,7 @@ void CPlayScene::Unload()
 
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer(); //[!?] lay con tro tro toi player o scene hien tai
 	switch (KeyCode)
 	{
@@ -425,7 +449,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
 	switch (KeyCode)
 	{
@@ -452,6 +476,14 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT))
 	{
+		if (mario->isSit) //tat isSit neu dang ngoi
+		{
+			mario->isSit = false;
+			if (mario->GetLevel() == MARIO_LEVEL_BIG)
+				mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+				mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+		}
 		if (mario->vx < 0)
 			mario->SetState(MARIO_STATE_STOP);
 		else
@@ -459,6 +491,14 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	}
 	else if (game->IsKeyDown(DIK_LEFT))
 	{
+		if (mario->isSit)
+		{
+			mario->isSit = false;
+			if (mario->GetLevel() == MARIO_LEVEL_BIG)
+				mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+				mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+		}
 		if (mario->vx > 0)
 			mario->SetState(MARIO_STATE_STOP);
 		else
