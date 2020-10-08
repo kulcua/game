@@ -18,6 +18,7 @@
 #define MARIO_STATE_JUMP			400
 #define MARIO_STATE_STOP			500
 #define MARIO_STATE_KICK			600
+#define MARIO_STATE_SPIN			700
 #define MARIO_STATE_DIE				999
 
 #define MARIO_ANI_SMALL_IDLE		0 
@@ -49,7 +50,7 @@
 #define MARIO_ANI_RACCOON_PRE_FLY	24
 #define MARIO_ANI_RACCOON_FLY		25
 #define MARIO_ANI_RACCOON_STOP		26
-#define MARIO_ANI_RACCOON_PRE_RUN	27
+#define MARIO_ANI_RACCOON_SPIN		27
 #define MARIO_ANI_RACCOON_KICK		28
 
 #define	MARIO_LEVEL_SMALL	1
@@ -88,6 +89,7 @@ class CMario : public CGameObject
 	bool isGrounded;
 
 public:
+	//bool idle; //neu ko nhan nut nao
 	bool isSit;
 	bool isRun; //check run o keyboard -> doi van toc run
 	bool run; //check run hay prefly

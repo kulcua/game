@@ -36,7 +36,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += MARIO_GRAVITY * dt;
 	
 	//set gia toc cho mario
-	if (vx == 0 && state != MARIO_STATE_DIE)
+	if (vx == 0 && state != MARIO_STATE_DIE)// && idle)
 	{
 		SetState(MARIO_STATE_IDLE);
 	}
@@ -275,7 +275,7 @@ void CMario::Render()
 		if(!isGrounded && !isFly) ani = MARIO_ANI_SMALL_JUMP;
 		if (isFly)	ani = MARIO_ANI_SMALL_FLY; 
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_SMALL_STOP;
-		//if (state == MARIO_STATE_KICK) ani = MARIO_ANI_SMALL_KICK;
+
 		if (state == MARIO_STATE_KICK)
 		{
 			ani = MARIO_ANI_SMALL_KICK;
@@ -294,7 +294,6 @@ void CMario::Render()
 		if (isSit) ani = MARIO_ANI_BIG_SIT;
 		if (isPreFly) ani = MARIO_ANI_BIG_PRE_FLY;
 		if (isFly)	ani = MARIO_ANI_BIG_FLY;
-
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_BIG_STOP;
 		if (state == MARIO_STATE_KICK)
 		{
@@ -317,6 +316,7 @@ void CMario::Render()
 		if (isFly)	ani = MARIO_ANI_RACCOON_FLY;
 		
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_RACCOON_STOP;
+		if (state == MARIO_STATE_SPIN) ani = MARIO_ANI_RACCOON_SPIN;
 		if (state == MARIO_STATE_KICK)
 		{
 			ani = MARIO_ANI_RACCOON_KICK;

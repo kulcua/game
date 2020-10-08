@@ -79,7 +79,7 @@ void CGameObject::CalcPotentialCollisions(
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (!coObjects->at(i)->die)
+		//if (!coObjects->at(i)->die)
 		{
 			LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
