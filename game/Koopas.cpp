@@ -6,8 +6,10 @@
 #include "Pipe.h"
 #include "Goomba.h"
 
-CKoopas::CKoopas()
+CKoopas::CKoopas(float start_x, float end_x)
 {
+	this->start_x = start_x;
+	this->end_x = end_x;
 	SetState(KOOPAS_STATE_WALKING);
 }
 
@@ -36,15 +38,15 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (state != KOOPAS_STATE_BALL)
 		{
-			if (vx < 0 && x < 510)
+			if (vx < 0 && x < start_x)
 			{
-				x = 510;
+				x = start_x;
 				vx = -vx;
 				nx = 1;
 			}
 
-			if (vx > 0 && x > 600) {
-				x = 600;
+			if (vx > 0 && x > end_x - KOOPAS_BBOX_WIDTH) {
+				x = end_x - KOOPAS_BBOX_WIDTH;
 				vx = -vx;
 				nx = -1;
 			}

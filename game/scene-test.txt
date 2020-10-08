@@ -299,8 +299,8 @@
 66	352	400	0	60003
 66	368	400	0	60004
 
-#KOOPAS
-3	577	350	70
+#KOOPAS -- 4: start_x 5: end_x
+3	577	350	70	510	608
 
 # --- HIDEN OBJECT ----
 # type	l	t	ani_set_id	r	b	scene_id

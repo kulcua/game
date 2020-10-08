@@ -20,11 +20,12 @@
 
 class CKoopas: public CGameObject
 {
+	float start_x, end_x;
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 public:
-	CKoopas();
+	CKoopas(float start_x, float end_x);
 	virtual void SetState(int state);
 };
 

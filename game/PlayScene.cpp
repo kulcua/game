@@ -175,7 +175,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CBrick(y, typeItem);
 	} 
 	break;
-	case OBJECT_TYPE_KOOPAS: obj = new CKoopas(); break;
+	case OBJECT_TYPE_KOOPAS:
+	{
+		float start_x, end_x;
+		start_x = atof(tokens[4].c_str());
+		end_x = atof(tokens[5].c_str());
+		obj = new CKoopas(start_x, end_x);
+	}
+	break;
 	case OBJECT_TYPE_PLANT: obj = new CPlant(player); break;
 	case OBJECT_TYPE_BIGBOX:
 	{
