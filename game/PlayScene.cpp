@@ -365,8 +365,8 @@ void CPlayScene::Update(DWORD dt)
 		objects[i]->Update(dt, &coObject);
 	}
 
-	DebugOut(L"size coo: %d\n", coObject.size());
-	DebugOut(L"size: %d\n", objects.size());
+	/*DebugOut(L"size coo: %d\n", coObject.size());
+	DebugOut(L"size: %d\n", objects.size());*/
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;
@@ -384,7 +384,7 @@ void CPlayScene::Update(DWORD dt)
 		if (player->GetLevel() != MARIO_LEVEL_RACCOON)
 			cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK; //check pos mario & set cung pos cam tai do khi cam ko di chuyen
 		else { //neu la raccoon
-			if (cy > CAM_BOTTOM_CHECK)
+			if (cy > CAM_BOTTOM_CHECK && !player->isFly)
 				cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK;
 			else
 				cy -= game->GetScreenHeight() / 2;
@@ -430,6 +430,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 		if (mario->isPreFly)
 		{
 			mario->isFly = true;
+			mario->run = false;
 		}
 		mario->SetState(MARIO_STATE_JUMP);
 		break;
@@ -455,8 +456,10 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 		}	
 		break;
 	case DIK_A:
+		//if (!mario->spin)
 		mario->isRun = true;
 		break;
+	
 	}
 }
 
@@ -476,7 +479,11 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 	case DIK_A:
 		mario->isRun = false;
 		mario->isPreFly = false;
+		mario->isFly = false;
 		mario->run = false;
+		break;
+	case DIK_S:
+		mario->isJump = false;
 		break;
 	}
 }
@@ -519,7 +526,6 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	}
 	else if (game->IsKeyDown(DIK_A))
 	{
-		mario->SetState(MARIO_STATE_SPIN);
+		//mario->StartSpin();
 	}
-	//else mario->idle = true;
 }

@@ -1,5 +1,4 @@
 #include <algorithm>
-#include "Utils.h"
 #include "Mario.h"
 #include "Game.h"
 #include "Goomba.h"
@@ -69,24 +68,42 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CalcPotentialCollisions(coObjects, coEvents); //sweptAABBEx in here so must use another function for AABB
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME)
+	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME && untouchable)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
+		SetLevel(level - 1);
 	}
-
 	if (GetTickCount() - run_start > MARIO_RUN_TIME && run)
 	{
 		run_start = 0;
 		run = false;
 		isPreFly = true;
 	}
-
-	//DebugOut(L"start_x: %f x:%f\n", start_x_run, x);
-
-	if (isGrounded || !isPreFly)
+	if (GetTickCount() - kick_start > MARIO_KICK_TIME && kick)
 	{
-		isFly = false;
+		kick_start = 0;
+		kick = false;
+	}
+	if (GetTickCount() - spin_start > MARIO_SPIN_TIME && spin)
+	{
+		spin_start = 0;
+		spin = false;
+	}
+	if (GetTickCount() - level_up_start > MARIO_LEVEL_UP_TIME && level_up)
+	{
+		level_up_start = 0;
+		level_up = false;
+	}
+
+	if (!isGrounded && !isJump && !isFly)
+	{
+		isDrop = true;
+	}
+	else
+	{
+		isDrop = false;
+		isDropFly = false;
 	}
 
 	// No collision occured, proceed normally
@@ -141,38 +158,33 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						if (goomba->GetState() != GOOMBA_STATE_DIE)
 						{
 							if (level > MARIO_LEVEL_SMALL)
-							{
-								level = MARIO_LEVEL_SMALL;
 								StartUntouchable();
-							}
 							else
-							{
 								SetState(MARIO_STATE_DIE);	
-							}		
 						}
 					}
 				}
-			} // if Goomba
+			}
 			else if (dynamic_cast<CGround*>(e->obj))
 			{
 				if (e->ny)
+				{
 					isGrounded = true;
+				}		
 			}
 			else if (dynamic_cast<CPipe*>(e->obj))
 			{
 				if (e->ny < 0)
+				{
 					isGrounded = true;
+				}
 			}
-			/*else if (dynamic_cast<CPortal*>(e->obj))
-			{
-				CPortal* p = dynamic_cast<CPortal*>(e->obj);
-				CGame::GetInstance()->SwitchScene(p->GetSceneId());
-			}*/
-
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{				
 				if (e->ny)
+				{
 					isGrounded = true;
+				}
 				else
 				{
 					x += dx;
@@ -198,16 +210,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CItem* item = dynamic_cast<CItem*>(e->obj);
 				if (level < MARIO_LEVEL_MAX)
 				{
+					SetLevel(level + 1);
 					if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
 					{
-						SetLevel(level + 1);
 						y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
 					}
 					else if (item->GetState() == ITEM_STATE_LEAF)
 					{
-						SetLevel(level + 1);
 						y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
 					}
+					StartLevelUp();
 				}
 				item->die = true;
 			}
@@ -224,8 +236,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else
 				{
 					koopas->vx = KOOPAS_BALL_SPEED;// *this->nx;
-					if (e->nx)
-						SetState(MARIO_STATE_KICK);
+					StartKick();
 				}
 			}
 		}
@@ -271,16 +282,15 @@ void CMario::Render()
 			ani = MARIO_ANI_SMALL_WALKING;
 
 		if (run) ani = MARIO_ANI_SMALL_RUN;
-		if (isPreFly) ani = MARIO_ANI_SMALL_PRE_FLY;
-		if(!isGrounded && !isFly) ani = MARIO_ANI_SMALL_JUMP;
-		if (isFly)	ani = MARIO_ANI_SMALL_FLY; 
-		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_SMALL_STOP;
+		if (kick) ani = MARIO_ANI_SMALL_KICK;
+		
+		if (isJump) ani = MARIO_ANI_SMALL_JUMP;
+		if (isPreFly && !isFly) ani = MARIO_ANI_SMALL_PRE_FLY;
+		if (isFly)	ani = MARIO_ANI_SMALL_FLY;
+		if (isDrop) ani = MARIO_ANI_SMALL_DROP;
+		
 
-		if (state == MARIO_STATE_KICK)
-		{
-			ani = MARIO_ANI_SMALL_KICK;
-			DebugOut(L"KICK\n");
-		}
+		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_SMALL_STOP;
 	}
 	else if (level == MARIO_LEVEL_BIG)
 	{
@@ -288,19 +298,19 @@ void CMario::Render()
 			ani = MARIO_ANI_BIG_IDLE;
 		else
 			ani = MARIO_ANI_BIG_WALKING;
-
-		if (!isGrounded) ani = MARIO_ANI_BIG_JUMP;
 		if (run) ani = MARIO_ANI_BIG_RUN;
+		else if (kick) ani = MARIO_ANI_BIG_KICK;
+
 		if (isSit) ani = MARIO_ANI_BIG_SIT;
-		if (isPreFly) ani = MARIO_ANI_BIG_PRE_FLY;
+		
+		if (isJump) ani = MARIO_ANI_BIG_JUMP;
+		if (isPreFly && !isFly) ani = MARIO_ANI_BIG_PRE_FLY;
 		if (isFly)	ani = MARIO_ANI_BIG_FLY;
+		if (isDrop) ani = MARIO_ANI_BIG_DROP;
+
+		if (level_up || untouchable) ani = MARIO_ANI_ITEM_SMALL_TO_BIG;
+
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_BIG_STOP;
-		if (state == MARIO_STATE_KICK)
-		{
-			ani = MARIO_ANI_BIG_KICK;
-			DebugOut(L"KICK\n");
-		}
-		//if (state == MARIO_STATE_KICK) ani = MARIO_ANI_BIG_KICK;
 	}
 	else if (level == MARIO_LEVEL_RACCOON)
 	{
@@ -309,26 +319,27 @@ void CMario::Render()
 		else
 			ani = MARIO_ANI_RACCOON_WALKING;
 
-		if (!isGrounded) ani = MARIO_ANI_RACCOON_JUMP;
 		if (run) ani = MARIO_ANI_RACCOON_RUN;
+		else if (kick) ani = MARIO_ANI_RACCOON_KICK;
+
 		if (isSit) ani = MARIO_ANI_RACCOON_SIT;
-		if (isPreFly) ani = MARIO_ANI_RACCOON_PRE_FLY;
-		if (isFly)	ani = MARIO_ANI_RACCOON_FLY;
 		
+		if (isJump) ani = MARIO_ANI_RACCOON_JUMP;
+		if (isPreFly && !isFly) ani = MARIO_ANI_RACCOON_PRE_FLY;
+		if (isFly) ani = MARIO_ANI_RACCOON_FLY;
+		if (isDrop) ani = MARIO_ANI_RACCOON_DROP;
+		if (isDropFly) ani = MARIO_ANI_RACCOON_DROP_FLY;
+
+		if (level_up || untouchable) ani = MARIO_ANI_ITEM_BOOM;
+
 		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_RACCOON_STOP;
-		if (state == MARIO_STATE_SPIN) ani = MARIO_ANI_RACCOON_SPIN;
-		if (state == MARIO_STATE_KICK)
-		{
-			ani = MARIO_ANI_RACCOON_KICK;
-			DebugOut(L"KICK\n");
-		}
 	}
 
 	int alpha = 255;
-	if (untouchable) alpha = 128;
 
 	animation_set->at(ani)->Render(x, y, nx, alpha);
-	//DebugOut(L"state: %d ani: %d\n", state, ani);
+	/*if (ani == 31)
+		DebugOut(L"state: %d ani: %d\n", state, ani);*/
 	//RenderBoundingBox();
 }
 
@@ -365,15 +376,25 @@ void CMario::SetState(int state)
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
-		if (isFly)
+		if (isDrop)
+		{
+			isDropFly = true;
+			isDrop = false;
+			vy = -MARIO_DROP_FLY_SPEED_Y;
+		}
+		else if (isFly)
 		{
 			if (level == MARIO_LEVEL_RACCOON)
 				vy = -MARIO_FLY_SPEED_Y;
 			else if (isGrounded)
 				vy = -MARIO_JUMP_SPEED_Y;
-		}	
-		else if (isGrounded)
-			vy = -MARIO_JUMP_SPEED_Y;	
+			isJump = false;
+		}
+		else if (isGrounded) //jump
+		{
+			vy = -MARIO_JUMP_SPEED_Y;
+			isJump = true;
+		}
 		isGrounded = false;
 		break;
 	case MARIO_STATE_IDLE:	
