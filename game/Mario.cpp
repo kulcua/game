@@ -319,20 +319,59 @@ void CMario::Render()
 		else
 			ani = MARIO_ANI_RACCOON_WALKING;
 
-		if (run) ani = MARIO_ANI_RACCOON_RUN;
-		else if (kick) ani = MARIO_ANI_RACCOON_KICK;
+		if (run)
+		{
+			ani = MARIO_ANI_RACCOON_RUN;
+			DebugOut(L"run\n");
+		}
+		else if (kick)
+		{
+			ani = MARIO_ANI_RACCOON_KICK;
+			DebugOut(L"kick\n");
+		}
 
-		if (isSit) ani = MARIO_ANI_RACCOON_SIT;
+		if (isSit)
+		{
+			ani = MARIO_ANI_RACCOON_SIT;
+			DebugOut(L"isSit\n");
+		}
 		
-		if (isJump) ani = MARIO_ANI_RACCOON_JUMP;
-		if (isPreFly && !isFly) ani = MARIO_ANI_RACCOON_PRE_FLY;
-		if (isFly) ani = MARIO_ANI_RACCOON_FLY;
-		if (isDrop) ani = MARIO_ANI_RACCOON_DROP;
-		if (isDropFly) ani = MARIO_ANI_RACCOON_DROP_FLY;
+		if (isJump) {
+			ani = MARIO_ANI_RACCOON_JUMP;
+			DebugOut(L"isJump\n");
+		}
+		if (isPreFly && !isFly) {
+			ani = MARIO_ANI_RACCOON_PRE_FLY;
+			DebugOut(L"isPreFly\n");
+		}
+		if (isFly)
+		{
+			ani = MARIO_ANI_RACCOON_FLY;
+			DebugOut(L"isFly\n");
+		}
 
-		if (level_up || untouchable) ani = MARIO_ANI_ITEM_BOOM;
+		if (isDrop)
+		{
+			ani = MARIO_ANI_RACCOON_DROP;
+			DebugOut(L"isDrop\n");
+		}
 
-		if (state == MARIO_STATE_STOP) ani = MARIO_ANI_RACCOON_STOP;
+		if (isDropFly) {
+			ani = MARIO_ANI_RACCOON_DROP_FLY;
+			DebugOut(L"isDropFly\n");
+		}
+
+		if (level_up || untouchable)
+		{
+			ani = MARIO_ANI_ITEM_BOOM;
+			DebugOut(L"level_up\n");
+		}
+
+		if (state == MARIO_STATE_STOP)
+		{
+			ani = MARIO_ANI_RACCOON_STOP;
+			DebugOut(L"stop\n");
+		}
 	}
 
 	int alpha = 255;
@@ -376,13 +415,16 @@ void CMario::SetState(int state)
 		nx = -1;
 		break;
 	case MARIO_STATE_JUMP:
-		if (isDrop)
+		if (isDrop) //drop
 		{
-			isDropFly = true;
-			isDrop = false;
-			vy = -MARIO_DROP_FLY_SPEED_Y;
+			if (level == MARIO_LEVEL_RACCOON)
+			{
+				isDropFly = true;
+				isDrop = false;
+				vy = -MARIO_DROP_FLY_SPEED_Y;
+			}
 		}
-		else if (isFly)
+		else if (isFly) //fly
 		{
 			if (level == MARIO_LEVEL_RACCOON)
 				vy = -MARIO_FLY_SPEED_Y;

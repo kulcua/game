@@ -132,7 +132,7 @@ public:
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StartRun() {
-		if (!run) { run = true;	run_start = GetTickCount(); }
+		if (!run && !isFly) { run = true;	run_start = GetTickCount(); }
 	}
 	void StartKick() { kick = true; kick_start = GetTickCount(); }
 	void StartSpin() { spin = true; spin_start = GetTickCount(); }

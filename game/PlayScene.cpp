@@ -456,7 +456,6 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 		}	
 		break;
 	case DIK_A:
-		//if (!mario->spin)
 		mario->isRun = true;
 		break;
 	
@@ -480,7 +479,7 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 		mario->isRun = false;
 		mario->isPreFly = false;
 		mario->isFly = false;
-		mario->run = false;
+		mario->run = false; //tat time du tru run
 		break;
 	case DIK_S:
 		mario->isJump = false;
