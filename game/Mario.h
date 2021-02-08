@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Utils.h"
+#include "MarioState.h"
 
 #define MARIO_WALKING_SPEED		0.1f 
 #define MARIO_RUN_SPEED			0.15f 
@@ -109,6 +110,10 @@ class CMario : public CGameObject
 	bool isGrounded;
 
 public:
+	MarioState* state_;
+
+	virtual void HandleInput(int keyCode);
+
 	bool isSit;
 	bool isDrop;
 	bool isDropFly;

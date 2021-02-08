@@ -11,6 +11,16 @@
 
 #define BORDER_X 15
 
+void CMario::HandleInput(int keyCode)
+{
+	MarioState* state = state_->HandleInput(*this, keyCode);
+	if (state != NULL)
+	{
+		delete state_;
+		state_ = state;
+	}
+}
+
 CMario::CMario(float x, float y) : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
@@ -25,6 +35,9 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	// update mario state
+	state_->Update(*this);
+
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 
@@ -328,6 +341,11 @@ void CMario::Render()
 		{
 			ani = MARIO_ANI_RACCOON_KICK;
 			DebugOut(L"kick\n");
+		}
+		else if (spin)
+		{
+			ani = MARIO_ANI_RACCOON_SPIN;
+			DebugOut(L"spin\n");
 		}
 
 		if (isSit)

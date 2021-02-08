@@ -525,6 +525,6 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	}
 	else if (game->IsKeyDown(DIK_A))
 	{
-		//mario->StartSpin();
+		mario->StartSpin();
 	}
 }
