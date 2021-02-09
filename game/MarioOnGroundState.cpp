@@ -1,8 +1,11 @@
 #include "MarioOnGroundState.h"
 #include <dinput.h>
+#include "Utils.h"
+#include "Game.h"
 
-MarioState* MarioOnGroundState::HandleInput(CMario& mario)
+void MarioOnGroundState::HandleInput(CMario& mario)
 {
+    CGame* game = CGame::GetInstance();
     if (game->IsKeyDown(DIK_A))
     {
         //mario.state_ = &MarioState::jumping;

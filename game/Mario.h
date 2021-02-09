@@ -1,7 +1,9 @@
 #pragma once
+class MarioState;
+
 #include "GameObject.h"
 #include "Utils.h"
-#include "MarioState.h"
+//#include "MarioState.h"
 
 class CMario : public CGameObject
 {

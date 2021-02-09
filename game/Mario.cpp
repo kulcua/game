@@ -8,6 +8,7 @@
 #include "Item.h"
 #include "Koopas.h"
 #include "Pipe.h"
+#include "MarioState.h"
 
 #define BORDER_X 15
 

@@ -1,7 +1,11 @@
 #include "MarioStandingState.h"
+#include "Utils.h"
+#include "Mario.h"
+#include "MarioState.h"
 
-MarioState* MarioStandingState::HandleInput(CMario& mario)
+void MarioStandingState::HandleInput(CMario& mario)
 {
+  /*  mario.state_ = &MarioState::standing;*/
     //if (game->IsKeyDown())
     //{
     //    // Stand up...
@@ -9,7 +13,7 @@ MarioState* MarioStandingState::HandleInput(CMario& mario)
     //else
     {
         // Didn't handle input, so walk up hierarchy.
-        MarioOnGroundState::HandleInput(mario);
+        //MarioOnGroundState::HandleInput(mario);
     }
 }
 

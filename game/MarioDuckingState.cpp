@@ -1,28 +1,28 @@
-#include "MarioDuckingState.h"
-
-MarioState* MarioDuckingState::HandleInput(CMario& mario)
-{
-    //if (keyCode == DIK_A)
-    //{
-    //    // Jump...
-    //}
-    //else if (keyCode == DIK_DOWN)
-    //{
-    //    // Duck...
-    //}
-}
-
-void MarioDuckingState::Update(CMario& mario)
-{
-
-}
-
-void MarioDuckingState::GetBoundingBox(float& left, float& top, float& right, float& bottom)
-{
-
-}
-
-void MarioDuckingState::Render()
-{
-
-}
+//#include "MarioDuckingState.h"
+//
+//MarioState* MarioDuckingState::HandleInput(CMario& mario)
+//{
+//    //if (keyCode == DIK_A)
+//    //{
+//    //    // Jump...
+//    //}
+//    //else if (keyCode == DIK_DOWN)
+//    //{
+//    //    // Duck...
+//    //}
+//}
+//
+//void MarioDuckingState::Update(CMario& mario)
+//{
+//
+//}
+//
+//void MarioDuckingState::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+//{
+//
+//}
+//
+//void MarioDuckingState::Render()
+//{
+//
+//}
