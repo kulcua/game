@@ -1,6 +1,6 @@
 #include "MarioWalkingState.h"
 
-MarioState* MarioWalkingState::HandleInput(CMario& mario, int keyCode)
+MarioState* MarioWalkingState::HandleInput(CMario& mario)
 {
     //if (keyCode == DIK_A)
     //{
@@ -23,6 +23,11 @@ void MarioWalkingState::GetBoundingBox(float& left, float& top, float& right, fl
 }
 
 void MarioWalkingState::Render()
+{
+
+}
+
+void MarioWalkingState::Enter(CMario& mario)
 {
 
 }

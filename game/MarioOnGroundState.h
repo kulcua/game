@@ -1,13 +1,13 @@
 #pragma once
 #include "MarioState.h"
-#include "Mario.h"
 
 class MarioOnGroundState : public MarioState
 {
 public:
-	virtual MarioState* HandleInput(CMario& mario, int keyCode);
-	virtual void Update(CMario& mario);
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Render();
+	MarioState* HandleInput(CMario& mario);
+	virtual void Update(CMario& mario) = 0;
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
+	virtual void Render() = 0;
+	virtual void Enter(CMario& mario) = 0;
 };
 

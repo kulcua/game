@@ -11,21 +11,19 @@
 
 #define BORDER_X 15
 
-void CMario::HandleInput(int keyCode)
+void CMario::HandleInput()
 {
-	MarioState* state = state_->HandleInput(*this, keyCode);
-	if (state != NULL)
-	{
-		delete state_;
-		state_ = state;
-	}
+	state_->HandleInput(*this);
+
+	state_->Enter(*this);
 }
 
 CMario::CMario(float x, float y) : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
-	SetState(MARIO_STATE_IDLE);
+	state_ = &MarioState::standing;
+	//SetState(MARIO_STATE_IDLE);
 
 	start_x = x;
 	start_y = y;
@@ -287,7 +285,7 @@ void CMario::Render()
 	int ani = -1;
 	if (state == MARIO_STATE_DIE)
 		ani = MARIO_ANI_DIE;
-	else if (level == MARIO_LEVEL_SMALL)
+	/*else if (level == MARIO_LEVEL_SMALL)
 	{
 		if (vx == 0)
 			ani = MARIO_ANI_SMALL_IDLE;
@@ -390,13 +388,15 @@ void CMario::Render()
 			ani = MARIO_ANI_RACCOON_STOP;
 			DebugOut(L"stop\n");
 		}
-	}
+	}*/
+
+	ani = GetAnimation();
+	DebugOut(L"state: %d ani: %d\n", state, ani); 
 
 	int alpha = 255;
 
 	animation_set->at(ani)->Render(x, y, nx, alpha);
-	/*if (ani == 31)
-		DebugOut(L"state: %d ani: %d\n", state, ani);*/
+
 	//RenderBoundingBox();
 }
 

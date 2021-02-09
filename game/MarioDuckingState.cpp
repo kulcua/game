@@ -1,6 +1,6 @@
 #include "MarioDuckingState.h"
 
-MarioState* MarioDuckingState::HandleInput(CMario& mario, int keyCode)
+MarioState* MarioDuckingState::HandleInput(CMario& mario)
 {
     //if (keyCode == DIK_A)
     //{
