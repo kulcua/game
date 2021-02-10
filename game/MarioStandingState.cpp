@@ -1,7 +1,7 @@
 #include "MarioStandingState.h"
 #include "Utils.h"
 #include "Mario.h"
-#include "MarioState.h"
+//#include "MarioState.h"
 
 void MarioStandingState::HandleInput(CMario& mario)
 {
@@ -13,11 +13,12 @@ void MarioStandingState::HandleInput(CMario& mario)
     //else
     {
         // Didn't handle input, so walk up hierarchy.
-        //MarioOnGroundState::HandleInput(mario);
+        MarioOnGroundState::HandleInput(mario);
     }
+    //return NULL;
 }
 
-void MarioStandingState::Enter(CMario& mario)
+void MarioStandingState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioStandingState
 {
     if (mario.GetLevel() == MARIO_LEVEL_SMALL)
     {
@@ -26,6 +27,10 @@ void MarioStandingState::Enter(CMario& mario)
     else if (mario.GetLevel() == MARIO_LEVEL_BIG)
     {
         mario.SetAnimation(MARIO_ANI_BIG_IDLE);
+    }
+    else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+    {
+        mario.SetAnimation(MARIO_ANI_RACCOON_IDLE);
     }
 }
 

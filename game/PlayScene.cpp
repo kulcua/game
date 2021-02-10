@@ -423,7 +423,8 @@ void CPlayScene::Unload()
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	CMario* mario = ((CPlayScene*)scene)->GetPlayer(); //[!?] lay con tro tro toi player o scene hien tai
+	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+	mario->HandleInput();
 	switch (KeyCode)
 	{
 	case DIK_S:
@@ -466,6 +467,7 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+	mario->HandleInput();
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
@@ -491,6 +493,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+	mario->HandleInput();
 	// disable control key when Mario die 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT))

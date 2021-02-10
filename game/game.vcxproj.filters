@@ -66,9 +66,6 @@
     <ClCompile Include="Mario.cpp">
       <Filter>Mario</Filter>
     </ClCompile>
-    <ClCompile Include="MarioState.cpp">
-      <Filter>Mario\MarioState</Filter>
-    </ClCompile>
     <ClCompile Include="BigBox.cpp">
       <Filter>Mics</Filter>
     </ClCompile>

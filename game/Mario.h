@@ -3,10 +3,11 @@ class MarioState;
 
 #include "GameObject.h"
 #include "Utils.h"
-//#include "MarioState.h"
 
 class CMario : public CGameObject
 {
+	//friend class MarioStandingState;
+
 	int level;
 	int ani;
 
@@ -32,7 +33,7 @@ class CMario : public CGameObject
 public:
 	MarioState* state_;
 
-	virtual void HandleInput();
+	void HandleInput();
 
 	bool isSit;
 	bool isDrop;

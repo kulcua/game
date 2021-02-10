@@ -1,6 +1,18 @@
 //#include "MarioDuckingState.h"
 //
-//MarioState* MarioDuckingState::HandleInput(CMario& mario)
+//void MarioDuckingState::Enter(CMario& mario)
+//{
+//    if (mario.GetLevel() == MARIO_LEVEL_BIG)
+//    {
+//        mario.SetAnimation(MARIO_ANI_BIG_SIT);
+//    }
+//    else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+//    {
+//        mario.SetAnimation(MARIO_ANI_RACCOON_SIT);
+//    }
+//}
+//
+//void MarioDuckingState::HandleInput(CMario& mario)
 //{
 //    //if (keyCode == DIK_A)
 //    //{
@@ -22,7 +34,3 @@
 //
 //}
 //
-//void MarioDuckingState::Render()
-//{
-//
-//}

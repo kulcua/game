@@ -9,6 +9,7 @@
 #include "Koopas.h"
 #include "Pipe.h"
 #include "MarioState.h"
+#include "MarioStandingState.h"
 
 #define BORDER_X 15
 
@@ -23,8 +24,11 @@ CMario::CMario(float x, float y) : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
-	state_ = &MarioState::standing;
-	//SetState(MARIO_STATE_IDLE);
+
+	state_ = new MarioStandingState();
+		//&MarioState::standing;
+		//new MarioStandingState();
+	DebugOut(L"INIT STATE \n");
 
 	start_x = x;
 	start_y = y;
@@ -392,7 +396,7 @@ void CMario::Render()
 	}*/
 
 	ani = GetAnimation();
-	DebugOut(L"state: %d ani: %d\n", state, ani); 
+	//DebugOut(L"state: %d ani: %d\n", state, ani); 
 
 	int alpha = 255;
 
