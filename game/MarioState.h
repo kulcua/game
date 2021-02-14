@@ -1,36 +1,32 @@
 #pragma once
+//
 class CMario;
 class MarioStandingState;
-//class MarioWalkingState;
-//class MarioJumpingState;
-//class MarioDuckingState;
+class MarioWalkingState;
+class MarioJumpingState;
+class MarioDuckingState;
 
-#include "Game.h"
+//#include "Mario.h"
+//#include "MarioStandingState.h"
 
 class MarioState
 {
-	MarioStandingState* marioStandingState_;
-	//MarioWalkingState* marioWalkingState_;
-	//MarioJumpingState* marioJumpingState_;
-	//MarioDuckingState* marioDuckingState_;
+	//static MarioState* __instance;
 public:
-	CGame* game = CGame::GetInstance();
+	//static MarioState* GetInstance();
 	CMario* mario_;
+	
 	// static state don’t burn memory and CPU cycles allocating objects each state change
 	static MarioStandingState standing;
 	//static MarioWalkingState walking;
-	//static MarioJumpingState jumping;
+	static MarioJumpingState jumping;
 	//static MarioDuckingState ducking;
-	virtual void Init() {};
-	virtual void HandleInput(CMario& mario) {};
-	virtual void Update(CMario& mario) {};
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) {};
-	virtual void Render() {};
+
+	virtual void HandleInput(CMario& mario) = 0;
+	virtual void Update(CMario& mario) = 0;
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom) = 0;
 
 	// using Enter() method to set animation for each state
-	virtual void Enter(CMario& mario)
-	{
-		//mario.setGraphics(IMAGE_STAND);
-	}
+	virtual void Enter(CMario& mario) = 0;
 };
 

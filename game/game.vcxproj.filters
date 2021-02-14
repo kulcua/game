@@ -105,6 +105,9 @@
     <ClCompile Include="MarioStandingState.cpp">
       <Filter>Mario\MarioState</Filter>
     </ClCompile>
+    <ClCompile Include="MarioState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">

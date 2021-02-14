@@ -1,11 +1,22 @@
 #include "MarioStandingState.h"
 #include "Utils.h"
 #include "Mario.h"
-//#include "MarioState.h"
+
+MarioStandingState* MarioStandingState::__instance = NULL;
+
+MarioStandingState* MarioStandingState::GetInstance()
+{
+    if (__instance == NULL)
+    {
+        __instance = new MarioStandingState();
+        DebugOut(L"Init Standing State\n");
+    }
+	return __instance;
+}
 
 void MarioStandingState::HandleInput(CMario& mario)
 {
-  /*  mario.state_ = &MarioState::standing;*/
+    //mario.state_ = &MarioState::standing;
     //if (game->IsKeyDown())
     //{
     //    // Stand up...
@@ -40,11 +51,6 @@ void MarioStandingState::GetBoundingBox(float& left, float& top, float& right, f
 }
 
 void MarioStandingState::Update(CMario& mario)
-{
-
-}
-
-void MarioStandingState::Render()
 {
 
 }

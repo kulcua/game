@@ -3,8 +3,9 @@
 
 class MarioJumpingState : public MarioState
 {
+	static MarioJumpingState* __instance;
 public:
-	virtual void Init() {};
+	static MarioJumpingState* GetInstance();
 	void HandleInput(CMario& mario);
 	virtual void Update(CMario& mario);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

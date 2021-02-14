@@ -158,6 +158,7 @@
     <ClCompile Include="MarioStandingState.cpp" />
     <ClCompile Include="MarioJumpingState.cpp" />
     <ClCompile Include="MarioOnGroundState.cpp" />
+    <ClCompile Include="MarioState.cpp" />
     <ClCompile Include="MarioWalkingState.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Plant.cpp" />

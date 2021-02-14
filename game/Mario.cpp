@@ -25,10 +25,7 @@ CMario::CMario(float x, float y) : CGameObject()
 	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
 
-	state_ = new MarioStandingState();
-		//&MarioState::standing;
-		//new MarioStandingState();
-	DebugOut(L"INIT STATE \n");
+	state_ = MarioState::standing.GetInstance();
 
 	start_x = x;
 	start_y = y;
