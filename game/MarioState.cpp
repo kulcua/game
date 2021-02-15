@@ -1,12 +1,26 @@
 #include "MarioState.h"
-#include "MarioStandingState.h"
-#include <d3dx9.h>
+#include "Mario.h"
 
-//MarioState* MarioState::__instance = NULL;
-//
-//MarioState* MarioState::GetInstance()
-//{
-//	if (__instance == NULL)
-//		__instance = new MarioStandingState();
-//	return __instance;
-//}
+void MarioState::GetBoundingBox(CMario &mario, float& left, float& top, float& right, float& bottom)
+{
+	left = mario.x;
+	top = mario.y;
+
+	if (mario.GetLevel() == MARIO_LEVEL_BIG)
+	{
+		right = mario.x + MARIO_BIG_BBOX_WIDTH;
+		bottom = mario.y + MARIO_BIG_BBOX_HEIGHT;
+	}
+	else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+	{
+		right = mario.x + MARIO_RACCOON_BBOX_WIDTH;
+		bottom = mario.y + MARIO_RACCOON_BBOX_HEIGHT;
+	}
+	else
+	{
+		right = mario.x + MARIO_SMALL_BBOX_WIDTH;
+		bottom = mario.y + MARIO_SMALL_BBOX_HEIGHT;
+	}
+
+	//if (isSit) bottom = y + MARIO_SIT_BBOX_HEIGHT;
+}

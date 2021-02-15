@@ -1,22 +1,49 @@
 #include "MarioOnGroundState.h"
-#include <dinput.h>
 #include "Utils.h"
 #include "Game.h"
 #include "MarioJumpingState.h"
-#include "MarioDuckingState.h"
+#include "MarioWalkingState.h"
+#include "MarioStandingState.h"
 
 void MarioOnGroundState::HandleInput(CMario& mario)
 {
     CGame* game = CGame::GetInstance();
     if (game->IsKeyDown(DIK_S))
     {
-        //DebugOut(L"jumping \n");
-        mario.state_ = MarioState::jumping.GetInstance();
+        if (mario.isGrounded) // check isGrounded to jump again
+        {
+            //DebugOut(L"jumping \n");
+            mario.state_ = MarioState::jumping.GetInstance();   
+            mario.vy = -MARIO_JUMP_SPEED_Y;
+        }
+        mario.isGrounded = false;
     }
-    else if (game->IsKeyDown(DIK_DOWN))
+    else if (game->IsKeyDown(DIK_LEFT))
     {
-        DebugOut(L"ducking \n");
-        //return new MarioDuckingState();
+        //DebugOut(L"left\n");
+        if (mario.isGrounded)
+        {
+            mario.state_ = MarioState::walking.GetInstance();
+        }
+        
+        mario.nx = -1;
+        mario.vx = -MARIO_WALKING_SPEED;
     }
-    //return NULL;
+    else if (game->IsKeyDown(DIK_RIGHT))
+    {
+        //DebugOut(L"right\n");
+        if (mario.isGrounded) 
+            //&& mario.vx > 0)
+        {
+            mario.state_ = MarioState::walking.GetInstance();
+        }
+
+        mario.nx = 1;
+        mario.vx = MARIO_WALKING_SPEED;
+    }
+    else 
+        //if (mario.isGrounded)
+    {
+        mario.state_ = MarioState::standing.GetInstance();
+    }
 }

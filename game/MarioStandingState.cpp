@@ -1,6 +1,8 @@
 #include "MarioStandingState.h"
 #include "Utils.h"
 #include "Mario.h"
+#include "MarioDuckingState.h"
+#include "Game.h"
 
 MarioStandingState* MarioStandingState::__instance = NULL;
 
@@ -9,24 +11,24 @@ MarioStandingState* MarioStandingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioStandingState();
-        DebugOut(L"Init Standing State\n");
+        DebugOut(L"Init MarioStandingState\n");
     }
 	return __instance;
 }
 
 void MarioStandingState::HandleInput(CMario& mario)
 {
-    //mario.state_ = &MarioState::standing;
-    //if (game->IsKeyDown())
-    //{
-    //    // Stand up...
-    //}
-    //else
+    CGame* game = CGame::GetInstance();
+    if (game->IsKeyDown(DIK_DOWN))
+    {
+        //DebugOut(L"ducking \n");
+        mario.state_ = MarioState::ducking.GetInstance();
+    }
+    else 
     {
         // Didn't handle input, so walk up hierarchy.
         MarioOnGroundState::HandleInput(mario);
     }
-    //return NULL;
 }
 
 void MarioStandingState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioStandingState
@@ -45,12 +47,12 @@ void MarioStandingState::Enter(CMario& mario) // declare (CMario& mario) means i
     }
 }
 
-void MarioStandingState::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void MarioStandingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)
 {
-
+    MarioState::GetBoundingBox(mario, left, top, right, bottom);
 }
 
 void MarioStandingState::Update(CMario& mario)
 {
-
+    //mario.vx = 0;
 }

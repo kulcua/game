@@ -35,6 +35,7 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	//DebugOut(L"vx: %f\n", vx);
 	// update mario state
 	state_->Update(*this);
 
@@ -48,9 +49,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += MARIO_GRAVITY * dt;
 	
 	//set gia toc cho mario
-	if (vx == 0 && state != MARIO_STATE_DIE)// && idle)
+	if (vx == 0) 
+		//&&state != MARIO_STATE_DIE)// && idle)
 	{
-		SetState(MARIO_STATE_IDLE);
+		state_ = MarioState::standing.GetInstance();
+		/*SetState(MARIO_STATE_IDLE);*/
 	}
 	else {
 		if (vx > 0)
@@ -399,78 +402,79 @@ void CMario::Render()
 
 	animation_set->at(ani)->Render(x, y, nx, alpha);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CMario::SetState(int state)
 {
 	CGameObject::SetState(state);
 
-	switch (state)
-	{
-	case MARIO_STATE_WALKING_RIGHT:
-		if (isRun)
-		{
-			StartRun();
-			vx = MARIO_RUN_SPEED;
-		}
-		else
-		{
-			vx = MARIO_WALKING_SPEED;
-			isPreFly = false;
-		}
-		nx = 1;
-		break;
-	case MARIO_STATE_WALKING_LEFT:
-		if (isRun)
-		{
-			StartRun();
-			vx = -MARIO_RUN_SPEED;
-		}	
-		else
-		{
-			isPreFly = false;
-			vx = -MARIO_WALKING_SPEED;
-		}
-		nx = -1;
-		break;
-	case MARIO_STATE_JUMP:
-		if (isDrop) //drop
-		{
-			if (level == MARIO_LEVEL_RACCOON)
-			{
-				isDropFly = true;
-				isDrop = false;
-				vy = -MARIO_DROP_FLY_SPEED_Y;
-			}
-		}
-		else if (isFly) //fly
-		{
-			if (level == MARIO_LEVEL_RACCOON)
-				vy = -MARIO_FLY_SPEED_Y;
-			else if (isGrounded)
-				vy = -MARIO_JUMP_SPEED_Y;
-			isJump = false;
-		}
-		else if (isGrounded) //jump
-		{
-			vy = -MARIO_JUMP_SPEED_Y;
-			isJump = true;
-		}
-		isGrounded = false;
-		break;
-	case MARIO_STATE_IDLE:	
-		vx = 0;
-		break;
-	case MARIO_STATE_DIE:
-		vy = -MARIO_DIE_DEFLECT_SPEED;
-		break;
-	}
+	//switch (state)
+	//{
+	//case MARIO_STATE_WALKING_RIGHT:
+	//	if (isRun)
+	//	{
+	//		StartRun();
+	//		vx = MARIO_RUN_SPEED;
+	//	}
+	//	else
+	//	{
+	//		vx = MARIO_WALKING_SPEED;
+	//		isPreFly = false;
+	//	}
+	//	nx = 1;
+	//	break;
+	//case MARIO_STATE_WALKING_LEFT:
+	//	if (isRun)
+	//	{
+	//		StartRun();
+	//		vx = -MARIO_RUN_SPEED;
+	//	}	
+	//	else
+	//	{
+	//		isPreFly = false;
+	//		vx = -MARIO_WALKING_SPEED;
+	//	}
+	//	nx = -1;
+	//	break;
+	//case MARIO_STATE_JUMP:
+	//	if (isDrop) //drop
+	//	{
+	//		if (level == MARIO_LEVEL_RACCOON)
+	//		{
+	//			isDropFly = true;
+	//			isDrop = false;
+	//			vy = -MARIO_DROP_FLY_SPEED_Y;
+	//		}
+	//	}
+	//	else if (isFly) //fly
+	//	{
+	//		if (level == MARIO_LEVEL_RACCOON)
+	//			vy = -MARIO_FLY_SPEED_Y;
+	//		else if (isGrounded)
+	//			vy = -MARIO_JUMP_SPEED_Y;
+	//		isJump = false;
+	//	}
+	//	else if (isGrounded) //jump
+	//	{
+	//		vy = -MARIO_JUMP_SPEED_Y;
+	//		isJump = true;
+	//	}
+	//	isGrounded = false;
+	//	break;
+	//case MARIO_STATE_IDLE:	
+	//	vx = 0;
+	//	break;
+	//case MARIO_STATE_DIE:
+	//	vy = -MARIO_DIE_DEFLECT_SPEED;
+	//	break;
+	//}
 }
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x;
+	state_->GetBoundingBox(*this, left, top, right, bottom);
+	/*left = x;
 	top = y;
 
 	if (level == MARIO_LEVEL_BIG)
@@ -489,7 +493,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
 	}
 
-	if (isSit) bottom = y + MARIO_SIT_BBOX_HEIGHT;
+	if (isSit) bottom = y + MARIO_SIT_BBOX_HEIGHT;*/
 }
 
 //Reset Mario status to the beginning state of a scene

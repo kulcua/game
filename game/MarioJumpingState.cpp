@@ -41,8 +41,8 @@ void MarioJumpingState::Update(CMario& mario)
         mario.state_ = MarioState::standing.GetInstance();
 }
 
-void MarioJumpingState::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)
 {
-
+    MarioState::GetBoundingBox(mario, left, top, right, bottom);
 }
 

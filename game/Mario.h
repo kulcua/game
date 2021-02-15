@@ -3,11 +3,11 @@
 
 #include "GameObject.h"
 #include "Utils.h"
-#include "MarioState.h"
+//#include "MarioState.h"
 
 class CMario : public CGameObject
 {
-	//friend class MarioStandingState;
+	friend class MarioState;
 
 	int level;
 	int ani;

@@ -493,41 +493,42 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+
 	mario->HandleInput();
 	// disable control key when Mario die 
-	if (mario->GetState() == MARIO_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT))
-	{
-		if (mario->isSit) //tat isSit neu dang ngoi
-		{
-			mario->isSit = false;
-			if (mario->GetLevel() == MARIO_LEVEL_BIG)
-				mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
-				mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-		}
-		if (mario->vx < 0)
-			mario->SetState(MARIO_STATE_STOP);
-		else
-			mario->SetState(MARIO_STATE_WALKING_RIGHT);
-	}
-	else if (game->IsKeyDown(DIK_LEFT))
-	{
-		if (mario->isSit)
-		{
-			mario->isSit = false;
-			if (mario->GetLevel() == MARIO_LEVEL_BIG)
-				mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
-				mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-		}
-		if (mario->vx > 0)
-			mario->SetState(MARIO_STATE_STOP);
-		else
-			mario->SetState(MARIO_STATE_WALKING_LEFT);
-	}
-	else if (game->IsKeyDown(DIK_A))
-	{
-		mario->StartSpin();
-	}
+	//if (mario->GetState() == MARIO_STATE_DIE) return;
+	//if (game->IsKeyDown(DIK_RIGHT))
+	//{
+	//	if (mario->isSit) //tat isSit neu dang ngoi
+	//	{
+	//		mario->isSit = false;
+	//		if (mario->GetLevel() == MARIO_LEVEL_BIG)
+	//			mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+	//		else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+	//			mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+	//	}
+	//	if (mario->vx < 0)
+	//		mario->SetState(MARIO_STATE_STOP);
+	//	else
+	//		mario->SetState(MARIO_STATE_WALKING_RIGHT);
+	//}
+	//else if (game->IsKeyDown(DIK_LEFT))
+	//{
+	//	if (mario->isSit)
+	//	{
+	//		mario->isSit = false;
+	//		if (mario->GetLevel() == MARIO_LEVEL_BIG)
+	//			mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+	//		else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
+	//			mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+	//	}
+	//	if (mario->vx > 0)
+	//		mario->SetState(MARIO_STATE_STOP);
+	//	else
+	//		mario->SetState(MARIO_STATE_WALKING_LEFT);
+	//}
+	//else if (game->IsKeyDown(DIK_A))
+	//{
+	//	mario->StartSpin();
+	//}
 }
