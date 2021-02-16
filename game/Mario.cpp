@@ -13,9 +13,9 @@
 
 #define BORDER_X 15
 
-void CMario::HandleInput()
+void CMario::HandleInput(Input input)
 {
-	state_->HandleInput(*this);
+	state_->HandleInput(*this, input);
 
 	state_->Enter(*this);
 }
@@ -35,7 +35,6 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	//DebugOut(L"vx: %f\n", vx);
 	// update mario state
 	state_->Update(*this);
 
@@ -50,10 +49,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	
 	//set gia toc cho mario
 	if (vx == 0) 
-		//&&state != MARIO_STATE_DIE)// && idle)
+		//&&state != MARIO_STATE_DIE)
 	{
 		state_ = MarioState::standing.GetInstance();
-		/*SetState(MARIO_STATE_IDLE);*/
 	}
 	else {
 		if (vx > 0)
@@ -84,7 +82,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		CalcPotentialCollisions(coObjects, coEvents); //sweptAABBEx in here so must use another function for AABB
 
 	// reset untouchable timer if untouchable time has passed
-	if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME && untouchable)
+	/*if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME && untouchable)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
@@ -120,7 +118,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		isDrop = false;
 		isDropFly = false;
-	}
+	}*/
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -473,8 +471,8 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	state_->GetBoundingBox(*this, left, top, right, bottom);
-	/*left = x;
+	//state_->GetBoundingBox(*this, left, top, right, bottom);
+	left = x;
 	top = y;
 
 	if (level == MARIO_LEVEL_BIG)
@@ -493,7 +491,10 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
 	}
 
-	if (isSit) bottom = y + MARIO_SIT_BBOX_HEIGHT;*/
+	if (isSit)
+	{
+		bottom = y + MARIO_SIT_BBOX_HEIGHT;
+	}	
 }
 
 //Reset Mario status to the beginning state of a scene

@@ -94,6 +94,18 @@
 #define MARIO_KICK_TIME	500
 #define MARIO_SPIN_TIME	200
 
+enum Input {
+	KEY_STATE,
+	PRESS_DOWN,
+	RELEASE_DOWN,
+	PRESS_A,
+	RELEASE_A,
+	PRESS_S,
+	RELEASE_S,
+	PRESS_LEFT,
+	PRESS_RIGHT
+};
+
 using namespace std;
 
 void DebugOut(wchar_t* fmt, ...);

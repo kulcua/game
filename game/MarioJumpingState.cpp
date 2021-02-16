@@ -30,15 +30,14 @@ void MarioJumpingState::Enter(CMario& mario)
     }
 }
 
-void MarioJumpingState::HandleInput(CMario& mario)
+void MarioJumpingState::HandleInput(CMario& mario, Input input)
 {
-    
+
 }
 
 void MarioJumpingState::Update(CMario& mario)
-{
-    if (mario.isGrounded)
-        mario.state_ = MarioState::standing.GetInstance();
+{ 
+
 }
 
 void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

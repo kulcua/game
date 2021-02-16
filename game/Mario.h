@@ -1,9 +1,6 @@
 #pragma once
-//class MarioState;
-
 #include "GameObject.h"
 #include "Utils.h"
-//#include "MarioState.h"
 
 class CMario : public CGameObject
 {
@@ -29,13 +26,11 @@ class CMario : public CGameObject
 	float start_y;
 
 	float a;
-	
-
 public:
 	bool isGrounded;
 	MarioState* state_;
 
-	void HandleInput();
+	void HandleInput(Input input);
 
 	bool isSit;
 	bool isDrop;

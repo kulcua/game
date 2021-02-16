@@ -29,21 +29,19 @@ void MarioWalkingState::Enter(CMario& mario)
     }
 }
 
-void MarioWalkingState::HandleInput(CMario& mario)
+void MarioWalkingState::HandleInput(CMario& mario, Input input)
 {
-    MarioOnGroundState::HandleInput(mario);
+    MarioOnGroundState::HandleInput(mario, input);
 }
 
 void MarioWalkingState::Update(CMario& mario)
 {
-    if (mario.nx == 1)
-        mario.vx = MARIO_WALKING_SPEED;
-    else
-        mario.vx = -MARIO_WALKING_SPEED;
+    
 }
 
 void MarioWalkingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)
 {
+    //DebugOut(L"GetBoundingBox walking\n");
     MarioState::GetBoundingBox(mario, left, top, right, bottom);
 }
 

@@ -1,4 +1,5 @@
 #include "MarioDuckingState.h"
+#include "MarioStandingState.h"
 #include "Mario.h"
 
 MarioDuckingState* MarioDuckingState::__instance = NULL;
@@ -25,22 +26,22 @@ void MarioDuckingState::Enter(CMario& mario)
     }
 }
 
-void MarioDuckingState::HandleInput(CMario& mario)
+void MarioDuckingState::HandleInput(CMario& mario, Input input)
 {
-    MarioOnGroundState::HandleInput(mario);
+    MarioOnGroundState::HandleInput(mario, input);
 }
 
 void MarioDuckingState::Update(CMario& mario)
 {
-
+    //DebugOut(L"MarioDuckingState\n");
 }
 
 void MarioDuckingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)
-{
-    DebugOut(L"voooooooo\n");
+{  
     MarioState::GetBoundingBox(mario, left, top, right, bottom);
-    DebugOut(L"bottom: %f\n", bottom);
-	bottom = mario.y + MARIO_SIT_BBOX_HEIGHT;
-    DebugOut(L"bottom: %f\n", bottom);
+    if (mario.isSit)
+    {      
+        bottom = mario.y + MARIO_SIT_BBOX_HEIGHT;
+    }  
 }
 

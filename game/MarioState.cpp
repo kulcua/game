@@ -21,6 +21,4 @@ void MarioState::GetBoundingBox(CMario &mario, float& left, float& top, float& r
 		right = mario.x + MARIO_SMALL_BBOX_WIDTH;
 		bottom = mario.y + MARIO_SMALL_BBOX_HEIGHT;
 	}
-
-	//if (isSit) bottom = y + MARIO_SIT_BBOX_HEIGHT;
 }
