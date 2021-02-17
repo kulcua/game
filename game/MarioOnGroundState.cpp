@@ -4,6 +4,7 @@
 #include "MarioWalkingState.h"
 #include "MarioStandingState.h"
 #include "MarioDuckingState.h"
+#include "MarioStoppingState.h"
 #include "Game.h"
 
 void SwitchSittingToWalking(CMario& mario)
@@ -46,29 +47,35 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         CGame* game = CGame::GetInstance();
         if (game->IsKeyDown(DIK_RIGHT))
         {
-            //DebugOut(L"DIK_RIGHT\n");
             if (mario.isSit)
                 SwitchSittingToWalking(mario);
 
-            if (mario.isGrounded)
-            {
-                mario.state_ = MarioState::walking.GetInstance();
+            if (mario.vx < 0)
+                mario.state_ = MarioState::stopping.GetInstance();
+            else {
+                if (mario.isGrounded) {
+                    mario.state_ = MarioState::walking.GetInstance();
+                }
+                mario.nx = 1;
+                mario.vx = MARIO_WALKING_SPEED;
             }
-            mario.nx = 1;
-            mario.vx = MARIO_WALKING_SPEED;
+
+            
         }
         else if (game->IsKeyDown(DIK_LEFT))
         {
-            //DebugOut(L"DIK_LEFT\n");
             if (mario.isSit) // if Mario is sitting
                 SwitchSittingToWalking(mario);
-            
-            if (mario.isGrounded)
-            {
-                mario.state_ = MarioState::walking.GetInstance();
-            }
-            mario.nx = -1;
-            mario.vx = -MARIO_WALKING_SPEED;
+
+            if (mario.vx > 0)
+                mario.state_ = MarioState::stopping.GetInstance();
+            else {
+                if (mario.isGrounded) {
+                    mario.state_ = MarioState::walking.GetInstance();
+                }
+                mario.nx = -1;
+                mario.vx = -MARIO_WALKING_SPEED;
+            }  
         }
     }
 

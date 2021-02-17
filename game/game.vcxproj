@@ -159,6 +159,7 @@
     <ClCompile Include="MarioJumpingState.cpp" />
     <ClCompile Include="MarioOnGroundState.cpp" />
     <ClCompile Include="MarioState.cpp" />
+    <ClCompile Include="MarioStoppingState.cpp" />
     <ClCompile Include="MarioWalkingState.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Plant.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="MarioJumpingState.h" />
     <ClInclude Include="MarioOnGroundState.h" />
     <ClInclude Include="MarioState.h" />
+    <ClInclude Include="MarioStoppingState.h" />
     <ClInclude Include="MarioWalkingState.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Plant.h" />

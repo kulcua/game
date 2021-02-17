@@ -36,11 +36,10 @@ void MarioStandingState::Enter(CMario& mario) // declare (CMario& mario) means i
 
 void MarioStandingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)
 {
-    //DebugOut(L"GetBoundingBox standing\n");
     MarioState::GetBoundingBox(mario, left, top, right, bottom);
 }
 
 void MarioStandingState::Update(CMario& mario)
 {
-    //DebugOut(L"MarioStandingState\n");
+    DebugOut(L"MarioStandingState\n");
 }
