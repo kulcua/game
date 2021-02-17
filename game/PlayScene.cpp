@@ -430,6 +430,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 	{
 	case DIK_S:
 		input = PRESS_S;
+		DebugOut(L"PRESS_S\n");
 		mario->HandleInput(input);
 		/*if (mario->isPreFly)
 		{
@@ -496,16 +497,6 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
 
 	Input input = KEY_STATE;
-
-	//if (game->IsKeyDown(DIK_RIGHT))
-	//{
-	//	input = KEY_STATE;
-	//	mario->HandleInput(input);
-	//}
-	//else if (game->IsKeyDown(DIK_LEFT))
-	//{
-	//	input = KEY_STATE;
-	//}
 
 	mario->HandleInput(input);
 	// disable control key when Mario die 

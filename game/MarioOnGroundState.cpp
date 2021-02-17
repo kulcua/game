@@ -46,7 +46,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         CGame* game = CGame::GetInstance();
         if (game->IsKeyDown(DIK_RIGHT))
         {
-            DebugOut(L"DIK_RIGHT\n");
+            //DebugOut(L"DIK_RIGHT\n");
             if (mario.isSit)
                 SwitchSittingToWalking(mario);
 
@@ -59,7 +59,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         }
         else if (game->IsKeyDown(DIK_LEFT))
         {
-            DebugOut(L"DIK_LEFT\n");
+            //DebugOut(L"DIK_LEFT\n");
             if (mario.isSit) // if Mario is sitting
                 SwitchSittingToWalking(mario);
             
@@ -70,16 +70,10 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
             mario.nx = -1;
             mario.vx = -MARIO_WALKING_SPEED;
         }
-        else if (game->IsKeyDown(DIK_DOWN)) //issit, vx
-        {
-            DebugOut(L"DIK_DOWN\n");
-            mario.state_ = MarioState::ducking.GetInstance();
-        }
     }
 
-    if (input == PRESS_S)
+    else if (input == PRESS_S)
     {
-        DebugOut(L"PRESS_S\n");
         if (mario.isGrounded) // check isGrounded to jump again
         {
             if (mario.isSit == false) // if isSit, don't change state
@@ -91,23 +85,15 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         } 
     }
     // Mario is walking can't duck
-    //if (input == PRESS_DOWN)
-    //{
-    //    DebugOut(L"PRESS_DOWN\n");
-    //    DebugOut(L"mario.vx == %f\n", mario.vx);
-    //    if (dynamic_cast<MarioWalkingState*>(mario.state_));
-    //        DebugOut(L"dynamic_cast\n");
-    //}
-    if (input == PRESS_DOWN)
+    // mario.vx == 0: prevent multiple key when walk and sit
+    else if (input == PRESS_DOWN && mario.vx == 0)
     {     
-        //mario.state_ = MarioState::ducking.GetInstance();
-        //DebugOut(L"PRESS_DOWN mario.vx == 0\n");
+        mario.state_ = MarioState::ducking.GetInstance();
         SettingLocationGetInSitState(mario);
     }
-    else if (input == RELEASE_DOWN)
+    else if (input == RELEASE_DOWN && mario.vx == 0)
     {
-        //DebugOut(L"RELEASE_DOWN\n");
+        mario.state_ = MarioState::standing.GetInstance();
         SettingLocationGetOutSitState(mario);
-        //mario.state_ = MarioState::standing.GetInstance();
     }
 }

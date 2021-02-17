@@ -36,6 +36,7 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	//DebugOut(L"vy: %f\n", vy);
 	// update mario state
 	state_->Update(*this);
 
@@ -49,7 +50,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += MARIO_GRAVITY * dt;
 	
 	//set gia toc cho mario
-	if (vx == 0) 
+	if (vx == 0 && isGrounded && isSit == false) 
 		//&&state != MARIO_STATE_DIE)
 	{
 		state_ = MarioState::standing.GetInstance();

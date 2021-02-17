@@ -33,7 +33,7 @@ void MarioDuckingState::HandleInput(CMario& mario, Input input)
 
 void MarioDuckingState::Update(CMario& mario)
 {
-    DebugOut(L"MarioDuckingState\n");
+    //DebugOut(L"MarioDuckingState\n");
 }
 
 void MarioDuckingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

@@ -36,7 +36,7 @@ void MarioWalkingState::HandleInput(CMario& mario, Input input)
 
 void MarioWalkingState::Update(CMario& mario)
 {
-    DebugOut(L"Walking\n");
+    //DebugOut(L"Walking\n");
 }
 
 void MarioWalkingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)
