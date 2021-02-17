@@ -1,5 +1,4 @@
 #include "MarioStandingState.h"
-#include "Utils.h"
 #include "Mario.h"
 
 MarioStandingState* MarioStandingState::__instance = NULL;
@@ -16,7 +15,6 @@ MarioStandingState* MarioStandingState::GetInstance()
 
 void MarioStandingState::HandleInput(CMario& mario, Input input)
 {
-    // Didn't handle input, so walk up hierarchy.
     MarioOnGroundState::HandleInput(mario, input);
 }
 
@@ -44,5 +42,5 @@ void MarioStandingState::GetBoundingBox(CMario& mario, float& left, float& top, 
 
 void MarioStandingState::Update(CMario& mario)
 {
-    //DebugOut(L"MarioStandingState\n");
+    DebugOut(L"MarioStandingState\n");
 }

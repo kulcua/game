@@ -37,7 +37,7 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
 
 void MarioJumpingState::Update(CMario& mario)
 { 
-
+    //DebugOut(L"Jumping\n");
 }
 
 void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

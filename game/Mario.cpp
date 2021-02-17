@@ -10,6 +10,7 @@
 #include "Pipe.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
+#include "MarioDuckingState.h"
 
 #define BORDER_X 15
 
