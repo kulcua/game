@@ -8,25 +8,25 @@ class CMario : public CGameObject
 
 	int level;
 	int ani;
+	int power;
+	DWORD power_time_start;
+	DWORD power_time_end;
 
 	int untouchable;
 	DWORD untouchable_start;
-
-	DWORD run_start;
 
 	bool kick;
 	DWORD kick_start;
 
 	bool level_up;
 	DWORD level_up_start;
-	
-	DWORD spin_start;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 	float a;
 public:
 	bool isGrounded;
+	bool isPower;
 	MarioState* state_;
 
 	void HandleInput(Input input);
@@ -34,14 +34,6 @@ public:
 	bool isSit;
 	bool isDrop;
 	bool isDropFly;
-	bool isJump;
-	bool isRun; //check run o keyboard -> doi van toc run
-	bool run; //check run hay prefly
-
-	bool isPreFly;
-	bool isFly;
-
-	bool spin;
 
 	CMario(float x = 0.0f, float y = 0.0f);
 
@@ -55,12 +47,15 @@ public:
 	void SetAnimation(int a) { ani = a; }
 	int GetAnimation() { return ani; }
 
+	void StartPowerUp(){ power_time_start = GetTickCount64(); }
+	void ResetPower();
+	int GetPower() { return power; }
+
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-	void StartRun() {
-		if (!run && !isFly) { run = true;	run_start = GetTickCount(); }
+
+	void StartKick() {
+		kick = true; kick_start = GetTickCount();
 	}
-	void StartKick() { kick = true; kick_start = GetTickCount(); }
-	void StartSpin() { spin = true; spin_start = GetTickCount(); }
 	void StartLevelUp() { level_up = true; level_up_start = GetTickCount(); }
 
 	//void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);
@@ -69,4 +64,3 @@ public:
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };
-

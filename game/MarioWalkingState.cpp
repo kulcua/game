@@ -37,6 +37,11 @@ void MarioWalkingState::HandleInput(CMario& mario, Input input)
 
 void MarioWalkingState::Update(CMario& mario, DWORD dt)
 {
+    if (mario.isPower)
+    {
+        mario.StartPowerUp();
+        DebugOut(L"StartPowerUp\n");
+    }
 	//if (mario.vx == 0)
 	//	//&&state != MARIO_STATE_DIE)
 	//{

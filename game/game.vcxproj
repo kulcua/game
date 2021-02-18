@@ -155,6 +155,8 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="MarioDuckingState.cpp" />
+    <ClCompile Include="MarioFlyingState.cpp" />
+    <ClCompile Include="MarioPreFlyState.cpp" />
     <ClCompile Include="MarioRunningState.cpp" />
     <ClCompile Include="MarioStandingState.cpp" />
     <ClCompile Include="MarioJumpingState.cpp" />
@@ -186,6 +188,8 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="MarioDuckingState.h" />
+    <ClInclude Include="MarioFlyingState.h" />
+    <ClInclude Include="MarioPreFlyState.h" />
     <ClInclude Include="MarioRunningState.h" />
     <ClInclude Include="MarioStandingState.h" />
     <ClInclude Include="MarioJumpingState.h" />

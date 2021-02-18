@@ -1,11 +1,11 @@
-#pragma once
+#pragma once 
 #include "MarioOnGroundState.h"
 
-class MarioRunningState : public MarioOnGroundState
+class MarioPreFlyState : public MarioOnGroundState
 {
-	static MarioRunningState* __instance;
+	static MarioPreFlyState* __instance;
 public:
-	static MarioRunningState* GetInstance();
+	static MarioPreFlyState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);
 	virtual void Update(CMario& mario, DWORD dt);
 	virtual void GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom);

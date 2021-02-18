@@ -386,7 +386,8 @@ void CPlayScene::Update(DWORD dt)
 		if (player->GetLevel() != MARIO_LEVEL_RACCOON)
 			cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK; //check pos mario & set cung pos cam tai do khi cam ko di chuyen
 		else { //neu la raccoon
-			if (cy > CAM_BOTTOM_CHECK && !player->isFly)
+			if (cy > CAM_BOTTOM_CHECK)
+				//&& !player->isFly)
 				cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK;
 			else
 				cy -= game->GetScreenHeight() / 2;
