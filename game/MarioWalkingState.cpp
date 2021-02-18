@@ -18,15 +18,15 @@ void MarioWalkingState::Enter(CMario& mario)
 {
     if (mario.GetLevel() == MARIO_LEVEL_SMALL)
     {
-        mario.SetAnimation(MARIO_ANI_SMALL_WALKING);
+        mario.SetAnimation(MARIO_ANI_SMALL_WALK);
     }
     else if (mario.GetLevel() == MARIO_LEVEL_BIG)
     {
-        mario.SetAnimation(MARIO_ANI_BIG_WALKING);
+        mario.SetAnimation(MARIO_ANI_BIG_WALK);
     }
     else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
     {
-        mario.SetAnimation(MARIO_ANI_RACCOON_WALKING);
+        mario.SetAnimation(MARIO_ANI_RACCOON_WALK);
     }
 }
 

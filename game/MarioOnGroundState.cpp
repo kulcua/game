@@ -4,6 +4,7 @@
 #include "MarioWalkingState.h"
 #include "MarioStandingState.h"
 #include "MarioDuckingState.h"
+#include "MarioRunningState.h"
 #include "MarioStoppingState.h"
 #include "Game.h"
 
@@ -40,6 +41,21 @@ void SettingLocationGetOutSitState(CMario& mario)
     }
 }
 
+void SetStateWalkOrRun(CMario &mario)
+{
+    if (mario.isGrounded) {
+        if (mario.isRun)
+        {
+            mario.vx = mario.nx * MARIO_RUN_SPEED;
+            mario.state_ = MarioState::running.GetInstance();
+        }
+        else {
+            mario.vx = mario.nx * MARIO_WALKING_SPEED;
+            mario.state_ = MarioState::walking.GetInstance();
+        }
+    }
+}
+
 void MarioOnGroundState::HandleInput(CMario& mario, Input input)
 {
     CGame* game = CGame::GetInstance();
@@ -47,34 +63,23 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     {
         if (game->IsKeyDown(DIK_RIGHT))
         {
+            mario.nx = 1;
+
             if (mario.isSit)
                 SwitchSittingToWalking(mario);
-
             if (mario.vx < 0)
                 mario.state_ = MarioState::stopping.GetInstance();
-            else {
-                if (mario.isGrounded) {
-                    mario.state_ = MarioState::walking.GetInstance();
-                }
-                mario.nx = 1;
-                mario.vx = MARIO_WALKING_SPEED;
-            }   
+            else SetStateWalkOrRun(mario);
         }
         else if (game->IsKeyDown(DIK_LEFT))
         {
+            mario.nx = -1;
+
             if (mario.isSit) // if Mario is sitting
                 SwitchSittingToWalking(mario);
-
             if (mario.vx > 0)
                 mario.state_ = MarioState::stopping.GetInstance();
-            else {
-                if (mario.isGrounded) {
-                    mario.state_ = MarioState::walking.GetInstance();
-                }
-                mario.nx = -1;
-                mario.vx = -MARIO_WALKING_SPEED;
-
-            }  
+            else SetStateWalkOrRun(mario);
         }
     }
     
@@ -88,12 +93,12 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
             }
             mario.vy = -MARIO_JUMP_SPEED_Y;
             mario.isGrounded = false;
-        } 
+        }
     }
     // Mario is walking can't duck
     // mario.vx == 0: prevent multiple key when walk and sit
     else if (input == PRESS_DOWN && mario.vx == 0)
-    {     
+    {
         mario.state_ = MarioState::ducking.GetInstance();
         SettingLocationGetInSitState(mario);
     }
@@ -101,5 +106,13 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     {
         mario.state_ = MarioState::standing.GetInstance();
         SettingLocationGetOutSitState(mario);
+    }
+    else if (input == PRESS_A)
+    {
+        mario.isRun = true;
+    }
+    else if (input == RELEASE_A)
+    {
+        mario.isRun = false;
     }
 }

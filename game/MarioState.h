@@ -5,6 +5,7 @@ class MarioWalkingState;
 class MarioJumpingState;
 class MarioDuckingState;
 class MarioStoppingState;
+class MarioRunningState;
 
 class MarioState
 {
@@ -16,6 +17,7 @@ public:
 	static MarioJumpingState jumping;
 	static MarioDuckingState ducking;
 	static MarioStoppingState stopping;
+	static MarioRunningState running;
 
 	virtual void HandleInput(CMario& mario, Input input) = 0;
 	virtual void Update(CMario& mario, DWORD dt) = 0;
