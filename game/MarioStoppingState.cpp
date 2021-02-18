@@ -34,9 +34,9 @@ void MarioStoppingState::HandleInput(CMario& mario, Input input)
     MarioOnGroundState::HandleInput(mario, input);
 }
 
-void MarioStoppingState::Update(CMario& mario)
+void MarioStoppingState::Update(CMario& mario, DWORD dt)
 {
-    DebugOut(L"Stoping\n");
+    //DebugOut(L"Stoping\n");
 }
 
 void MarioStoppingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

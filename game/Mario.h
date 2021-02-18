@@ -24,7 +24,6 @@ class CMario : public CGameObject
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
-
 	float a;
 public:
 	bool isGrounded;

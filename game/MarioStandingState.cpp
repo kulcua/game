@@ -39,7 +39,7 @@ void MarioStandingState::GetBoundingBox(CMario& mario, float& left, float& top, 
     MarioState::GetBoundingBox(mario, left, top, right, bottom);
 }
 
-void MarioStandingState::Update(CMario& mario)
+void MarioStandingState::Update(CMario& mario, DWORD dt)
 {
-    DebugOut(L"MarioStandingState\n");
+    //DebugOut(L"MarioStandingState\n");
 }

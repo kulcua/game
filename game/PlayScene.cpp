@@ -12,6 +12,8 @@
 #include "Plant.h"
 #include "Pipe.h"
 #include "FireBall.h"
+#include "MarioStoppingState.h"
+#include "MarioWalkingState.h"
 
 using namespace std;
 
@@ -430,7 +432,6 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 	{
 	case DIK_S:
 		input = PRESS_S;
-		DebugOut(L"PRESS_S\n");
 		mario->HandleInput(input);
 		/*if (mario->isPreFly)
 		{
@@ -452,7 +453,6 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_DOWN:
 		input = PRESS_DOWN;
-		DebugOut(L"PRESS_DOWN PS\n");
 		mario->HandleInput(input);
 		break;
 	case DIK_A:
@@ -501,8 +501,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	mario->HandleInput(input);
 	// disable control key when Mario die 
 	//if (mario->GetState() == MARIO_STATE_DIE) return;
-	//if (game->IsKeyDown(DIK_RIGHT))
-	//{
+
 	//	input = PRESS_RIGHT;
 	//	//mario->HandleInput(input);
 	//	//if (mario->isSit) //tat isSit neu dang ngoi

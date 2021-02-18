@@ -38,7 +38,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	//DebugOut(L"vy: %f\n", vy);
 	// update mario state
-	state_->Update(*this);
+	state_->Update(*this, dt);
 
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
@@ -49,16 +49,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Simple fall down
 	vy += MARIO_GRAVITY * dt;
 	
-	// set ACCELERATION for mario
-	// maybe it should be in Walking State?
-	// but how about ACCELERATION when jumping or flying?
+	//// set ACCELERATION for mario
+	//// maybe it should be in Walking State?
+	//// but how about ACCELERATION when jumping or flying?
 	if (vx == 0 && isGrounded && isSit == false) 
 		//&&state != MARIO_STATE_DIE)
 	{
 		state_ = MarioState::standing.GetInstance();
 	}
 	else {
-		//DebugOut(L"vx: %f\n", vx);
 		if (vx > 0)
 		{
 			a = -MARIO_ACCELERATION;

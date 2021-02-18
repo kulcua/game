@@ -42,9 +42,9 @@ void SettingLocationGetOutSitState(CMario& mario)
 
 void MarioOnGroundState::HandleInput(CMario& mario, Input input)
 {
+    CGame* game = CGame::GetInstance();
     if (input == KEY_STATE)
     {
-        CGame* game = CGame::GetInstance();
         if (game->IsKeyDown(DIK_RIGHT))
         {
             if (mario.isSit)
@@ -58,9 +58,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 }
                 mario.nx = 1;
                 mario.vx = MARIO_WALKING_SPEED;
-            }
-
-            
+            }   
         }
         else if (game->IsKeyDown(DIK_LEFT))
         {
@@ -75,11 +73,12 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 }
                 mario.nx = -1;
                 mario.vx = -MARIO_WALKING_SPEED;
+
             }  
         }
     }
-
-    else if (input == PRESS_S)
+    
+    if (input == PRESS_S)
     {
         if (mario.isGrounded) // check isGrounded to jump again
         {

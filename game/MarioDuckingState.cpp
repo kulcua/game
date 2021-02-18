@@ -31,7 +31,7 @@ void MarioDuckingState::HandleInput(CMario& mario, Input input)
     MarioOnGroundState::HandleInput(mario, input);
 }
 
-void MarioDuckingState::Update(CMario& mario)
+void MarioDuckingState::Update(CMario& mario, DWORD dt)
 {
     //DebugOut(L"MarioDuckingState\n");
 }

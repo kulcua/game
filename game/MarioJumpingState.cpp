@@ -1,5 +1,6 @@
 #include "MarioJumpingState.h"
 #include "Mario.h"
+#include "Game.h"
 #include "MarioStandingState.h"
 
 MarioJumpingState* MarioJumpingState::__instance = NULL;
@@ -32,12 +33,27 @@ void MarioJumpingState::Enter(CMario& mario)
 
 void MarioJumpingState::HandleInput(CMario& mario, Input input)
 {
-
+    CGame* game = CGame::GetInstance();
+    if (input == KEY_STATE)
+    {
+        if (game->IsKeyDown(DIK_RIGHT))
+        {
+            mario.nx = 1;
+            mario.vx = MARIO_WALKING_SPEED;
+        }
+        else if (game->IsKeyDown(DIK_LEFT))
+        {
+            mario.nx = -1;
+            mario.vx = -MARIO_WALKING_SPEED;
+        }
+    }
 }
 
-void MarioJumpingState::Update(CMario& mario)
+void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
-    //DebugOut(L"Jumping\n");
+    if (mario.isGrounded)
+        mario.state_ = MarioState::standing.GetInstance();
+    //DebugOut(L"Jumping %f\n", mario.vx);
 }
 
 void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)
