@@ -54,7 +54,7 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
     if (mario.isGrounded == false && mario.vy > 0)
         mario.state_ = MarioState::dropping.GetInstance();
-    //DebugOut(L"Jumping %f\n", mario.vx);
+    DebugOut(L"Jumping %f\n", mario.vx);
 }
 
 void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

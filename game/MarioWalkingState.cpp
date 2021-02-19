@@ -37,33 +37,13 @@ void MarioWalkingState::HandleInput(CMario& mario, Input input)
 
 void MarioWalkingState::Update(CMario& mario, DWORD dt)
 {
+    // set up MARIO_ACCELERATION
+    MarioState::Update(mario, dt);
     if (mario.isPower)
     {
         mario.PowerUp();
         DebugOut(L"StartPowerUp\n");
     }
-	/*if (mario.vx == 0)
-	{
-        DebugOut(L"standing\n");
-		mario.state_ = MarioState::standing.GetInstance();
-	}
-	else {
-        DebugOut(L"MARIO_ACCELERATION\n");
-		if (mario.vx > 0)
-		{
-			a = -MARIO_ACCELERATION;
-			mario.vx += a * dt;
-			if (mario.vx < 0)
-				mario.vx = 0;
-		}
-		else
-		{
-			a = MARIO_ACCELERATION;
-			mario.vx += a * dt;
-			if (mario.vx > 0)
-				mario.vx = 0;
-		}
-	}*/
     //DebugOut(L"Walking\n");
 }
 

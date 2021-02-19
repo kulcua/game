@@ -129,6 +129,9 @@
     <ClCompile Include="MarioKickState.cpp">
       <Filter>Mario\MarioState</Filter>
     </ClCompile>
+    <ClCompile Include="MarioLevelUpState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -231,6 +234,9 @@
       <Filter>Mario\MarioState</Filter>
     </ClInclude>
     <ClInclude Include="MarioKickState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioLevelUpState.h">
       <Filter>Mario\MarioState</Filter>
     </ClInclude>
   </ItemGroup>

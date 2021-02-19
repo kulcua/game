@@ -41,5 +41,6 @@ void MarioPreFlyState::GetBoundingBox(CMario& mario, float& left, float& top, fl
 
 void MarioPreFlyState::Update(CMario& mario, DWORD dt)
 {
+    MarioState::Update(mario, dt);
     //DebugOut(L"Running\n");
 }

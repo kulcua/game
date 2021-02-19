@@ -8,6 +8,7 @@ class CMario : public CGameObject
 
 	int level;
 	int ani;
+
 	int power;
 	DWORD power_time_start;
 	DWORD power_time_end;
@@ -15,12 +16,8 @@ class CMario : public CGameObject
 	int untouchable;
 	DWORD untouchable_start;
 
-	bool level_up;
-	DWORD level_up_start;
-
 	float start_x;			// initial position of Mario at scene
 	float start_y;
-	float a;
 public:
 	bool isGrounded;
 	bool isPower;
@@ -29,7 +26,6 @@ public:
 	void HandleInput(Input input);
 
 	bool isSit;
-	bool isKick;
 
 	CMario(float x = 0.0f, float y = 0.0f);
 
@@ -50,11 +46,11 @@ public:
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 
-	void StartLevelUp() { level_up = true; level_up_start = GetTickCount(); }
-
 	//void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);
 	
 	void Reset();
+
+	void LevelUp();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

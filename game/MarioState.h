@@ -11,7 +11,7 @@ class MarioFlyingState;
 class MarioDroppingState;
 class MarioDropFlyState;
 class MarioKickState;
-
+class MarioLevelUpState;
 
 class MarioState
 {
@@ -29,9 +29,10 @@ public:
 	static MarioDroppingState dropping;
 	static MarioDropFlyState dropFly;
 	static MarioKickState kick;
+	static MarioLevelUpState levelUp;
 
 	virtual void HandleInput(CMario& mario, Input input) = 0;
-	virtual void Update(CMario& mario, DWORD dt) = 0;
+	virtual void Update(CMario& mario, DWORD dt);
 	virtual void GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom);
 
 	// using Enter() method to set animation for each state

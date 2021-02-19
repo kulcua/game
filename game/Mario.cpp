@@ -12,6 +12,7 @@
 #include "MarioStandingState.h"
 #include "MarioDuckingState.h"
 #include "MarioKickState.h"
+#include "MarioLevelUpState.h"
 
 #define BORDER_X 15
 
@@ -20,6 +21,13 @@ void CMario::ResetPower()
 	isPower = false; 
 	power_time_start = 0;
 	PowerDown();
+}
+
+void CMario::LevelUp()
+{
+	SetLevel(level + 1);
+	state_ = MarioState::levelUp.GetInstance();
+	MarioState::levelUp.GetInstance()->StartLevelUp();
 }
 
 void CMario::HandleInput(Input input)
@@ -45,7 +53,7 @@ CMario::CMario(float x, float y) : CGameObject()
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	//DebugOut(L"GetPower %d\n", GetPower());
-	//DebugOut(L"vy: %f y: %f\n", vy,y);
+	//DebugOut(L"vx: %f\n", vx);
 	// update mario state
 	state_->Update(*this, dt);
 
@@ -57,31 +65,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	// Simple fall down
 	vy += MARIO_GRAVITY * dt;
-	
-	// set ACCELERATION for mario
-	// maybe it should be in Walking State?
-	// but how about ACCELERATION when jumping or flying?
-	if (vx == 0 && isGrounded && isSit == false && isKick == false) 
-		//&&state != MARIO_STATE_DIE)
-	{
-		state_ = MarioState::standing.GetInstance();
-	}
-	else {
-		if (vx > 0)
-		{
-			a = -MARIO_ACCELERATION;
-			vx += a * dt;
-			if (vx < 0)
-				vx = 0;
-		}
-		else
-		{
-			a = MARIO_ACCELERATION;
-			vx += a * dt;
-			if (vx > 0)
-				vx = 0;
-		}
-	}
 	
 	//CollisionAABB(coObjects);
 
@@ -107,18 +90,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		power_time_end = 0;
 	}
 
-	/*if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME && untouchable)
-	{
-		untouchable_start = 0;
-		untouchable = 0;
-		SetLevel(level - 1);
-	}
-
-	if (GetTickCount() - level_up_start > MARIO_LEVEL_UP_TIME && level_up)
-	{
-		level_up_start = 0;
-		level_up = false;
-	}*/
+	//if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME && untouchable)
+	//{
+	//	untouchable_start = 0;
+	//	untouchable = 0;
+	//	SetLevel(level - 1);
+	//}
 
 	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
@@ -224,7 +201,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CItem* item = dynamic_cast<CItem*>(e->obj);
 				if (level < MARIO_LEVEL_MAX)
 				{
-					SetLevel(level + 1);
+					LevelUp();
 					if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
 					{
 						y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
@@ -233,7 +210,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					{
 						y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
 					}
-					StartLevelUp();
 				}
 				item->die = true;
 			}
@@ -252,8 +228,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					koopas->vx = KOOPAS_BALL_SPEED;// *this->nx;
 					MarioState::kick.GetInstance()->StartKick();
 					state_ = MarioState::kick.GetInstance();
-					isKick = true;
-					DebugOut(L"startkick\n");
 				}
 			}
 		}
@@ -291,23 +265,25 @@ void CMario::Render()
 	int ani = -1;
 	if (state == MARIO_STATE_DIE)
 		ani = MARIO_ANI_DIE;
-
-	ani = GetAnimation();
+	else 
+		ani = GetAnimation();
 	
 	int alpha = 255;
 	animation_set->at(ani)->Render(x, y, nx, alpha);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	//DebugOut(L"state: %d ani: %d\n", state, ani); 
 }
 
 void CMario::SetState(int state)
 {
 	CGameObject::SetState(state);
-	//case MARIO_STATE_DIE:
-	//	vy = -MARIO_DIE_DEFLECT_SPEED;
-	//	break;
-	//}
+	switch (state)
+	{
+		case MARIO_STATE_DIE:
+		vy = -MARIO_DIE_DEFLECT_SPEED;
+		break;
+	}
 }
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -341,7 +317,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 //Reset Mario status to the beginning state of a scene
 void CMario::Reset()
 {
-	SetState(MARIO_STATE_IDLE);
+	state_ = MarioState::standing.GetInstance();
 	SetLevel(MARIO_LEVEL_SMALL);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);

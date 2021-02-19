@@ -36,6 +36,7 @@ void MarioRunningState::HandleInput(CMario& mario, Input input)
 
 void MarioRunningState::Update(CMario& mario, DWORD dt)
 {
+	MarioState::Update(mario, dt);
 	//DebugOut(L"Running\n");
 }
 

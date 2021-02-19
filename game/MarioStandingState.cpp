@@ -1,5 +1,6 @@
 #include "MarioStandingState.h"
 #include "Mario.h"
+#include "MarioWalkingState.h"
 
 MarioStandingState* MarioStandingState::__instance = NULL;
 
@@ -41,5 +42,9 @@ void MarioStandingState::GetBoundingBox(CMario& mario, float& left, float& top, 
 
 void MarioStandingState::Update(CMario& mario, DWORD dt)
 {
+    if (mario.vx != 0)
+    {
+        mario.state_ = MarioState::walking.GetInstance();
+    }
     //DebugOut(L"MarioStandingState\n");
 }

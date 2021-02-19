@@ -36,6 +36,7 @@ void MarioStoppingState::HandleInput(CMario& mario, Input input)
 
 void MarioStoppingState::Update(CMario& mario, DWORD dt)
 {
+    MarioState::Update(mario, dt);
     //DebugOut(L"Stoping\n");
 }
 
