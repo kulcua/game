@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "Game.h"
 #include "MarioStandingState.h"
+#include "MarioDropFlyState.h"
 
 MarioDroppingState* MarioDroppingState::__instance = NULL;
 
@@ -34,6 +35,11 @@ void MarioDroppingState::Enter(CMario& mario)
 void MarioDroppingState::HandleInput(CMario& mario, Input input)
 {
     MarioJumpingState::HandleInput(mario, input);
+    if (input == PRESS_S && mario.GetLevel() == MARIO_LEVEL_RACCOON)
+    {
+        mario.state_ = MarioState::dropFly.GetInstance();
+        mario.vy = -MARIO_DROP_FLY_SPEED_Y;
+    }
 }
 
 void MarioDroppingState::Update(CMario& mario, DWORD dt)
