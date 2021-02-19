@@ -16,11 +16,44 @@
 
 #define BORDER_X 15
 
-void CMario::ResetPower()
+void CMario::PowerReset()
 {
 	isPower = false; 
 	power_time_start = 0;
+	save_power = 0;
 	PowerDown();
+}
+
+void CMario::PowerControl()
+{
+	if (isPower)
+	{
+		int temp;
+		if (((GetTickCount64() - power_time_start) / MARIO_POWERUP_PER_SECOND) < MARIO_MAX_POWER)
+		{
+			temp = (GetTickCount64() - power_time_start) / MARIO_POWERUP_PER_SECOND; //1
+			if (power > 0 && save_power == 0)
+			{
+				save_power = power;
+			}
+			if (temp <= MARIO_MAX_POWER - save_power) //temp_power = 2
+			{
+				power = save_power + temp;
+			}
+			if (power == 0)
+				power = temp;
+			//DebugOut(L"temp %d - temp-power %d - power %d\n", temp, temp_power, power);
+		}
+	}
+	if (power_time_end > 0 && isPower == false)
+	{
+		if (power == 0)
+		{
+			power_time_end = 0;
+		}
+		else
+			power = MARIO_MAX_POWER - ((GetTickCount64() - power_time_end) / MARIO_POWERUP_PER_SECOND);
+	}
 }
 
 void CMario::LevelUp()
@@ -52,7 +85,7 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	//DebugOut(L"GetPower %d\n", GetPower());
+	DebugOut(L"GetPower %d\n", GetPower());
 	//DebugOut(L"vx: %f\n", vx);
 	// update mario state
 	state_->Update(*this, dt);
@@ -66,29 +99,18 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// Simple fall down
 	vy += MARIO_GRAVITY * dt;
 	
+	PowerControl();
+
 	//CollisionAABB(coObjects);
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-
+	//DebugOut(L"power_time_start %d\n", power_time_start);
 	// turn off collision when die 
 	if (state != MARIO_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
-
-	if (power < MARIO_MAX_POWER && power_time_start > 0)
-	{
-		power = (GetTickCount64() - power_time_start) / MARIO_POWERUP_PER_SECOND;
-	}
-	if (power_time_end > 0 && isPower == false)
-	{
-		power = MARIO_MAX_POWER - ((GetTickCount64() - power_time_end) / MARIO_POWERUP_PER_SECOND);
-	}
-	if (power == 0)
-	{
-		power_time_end = 0;
-	}
 
 	//if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME && untouchable)
 	//{

@@ -23,11 +23,6 @@ void MarioFlyingState::HandleInput(CMario& mario, Input input)
             mario.vy = -MARIO_FLY_SPEED_Y;
         }
     }
-    else if (input == RELEASE_A)
-    {
-        mario.isPower = false;
-        mario.PowerDown();
-    }
 }
 
 void MarioFlyingState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioFlyingState
@@ -54,5 +49,5 @@ void MarioFlyingState::GetBoundingBox(CMario& mario, float& left, float& top, fl
 void MarioFlyingState::Update(CMario& mario, DWORD dt)
 {
     MarioJumpingState::Update(mario, dt);
-    //DebugOut(L"Flying\n");
+    //DebugOut(L"Flying power %d\n", mario.GetPower());
 }

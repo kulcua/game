@@ -48,6 +48,7 @@ void SetStateWalk_Run_PreFly(CMario &mario)
     if (mario.isGrounded) {
         if (mario.isPower)
         {
+            DebugOut(L"ispower\n");
             if (mario.GetPower() < MARIO_MAX_POWER)
             {
                 mario.vx = mario.nx * MARIO_RUN_SPEED;
@@ -80,7 +81,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 SwitchSittingToWalking(mario);
             if (mario.vx < 0)
             {
-                mario.ResetPower();
+                mario.PowerReset();
                 mario.state_ = MarioState::stopping.GetInstance();
             }
             else SetStateWalk_Run_PreFly(mario);
@@ -93,7 +94,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 SwitchSittingToWalking(mario);
             if (mario.vx > 0)
             {
-                mario.ResetPower();
+                mario.PowerReset();
                 mario.state_ = MarioState::stopping.GetInstance();
             }
             else SetStateWalk_Run_PreFly(mario);
@@ -144,7 +145,14 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     }
     else if (input == RELEASE_A)
     {
-        mario.isPower = false;
-        mario.PowerDown();
+        mario.PowerReset();
+    }
+    else if (input == PRESS_LEFT || input == PRESS_RIGHT)
+    {
+        if (mario.isPower)
+        {
+            DebugOut(L"PowerUp\n");
+            mario.PowerUp();
+        }
     }
 }

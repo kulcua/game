@@ -39,7 +39,7 @@ void MarioWalkingState::Update(CMario& mario, DWORD dt)
 {
     // set up MARIO_ACCELERATION
     MarioState::Update(mario, dt);
-    if (mario.isPower)
+    if (mario.isPower && mario.power_time_start == 0)
     {
         mario.PowerUp();
         DebugOut(L"StartPowerUp\n");
