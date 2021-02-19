@@ -43,7 +43,7 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	DebugOut(L"GetPower %d\n", GetPower());
+	//DebugOut(L"GetPower %d\n", GetPower());
 	//DebugOut(L"vy: %f y: %f\n", vy,y);
 	// update mario state
 	state_->Update(*this, dt);

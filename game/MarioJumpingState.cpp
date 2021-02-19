@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "Game.h"
 #include "MarioStandingState.h"
+#include "MarioDroppingState.h"
 
 MarioJumpingState* MarioJumpingState::__instance = NULL;
 
@@ -51,8 +52,8 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
-    if (mario.isGrounded)
-        mario.state_ = MarioState::standing.GetInstance();
+    if (mario.isGrounded == false && mario.vy > 0)
+        mario.state_ = MarioState::dropping.GetInstance();
     //DebugOut(L"Jumping %f\n", mario.vx);
 }
 
