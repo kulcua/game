@@ -12,6 +12,8 @@
 #include "Plant.h"
 #include "Pipe.h"
 #include "FireBall.h"
+#include "MarioStoppingState.h"
+#include "MarioWalkingState.h"
 
 using namespace std;
 
@@ -384,7 +386,8 @@ void CPlayScene::Update(DWORD dt)
 		if (player->GetLevel() != MARIO_LEVEL_RACCOON)
 			cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK; //check pos mario & set cung pos cam tai do khi cam ko di chuyen
 		else { //neu la raccoon
-			if (cy > CAM_BOTTOM_CHECK && !player->isFly)
+			if (cy > CAM_BOTTOM_CHECK)
+				//&& !player->isFly)
 				cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK;
 			else
 				cy -= game->GetScreenHeight() / 2;
@@ -423,18 +426,16 @@ void CPlayScene::Unload()
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
-	CMario* mario = ((CPlayScene*)scene)->GetPlayer(); //[!?] lay con tro tro toi player o scene hien tai
+	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+	Input input;
+	
 	switch (KeyCode)
 	{
 	case DIK_S:
-		if (mario->isPreFly)
-		{
-			mario->isFly = true;
-			mario->run = false;
-		}
-		mario->SetState(MARIO_STATE_JUMP);
+		input = PRESS_S;
+		mario->HandleInput(input);
 		break;
-	case DIK_F1: // reset
+	case DIK_F1:
 		mario->Reset();
 		break;
 	case DIK_F2:
@@ -446,19 +447,21 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 		mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
 		break;
 	case DIK_DOWN:
-		if (mario->GetLevel() != MARIO_LEVEL_SMALL)
-		{
-			mario->isSit = true;
-			if (mario->GetLevel() == MARIO_LEVEL_BIG)
-				mario->y += MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
-				mario->y += MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-		}	
+		input = PRESS_DOWN;
+		mario->HandleInput(input);
 		break;
 	case DIK_A:
-		mario->isRun = true;
+		input = PRESS_A;
+		mario->HandleInput(input);
 		break;
-	
+	case DIK_LEFT:
+		input = PRESS_LEFT;
+		mario->HandleInput(input);
+		break;
+	case DIK_RIGHT:
+		input = PRESS_RIGHT;
+		mario->HandleInput(input);
+		break;
 	}
 }
 
@@ -466,23 +469,17 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+	Input input;
+	
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
-		mario->isSit = false;
-		if (mario->GetLevel() == MARIO_LEVEL_BIG)
-			mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-		else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
-			mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+		input = RELEASE_DOWN;
+		mario->HandleInput(input);
 		break;
 	case DIK_A:
-		mario->isRun = false;
-		mario->isPreFly = false;
-		mario->isFly = false;
-		mario->run = false; //tat time du tru run
-		break;
-	case DIK_S:
-		mario->isJump = false;
+		input = RELEASE_A;
+		mario->HandleInput(input);
 		break;
 	}
 }
@@ -493,38 +490,8 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
 	// disable control key when Mario die 
 	if (mario->GetState() == MARIO_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT))
-	{
-		if (mario->isSit) //tat isSit neu dang ngoi
-		{
-			mario->isSit = false;
-			if (mario->GetLevel() == MARIO_LEVEL_BIG)
-				mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
-				mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-		}
-		if (mario->vx < 0)
-			mario->SetState(MARIO_STATE_STOP);
-		else
-			mario->SetState(MARIO_STATE_WALKING_RIGHT);
-	}
-	else if (game->IsKeyDown(DIK_LEFT))
-	{
-		if (mario->isSit)
-		{
-			mario->isSit = false;
-			if (mario->GetLevel() == MARIO_LEVEL_BIG)
-				mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-			else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
-				mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-		}
-		if (mario->vx > 0)
-			mario->SetState(MARIO_STATE_STOP);
-		else
-			mario->SetState(MARIO_STATE_WALKING_LEFT);
-	}
-	else if (game->IsKeyDown(DIK_A))
-	{
-		//mario->StartSpin();
-	}
+
+	Input input = KEY_STATE;
+
+	mario->HandleInput(input);
 }

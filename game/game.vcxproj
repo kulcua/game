@@ -80,6 +80,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -118,7 +120,10 @@
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <ForceConformanceInForLoopScope>true</ForceConformanceInForLoopScope>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,6 +154,20 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Maps.cpp" />
+    <ClCompile Include="MarioDropFlyState.cpp" />
+    <ClCompile Include="MarioDroppingState.cpp" />
+    <ClCompile Include="MarioDuckingState.cpp" />
+    <ClCompile Include="MarioFlyingState.cpp" />
+    <ClCompile Include="MarioKickState.cpp" />
+    <ClCompile Include="MarioLevelUpState.cpp" />
+    <ClCompile Include="MarioPreFlyState.cpp" />
+    <ClCompile Include="MarioRunningState.cpp" />
+    <ClCompile Include="MarioStandingState.cpp" />
+    <ClCompile Include="MarioJumpingState.cpp" />
+    <ClCompile Include="MarioOnGroundState.cpp" />
+    <ClCompile Include="MarioState.cpp" />
+    <ClCompile Include="MarioStoppingState.cpp" />
+    <ClCompile Include="MarioWalkingState.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Utils.cpp" />
@@ -172,6 +191,20 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Maps.h" />
+    <ClInclude Include="MarioDropFlyState.h" />
+    <ClInclude Include="MarioDroppingState.h" />
+    <ClInclude Include="MarioDuckingState.h" />
+    <ClInclude Include="MarioFlyingState.h" />
+    <ClInclude Include="MarioKickState.h" />
+    <ClInclude Include="MarioLevelUpState.h" />
+    <ClInclude Include="MarioPreFlyState.h" />
+    <ClInclude Include="MarioRunningState.h" />
+    <ClInclude Include="MarioStandingState.h" />
+    <ClInclude Include="MarioJumpingState.h" />
+    <ClInclude Include="MarioOnGroundState.h" />
+    <ClInclude Include="MarioState.h" />
+    <ClInclude Include="MarioStoppingState.h" />
+    <ClInclude Include="MarioWalkingState.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="Utils.h" />

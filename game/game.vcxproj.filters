@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Mario">
+      <UniqueIdentifier>{e1a79e93-c950-49e7-af38-792610f9e4c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mario\MarioState">
+      <UniqueIdentifier>{a6c5adda-a931-4ab9-8376-e95ed540323f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enermies">
+      <UniqueIdentifier>{df965af5-ab84-4fe5-994f-e9f06badea2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mics">
+      <UniqueIdentifier>{56531830-0376-46c0-abc1-57c6661d52bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -30,22 +42,7 @@
     <ClCompile Include="Textures.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Portal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Koopas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene.cpp">
@@ -60,23 +57,80 @@
     <ClCompile Include="Maps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BigBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ground.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Plant.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Pipe.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FireBall.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="BigBox.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="Ground.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="Pipe.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Enermies</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopas.cpp">
+      <Filter>Enermies</Filter>
+    </ClCompile>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Enermies</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioOnGroundState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioDuckingState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioJumpingState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioWalkingState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioStandingState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioStoppingState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioRunningState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioPreFlyState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioFlyingState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioDroppingState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioDropFlyState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioKickState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioLevelUpState.cpp">
+      <Filter>Mario\MarioState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,25 +146,10 @@
     <ClInclude Include="Textures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="KeyEventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Portal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Koopas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PlayScene.h">
@@ -125,23 +164,80 @@
     <ClInclude Include="Maps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BigBox.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ground.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Plant.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Pipe.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FireBall.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="BigBox.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="Ground.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Enermies</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopas.h">
+      <Filter>Enermies</Filter>
+    </ClInclude>
+    <ClInclude Include="Plant.h">
+      <Filter>Enermies</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioOnGroundState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioDuckingState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioJumpingState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioWalkingState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioStandingState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioStoppingState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioRunningState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioPreFlyState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioFlyingState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioDroppingState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioDropFlyState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioKickState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioLevelUpState.h">
+      <Filter>Mario\MarioState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
