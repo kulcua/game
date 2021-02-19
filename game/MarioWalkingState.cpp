@@ -39,7 +39,7 @@ void MarioWalkingState::Update(CMario& mario, DWORD dt)
 {
     if (mario.isPower)
     {
-        mario.StartPowerUp();
+        mario.PowerUp();
         DebugOut(L"StartPowerUp\n");
     }
 	//if (mario.vx == 0)

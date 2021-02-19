@@ -16,10 +16,9 @@
 
 void CMario::ResetPower()
 {
-	power = 0; 
 	isPower = false; 
 	power_time_start = 0;
-	power_time_end = GetTickCount64(); // bug
+	PowerDown();
 }
 
 void CMario::HandleInput(Input input)
@@ -44,8 +43,8 @@ CMario::CMario(float x, float y) : CGameObject()
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	/*DebugOut(L"ispower %d\n", GetPower());*/
-	//DebugOut(L"vy: %f\n", vy);
+	DebugOut(L"GetPower %d\n", GetPower());
+	//DebugOut(L"vy: %f y: %f\n", vy,y);
 	// update mario state
 	state_->Update(*this, dt);
 
@@ -96,17 +95,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (power < MARIO_MAX_POWER && power_time_start > 0)
 	{
-		DebugOut(L"power_time_start %d\n", GetPower());
 		power = (GetTickCount64() - power_time_start) / MARIO_POWERUP_PER_SECOND;
 	}
 	if (power_time_end > 0 && isPower == false)
 	{
-		DebugOut(L"power_time_end %d\n", GetPower());
 		power = MARIO_MAX_POWER - ((GetTickCount64() - power_time_end) / MARIO_POWERUP_PER_SECOND);
 	}
 	if (power == 0)
 	{
-		DebugOut(L"power == 0 %d\n", GetPower());
 		power_time_end = 0;
 	}
 

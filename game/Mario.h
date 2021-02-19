@@ -47,7 +47,8 @@ public:
 	void SetAnimation(int a) { ani = a; }
 	int GetAnimation() { return ani; }
 
-	void StartPowerUp(){ power_time_start = GetTickCount64(); }
+	void PowerUp(){ power_time_start = GetTickCount64(); }
+	void PowerDown() { power_time_end = GetTickCount64(); }
 	void ResetPower();
 	int GetPower() { return power; }
 

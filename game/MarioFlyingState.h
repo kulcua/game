@@ -1,7 +1,7 @@
 #pragma once 
-#include "MarioOnGroundState.h"
+#include "MarioJumpingState.h"
 
-class MarioFlyingState : public MarioState
+class MarioFlyingState : public MarioJumpingState
 {
 	static MarioFlyingState* __instance;
 public:

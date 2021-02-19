@@ -104,11 +104,25 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     {
         if (mario.isGrounded) // check isGrounded to jump again
         {
-            if (mario.isSit == false) // if isSit, don't change state
+            if (mario.GetPower() == MARIO_MAX_POWER)
             {
-                mario.state_ = MarioState::jumping.GetInstance();
+                if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+                {
+                    mario.vy = -MARIO_FLY_SPEED_Y;
+                }
+                else
+                {
+                    mario.vy = -MARIO_JUMP_SPEED_Y;
+                }
+                mario.state_ = MarioState::flying.GetInstance();
             }
-            mario.vy = -MARIO_JUMP_SPEED_Y;
+            else {
+                if (mario.isSit == false) // if isSit, don't change state
+                {
+                    mario.state_ = MarioState::jumping.GetInstance();
+                }
+                mario.vy = -MARIO_JUMP_SPEED_Y;
+            }
             mario.isGrounded = false;
         }  
     }
@@ -130,6 +144,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     }
     else if (input == RELEASE_A)
     {
-        mario.ResetPower();
+        mario.isPower = false;
+        mario.PowerDown();
     }
 }
