@@ -15,9 +15,6 @@ class CMario : public CGameObject
 	int untouchable;
 	DWORD untouchable_start;
 
-	bool kick;
-	DWORD kick_start;
-
 	bool level_up;
 	DWORD level_up_start;
 
@@ -32,8 +29,7 @@ public:
 	void HandleInput(Input input);
 
 	bool isSit;
-	bool isDrop;
-	bool isDropFly;
+	bool isKick;
 
 	CMario(float x = 0.0f, float y = 0.0f);
 
@@ -54,9 +50,6 @@ public:
 
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 
-	void StartKick() {
-		kick = true; kick_start = GetTickCount();
-	}
 	void StartLevelUp() { level_up = true; level_up_start = GetTickCount(); }
 
 	//void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);

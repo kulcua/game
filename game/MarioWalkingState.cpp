@@ -42,28 +42,28 @@ void MarioWalkingState::Update(CMario& mario, DWORD dt)
         mario.PowerUp();
         DebugOut(L"StartPowerUp\n");
     }
-	//if (mario.vx == 0)
-	//	//&&state != MARIO_STATE_DIE)
-	//{
-	//	mario.state_ = MarioState::standing.GetInstance();
-	//}
-	//else {
-	//	//DebugOut(L"vx: %f\n", vx);
-	//	if (mario.vx > 0)
-	//	{
-	//		a = -MARIO_ACCELERATION;
-	//		mario.vx += a * dt;
-	//		if (mario.vx < 0)
-	//			mario.vx = 0;
-	//	}
-	//	else
-	//	{
-	//		a = MARIO_ACCELERATION;
-	//		mario.vx += a * dt;
-	//		if (mario.vx > 0)
-	//			mario.vx = 0;
-	//	}
-	//}
+	/*if (mario.vx == 0)
+	{
+        DebugOut(L"standing\n");
+		mario.state_ = MarioState::standing.GetInstance();
+	}
+	else {
+        DebugOut(L"MARIO_ACCELERATION\n");
+		if (mario.vx > 0)
+		{
+			a = -MARIO_ACCELERATION;
+			mario.vx += a * dt;
+			if (mario.vx < 0)
+				mario.vx = 0;
+		}
+		else
+		{
+			a = MARIO_ACCELERATION;
+			mario.vx += a * dt;
+			if (mario.vx > 0)
+				mario.vx = 0;
+		}
+	}*/
     //DebugOut(L"Walking\n");
 }
 

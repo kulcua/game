@@ -11,6 +11,7 @@
 #include "MarioState.h"
 #include "MarioStandingState.h"
 #include "MarioDuckingState.h"
+#include "MarioKickState.h"
 
 #define BORDER_X 15
 
@@ -60,7 +61,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	// set ACCELERATION for mario
 	// maybe it should be in Walking State?
 	// but how about ACCELERATION when jumping or flying?
-	if (vx == 0 && isGrounded && isSit == false) 
+	if (vx == 0 && isGrounded && isSit == false && isKick == false) 
 		//&&state != MARIO_STATE_DIE)
 	{
 		state_ = MarioState::standing.GetInstance();
@@ -117,16 +118,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		level_up_start = 0;
 		level_up = false;
-	}
-
-	if (!isGrounded && !isJump && !isFly)
-	{
-		isDrop = true;
-	}
-	else
-	{
-		isDrop = false;
-		isDropFly = false;
 	}*/
 
 	// No collision occured, proceed normally
@@ -259,7 +250,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else
 				{
 					koopas->vx = KOOPAS_BALL_SPEED;// *this->nx;
-					StartKick();
+					MarioState::kick.GetInstance()->StartKick();
+					state_ = MarioState::kick.GetInstance();
+					isKick = true;
+					DebugOut(L"startkick\n");
 				}
 			}
 		}
@@ -310,63 +304,6 @@ void CMario::Render()
 void CMario::SetState(int state)
 {
 	CGameObject::SetState(state);
-
-	//switch (state)
-	//{
-	//case MARIO_STATE_WALKING_RIGHT:
-	//	if (isRun)
-	//	{
-	//		StartRun();
-	//		vx = MARIO_RUN_SPEED;
-	//	}
-	//	else
-	//	{
-	//		vx = MARIO_WALKING_SPEED;
-	//		isPreFly = false;
-	//	}
-	//	nx = 1;
-	//	break;
-	//case MARIO_STATE_WALKING_LEFT:
-	//	if (isRun)
-	//	{
-	//		StartRun();
-	//		vx = -MARIO_RUN_SPEED;
-	//	}	
-	//	else
-	//	{
-	//		isPreFly = false;
-	//		vx = -MARIO_WALKING_SPEED;
-	//	}
-	//	nx = -1;
-	//	break;
-	//case MARIO_STATE_JUMP:
-	//	if (isDrop) //drop
-	//	{
-	//		if (level == MARIO_LEVEL_RACCOON)
-	//		{
-	//			isDropFly = true;
-	//			isDrop = false;
-	//			vy = -MARIO_DROP_FLY_SPEED_Y;
-	//		}
-	//	}
-	//	else if (isFly) //fly
-	//	{
-	//		if (level == MARIO_LEVEL_RACCOON)
-	//			vy = -MARIO_FLY_SPEED_Y;
-	//		else if (isGrounded)
-	//			vy = -MARIO_JUMP_SPEED_Y;
-	//		isJump = false;
-	//	}
-	//	else if (isGrounded) //jump
-	//	{
-	//		vy = -MARIO_JUMP_SPEED_Y;
-	//		isJump = true;
-	//	}
-	//	isGrounded = false;
-	//	break;
-	//case MARIO_STATE_IDLE:	
-	//	vx = 0;
-	//	break;
 	//case MARIO_STATE_DIE:
 	//	vy = -MARIO_DIE_DEFLECT_SPEED;
 	//	break;
