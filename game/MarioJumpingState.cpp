@@ -56,8 +56,10 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
-    if (mario.isGrounded == false && mario.vy > 0)
+    if (mario.isGrounded == false && mario.vy > 0 && mario.GetPower() < 6)
         mario.state_ = MarioState::dropping.GetInstance();
+    else if (mario.isGrounded) // if mario suddenly get on Ground
+        mario.state_ = MarioState::standing.GetInstance();
     //DebugOut(L"Jumping %f\n", mario.vx);
 }
 
