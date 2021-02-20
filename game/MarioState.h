@@ -12,6 +12,7 @@ class MarioDroppingState;
 class MarioDropFlyState;
 class MarioKickState;
 class MarioLevelUpState;
+class MarioTailHitState;
 
 class MarioState
 {
@@ -30,6 +31,7 @@ public:
 	static MarioDropFlyState dropFly;
 	static MarioKickState kick;
 	static MarioLevelUpState levelUp;
+	static MarioTailHitState tailHit;
 
 	virtual void HandleInput(CMario& mario, Input input) = 0;
 	virtual void Update(CMario& mario, DWORD dt);

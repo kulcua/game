@@ -9,6 +9,7 @@
 #include "MarioStoppingState.h"
 #include "MarioPreFlyState.h"
 #include "MarioFlyingState.h"
+#include "MarioTailHitState.h"
 
 void SwitchSittingToWalking(CMario& mario)
 {
@@ -146,6 +147,12 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     else if (input == PRESS_A)
     {
         mario.isPower = true; 
+        if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        {
+            mario.isAttack = true;
+            mario.state_ = MarioState::tailHit.GetInstance();
+            MarioState::tailHit.GetInstance()->StartHit();
+        }     
     }
     else if (input == RELEASE_A)
     {

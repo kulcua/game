@@ -166,7 +166,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (e->nx != 0)
 				{
-					if (untouchable == 0)
+					if (isAttack)
+						goomba->SetState(GOOMBA_STATE_DIE);
+					/*if (untouchable == 0)
 					{
 						if (goomba->GetState() != GOOMBA_STATE_DIE)
 						{
@@ -175,7 +177,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 							else
 								SetState(MARIO_STATE_DIE);	
 						}
-					}
+					}*/
 				}
 			}
 			else if (dynamic_cast<CGround*>(e->obj))
@@ -289,11 +291,21 @@ void CMario::Render()
 		ani = MARIO_ANI_DIE;
 	else 
 		ani = GetAnimation();
-	
-	int alpha = 255;
-	animation_set->at(ani)->Render(x, y, nx, alpha);
 
-	//RenderBoundingBox();
+	int alpha = 255;
+
+	if (isAttack)
+	{
+		int x_;
+		if (nx < 0)
+			x_ = x - 5;
+		else x_ = x;
+		animation_set->at(ani)->Render(x_, y, nx, alpha);
+	}
+	else 
+		animation_set->at(ani)->Render(x, y, nx, alpha);
+
+	RenderBoundingBox();
 	//DebugOut(L"state: %d ani: %d\n", state, ani); 
 }
 
@@ -333,7 +345,18 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	if (isSit)
 	{
 		bottom = y + MARIO_SIT_BBOX_HEIGHT;
-	}	
+	}
+	else if (isAttack)
+	{
+		if (nx > 0)
+			right = x + 30;
+		else
+		{
+			//left = x;
+			//right = x + 50;
+			//DebugOut(L"left %f right %f", left, right);
+		}
+	}
 }
 
 //Reset Mario status to the beginning state of a scene
