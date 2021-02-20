@@ -51,6 +51,11 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     else if (input == RELEASE_A)
     {
         mario.PowerReset();
+
+    }
+    else if (input == RELEASE_S)
+    {
+        mario.highJump = false;
     }
 }
 
@@ -60,11 +65,29 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
         mario.state_ = MarioState::dropping.GetInstance();
     else if (mario.isGrounded) // if mario suddenly get on Ground
         mario.state_ = MarioState::standing.GetInstance();
+
+    //region check highJump
+    if (mario.highJump)
+    {
+        if (GetTickCount64() - jump_time_start > MARIO_HIGH_JUMP_TIME)
+        {
+            jump_time_start = 0;
+        }
+        else
+        {
+            mario.vy = -MARIO_JUMP_SPEED_Y;
+        }   
+    }
     //DebugOut(L"Jumping %f\n", mario.vx);
 }
 
 void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)
 {
     MarioState::GetBoundingBox(mario, left, top, right, bottom);
+}
+
+void MarioJumpingState::StartJump()
+{
+    jump_time_start = GetTickCount64();
 }
 

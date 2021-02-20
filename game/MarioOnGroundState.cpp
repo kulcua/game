@@ -48,7 +48,6 @@ void SetStateWalk_Run_PreFly(CMario &mario)
     if (mario.isGrounded) {
         if (mario.isPower)
         {
-            DebugOut(L"ispower\n");
             if (mario.GetPower() < MARIO_MAX_POWER)
             {
                 mario.vx = mario.nx * MARIO_RUN_SPEED;
@@ -106,7 +105,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         if (mario.isGrounded) // check isGrounded to jump again
         {
             if (mario.GetPower() == MARIO_MAX_POWER)
-            {
+            { // if can Fly
                 if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
                 {
                     mario.vy = -MARIO_FLY_SPEED_Y;
@@ -117,10 +116,15 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 }
                 mario.state_ = MarioState::flying.GetInstance();
             }
-            else {
-                if (mario.isSit == false) // if isSit, don't change state
+            else { // if not, Jump normally
+                mario.highJump = true;
+                if (mario.isSit == true) // if isSit, don't change state
                 {
+                    MarioState::ducking.GetInstance()->StartJump();
+                }
+                else {
                     mario.state_ = MarioState::jumping.GetInstance();
+                    MarioState::jumping.GetInstance()->StartJump();
                 }
                 mario.vy = -MARIO_JUMP_SPEED_Y;
             }
