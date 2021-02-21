@@ -246,6 +246,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						koopas->SetState(KOOPAS_STATE_BALL);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
+					else if (e->nx != 0 && isAttack)
+					{
+						koopas->SetState(KOOPAS_STATE_BALL);
+					}
 				}
 				else
 				{
@@ -341,7 +345,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 		right = x + MARIO_SMALL_BBOX_WIDTH;
 		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
 	}
-
+	
 	if (isSit)
 	{
 		bottom = y + MARIO_SIT_BBOX_HEIGHT;
@@ -352,9 +356,9 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 			right = x + 30;
 		else
 		{
-			//left = x;
-			//right = x + 50;
-			//DebugOut(L"left %f right %f", left, right);
+			left = x - 30;
+			//right = left - 25;
+			DebugOut(L"ATT left %f right %f\n", left, right);
 		}
 	}
 }

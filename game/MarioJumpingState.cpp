@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "MarioStandingState.h"
 #include "MarioDroppingState.h"
+#include "MarioTailHitState.h"
 
 MarioJumpingState* MarioJumpingState::__instance = NULL;
 
@@ -56,6 +57,15 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     else if (input == RELEASE_S)
     {
         mario.highJump = false;
+    }
+    else if (input == PRESS_A)
+    {
+        if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        {
+            mario.isAttack = true;
+            mario.state_ = MarioState::tailHit.GetInstance();
+            MarioState::tailHit.GetInstance()->StartHit();
+        }
     }
 }
 
