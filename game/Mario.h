@@ -23,11 +23,14 @@ public:
 
 	bool isGrounded;
 	bool isPower;
+	bool isHandleShell;
 	MarioState* state_;
 
 	void HandleInput(Input input);
 
 	bool isSit;
+	bool highJump;
+	bool isAttack;
 
 	CMario(float x = 0.0f, float y = 0.0f);
 

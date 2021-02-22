@@ -1,16 +1,15 @@
-#pragma once
-#include "MarioOnGroundState.h"
+#pragma once 
+#include "MarioState.h"
 
-class MarioDuckingState : public MarioOnGroundState
+class MarioAttackState : public MarioState
 {
-	static MarioDuckingState* __instance;
-	DWORD jump_time_start;
+	static MarioAttackState* __instance;
+	DWORD hit_time_start;
 public:
-	static MarioDuckingState* GetInstance();
+	static MarioAttackState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);
 	virtual void Update(CMario& mario, DWORD dt);
 	virtual void GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom);
 	virtual void Enter(CMario& mario);
-	void StartJump();
+	void StartHit() { hit_time_start = GetTickCount64(); };
 };
-

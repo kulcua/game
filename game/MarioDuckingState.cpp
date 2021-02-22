@@ -29,10 +29,25 @@ void MarioDuckingState::Enter(CMario& mario)
 void MarioDuckingState::HandleInput(CMario& mario, Input input)
 {
     MarioOnGroundState::HandleInput(mario, input);
+    if (input == RELEASE_S)
+    {
+        mario.highJump = false;
+    }
 }
 
 void MarioDuckingState::Update(CMario& mario, DWORD dt)
 {
+    if (mario.highJump)
+    {
+        if (GetTickCount64() - jump_time_start > MARIO_HIGH_JUMP_TIME)
+        {
+            jump_time_start = 0;
+        }
+        else
+        {
+            mario.vy = -MARIO_JUMP_SPEED_Y;
+        }
+    }
     //DebugOut(L"MarioDuckingState\n");
 }
 
@@ -43,5 +58,10 @@ void MarioDuckingState::GetBoundingBox(CMario& mario, float& left, float& top, f
     {      
         bottom = mario.y + MARIO_SIT_BBOX_HEIGHT;
     }  
+}
+
+void MarioDuckingState::StartJump()
+{
+    jump_time_start = GetTickCount64();
 }
 

@@ -15,17 +15,35 @@ MarioRunningState* MarioRunningState::GetInstance()
 
 void MarioRunningState::Enter(CMario& mario)
 {
-	if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+	if (mario.isHandleShell)
 	{
-		mario.SetAnimation(MARIO_ANI_SMALL_RUN);
+		if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+		{
+			mario.SetAnimation(MARIO_ANI_SMALL_HANDLESHELL_RUN);
+		}
+		else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+		{
+			mario.SetAnimation(MARIO_ANI_BIG_HANDLESHELL_RUN);
+		}
+		else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+		{
+			mario.SetAnimation(MARIO_ANI_RACCOON_HANDLESHELL_RUN);
+		}
 	}
-	else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+	else
 	{
-		mario.SetAnimation(MARIO_ANI_BIG_RUN);
-	}
-	else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-	{
-		mario.SetAnimation(MARIO_ANI_RACCOON_RUN);
+		if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+		{
+			mario.SetAnimation(MARIO_ANI_SMALL_RUN);
+		}
+		else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+		{
+			mario.SetAnimation(MARIO_ANI_BIG_RUN);
+		}
+		else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+		{
+			mario.SetAnimation(MARIO_ANI_RACCOON_RUN);
+		}
 	}
 }
 
@@ -37,6 +55,11 @@ void MarioRunningState::HandleInput(CMario& mario, Input input)
 void MarioRunningState::Update(CMario& mario, DWORD dt)
 {
 	MarioState::Update(mario, dt);
+	if (mario.isPower && mario.power_time_start == 0)
+	{
+		mario.PowerUp();
+		DebugOut(L"StartPowerUp\n");
+	}
 	//DebugOut(L"Running\n");
 }
 

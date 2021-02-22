@@ -12,8 +12,7 @@
 #include "Plant.h"
 #include "Pipe.h"
 #include "FireBall.h"
-#include "MarioStoppingState.h"
-#include "MarioWalkingState.h"
+#include "MarioKickState.h"
 
 using namespace std;
 
@@ -479,6 +478,10 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 		break;
 	case DIK_A:
 		input = RELEASE_A;
+		mario->HandleInput(input);
+		break;
+	case DIK_S:
+		input = RELEASE_S;
 		mario->HandleInput(input);
 		break;
 	}
