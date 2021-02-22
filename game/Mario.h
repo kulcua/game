@@ -5,7 +5,9 @@
 class CMario : public CGameObject
 {
 	friend class MarioState;
+	friend class CKoopas;
 
+	CKoopas* koopaShell;
 	int level;
 	int ani;
 
@@ -55,8 +57,8 @@ public:
 	//void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);
 	
 	void Reset();
-
 	void LevelUp();
+	void KickShell();
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

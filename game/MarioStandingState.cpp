@@ -1,6 +1,7 @@
 #include "MarioStandingState.h"
 #include "Mario.h"
 #include "MarioWalkingState.h"
+#include "MarioRunningState.h"
 
 MarioStandingState* MarioStandingState::__instance = NULL;
 
@@ -60,9 +61,14 @@ void MarioStandingState::GetBoundingBox(CMario& mario, float& left, float& top, 
 
 void MarioStandingState::Update(CMario& mario, DWORD dt)
 {
-    if (mario.vx != 0)
+    if (mario.vx !=0)
     {
-        mario.state_ = MarioState::walking.GetInstance();
+        mario.state_ = MarioState::running.GetInstance();
     }
+    if (mario.isHandleShell == true)
+    {
+        mario.PowerReset();
+        mario.isPower = true; // cuz standing but player still keep PRESS_A
+    }       
     //DebugOut(L"MarioStandingState\n");
 }

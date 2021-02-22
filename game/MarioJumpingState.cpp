@@ -70,6 +70,7 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     else if (input == RELEASE_A)
     {
         mario.PowerReset();
+        mario.KickShell();
     }
     else if (input == RELEASE_S)
     {

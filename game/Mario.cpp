@@ -22,9 +22,14 @@ void CMario::PowerReset()
 	power_time_start = 0;
 	save_power = 0;
 	PowerDown();
+}
+
+void CMario::KickShell()
+{
 	if (isHandleShell)
 	{
 		isHandleShell = false;
+		koopaShell->KickByMario(this);
 		state_ = MarioState::kick.GetInstance();
 		MarioState::kick.GetInstance()->StartKick();
 	}
@@ -252,21 +257,22 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						koopas->SetState(KOOPAS_STATE_BALL);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-					else if (e->nx != 0)
-					{
-						if (isAttack)
-							koopas->SetState(KOOPAS_STATE_BALL);
-						else if (isPower && GetPower() > 0)
-						{
-							isHandleShell = true;
-						}
-					}
+					else if (e->nx != 0 && isAttack) // tail hit
+						koopas->SetState(KOOPAS_STATE_BALL);							
 				}
 				else
 				{
-					koopas->vx = KOOPAS_BALL_SPEED;// *this->nx;
-					MarioState::kick.GetInstance()->StartKick();
-					state_ = MarioState::kick.GetInstance();
+					if (isPower && e->nx != 0) //handleShell
+					{
+						isHandleShell = true;
+						koopas->HandleByMario(this);
+						koopaShell = koopas;
+					}
+					else { // kick normally
+						koopas->vx = this->nx * KOOPAS_BALL_SPEED;
+						MarioState::kick.GetInstance()->StartKick();
+						state_ = MarioState::kick.GetInstance();
+					}
 				}
 			}
 		}
@@ -363,13 +369,9 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	else if (isAttack)
 	{
 		if (nx > 0)
-			right = x + 30;
+			right = x + MARIO_BBOX_TAIL_HIT_RIGHT;
 		else
-		{
-			left = x - 5;
-			//right = left - 25;
-			DebugOut(L"ATT left %f right %f\n", left, right);
-		}
+			left = x - MARIO_BBOX_TAIL_HIT_LEFT;
 	}
 }
 

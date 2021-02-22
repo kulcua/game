@@ -18,7 +18,12 @@ void MarioDropFlyState::Enter(CMario& mario)
 {
     if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
     {
-        mario.SetAnimation(MARIO_ANI_RACCOON_DROP_FLY);
+        if (mario.isHandleShell)
+        {
+            mario.SetAnimation(MARIO_ANI_RACCOON_HANDLESHELL_JUMP_FLY_DROP);
+        }
+        else
+            mario.SetAnimation(MARIO_ANI_RACCOON_DROP_FLY);
     }
 }
 
