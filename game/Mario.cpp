@@ -22,6 +22,12 @@ void CMario::PowerReset()
 	power_time_start = 0;
 	save_power = 0;
 	PowerDown();
+	if (isHandleShell)
+	{
+		isHandleShell = false;
+		state_ = MarioState::kick.GetInstance();
+		MarioState::kick.GetInstance()->StartKick();
+	}
 }
 
 void CMario::PowerControl()
@@ -246,9 +252,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						koopas->SetState(KOOPAS_STATE_BALL);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-					else if (e->nx != 0 && isAttack)
+					else if (e->nx != 0)
 					{
-						koopas->SetState(KOOPAS_STATE_BALL);
+						if (isAttack)
+							koopas->SetState(KOOPAS_STATE_BALL);
+						else if (isPower && GetPower() > 0)
+						{
+							isHandleShell = true;
+						}
 					}
 				}
 				else
@@ -295,7 +306,7 @@ void CMario::Render()
 		ani = MARIO_ANI_DIE;
 	else 
 		ani = GetAnimation();
-
+	//DebugOut(L"state: %d ani: %d\n", state_, ani);
 	int alpha = 255;
 
 	if (isAttack)
@@ -309,8 +320,7 @@ void CMario::Render()
 	else 
 		animation_set->at(ani)->Render(x, y, nx, alpha);
 
-	RenderBoundingBox();
-	//DebugOut(L"state: %d ani: %d\n", state, ani); 
+	//RenderBoundingBox();
 }
 
 void CMario::SetState(int state)
@@ -356,7 +366,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 			right = x + 30;
 		else
 		{
-			left = x - 30;
+			left = x - 5;
 			//right = left - 25;
 			DebugOut(L"ATT left %f right %f\n", left, right);
 		}
@@ -367,6 +377,9 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CMario::Reset()
 {
 	state_ = MarioState::standing.GetInstance();
+	isAttack = false;
+	isPower = false;
+	isHandleShell = false;
 	SetLevel(MARIO_LEVEL_SMALL);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);

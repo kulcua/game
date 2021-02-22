@@ -18,28 +18,46 @@ MarioDroppingState* MarioDroppingState::GetInstance()
 
 void MarioDroppingState::Enter(CMario& mario)
 {
-    if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+    if (mario.isHandleShell)
     {
-        mario.SetAnimation(MARIO_ANI_SMALL_DROP);
+        if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+        {
+            mario.SetAnimation(MARIO_ANI_SMALL_HANDLESHELL_JUMP_DROP);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+        {
+            mario.SetAnimation(MARIO_ANI_BIG_HANDLESHELL_JUMP_DROP);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        {
+            mario.SetAnimation(MARIO_ANI_RACCOON_HANDLESHELL_JUMP_FLY_DROP);
+        }
     }
-    else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+    else
     {
-        mario.SetAnimation(MARIO_ANI_BIG_DROP);
-    }
-    else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-    {
-        mario.SetAnimation(MARIO_ANI_RACCOON_DROP);
+        if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+        {
+            mario.SetAnimation(MARIO_ANI_SMALL_DROP);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+        {
+            mario.SetAnimation(MARIO_ANI_BIG_DROP);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        {
+            mario.SetAnimation(MARIO_ANI_RACCOON_DROP);
+        }
     }
 }
 
 void MarioDroppingState::HandleInput(CMario& mario, Input input)
 {
-    MarioJumpingState::HandleInput(mario, input);
     if (input == PRESS_S && mario.GetLevel() == MARIO_LEVEL_RACCOON)
     {
         mario.state_ = MarioState::dropFly.GetInstance();
         mario.vy = -MARIO_DROP_FLY_SPEED_Y;
     }
+    else  MarioJumpingState::HandleInput(mario, input);
 }
 
 void MarioDroppingState::Update(CMario& mario, DWORD dt)

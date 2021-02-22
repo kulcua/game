@@ -27,17 +27,34 @@ void MarioFlyingState::HandleInput(CMario& mario, Input input)
 
 void MarioFlyingState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioFlyingState
 {
-    if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+    if (mario.isHandleShell)
     {
-        mario.SetAnimation(MARIO_ANI_SMALL_FLY);
+        if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+        {
+            mario.SetAnimation(MARIO_ANI_SMALL_HANDLESHELL_JUMP_DROP);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+        {
+            mario.SetAnimation(MARIO_ANI_BIG_HANDLESHELL_JUMP_DROP);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        {
+            mario.SetAnimation(MARIO_ANI_RACCOON_HANDLESHELL_JUMP_FLY_DROP);
+        }
     }
-    else if (mario.GetLevel() == MARIO_LEVEL_BIG)
-    {
-        mario.SetAnimation(MARIO_ANI_BIG_FLY);
-    }
-    else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-    {
-        mario.SetAnimation(MARIO_ANI_RACCOON_FLY);
+    else {
+        if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+        {
+            mario.SetAnimation(MARIO_ANI_SMALL_FLY);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+        {
+            mario.SetAnimation(MARIO_ANI_BIG_FLY);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        {
+            mario.SetAnimation(MARIO_ANI_RACCOON_FLY);
+        }
     }
 }
 

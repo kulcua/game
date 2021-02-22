@@ -12,8 +12,7 @@
 #include "Plant.h"
 #include "Pipe.h"
 #include "FireBall.h"
-#include "MarioStoppingState.h"
-#include "MarioWalkingState.h"
+#include "MarioKickState.h"
 
 using namespace std;
 

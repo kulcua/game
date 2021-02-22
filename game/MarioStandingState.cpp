@@ -21,17 +21,35 @@ void MarioStandingState::HandleInput(CMario& mario, Input input)
 
 void MarioStandingState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioStandingState
 {
-    if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+    if (mario.isHandleShell)
     {
-        mario.SetAnimation(MARIO_ANI_SMALL_IDLE);
+        if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+        {
+            mario.SetAnimation(MARIO_ANI_SMALL_HANDLESHELL_IDLE);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+        {
+            mario.SetAnimation(MARIO_ANI_BIG_HANDLESHELL_IDLE);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        {
+            mario.SetAnimation(MARIO_ANI_RACCOON_HANDLESHELL_IDLE);
+        }
     }
-    else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+    else
     {
-        mario.SetAnimation(MARIO_ANI_BIG_IDLE);
-    }
-    else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-    {
-        mario.SetAnimation(MARIO_ANI_RACCOON_IDLE);
+        if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+        {
+            mario.SetAnimation(MARIO_ANI_SMALL_IDLE);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_BIG)
+        {
+            mario.SetAnimation(MARIO_ANI_BIG_IDLE);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        {
+            mario.SetAnimation(MARIO_ANI_RACCOON_IDLE);
+        }
     }
 }
 

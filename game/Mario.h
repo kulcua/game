@@ -23,6 +23,7 @@ public:
 
 	bool isGrounded;
 	bool isPower;
+	bool isHandleShell;
 	MarioState* state_;
 
 	void HandleInput(Input input);

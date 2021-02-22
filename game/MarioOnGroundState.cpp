@@ -79,7 +79,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
 
             if (mario.isSit)
                 SwitchSittingToWalking(mario);
-            if (mario.vx < 0)
+            if (mario.vx < 0 && mario.isHandleShell == false)
             {
                 mario.PowerReset();
                 mario.state_ = MarioState::stopping.GetInstance();
@@ -92,7 +92,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
 
             if (mario.isSit) // if Mario is sitting
                 SwitchSittingToWalking(mario);
-            if (mario.vx > 0)
+            if (mario.vx > 0 && mario.isHandleShell == false)
             {
                 mario.PowerReset();
                 mario.state_ = MarioState::stopping.GetInstance();
@@ -147,6 +147,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     else if (input == PRESS_A)
     {
         mario.isPower = true; 
+        DebugOut(L"mario.isPower = true\n");
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
             mario.isAttack = true;
@@ -162,7 +163,6 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     {
         if (mario.isPower)
         {
-            DebugOut(L"PowerUp\n");
             mario.PowerUp();
         }
     }
