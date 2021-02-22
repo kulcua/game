@@ -5,12 +5,50 @@
 #include "Utils.h"
 #include "Pipe.h"
 #include "Goomba.h"
+#include "Mario.h"
 
 CKoopas::CKoopas(float start_x, float end_x)
 {
 	this->start_x = start_x;
 	this->end_x = end_x;
 	SetState(KOOPAS_STATE_WALKING);
+}
+
+void CKoopas::HandleByMario(CMario* mario)
+{
+	isHandled = true;
+	mario_ = mario;
+}
+
+void CKoopas::KickByMario(CMario* mario)
+{
+	isHandled = false;	 
+	vx = mario->nx * KOOPAS_BALL_SPEED; // mario->nx;
+}
+
+void CKoopas::SetPositionHandled()
+{
+	if (mario_->GetLevel() == MARIO_LEVEL_SMALL)
+	{
+		if (mario_->nx < 0)
+			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
+		else
+			SetPosition(mario_->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario_->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
+	}
+	else if (mario_->GetLevel() == MARIO_LEVEL_BIG)
+	{
+		if (mario_->nx < 0)
+			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+		else
+			SetPosition(mario_->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+	}
+	else if (mario_->GetLevel() == MARIO_LEVEL_RACCOON)
+	{
+		if (mario_->nx < 0)
+			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+		else
+			SetPosition(mario_->x + MARIO_RACCOON_HANDLE_SHELL_WIDTH_RIGHT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+	}
 }
 
 void CKoopas::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -34,7 +72,14 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		CGameObject::Update(dt, coObjects);
 
-		vy += KOOPAS_GRAVITY * dt;
+		if (isHandled)
+		{
+			SetPositionHandled();
+		}
+		else
+		{
+			vy += KOOPAS_GRAVITY * dt;
+		}
 
 		if (state != KOOPAS_STATE_BALL)
 		{
@@ -106,7 +151,6 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					goomba->SetState(GOOMBA_STATE_DIE);
 				}
 			}
-
 		}
 		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}

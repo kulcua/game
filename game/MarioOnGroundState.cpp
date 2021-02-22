@@ -68,6 +68,17 @@ void SetStateWalk_Run_PreFly(CMario &mario)
     }
 }
 
+void StopStateWhenHandleShell(CMario& mario)
+{
+    mario.PowerReset();
+    if (mario.isHandleShell == false)
+        mario.state_ = MarioState::stopping.GetInstance();
+    else {
+        //if handleShell but stop -> still keep flag isPower
+        mario.isPower = true;
+    }
+}
+
 void MarioOnGroundState::HandleInput(CMario& mario, Input input)
 {
     CGame* game = CGame::GetInstance();
@@ -79,10 +90,9 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
 
             if (mario.isSit)
                 SwitchSittingToWalking(mario);
-            if (mario.vx < 0 && mario.isHandleShell == false)
+            if (mario.vx < 0)
             {
-                mario.PowerReset();
-                mario.state_ = MarioState::stopping.GetInstance();
+                StopStateWhenHandleShell(mario);
             }
             else SetStateWalk_Run_PreFly(mario);
         }
@@ -92,10 +102,9 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
 
             if (mario.isSit) // if Mario is sitting
                 SwitchSittingToWalking(mario);
-            if (mario.vx > 0 && mario.isHandleShell == false)
+            if (mario.vx > 0)
             {
-                mario.PowerReset();
-                mario.state_ = MarioState::stopping.GetInstance();
+                StopStateWhenHandleShell(mario);
             }
             else SetStateWalk_Run_PreFly(mario);
         }
@@ -146,8 +155,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     }
     else if (input == PRESS_A)
     {
-        mario.isPower = true; 
-        DebugOut(L"mario.isPower = true\n");
+        mario.isPower = true; ;
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
             mario.isAttack = true;
@@ -158,6 +166,11 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     else if (input == RELEASE_A)
     {
         mario.PowerReset();
+        mario.KickShell();
+    }
+    else if (input == RELEASE_LEFT || input == RELEASE_RIGHT)
+    {
+        mario.isPower = false;
     }
     else if (input == PRESS_LEFT || input == PRESS_RIGHT)
     {

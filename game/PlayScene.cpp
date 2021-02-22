@@ -407,8 +407,9 @@ void CPlayScene::Update(DWORD dt)
 void CPlayScene::Render()
 {
 	CMaps::GetInstance()->Render();
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = 1; i < objects.size(); i++)
 		objects[i]->Render();
+	objects[0]->Render(); // render mario lastest
 }
 
 //Unload current scene
@@ -482,6 +483,14 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 		break;
 	case DIK_S:
 		input = RELEASE_S;
+		mario->HandleInput(input);
+		break;
+	case DIK_LEFT:
+		input = RELEASE_LEFT;
+		mario->HandleInput(input);
+		break;
+	case DIK_RIGHT:
+		input = RELEASE_RIGHT;
 		mario->HandleInput(input);
 		break;
 	}
