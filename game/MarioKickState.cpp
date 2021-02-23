@@ -16,9 +16,8 @@ MarioKickState* MarioKickState::GetInstance()
 
 void MarioKickState::HandleInput(CMario& mario, Input input)
 {
-    if (kick_time_start == 0)
+    if (kickStartTime == 0)
     {
-        DebugOut(L"HandleInput\n");
         MarioOnGroundState::HandleInput(mario, input);
     }
 }
@@ -46,10 +45,10 @@ void MarioKickState::GetBoundingBox(CMario& mario, float& left, float& top, floa
 
 void MarioKickState::Update(CMario& mario, DWORD dt)
 {
-    if (GetTickCount64() - kick_time_start > MARIO_KICK_TIME)
+    if (GetTickCount64() - kickStartTime > MARIO_KICK_TIME)
     {
         mario.state_ = MarioState::standing.GetInstance();
-        kick_time_start = 0;
+        kickStartTime = 0;
     }
     //DebugOut(L"Kick %d\n", GetTickCount64() - kick_time_start);
 }

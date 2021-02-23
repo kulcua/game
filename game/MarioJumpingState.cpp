@@ -74,7 +74,7 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     }
     else if (input == RELEASE_S)
     {
-        mario.highJump = false;
+        mario.isHighJump = false;
     }
     else if (input == PRESS_A)
     {
@@ -95,11 +95,11 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
         mario.state_ = MarioState::standing.GetInstance();
 
     //region check highJump
-    if (mario.highJump)
+    if (mario.isHighJump)
     {
-        if (GetTickCount64() - jump_time_start > MARIO_HIGH_JUMP_TIME)
+        if (GetTickCount64() - jumpStartTime > MARIO_HIGH_JUMP_TIME)
         {
-            jump_time_start = 0;
+            jumpStartTime = 0;
         }
         else
         {
@@ -116,6 +116,6 @@ void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, f
 
 void MarioJumpingState::StartJump()
 {
-    jump_time_start = GetTickCount64();
+    jumpStartTime = GetTickCount64();
 }
 
