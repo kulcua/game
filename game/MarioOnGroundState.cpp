@@ -20,7 +20,7 @@ void SwitchSittingToWalking(CMario& mario)
         mario.y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
 }
 
-void SettingLocationGetInSitState(CMario& mario)
+void SetPositionGetInSitState(CMario& mario)
 {
     if (mario.GetLevel() != MARIO_LEVEL_SMALL)
     {
@@ -32,7 +32,7 @@ void SettingLocationGetInSitState(CMario& mario)
     }
 }
 
-void SettingLocationGetOutSitState(CMario& mario)
+void SetPositionGetOutSitState(CMario& mario)
 {
     if (mario.GetLevel() != MARIO_LEVEL_SMALL)
     {
@@ -68,7 +68,7 @@ void SetStateWalk_Run_PreFly(CMario &mario)
     }
 }
 
-void StopStateWhenHandleShell(CMario& mario)
+void SetStopStateWhenHandleShell(CMario& mario)
 {
     mario.PowerReset();
     if (mario.isHandleShell == false)
@@ -92,7 +92,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 SwitchSittingToWalking(mario);
             if (mario.vx < 0)
             {
-                StopStateWhenHandleShell(mario);
+                SetStopStateWhenHandleShell(mario);
             }
             else SetStateWalk_Run_PreFly(mario);
         }
@@ -104,7 +104,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 SwitchSittingToWalking(mario);
             if (mario.vx > 0)
             {
-                StopStateWhenHandleShell(mario);
+                SetStopStateWhenHandleShell(mario);
             }
             else SetStateWalk_Run_PreFly(mario);
         }
@@ -127,7 +127,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 mario.state_ = MarioState::flying.GetInstance();
             }
             else { // if not, Jump normally
-                mario.highJump = true;
+                mario.isHighJump = true;
                 if (mario.isSit == true) // if isSit, don't change state
                 {
                     MarioState::ducking.GetInstance()->StartJump();
@@ -146,12 +146,12 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     else if (input == PRESS_DOWN && mario.vx == 0)
     {
         mario.state_ = MarioState::ducking.GetInstance();
-        SettingLocationGetInSitState(mario);
+        SetPositionGetInSitState(mario);
     }
     else if (input == RELEASE_DOWN && mario.vx == 0)
     {
         mario.state_ = MarioState::standing.GetInstance();
-        SettingLocationGetOutSitState(mario);
+        SetPositionGetOutSitState(mario);
     }
     else if (input == PRESS_A)
     {

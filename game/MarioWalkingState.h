@@ -4,7 +4,6 @@
 class MarioWalkingState : public MarioOnGroundState
 {
 	static MarioWalkingState* __instance;
-	//float a;
 public:
 	static MarioWalkingState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);

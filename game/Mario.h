@@ -12,7 +12,7 @@ class CMario : public CGameObject
 	int ani;
 
 	int power;
-	int save_power;
+	int savePower;
 
 	int untouchable;
 	DWORD untouchable_start;
@@ -20,8 +20,8 @@ class CMario : public CGameObject
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 public:
-	DWORD power_time_start;
-	DWORD power_time_end;
+	DWORD powerStartTime;
+	DWORD powerEndTime;
 
 	bool isGrounded;
 	bool isPower;
@@ -31,7 +31,7 @@ public:
 	void HandleInput(Input input);
 
 	bool isSit;
-	bool highJump;
+	bool isHighJump;
 	bool isAttack;
 
 	CMario(float x = 0.0f, float y = 0.0f);
@@ -46,8 +46,8 @@ public:
 	void SetAnimation(int a) { ani = a; }
 	int GetAnimation() { return ani; }
 
-	void PowerUp() { power_time_start = GetTickCount64(); save_power = 0; }
-	void PowerDown() { power_time_end = GetTickCount64(); }
+	void PowerUp() { powerStartTime = GetTickCount64(); savePower = 0; }
+	void PowerDown() { powerEndTime = GetTickCount64(); }
 	void PowerReset();
 	int GetPower() { return power; }
 	void PowerControl();

@@ -4,7 +4,7 @@
 class MarioDuckingState : public MarioOnGroundState
 {
 	static MarioDuckingState* __instance;
-	DWORD jump_time_start;
+	DWORD jumpStartTime;
 public:
 	static MarioDuckingState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);

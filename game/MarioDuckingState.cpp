@@ -31,17 +31,17 @@ void MarioDuckingState::HandleInput(CMario& mario, Input input)
     MarioOnGroundState::HandleInput(mario, input);
     if (input == RELEASE_S)
     {
-        mario.highJump = false;
+        mario.isHighJump = false;
     }
 }
 
 void MarioDuckingState::Update(CMario& mario, DWORD dt)
 {
-    if (mario.highJump)
+    if (mario.isHighJump)
     {
-        if (GetTickCount64() - jump_time_start > MARIO_HIGH_JUMP_TIME)
+        if (GetTickCount64() - jumpStartTime > MARIO_HIGH_JUMP_TIME)
         {
-            jump_time_start = 0;
+            jumpStartTime = 0;
         }
         else
         {
@@ -62,6 +62,6 @@ void MarioDuckingState::GetBoundingBox(CMario& mario, float& left, float& top, f
 
 void MarioDuckingState::StartJump()
 {
-    jump_time_start = GetTickCount64();
+    jumpStartTime = GetTickCount64();
 }
 

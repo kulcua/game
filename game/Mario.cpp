@@ -19,8 +19,8 @@
 void CMario::PowerReset()
 {
 	isPower = false; 
-	power_time_start = 0;
-	save_power = 0;
+	powerStartTime = 0;
+	savePower = 0;
 	PowerDown();
 }
 
@@ -40,30 +40,30 @@ void CMario::PowerControl()
 	if (isPower)
 	{
 		int temp;
-		if (((GetTickCount64() - power_time_start) / MARIO_POWERUP_PER_SECOND) < MARIO_MAX_POWER)
+		if (((GetTickCount64() - powerStartTime) / MARIO_POWERUP_PER_SECOND) < MARIO_MAX_POWER)
 		{
-			temp = (GetTickCount64() - power_time_start) / MARIO_POWERUP_PER_SECOND; //1
-			if (power > 0 && save_power == 0)
+			temp = (GetTickCount64() - powerStartTime) / MARIO_POWERUP_PER_SECOND; //1
+			if (power > 0 && savePower == 0)
 			{
-				save_power = power;
+				savePower = power;
 			}
-			if (temp <= MARIO_MAX_POWER - save_power) //temp_power = 2
+			if (temp <= MARIO_MAX_POWER - savePower) //temp_power = 2
 			{
-				power = save_power + temp;
+				power = savePower + temp;
 			}
 			if (power == 0)
 				power = temp;
 			//DebugOut(L"temp %d - temp-power %d - power %d\n", temp, temp_power, power);
 		}
 	}
-	if (power_time_end > 0 && isPower == false)
+	if (powerEndTime > 0 && isPower == false)
 	{
 		if (power == 0)
 		{
-			power_time_end = 0;
+			powerEndTime = 0;
 		}
 		else
-			power = MARIO_MAX_POWER - ((GetTickCount64() - power_time_end) / MARIO_POWERUP_PER_SECOND);
+			power = MARIO_MAX_POWER - ((GetTickCount64() - powerEndTime) / MARIO_POWERUP_PER_SECOND);
 	}
 }
 

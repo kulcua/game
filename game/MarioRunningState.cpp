@@ -55,7 +55,7 @@ void MarioRunningState::HandleInput(CMario& mario, Input input)
 void MarioRunningState::Update(CMario& mario, DWORD dt)
 {
 	MarioState::Update(mario, dt);
-	if (mario.isPower && mario.power_time_start == 0)
+	if (mario.isPower && mario.powerStartTime == 0)
 	{
 		mario.PowerUp();
 		DebugOut(L"StartPowerUp\n");

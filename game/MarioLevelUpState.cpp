@@ -38,9 +38,9 @@ void MarioLevelUpState::GetBoundingBox(CMario& mario, float& left, float& top, f
 
 void MarioLevelUpState::Update(CMario& mario, DWORD dt)
 {
-    if (GetTickCount64() - level_up_time_start > MARIO_LEVEL_UP_TIME)
+    if (GetTickCount64() - levelUpStartTime > MARIO_LEVEL_UP_TIME)
     {
-        level_up_time_start = 0;
+        levelUpStartTime = 0;
         mario.state_ = MarioState::standing.GetInstance();
     }
     //DebugOut(L"MarioLevelUpState\n");
