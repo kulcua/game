@@ -151,6 +151,7 @@
     <ClCompile Include="BigBox.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="FireBall.cpp" />
+    <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Maps.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="BigBox.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="FireBall.h" />
+    <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Maps.h" />

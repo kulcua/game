@@ -7,6 +7,7 @@
 #include "Mario.h"
 #include "Goomba.h"
 #include "Koopas.h"
+#include "FireBallPool.h"
 
 class CPlayScene : public CScene
 {
@@ -31,7 +32,7 @@ public:
 	virtual void Unload();
 
 	CMario* GetPlayer() { return player; }
-
+	FireBallPool* pool;
 	//friend class CPlayScenceKeyHandler;
 };
 

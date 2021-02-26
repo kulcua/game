@@ -1,28 +1,44 @@
 #include "FireBall.h"
 #include "Utils.h"
+#include "Animations.h"
 
-CFireBall::CFireBall(CMario* player, CPlant *plant)
+CFireBall::CFireBall()
 {
-	this->player = player;
-	this->plant = plant;
+	SetAnimationFireBall();	
+	die = true;
+}
 
+void CFireBall::Init(CMario* mario, CPlant* plant) {
+	this->state_.live.mario = mario;
+	this->state_.live.plant = plant;
+	die = false;
 	SetPosition(plant->x, plant->y);
+	DebugOut(L"init fireball\n");
+}
+
+void CFireBall::SetAnimationFireBall()
+{
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	LPANIMATION_SET ani_set = animation_sets->Get(FIREBALL_ANI_ID);
+	SetAnimationSet(ani_set);
 }
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	//DebugOut(L"update CFireBall die\n");
 	if (!die)
 	{
+		//DebugOut(L"update CFireBall\n");
 		CGameObject::Update(dt, coObjects);
 
 		float x_mario, y_mario, x_plant, y_plant;
 
-		player->GetPosition(x_mario, y_mario);
-		plant->GetPosition(x_plant, y_plant);
+		state_.live.mario->GetPosition(x_mario, y_mario);
+		state_.live.plant->GetPosition(x_plant, y_plant);
 
-		nx = plant->nx;
+		nx = state_.live.plant->nx;
 
-		if (plant->isUp)
+		if (state_.live.plant->isUp)
 			vy = -FIREBALL_SPEED;
 		else
 			vy = FIREBALL_SPEED;
@@ -36,7 +52,9 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y += dy;
 
 		if (abs(y_mario - y) > FIREBALL_CHECK_Y || abs(x_plant - x_mario) > FIREBALL_CHECK_X)
-			die = true;
+		{
+			//die = true;
+		}			
 	}
 }
 

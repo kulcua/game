@@ -333,7 +333,11 @@
 #ITEM: 25 = coin, 26 = red_mushroom
 
 # MARIO
-0	684	308	1
+0	200	308	1
+
+#POOL_FIREBALL
+# -1 means not have x y geometry
+69	-1	-1	62
 
 #BRICK
 #[4] ani coin
