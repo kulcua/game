@@ -6,6 +6,7 @@ class CMario : public CGameObject
 {
 	friend class MarioState;
 	friend class CKoopas;
+	friend class FireBallPool;
 
 	CKoopas* koopaShell;
 	int level;
@@ -27,6 +28,7 @@ public:
 	bool isPower;
 	bool isHandleShell;
 	MarioState* state_;
+	FireBallPool* pool_;
 
 	void HandleInput(Input input);
 
@@ -34,7 +36,7 @@ public:
 	bool isHighJump;
 	bool isAttack;
 
-	CMario(float x = 0.0f, float y = 0.0f);
+	CMario(float x, float y, FireBallPool* pool);
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();

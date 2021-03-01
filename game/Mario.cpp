@@ -13,6 +13,7 @@
 #include "MarioDuckingState.h"
 #include "MarioKickState.h"
 #include "MarioLevelUpState.h"
+#include "FireBallPool.h"
 
 #define BORDER_X 15
 
@@ -81,7 +82,7 @@ void CMario::HandleInput(Input input)
 	state_->Enter(*this);
 }
 
-CMario::CMario(float x, float y) : CGameObject()
+CMario::CMario(float x, float y, FireBallPool* pool) : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
@@ -92,6 +93,7 @@ CMario::CMario(float x, float y) : CGameObject()
 	start_y = y;
 	this->x = x;
 	this->y = y;
+	this->pool_ = pool;
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -177,7 +179,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (e->nx != 0)
 				{
-					if (isAttack)
+					if (isAttack || level == MARIO_LEVEL_RACCOON)
 						goomba->SetState(GOOMBA_STATE_DIE);
 					/*if (untouchable == 0)
 					{
@@ -257,7 +259,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						koopas->SetState(KOOPAS_STATE_BALL);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-					else if (e->nx != 0 && isAttack) // tail hit
+					else if (e->nx != 0 && isAttack && level == MARIO_LEVEL_RACCOON) // tail hit
 						koopas->SetState(KOOPAS_STATE_BALL);							
 				}
 				else

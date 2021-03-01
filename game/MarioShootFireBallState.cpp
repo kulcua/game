@@ -39,11 +39,11 @@ void MarioShootFireBallState::GetBoundingBox(CMario& mario, float& left, float& 
 
 void MarioShootFireBallState::Update(CMario& mario, DWORD dt)
 {
-    if (GetTickCount64() - hit_time_start > MARIO_HIT_TIME)
+    if (GetTickCount64() - hitStartTime > MARIO_HIT_TIME)
     {
-        hit_time_start = 0;
+        hitStartTime = 0;
         mario.state_ = MarioState::standing.GetInstance();
-        mario.isAttack = false;
+        //mario.isAttack = false;
     }
     //DebugOut(L"MarioShootFireBallState\n");
 }

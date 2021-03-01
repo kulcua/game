@@ -165,9 +165,10 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         } 
         else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
         {
-            mario.isAttack = true;
+            //mario.isAttack = true;
             mario.state_ = MarioState::shootFireball.GetInstance();
             MarioState::shootFireball.GetInstance()->StartHit();
+            mario.pool_->Create()->Init(&mario);
         }
     }
     else if (input == RELEASE_A)
