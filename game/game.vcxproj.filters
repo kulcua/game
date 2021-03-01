@@ -147,6 +147,9 @@
     <ClCompile Include="MarioAttackState.cpp">
       <Filter>Mario\MarioState\AttackState</Filter>
     </ClCompile>
+    <ClCompile Include="FireBallPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -259,6 +262,9 @@
     </ClInclude>
     <ClInclude Include="MarioAttackState.h">
       <Filter>Mario\MarioState\AttackState</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBallPool.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

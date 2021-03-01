@@ -40,6 +40,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define OBJECT_TYPE_GOOMBA	2
 #define OBJECT_TYPE_KOOPAS	3
 #define OBJECT_TYPE_PLANT	6
+#define OBJECT_TYPE_POOL_FIREBALL	69
 
 #define OBJECT_TYPE_PIPE	66
 #define OBJECT_TYPE_BIGBOX	10
@@ -184,7 +185,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CKoopas(start_x, end_x);
 	}
 	break;
-	case OBJECT_TYPE_PLANT: obj = new CPlant(player); break;
+	case OBJECT_TYPE_PLANT:
+	{
+		obj = new CPlant(player, pool);
+	}
+	break;
 	case OBJECT_TYPE_BIGBOX:
 	{
 		float r = atof(tokens[4].c_str());
@@ -206,6 +211,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj = new CPipe(x, y, spriteId);
 	}
 	break;
+	case OBJECT_TYPE_POOL_FIREBALL:
+	{
+		pool = new FireBallPool(objects);
+	}
+	break;
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = atof(tokens[4].c_str());
@@ -219,13 +229,16 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		return;
 	}
 
-	// General object setup
-	obj->SetPosition(x, y);
+	if (obj != NULL) //check if not a pool
+	{
+		// General object setup
+		obj->SetPosition(x, y);
 
-	LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
+		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
 
-	obj->SetAnimationSet(ani_set);
-	objects.push_back(obj);
+		obj->SetAnimationSet(ani_set);
+		objects.push_back(obj);
+	}	
 	//DebugOut(L"obj id: %d ani: %d\n", object_type, ani_set_id);
 }
 
@@ -315,22 +328,9 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if (objects[i]->die)
 		{
-			objects.erase(objects.begin() + i);
+			//objects.erase(objects.begin() + i);
 		}
 		else {
-			if (dynamic_cast<CPlant*>(objects[i]))
-			{
-				CPlant* plant = dynamic_cast<CPlant*>(objects[i]);
-				if (plant->fireball)
-				{
-					CFireBall* fireball = new CFireBall(player, plant);
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-					LPANIMATION_SET ani_set = animation_sets->Get(FIREBALL_ANI_ID);
-					fireball->SetAnimationSet(ani_set);
-
-					objects.push_back(fireball);
-				}
-			}
 			if (dynamic_cast<CBrick*>(objects[i]))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
@@ -365,6 +365,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		objects[i]->Update(dt, &coObject);
 	}
+	pool->Animate();
 
 	/*DebugOut(L"size coo: %d\n", coObject.size());
 	DebugOut(L"size: %d\n", objects.size());*/

@@ -1,15 +1,16 @@
 #include "Plant.h"
 #include "Ground.h"
 #include "Pipe.h"
-#include "Mario.h"
 #include "PlayScene.h"
+#include "FireBallPool.h"
 
-CPlant::CPlant(CGameObject *player) {
+CPlant::CPlant(CMario * mario, FireBallPool* pool) {
 	SetState(PLANT_STATE_ENABLE);
 	die = false;
 	shoot = false;
 	fireball = false;
-	this->player = player;
+	this->mario = mario;
+	this->pool = pool;
 	vy = -PLANT_SPEED;
 }
 
@@ -18,15 +19,16 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (!die)
 	{
 		CGameObject::Update(dt, coObjects);
-		
+
 		if (fireball)
 		{
+			pool->Create(mario, this);
 			fireball = false;
 		}
 
 		//xet nx va huong ban theo x y cua Mario
 		float x_mario, y_mario;
-		player->GetPosition(x_mario, y_mario);
+		mario->GetPosition(x_mario, y_mario);
 		if (x_mario < x)
 			nx = -1;
 		else	

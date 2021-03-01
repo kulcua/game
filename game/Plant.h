@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Utils.h"
+#include "Mario.h"
 
 #define PLANT_STATE_DISABLE 100
 #define PLANT_STATE_ENABLE 200
@@ -18,16 +19,19 @@
 
 class CPlant : public CGameObject
 {
+	friend class FireBallPool;
+	
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();	
 	DWORD shoot_time_start;
-	CGameObject *player;
+	CMario* mario;
+	FireBallPool* pool;
 	bool shoot;
 	
 public:
 	bool isUp;
 	bool fireball; //check ban only 1 vien dan
-	CPlant(CGameObject *player);
+	CPlant(CMario* mario, FireBallPool* pool);
 	void StartShootTime() {
 		shoot = true;
 		shoot_time_start = GetTickCount();
