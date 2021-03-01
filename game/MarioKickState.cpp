@@ -36,6 +36,10 @@ void MarioKickState::Enter(CMario& mario)
     {
         mario.SetAnimation(MARIO_ANI_RACCOON_KICK);
     }
+    else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+    {
+        mario.SetAnimation(MARIO_ANI_FIRE_KICK);
+    }
 }
 
 void MarioKickState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

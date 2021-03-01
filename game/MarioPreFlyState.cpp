@@ -34,6 +34,10 @@ void MarioPreFlyState::Enter(CMario& mario) // declare (CMario& mario) means in 
         {
             mario.SetAnimation(MARIO_ANI_RACCOON_HANDLESHELL_RUN);
         }
+        else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+        {
+            mario.SetAnimation(MARIO_ANI_FIRE_HANDLESHELL_RUN);
+        }
     }
     else
     {
@@ -48,6 +52,10 @@ void MarioPreFlyState::Enter(CMario& mario) // declare (CMario& mario) means in 
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
             mario.SetAnimation(MARIO_ANI_RACCOON_PRE_FLY);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+        {
+            mario.SetAnimation(MARIO_ANI_FIRE_PRE_FLY);
         }
     }
 }

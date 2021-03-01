@@ -10,11 +10,12 @@
 #include "MarioPreFlyState.h"
 #include "MarioFlyingState.h"
 #include "MarioTailHitState.h"
+#include "MarioShootFireBallState.h"
 
 void SwitchSittingToWalking(CMario& mario)
 {
     mario.isSit = false;
-    if (mario.GetLevel() == MARIO_LEVEL_BIG)
+    if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
         mario.y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
     else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         mario.y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
@@ -25,7 +26,7 @@ void SetPositionGetInSitState(CMario& mario)
     if (mario.GetLevel() != MARIO_LEVEL_SMALL)
     {
         mario.isSit = true;
-        if (mario.GetLevel() == MARIO_LEVEL_BIG)
+        if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
             mario.y += MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
             mario.y += MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
@@ -37,7 +38,7 @@ void SetPositionGetOutSitState(CMario& mario)
     if (mario.GetLevel() != MARIO_LEVEL_SMALL)
     {
         mario.isSit = false;
-        if (mario.GetLevel() == MARIO_LEVEL_BIG)
+        if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
             mario.y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
             mario.y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
@@ -155,13 +156,19 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     }
     else if (input == PRESS_A)
     {
-        mario.isPower = true; ;
+        mario.isPower = true;
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
             mario.isAttack = true;
             mario.state_ = MarioState::tailHit.GetInstance();
             MarioState::tailHit.GetInstance()->StartHit();
-        }     
+        } 
+        else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+        {
+            mario.isAttack = true;
+            mario.state_ = MarioState::shootFireball.GetInstance();
+            MarioState::shootFireball.GetInstance()->StartHit();
+        }
     }
     else if (input == RELEASE_A)
     {

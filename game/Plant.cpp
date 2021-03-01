@@ -22,7 +22,7 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (fireball)
 		{
-			pool->Create(mario, this);
+			//pool->Create(mario, this);
 			fireball = false;
 		}
 

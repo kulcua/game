@@ -24,6 +24,10 @@ void MarioDuckingState::Enter(CMario& mario)
     {
         mario.SetAnimation(MARIO_ANI_RACCOON_SIT);
     }
+    else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+    {
+        mario.SetAnimation(MARIO_ANI_FIRE_SIT);
+    }
 }
 
 void MarioDuckingState::HandleInput(CMario& mario, Input input)

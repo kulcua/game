@@ -27,6 +27,10 @@ void MarioStoppingState::Enter(CMario& mario)
     {
         mario.SetAnimation(MARIO_ANI_RACCOON_STOP);
     }
+    else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+    {
+        mario.SetAnimation(MARIO_ANI_FIRE_STOP);
+    }
 }
 
 void MarioStoppingState::HandleInput(CMario& mario, Input input)

@@ -22,7 +22,7 @@ void FireBallPool::Create(CMario* mario, CPlant* plant)
     // Make sure the pool isn't full.
     if (firstAvailable_ != NULL)
     {
-        DebugOut(L"init fireball pool\n");
+        //DebugOut(L"init fireball pool\n");
         // Remove it from the available list.
         CFireBall* newParticle = firstAvailable_;
         firstAvailable_ = newParticle->GetNext();
@@ -37,7 +37,7 @@ void FireBallPool::Animate()
         //if (fireBall_[i]->Animate())  
         if (fireBall_[i].InUse() == false) // return fireball if it die
         {
-            DebugOut(L"fireBall_[i] %d\n", i);
+            //DebugOut(L"fireBall_[i] %d\n", i);
             // Add this particle to the front of the list.
            /* fireBall_[i].SetNext(firstAvailable_);
             firstAvailable_ = &fireBall_[i];*/
