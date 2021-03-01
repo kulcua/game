@@ -27,7 +27,7 @@ class CFireBall : public CGameObject
 		} live;
 
 		// State when it's available.
-		CFireBall** next;
+		CFireBall* next;
 	} state_;
 
 	void SetAnimationFireBall();
@@ -38,12 +38,14 @@ public:
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 
-	CFireBall** GetNext() const { return state_.next; }
-	void SetNext(CFireBall** next) { state_.next = next; }
+	CFireBall* GetNext() const { return state_.next; }
+	void SetNext(CFireBall* next) { state_.next = next; }
 
 	void Init(CMario* mario, CPlant* plant);
 
 	/*bool InUse() const { return !die; }*/
+
+	bool InUse() { return !die; }
 
 	bool Animate()
 	{

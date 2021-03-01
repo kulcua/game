@@ -25,11 +25,6 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			pool->Create(mario, this);
 			fireball = false;
 		}
-		
-		if (fireball)
-		{
-			fireball = false;
-		}
 
 		//xet nx va huong ban theo x y cua Mario
 		float x_mario, y_mario;

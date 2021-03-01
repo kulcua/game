@@ -9,11 +9,11 @@ CFireBall::CFireBall()
 }
 
 void CFireBall::Init(CMario* mario, CPlant* plant) {
-	this->state_.live.mario = mario;
+  	this->state_.live.mario = mario;
 	this->state_.live.plant = plant;
 	die = false;
 	SetPosition(plant->x, plant->y);
-	DebugOut(L"init fireball\n");
+	//DebugOut(L"init fireball\n");
 }
 
 void CFireBall::SetAnimationFireBall()
@@ -25,10 +25,8 @@ void CFireBall::SetAnimationFireBall()
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	//DebugOut(L"update CFireBall die\n");
 	if (!die)
 	{
-		//DebugOut(L"update CFireBall\n");
 		CGameObject::Update(dt, coObjects);
 
 		float x_mario, y_mario, x_plant, y_plant;
