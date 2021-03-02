@@ -10,11 +10,14 @@
 #define FIREBALL_CHECK_POS_SHOOT_X 72
 #define FIREBALL_CHECK_X 150
 #define FIREBALL_CHECK_Y 120
+#define FIREBALL_VELOCITY_X 0.1f
+#define FIREBALL_GRAVITY 0.0007f
+#define FIREBALL_DEFLECT_Y 0.15f
 
 class CFireBall : public CGameObject
 {
 	friend class FireBallPool;
-
+	bool isForPlant;
 	int framesLeft_;
 
 	union
@@ -42,6 +45,7 @@ public:
 	void SetNext(CFireBall* next) { state_.next = next; }
 
 	void Init(CMario* mario, CPlant* plant);
+	void Init(CMario* mario);
 
 	/*bool InUse() const { return !die; }*/
 

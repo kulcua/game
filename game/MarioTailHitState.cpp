@@ -2,7 +2,7 @@
 #include "Mario.h"
 #include "MarioStandingState.h"
 
-#define Hit_time 210
+#define MARIO_HIT_TIME 210
 
 MarioTailHitState* MarioTailHitState::__instance = NULL;
 
@@ -39,9 +39,9 @@ void MarioTailHitState::GetBoundingBox(CMario& mario, float& left, float& top, f
 
 void MarioTailHitState::Update(CMario& mario, DWORD dt)
 {
-    if (GetTickCount64() - hit_time_start > Hit_time)
+    if (GetTickCount64() - hitStartTime > MARIO_HIT_TIME)
     {
-        hit_time_start = 0;
+        hitStartTime = 0;
         mario.state_ = MarioState::standing.GetInstance();
         mario.isAttack = false;
     }

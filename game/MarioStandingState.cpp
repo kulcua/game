@@ -36,6 +36,10 @@ void MarioStandingState::Enter(CMario& mario) // declare (CMario& mario) means i
         {
             mario.SetAnimation(MARIO_ANI_RACCOON_HANDLESHELL_IDLE);
         }
+        else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+        {
+            mario.SetAnimation(MARIO_ANI_FIRE_HANDLESHELL_IDLE);
+        }
     }
     else
     {
@@ -50,6 +54,10 @@ void MarioStandingState::Enter(CMario& mario) // declare (CMario& mario) means i
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
             mario.SetAnimation(MARIO_ANI_RACCOON_IDLE);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+        {
+            mario.SetAnimation(MARIO_ANI_FIRE_IDLE);
         }
     }
 }

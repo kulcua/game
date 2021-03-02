@@ -1,12 +1,12 @@
 #pragma once 
 #include "MarioAttackState.h"
 
-class MarioTailHitState : public MarioAttackState
+class MarioShootFireBallState : public MarioAttackState
 {
-	static MarioTailHitState* __instance;
+	static MarioShootFireBallState* __instance;
 	DWORD hitStartTime;
 public:
-	static MarioTailHitState* GetInstance();
+	static MarioShootFireBallState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);
 	virtual void Update(CMario& mario, DWORD dt);
 	virtual void GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom);

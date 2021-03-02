@@ -17,17 +17,28 @@ FireBallPool::FireBallPool(vector<LPGAMEOBJECT> &objects)
     objects.push_back(&fireBall_[POOL_SIZE - 1]);
 }
 
-void FireBallPool::Create(CMario* mario, CPlant* plant)
-{
-    // Make sure the pool isn't full.
+//void FireBallPool::Create(CMario* mario, CPlant* plant)
+//{
+//    // Make sure the pool isn't full.
+//    if (firstAvailable_ != NULL)
+//    {
+//        //DebugOut(L"init fireball pool\n");
+//        // Remove it from the available list.
+//        CFireBall* newFireball = firstAvailable_;
+//        firstAvailable_ = newFireball->GetNext();
+//        newFireball->Init(mario, plant);
+//    } 
+//}
+
+CFireBall* FireBallPool::Create() {
     if (firstAvailable_ != NULL)
     {
-        DebugOut(L"init fireball pool\n");
         // Remove it from the available list.
-        CFireBall* newParticle = firstAvailable_;
-        firstAvailable_ = newParticle->GetNext();
-        newParticle->Init(mario, plant);       
-    } 
+        DebugOut(L"init fireball pool\n");
+        CFireBall* newFireball = firstAvailable_;
+        firstAvailable_ = newFireball->GetNext();
+        return newFireball;
+    }
 }
 
 void FireBallPool::Animate()
@@ -37,7 +48,7 @@ void FireBallPool::Animate()
         //if (fireBall_[i]->Animate())  
         if (fireBall_[i].InUse() == false) // return fireball if it die
         {
-            DebugOut(L"fireBall_[i] %d\n", i);
+            //DebugOut(L"fireBall_[i] %d\n", i);
             // Add this particle to the front of the list.
            /* fireBall_[i].SetNext(firstAvailable_);
             firstAvailable_ = &fireBall_[i];*/

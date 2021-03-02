@@ -4,6 +4,7 @@
 #include "MarioStandingState.h"
 #include "MarioDroppingState.h"
 #include "MarioTailHitState.h"
+#include "MarioShootFireBallState.h"
 
 MarioJumpingState* MarioJumpingState::__instance = NULL;
 
@@ -33,6 +34,10 @@ void MarioJumpingState::Enter(CMario& mario)
         {
             mario.SetAnimation(MARIO_ANI_RACCOON_HANDLESHELL_JUMP_FLY_DROP);
         }
+        else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+        {
+            mario.SetAnimation(MARIO_ANI_FIRE_HANDLESHELL_JUMP_DROP);
+        }
     }
     else
     {
@@ -47,6 +52,10 @@ void MarioJumpingState::Enter(CMario& mario)
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
             mario.SetAnimation(MARIO_ANI_RACCOON_JUMP);
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+        {
+            mario.SetAnimation(MARIO_ANI_FIRE_JUMP);
         }
     } 
 }
@@ -83,6 +92,12 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
             mario.isAttack = true;
             mario.state_ = MarioState::tailHit.GetInstance();
             MarioState::tailHit.GetInstance()->StartHit();
+        }
+        else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
+        {
+            mario.state_ = MarioState::shootFireball.GetInstance();
+            MarioState::shootFireball.GetInstance()->StartHit();
+            mario.pool_->Create()->Init(&mario);
         }
     }
 }

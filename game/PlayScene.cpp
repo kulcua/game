@@ -164,7 +164,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMario(x, y);
+		obj = new CMario(x, y, pool);
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object created!\n");
@@ -407,10 +407,16 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
+	int idMario = 0; //default id = 0 if not have pool 
 	CMaps::GetInstance()->Render();
-	for (int i = 1; i < objects.size(); i++)
-		objects[i]->Render();
-	objects[0]->Render(); // render mario lastest
+	for (int i = 0; i < objects.size(); i++)
+	{
+		if (dynamic_cast<CMario*>(objects[i]))
+			idMario = i;	
+		else
+			objects[i]->Render();
+	}	
+	objects[idMario]->Render(); // render mario lastest
 }
 
 //Unload current scene
@@ -441,11 +447,15 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_F2:
 		mario->SetLevel(MARIO_LEVEL_BIG);
-		mario->y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+		mario->y -= MARIO_BIG_BBOX_HEIGHT;
 		break;
 	case DIK_F3:
 		mario->SetLevel(MARIO_LEVEL_RACCOON);
-		mario->y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
+		mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
+		break;
+	case DIK_F4:
+		mario->SetLevel(MARIO_LEVEL_FIRE);
+		mario->y -= MARIO_BIG_BBOX_HEIGHT;
 		break;
 	case DIK_DOWN:
 		input = PRESS_DOWN;
