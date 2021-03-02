@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Windows.h>
-
 #include <signal.h>
 #include <string>
 #include <stdio.h>
@@ -85,7 +84,8 @@
 #define MARIO_ANI_FIRE_HANDLESHELL_IDLE				54
 #define MARIO_ANI_FIRE_HANDLESHELL_RUN				55
 #define MARIO_ANI_FIRE_HANDLESHELL_JUMP_DROP		56
-#define MARIO_ANI_FIRE_SHOOT_FIREBALL				57
+#define MARIO_ANI_FIRE_SHOOT_FIREBALL_IDLE				57
+#define MARIO_ANI_FIRE_SHOOT_FIREBALL_JUMP				58
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2

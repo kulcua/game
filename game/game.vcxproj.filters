@@ -34,6 +34,9 @@
     <Filter Include="Mario\MarioState\OnAirState">
       <UniqueIdentifier>{bb79fd21-1798-424d-9a03-e852ddb074b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fireball">
+      <UniqueIdentifier>{89e4290d-5054-4d88-8b5a-c403684c0979}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -67,9 +70,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FireBall.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Mario.cpp">
@@ -147,11 +147,14 @@
     <ClCompile Include="MarioAttackState.cpp">
       <Filter>Mario\MarioState\AttackState</Filter>
     </ClCompile>
-    <ClCompile Include="FireBallPool.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MarioShootFireBallState.cpp">
       <Filter>Mario\MarioState\AttackState</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBall.cpp">
+      <Filter>Fireball</Filter>
+    </ClCompile>
+    <ClCompile Include="FireBallPool.cpp">
+      <Filter>Fireball</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -186,9 +189,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FireBall.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mario.h">
@@ -266,11 +266,14 @@
     <ClInclude Include="MarioAttackState.h">
       <Filter>Mario\MarioState\AttackState</Filter>
     </ClInclude>
-    <ClInclude Include="FireBallPool.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MarioShootFireBallState.h">
       <Filter>Mario\MarioState\AttackState</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBallPool.h">
+      <Filter>Fireball</Filter>
+    </ClInclude>
+    <ClInclude Include="FireBall.h">
+      <Filter>Fireball</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

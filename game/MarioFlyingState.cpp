@@ -23,6 +23,7 @@ void MarioFlyingState::HandleInput(CMario& mario, Input input)
             mario.vy = -MARIO_FLY_SPEED_Y;
         }
     }
+
 }
 
 void MarioFlyingState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioFlyingState

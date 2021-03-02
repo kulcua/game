@@ -28,7 +28,10 @@ void MarioShootFireBallState::Enter(CMario& mario) // declare (CMario& mario) me
 {
     if (mario.GetLevel() == MARIO_LEVEL_FIRE)
     {
-        mario.SetAnimation(MARIO_ANI_FIRE_SHOOT_FIREBALL);
+        if (mario.isGrounded)
+            mario.SetAnimation(MARIO_ANI_FIRE_SHOOT_FIREBALL_IDLE);
+        else 
+            mario.SetAnimation(MARIO_ANI_FIRE_SHOOT_FIREBALL_JUMP);
     }
 }
 

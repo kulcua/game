@@ -1,6 +1,7 @@
 #include "FireBall.h"
 #include "Utils.h"
 #include "Animations.h"
+#include "Ground.h"
 
 CFireBall::CFireBall()
 {
@@ -37,11 +38,11 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		CGameObject::Update(dt, coObjects);
 
-		x += dx;
-		y += dy;
-
 		if (isForPlant)
 		{
+			x += dx;
+			y += dy;
+
 			float x_mario, y_mario, x_plant, y_plant;
 
 			state_.live.mario->GetPosition(x_mario, y_mario);
@@ -66,15 +67,57 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
+			vy += FIREBALL_GRAVITY * dt;
+
 			if (this->state_.live.mario->nx > 0)
 			{
-				vx = FIREBALL_VELOCITY;
-				vy = FIREBALL_VELOCITY;
+				vx = FIREBALL_VELOCITY_X;
 			}
 			else
 			{
-				vx = -FIREBALL_VELOCITY;
-				vy = -FIREBALL_VELOCITY;
+				vx = -FIREBALL_VELOCITY_X;
+			}
+
+			vector<LPCOLLISIONEVENT> coEvents;
+			vector<LPCOLLISIONEVENT> coEventsResult;
+			coEvents.clear();
+			CalcPotentialCollisions(coObjects, coEvents);
+
+			if (coEvents.size() == 0)
+			{
+				x += dx;
+				y += dy;
+			}
+			else
+			{
+				float min_tx, min_ty, nx = 0, ny;
+				float rdx = 0;
+				float rdy = 0;
+
+				FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+				if (rdx != 0 && rdx != dx)
+					x += nx * abs(rdx);
+
+				x += min_tx * dx + nx * 0.4f;
+				y += min_ty * dy + ny * 0.4f;
+
+				if (nx != 0) vx = 0;
+				if (ny != 0) vy = 0;
+
+				for (UINT i = 0; i < coEventsResult.size(); i++)
+				{
+					LPCOLLISIONEVENT e = coEventsResult[i];
+
+					if (dynamic_cast<CGround*>(e->obj))
+					{
+						CGround* ground = dynamic_cast<CGround*>(e->obj); 
+						if (e->ny < 0)
+						{
+							vy = -FIREBALL_DEFLECT_Y;
+						}
+					}
+				}
 			}
 		}
 	}
