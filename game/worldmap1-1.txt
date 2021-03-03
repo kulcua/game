@@ -476,6 +476,10 @@
 10	1408	192	0	1471	207	1
 10	1489	176	0	1694	191	1
 
-[MAP]
+#[MAP]
 #id	filePath.bmp	r	g	b	width_tile	height_tile	num_tile_x	num_tile_y	filePath.txt
-80000	map\map1.bmp	255	255	255	1280	448	44	10	map\map1.txt
+#80000	map\map1.bmp	255	255	255	1280	448	44	10	map\map1.txt
+
+[MAP]
+#id	.tmx	r	g	b
+80000	map/World-map-1-1/world-1-1-map.tmx	0	0	0

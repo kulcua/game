@@ -37,6 +37,9 @@
     <Filter Include="Fireball">
       <UniqueIdentifier>{89e4290d-5054-4d88-8b5a-c403684c0979}</UniqueIdentifier>
     </Filter>
+    <Filter Include="XmlLib">
+      <UniqueIdentifier>{c9836ac4-911e-437b-b45a-6e204b4dfcdc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -156,6 +159,21 @@
     <ClCompile Include="FireBallPool.cpp">
       <Filter>Fireball</Filter>
     </ClCompile>
+    <ClCompile Include="tinystr.cpp">
+      <Filter>XmlLib</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxml.cpp">
+      <Filter>XmlLib</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlerror.cpp">
+      <Filter>XmlLib</Filter>
+    </ClCompile>
+    <ClCompile Include="tinyxmlparser.cpp">
+      <Filter>XmlLib</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -274,6 +292,15 @@
     </ClInclude>
     <ClInclude Include="FireBall.h">
       <Filter>Fireball</Filter>
+    </ClInclude>
+    <ClInclude Include="tinyxml.h">
+      <Filter>XmlLib</Filter>
+    </ClInclude>
+    <ClInclude Include="tinystr.h">
+      <Filter>XmlLib</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

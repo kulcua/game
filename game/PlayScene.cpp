@@ -249,18 +249,16 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	if (tokens.size() < 10) return;
 
 	int id = atoi(tokens[0].c_str());
-	wstring path_img = ToWSTR(tokens[1]);
+	const char* pathTmx = tokens[1].c_str();
 	int R = atoi(tokens[2].c_str());
 	int G = atoi(tokens[3].c_str());
 	int B = atoi(tokens[4].c_str());
-	int width = atoi(tokens[5].c_str());
-	int height = atoi(tokens[6].c_str());
-	int num_tile_x = atoi(tokens[7].c_str());
-	int num_tile_y = atoi(tokens[8].c_str());
-	wstring path_txt = ToWSTR(tokens[9]);
 
-	CMaps::GetInstance()->Add(id, path_img.c_str(), width, height,
-		num_tile_x, num_tile_y, path_txt.c_str(), D3DCOLOR_XRGB(R, G, B));
+	tileMap = new TileMap();
+	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B));
+
+	/*CMaps::GetInstance()->Add(id, path_img.c_str(), width, height,
+		num_tile_x, num_tile_y, path_txt.c_str(), D3DCOLOR_XRGB(R, G, B));*/
 }
 
 void CPlayScene::Load()

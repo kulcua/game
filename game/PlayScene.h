@@ -8,11 +8,14 @@
 #include "Goomba.h"
 #include "Koopas.h"
 #include "FireBallPool.h"
+#include "TileMap.h"
 
 class CPlayScene : public CScene
 {
 protected:
-	CMario* player; // A play scene has to have player, right? 
+	CMario* player;
+
+	TileMap* tileMap;
 
 	vector<LPGAMEOBJECT> objects;
 
