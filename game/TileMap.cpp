@@ -22,28 +22,35 @@ bool TileMap::ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor)
 	TiXmlElement* root = doc.RootElement(); //map
 	TiXmlElement* editorsSettingsElement = root->FirstChildElement();
 
-	string nameElement;
-	TiXmlElement* nextElement = editorsSettingsElement->NextSiblingElement();
+	string elementName;
+	TiXmlElement* element = editorsSettingsElement->NextSiblingElement();
 	
-	while (nextElement)
+	while (element)
 	{
-		nameElement = nextElement->Value();
-		if (nameElement.compare("tileset") == 0)
+		elementName = element->Value();
+		if (elementName.compare("tileset") == 0)
 		{
-			DebugOut(L"Tileset\n");
-			this->tileSet = new Tileset(nextElement, id, transColor);			
+			tileSet = new Tileset(element, id, transColor);
 		}
-		else if (nameElement.compare("layer") == 0)
+		else if (elementName.compare("layer") == 0)
 		{
-			DebugOut(L"Layer\n");
-			this->layer = new Layer(nextElement);			
+			Layer* layer = new Layer(element);
+			layers.push_back(layer);
 		}
-		nextElement = nextElement->NextSiblingElement();
+		else if (elementName.compare("objectgroup") == 0)
+		{
+			//DebugOut(L"objectgroup\n");
+		}
+		element = element->NextSiblingElement();
 	}
-	DebugOut(L"null\n");
-	//TiXmlElement* tilesetElement = editorsSettingsElement->NextSiblingElement();
-	//TiXmlElement* layerElement = tilesetElement->NextSiblingElement();
-	////TiXmlElement* objectGroupElement = layerElement->NextSiblingElement();
-	//DebugOut(L"nee %s\n", ToLPCWSTR(s));	
 	return true;
+}
+
+void TileMap::Render()
+{
+	layers[2]->Render();
+	/*for (int i = 0; i < layers.size(); i++)
+	{
+		layers[i]->Render();
+	}*/
 }

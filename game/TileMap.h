@@ -6,13 +6,16 @@
 #include "Tileset.h"
 #include "Layer.h"
 
+typedef Layer* LPLAYER;
+
 class TileMap
 {
 	static TileMap* __instance;
 	Tileset* tileSet;
-	Layer* layer;
+	vector<LPLAYER> layers;
 public:
 	bool ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor);
+	void Render();
 	static TileMap* GetInstance();
 };
 

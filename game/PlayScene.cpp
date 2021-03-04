@@ -256,9 +256,6 @@ void CPlayScene::_ParseSection_MAPS(string line)
 
 	tileMap = new TileMap();
 	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B));
-
-	/*CMaps::GetInstance()->Add(id, path_img.c_str(), width, height,
-		num_tile_x, num_tile_y, path_txt.c_str(), D3DCOLOR_XRGB(R, G, B));*/
 }
 
 void CPlayScene::Load()
@@ -379,34 +376,36 @@ void CPlayScene::Update(DWORD dt)
 
 	cx -= game->GetScreenWidth() / 2;
 
-	if (cy != CAM_BOTTOM_CHECK) //< or > cambottom deu set ve pos bottom
-	{
-		if (player->GetLevel() != MARIO_LEVEL_RACCOON)
-			cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK; //check pos mario & set cung pos cam tai do khi cam ko di chuyen
-		else { //neu la raccoon
-			if (cy > CAM_BOTTOM_CHECK)
-				//&& !player->isFly)
-				cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK;
-			else
-				cy -= game->GetScreenHeight() / 2;
-			if (cy < CAM_TOP_CHECK)
-			{
-				cy = CAM_TOP_CHECK;
-			}
-		}
-	}
+	//if (cy != CAM_BOTTOM_CHECK) //< or > cambottom deu set ve pos bottom
+	//{
+	//	if (player->GetLevel() != MARIO_LEVEL_RACCOON)
+	//		cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK; //check pos mario & set cung pos cam tai do khi cam ko di chuyen
+	//	else { //neu la raccoon
+	//		if (cy > CAM_BOTTOM_CHECK)
+	//			//&& !player->isFly)
+	//			cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK;
+	//		else
+	//			cy -= game->GetScreenHeight() / 2;
+	//		if (cy < CAM_TOP_CHECK)
+	//		{
+	//			cy = CAM_TOP_CHECK;
+	//		}
+	//	}
+	//}
 		
 	if (cx < 0)	
 		cx = 0;
 
-	CGame::GetInstance()->SetCamPos(cx, cy);
+	CGame::GetInstance()->SetCamPos(cx, 900);
 	//DebugOut(L"cx: %f cy: %f\n", cx, cy);
 }
 
 void CPlayScene::Render()
 {
+	//render map
+	tileMap->GetInstance()->Render();
+
 	int idMario = 0; //default id = 0 if not have pool 
-	CMaps::GetInstance()->Render();
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (dynamic_cast<CMario*>(objects[i]))
@@ -414,7 +413,7 @@ void CPlayScene::Render()
 		else
 			objects[i]->Render();
 	}	
-	objects[idMario]->Render(); // render mario lastest
+	objects[idMario]->Render(); // render mario lastest	
 }
 
 //Unload current scene
