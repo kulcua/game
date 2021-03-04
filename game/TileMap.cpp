@@ -20,11 +20,30 @@ bool TileMap::ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor)
 		return -1;
 	}
 	TiXmlElement* root = doc.RootElement(); //map
-	TiXmlElement* editorsettings = root->FirstChildElement();
+	TiXmlElement* editorsSettingsElement = root->FirstChildElement();
 
-	TiXmlElement* tileset = editorsettings->NextSiblingElement();
-
-	tileSet = new Tileset(tileset, id, transColor);
+	string nameElement;
+	TiXmlElement* nextElement = editorsSettingsElement->NextSiblingElement();
 	
+	while (nextElement)
+	{
+		nameElement = nextElement->Value();
+		if (nameElement.compare("tileset") == 0)
+		{
+			DebugOut(L"Tileset\n");
+			this->tileSet = new Tileset(nextElement, id, transColor);			
+		}
+		else if (nameElement.compare("layer") == 0)
+		{
+			DebugOut(L"Layer\n");
+			this->layer = new Layer(nextElement);			
+		}
+		nextElement = nextElement->NextSiblingElement();
+	}
+	DebugOut(L"null\n");
+	//TiXmlElement* tilesetElement = editorsSettingsElement->NextSiblingElement();
+	//TiXmlElement* layerElement = tilesetElement->NextSiblingElement();
+	////TiXmlElement* objectGroupElement = layerElement->NextSiblingElement();
+	//DebugOut(L"nee %s\n", ToLPCWSTR(s));	
 	return true;
 }

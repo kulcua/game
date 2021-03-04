@@ -154,6 +154,7 @@
     <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="MarioAttackState.cpp" />
     <ClCompile Include="MarioDropFlyState.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Layer.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="MarioAttackState.h" />
     <ClInclude Include="MarioDropFlyState.h" />

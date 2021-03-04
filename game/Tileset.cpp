@@ -19,7 +19,7 @@ void Tileset::SplitImageToTile()
 	rows = tileCount % columns;
 
 	TiXmlElement* image = tileset->FirstChildElement();
-	pathImage = ToLPCWSTR(image->Attribute("source"));
+	pathImage = ToLPCWSTR(prefix + image->Attribute("source"));
 
 	//add vao textures nguyen hinh tileset
 	CTextures::GetInstance()->Add(textureId, pathImage, transColor);

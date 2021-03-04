@@ -40,6 +40,9 @@
     <Filter Include="XmlLib">
       <UniqueIdentifier>{c9836ac4-911e-437b-b45a-6e204b4dfcdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{a596ee21-b1a3-4658-996f-1f0a4827e2bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -171,8 +174,14 @@
     <ClCompile Include="tinyxmlparser.cpp">
       <Filter>XmlLib</Filter>
     </ClCompile>
+    <ClCompile Include="Tileset.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
     <ClCompile Include="TileMap.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -201,9 +210,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Item.h">
@@ -299,8 +305,17 @@
     <ClInclude Include="tinystr.h">
       <Filter>XmlLib</Filter>
     </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Maps.h">
+      <Filter>Map</Filter>
+    </ClInclude>
     <ClInclude Include="TileMap.h">
-      <Filter>Header Files</Filter>
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Tileset.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

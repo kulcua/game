@@ -1,12 +1,12 @@
 #pragma once
 #include "fstream"
 #include "Sprites.h"
-#include <string>
 #include "Utils.h"
 #include "tinyxml.h"
 
 class Tileset
 {
+	const string prefix = "map/World-map-1-1/";
 	TiXmlElement* tileset;
 	int textureId;
 	D3DCOLOR transColor;

@@ -246,7 +246,7 @@ void CPlayScene::_ParseSection_MAPS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 10) return;
+	if (tokens.size() < 5) return;
 
 	int id = atoi(tokens[0].c_str());
 	const char* pathTmx = tokens[1].c_str();
