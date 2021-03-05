@@ -328,7 +328,7 @@ void CMario::Render()
 	else 
 		animation_set->at(ani)->Render(x, y, nx, alpha);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CMario::SetState(int state)
