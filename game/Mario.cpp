@@ -317,7 +317,7 @@ void CMario::Render()
 	//DebugOut(L"state: %d ani: %d\n", state_, ani);
 	int alpha = 255;
 
-	if (isAttack && level == MARIO_LEVEL_RACCOON)
+	/*if (isAttack && level == MARIO_LEVEL_RACCOON)
 	{
 		int x_;
 		if (nx < 0)
@@ -325,8 +325,8 @@ void CMario::Render()
 		else x_ = x;
 		animation_set->at(ani)->Render(x_, y, nx, alpha);
 	}
-	else 
-		animation_set->at(ani)->Render(x, y, nx, alpha);
+	else */
+	animation_set->at(ani)->Render(x, y, nx, alpha);
 
 	RenderBoundingBox();
 }
@@ -368,13 +368,13 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	{
 		bottom = y + MARIO_SIT_BBOX_HEIGHT;
 	}
-	else if (isAttack)
+	/*else if (isAttack)
 	{
 		if (nx > 0)
 			right = x + MARIO_BBOX_TAIL_HIT_RIGHT;
 		else
 			left = x - MARIO_BBOX_TAIL_HIT_LEFT;
-	}
+	}*/
 }
 
 //Reset Mario status to the beginning state of a scene

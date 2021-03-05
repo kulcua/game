@@ -48,9 +48,8 @@ bool TileMap::ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor)
 
 void TileMap::Render()
 {
-	layers[2]->Render();
-	/*for (int i = 0; i < layers.size(); i++)
+	for (int i = 0; i < layers.size(); i++)
 	{
 		layers[i]->Render();
-	}*/
+	}
 }

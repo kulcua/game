@@ -8,6 +8,10 @@ Layer::Layer(TiXmlElement* layer)
 	name = layer->Attribute("name");
 	layer->QueryIntAttribute("width", &width);
 	layer->QueryIntAttribute("height", &height);
+	if (layer->Attribute("visible") == NULL)
+		isVisible = 1;
+	else 
+		layer->QueryIntAttribute("visible", &isVisible);
 
 	this->dataElement = layer->FirstChildElement();
 
@@ -31,14 +35,17 @@ void Layer::ImportData()
 
 void Layer::Render()
 {	
-	for (int i = 0; i < height; i++)
+	if (isVisible)
 	{
-		for (int j = 0; j < width; j++)
+		for (int i = 0; i < height; i++)
 		{
-			if (tile[i][j] != 0)
+			for (int j = 0; j < width; j++)
 			{
-				CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE, NULL);
+				if (tile[i][j] != 0)
+				{
+					CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE, NULL);
+				}
 			}
 		}
-	}		
+	}			
 }

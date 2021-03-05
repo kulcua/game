@@ -3,16 +3,16 @@
 #include "Plant.h"
 #include "Mario.h"
 
-#define FIREBALL_WIDTH 9
-#define FIREBALL_HEIGHT 9
-#define FIREBALL_SPEED 0.06f
+#define FIREBALL_WIDTH 25
+#define FIREBALL_HEIGHT 25
+#define FIREBALL_SPEED 0.1f
 #define FIREBALL_ANI_ID 62
 #define FIREBALL_CHECK_POS_SHOOT_X 72
 #define FIREBALL_CHECK_X 150
 #define FIREBALL_CHECK_Y 120
-#define FIREBALL_VELOCITY_X 0.1f
-#define FIREBALL_GRAVITY 0.0007f
-#define FIREBALL_DEFLECT_Y 0.15f
+#define FIREBALL_VELOCITY_X 0.2f
+#define FIREBALL_GRAVITY 0.0015f
+#define FIREBALL_DEFLECT_Y 0.3f
 
 class CFireBall : public CGameObject
 {

@@ -15,7 +15,7 @@ class Layer
 	string name;
 	int width;
 	int height;
-	bool isVisible;
+	int isVisible;
 
 	int tile[MAX_TILE][MAX_TILE];
 public:
