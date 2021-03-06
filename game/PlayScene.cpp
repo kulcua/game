@@ -255,7 +255,7 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	int B = atoi(tokens[4].c_str());
 
 	tileMap = new TileMap();
-	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B));
+	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects);
 }
 
 void CPlayScene::Load()
@@ -362,8 +362,8 @@ void CPlayScene::Update(DWORD dt)
 	}
 	pool->Animate();
 
-	/*DebugOut(L"size coo: %d\n", coObject.size());
-	DebugOut(L"size: %d\n", objects.size());*/
+	//DebugOut(L"size coo: %d\n", coObject.size());
+	//DebugOut(L"size: %d\n", objects.size());
 
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return;

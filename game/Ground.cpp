@@ -1,16 +1,22 @@
 #include "Ground.h"
-CGround::CGround(float l, float t, float r, float b)
+#include "Animations.h"
+#include "Utils.h"
+
+CGround::CGround(float l, float t, float w, float h)
 {
 	x = l;
 	y = t;
-	width = r - l + 1;
-	height = b - t + 1;
+	width = w;
+	height = h;
 	nx = NULL; //gan bang null cho khoi chay lung tung
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	LPANIMATION_SET ani_set = animation_sets->Get(0);
+	SetAnimationSet(ani_set);
 }
 
 void CGround::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CGround::GetBoundingBox(float& l, float& t, float& r, float& b)

@@ -5,7 +5,8 @@
 
 CFireBall::CFireBall()
 {
-	SetAnimationFireBall();	
+	//SetAnimation(FIREBALL_ANI_ID);
+	SetAnimationFireBall();
 	die = true;
 }
 

@@ -183,6 +183,9 @@
     <ClCompile Include="Maps.cpp">
       <Filter>Map</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectMap.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -315,6 +318,9 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Tileset.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectMap.h">
       <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>

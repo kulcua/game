@@ -2,10 +2,8 @@
 #include <Windows.h>
 #include <d3dx9.h>
 #include <vector>
-
 #include "Animations.h"
 #include "Sprites.h"
-
 
 using namespace std;
 
@@ -59,10 +57,11 @@ public:
 	DWORD die_time_start;
 
 	LPANIMATION_SET animation_set;
+	//int ani;
 
 public:
 	bool die;
-	void StartDieTime() { die = true; die_time_start = GetTickCount(); }
+	void StartDieTime() { die = true; die_time_start = GetTickCount64(); }
 
 	void SetPosition(float x, float y) { this->x = x; this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx; this->y = y; }
@@ -74,6 +73,8 @@ public:
 	void RenderBoundingBox();
 
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
+	//void SetAnimation(int ani);
+	//int GetAnimation() { return ani; }
 
 	bool AABB(CGameObject *obj);
 	

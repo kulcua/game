@@ -19,7 +19,6 @@ class CFireBall : public CGameObject
 	friend class FireBallPool;
 	bool isForPlant;
 	int framesLeft_;
-
 	union
 	{
 		// State when it's in use.

@@ -1,7 +1,5 @@
 #include <d3dx9.h>
 #include <algorithm>
-
-
 #include "Utils.h"
 #include "Game.h"
 #include "GameObject.h"
@@ -151,6 +149,13 @@ void CGameObject::RenderBoundingBox()
 
 	CGame::GetInstance()->Draw(x, y, nx, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
 }
+
+//void CGameObject::SetAnimation(int ani) {
+//	this->ani = ani;
+//	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+//	LPANIMATION_SET ani_set = animation_sets->Get(ani);
+//	SetAnimationSet(ani_set);
+//}
 
 CGameObject::~CGameObject()
 {

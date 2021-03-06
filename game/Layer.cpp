@@ -1,19 +1,19 @@
 #include "Layer.h"
 #include "Sprites.h"
 
-Layer::Layer(TiXmlElement* layer)
+Layer::Layer(TiXmlElement* layerElement)
 {
-	this->layerElement = layer;	
-	layer->QueryIntAttribute("id", &layerId);
-	name = layer->Attribute("name");
-	layer->QueryIntAttribute("width", &width);
-	layer->QueryIntAttribute("height", &height);
-	if (layer->Attribute("visible") == NULL)
+	this->layerElement = layerElement;
+	layerElement->QueryIntAttribute("id", &layerId);
+	name = layerElement->Attribute("name");
+	layerElement->QueryIntAttribute("width", &width);
+	layerElement->QueryIntAttribute("height", &height);
+	if (layerElement->Attribute("visible") == NULL)
 		isVisible = 1;
 	else 
-		layer->QueryIntAttribute("visible", &isVisible);
+		layerElement->QueryIntAttribute("visible", &isVisible);
 
-	this->dataElement = layer->FirstChildElement();
+	this->dataElement = layerElement->FirstChildElement();
 
 	ImportData();
 }

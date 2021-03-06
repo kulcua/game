@@ -12,7 +12,7 @@ TileMap* TileMap::GetInstance()
 	return __instance;
 }
 
-bool TileMap::ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor)
+bool TileMap::ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor, vector<LPGAMEOBJECT> &objects)
 {
 	TiXmlDocument doc(pathTmx);
 	if (!doc.LoadFile())
@@ -39,7 +39,7 @@ bool TileMap::ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor)
 		}
 		else if (elementName.compare("objectgroup") == 0)
 		{
-			//DebugOut(L"objectgroup\n");
+			objectMap = new ObjectMap(element, objects);
 		}
 		element = element->NextSiblingElement();
 	}

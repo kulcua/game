@@ -309,11 +309,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMario::Render()
 {
-	int ani = -1;
+	int animation = -1;
 	if (state == MARIO_STATE_DIE)
-		ani = MARIO_ANI_DIE;
+		animation = MARIO_ANI_DIE;
 	else 
-		ani = GetAnimation();
+		animation = GetAnimation();
 	//DebugOut(L"state: %d ani: %d\n", state_, ani);
 	int alpha = 255;
 
@@ -326,7 +326,7 @@ void CMario::Render()
 		animation_set->at(ani)->Render(x_, y, nx, alpha);
 	}
 	else */
-	animation_set->at(ani)->Render(x, y, nx, alpha);
+	animation_set->at(animation)->Render(x, y, nx, alpha);
 
 	RenderBoundingBox();
 }
