@@ -2,8 +2,6 @@
 #include "GameObject.h"
 class CGround : public CGameObject
 {
-	int width;
-	int height;
 public:
 	CGround(float l, float t, float w, float h);
 	virtual void Render();

@@ -1,11 +1,11 @@
 #include "BigBox.h"
 
-CBigBox::CBigBox(float l, float t, float r, float b)
+CBigBox::CBigBox(float l, float t, float w, float h)
 {
 	x = l;
 	y = t;
-	width = r - l + 1;
-	height = b - t + 1;
+	width = w;
+	height = h;
 	nx = NULL; //gan bang null cho khoi chay lung tung
 }
 

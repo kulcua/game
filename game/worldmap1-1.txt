@@ -4,6 +4,7 @@
 10	textures\enemies.png	68	145	190
 20	textures\misc.png	224	163	216
 30	textures\fireball.png	255	255	255
+40	textures\misc_.png	225	255	255
 
 # id	left	top	right	bottom	texture_id
 [SPRITES]
@@ -143,11 +144,11 @@
 30003	32	6	47	16	10
 
 #QUESTION BRICK
-40001	1140	1	1156	17	20
-40002	1157	1	1173	17	20
-40003	1174	1	1190	17	20
-40004	1191	1	1207	17	20
-40005	1208	1	1224	17	20
+40001	472	563	520	613	40
+40002	528	563	576	613	40
+40003	588	563	636	613	40
+40004	645	563	693	613	40
+40005	705	563	753	613	40
 
 #COIN
 50001	953	69	969	85	20
@@ -483,4 +484,4 @@
 
 [MAP]
 #id	.tmx	r	g	b
-80000	map/World-map-1-1/world-1-1-map.tmx	255	255	255
+80000	map/World-map-1-1/world-1-1-map_venus.tmx	255	255	255

@@ -174,7 +174,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BRICK:
 	{
 		int typeItem = atoi(tokens[4].c_str()); //coin 25, level 26
-		obj = new CBrick(y, typeItem);
+		obj = new CBrick(x, y, typeItem);
 	} 
 	break;
 	case OBJECT_TYPE_KOOPAS:

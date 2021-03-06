@@ -1,5 +1,7 @@
 #include "ObjectMap.h"
 #include "Ground.h"
+#include "BigBox.h"
+#include "Brick.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -30,5 +32,35 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}		
+	}
+	else if (name.compare("Ghost") == 0)
+	{
+		TiXmlElement* element = objectGroupElement->FirstChildElement();
+		while (element)
+		{
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryFloatAttribute("width", &width);
+			element->QueryFloatAttribute("height", &height);
+			obj = new CBigBox(x, y, width, height);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("QuestionBlocks") == 0)
+	{
+		string typeName;
+		int type;
+		TiXmlElement* element = objectGroupElement->FirstChildElement();
+		while (element)
+		{
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryIntAttribute("type", &type);
+			//typeName = objectGroupElement->Attribute("name");
+			obj = new CBrick(x, y, type);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
 	}
 }

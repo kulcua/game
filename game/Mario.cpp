@@ -209,13 +209,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{				
-				if (e->ny)
+				if (e->ny < 0)
 				{
 					isGrounded = true;
 				}
 				else
 				{
 					x += dx;
+					y += dy;
 				}				
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))

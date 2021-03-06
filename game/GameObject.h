@@ -54,6 +54,9 @@ public:
 
 	DWORD dt;
 
+	int width;
+	int height;
+
 	DWORD die_time_start;
 
 	LPANIMATION_SET animation_set;
