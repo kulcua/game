@@ -13,7 +13,6 @@ MarioJumpingState* MarioJumpingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioJumpingState();
-        DebugOut(L"Init MarioJumpingState\n");
     }
     return __instance;
 }
@@ -104,11 +103,6 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
-    if (mario.isGrounded == false && mario.vy > 0 && mario.GetPower() < 6)
-        mario.state_ = MarioState::dropping.GetInstance();
-    else if (mario.isGrounded) // if mario suddenly get on Ground
-        mario.state_ = MarioState::standing.GetInstance();
-
     //region check highJump
     if (mario.isHighJump)
     {
@@ -120,6 +114,13 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
         {
             mario.vy = -MARIO_JUMP_SPEED_Y;
         }   
+    }
+    else
+    {
+        if (mario.isGrounded) // if mario suddenly get on Ground
+            mario.state_ = MarioState::standing.GetInstance();
+        else if (mario.vy > 0 && mario.GetPower() < 6)
+            mario.state_ = MarioState::dropping.GetInstance();
     }
     //DebugOut(L"Jumping %f\n", mario.vx);
 }

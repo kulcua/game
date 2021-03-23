@@ -15,8 +15,6 @@
 #include "MarioLevelUpState.h"
 #include "FireBallPool.h"
 
-#define BORDER_X 15
-
 void CMario::PowerReset()
 {
 	isPower = false; 
@@ -97,21 +95,18 @@ CMario::CMario(float x, float y, FireBallPool* pool) : CGameObject()
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	//DebugOut(L"GetPower %d\n", GetPower());
-	//DebugOut(L"vx: %f\n", vx);
-	// update mario state
-	state_->Update(*this, dt);
-
-	// Calculate dx, dy 
+{	
 	CGameObject::Update(dt);
 
-	if (x <= BORDER_X) //when mario collise with border x
-		x = BORDER_X;
+	DebugOut(L"vy %f\n", vy);
 
-	// Simple fall down
+	state_->Update(*this, dt);
+
 	vy += MARIO_GRAVITY * dt;
-	
+
+	if (vy > MARIO_VY_DROP)
+		isGrounded = false;
+
 	PowerControl();
 
 	//CollisionAABB(coObjects);
@@ -120,19 +115,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	//DebugOut(L"power_time_start %d\n", power_time_start);
-	// turn off collision when die 
 	if (state != MARIO_STATE_DIE)
 		CalcPotentialCollisions(coObjects, coEvents);
 
-	//if (GetTickCount() - untouchable_start > MARIO_UNTOUCHABLE_TIME && untouchable)
-	//{
-	//	untouchable_start = 0;
-	//	untouchable = 0;
-	//	SetLevel(level - 1);
-	//}
-
-	// No collision occured, proceed normally
 	if (coEvents.size() == 0)
 	{
 		x += dx;
@@ -157,18 +142,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
-		//
-		// Collision logic with other objects
-		//
+
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGoomba*>(e->obj)) // if e->obj is Goomba 
+			if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-
-				// jump on top >> kill Goomba and deflect a bit 
 				if (e->ny < 0)
 				{
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
@@ -181,16 +162,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (isAttack || level == MARIO_LEVEL_RACCOON)
 						goomba->SetState(GOOMBA_STATE_DIE);
-					/*if (untouchable == 0)
-					{
-						if (goomba->GetState() != GOOMBA_STATE_DIE)
-						{
-							if (level > MARIO_LEVEL_SMALL)
-								StartUntouchable();
-							else
-								SetState(MARIO_STATE_DIE);	
-						}
-					}*/
 				}
 			}
 			else if (dynamic_cast<CGround*>(e->obj))
@@ -213,10 +184,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					isGrounded = true;
 				}
-				else
+				else if (e->ny > 0 && isHighJump)
 				{
-					x += dx;
+					vy = -MARIO_JUMP_SPEED_Y / 2; // jump little to avoid object on mario head
 					y += dy;
+				}
+				else {
+					x += dx;
 				}				
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
@@ -280,8 +254,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-
-	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
@@ -315,21 +287,12 @@ void CMario::Render()
 		animation = MARIO_ANI_DIE;
 	else 
 		animation = GetAnimation();
-	//DebugOut(L"state: %d ani: %d\n", state_, ani);
+
 	int alpha = 255;
 
-	/*if (isAttack && level == MARIO_LEVEL_RACCOON)
-	{
-		int x_;
-		if (nx < 0)
-			x_ = x - 5;
-		else x_ = x;
-		animation_set->at(ani)->Render(x_, y, nx, alpha);
-	}
-	else */
 	animation_set->at(animation)->Render(x, y, nx, alpha);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CMario::SetState(int state)
@@ -369,16 +332,8 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 	{
 		bottom = y + MARIO_SIT_BBOX_HEIGHT;
 	}
-	/*else if (isAttack)
-	{
-		if (nx > 0)
-			right = x + MARIO_BBOX_TAIL_HIT_RIGHT;
-		else
-			left = x - MARIO_BBOX_TAIL_HIT_LEFT;
-	}*/
 }
 
-//Reset Mario status to the beginning state of a scene
 void CMario::Reset()
 {
 	state_ = MarioState::standing.GetInstance();

@@ -2,14 +2,15 @@
 #include "Ground.h"
 #include "BigBox.h"
 #include "Brick.h"
+#include "CameraBound.h"
+#include "Camera.h"
 
-ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
+ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, CMario* mario)
 {
-	DebugOut(L"objectgroup\n");
 	this->objectGroupElement = objectGroupElement;
 	objectGroupElement->QueryIntAttribute("objectGroupId", &objectGroupId);
 	name = objectGroupElement->Attribute("name");
-
+	this->mario = mario;
 	ImportData(objects);
 }
 
@@ -59,6 +60,34 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryIntAttribute("type", &type);
 			//typeName = objectGroupElement->Attribute("name");
 			obj = new CBrick(x, y, type);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("CameraBound") == 0)
+	{
+		TiXmlElement* element = objectGroupElement->FirstChildElement();
+		while (element)
+		{
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryFloatAttribute("width", &width);
+			element->QueryFloatAttribute("height", &height);
+			obj = new CCameraBound(x, y, width, height);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("Camera") == 0)
+	{
+		TiXmlElement* element = objectGroupElement->FirstChildElement();
+		while (element)
+		{
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryFloatAttribute("width", &width);
+			element->QueryFloatAttribute("height", &height);
+			obj = new CCamera(mario, x, y, width, height);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

@@ -150,6 +150,8 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BigBox.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraBound.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="Ground.cpp" />
@@ -199,6 +201,8 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BigBox.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraBound.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="Ground.h" />

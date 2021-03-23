@@ -9,7 +9,6 @@ MarioDropFlyState* MarioDropFlyState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioDropFlyState();
-        DebugOut(L"Init MarioDropFlyState\n");
     }
     return __instance;
 }

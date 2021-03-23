@@ -10,7 +10,6 @@ MarioStandingState* MarioStandingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioStandingState();
-        DebugOut(L"Init MarioStandingState\n");
     }
 	return __instance;
 }

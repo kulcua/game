@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="25" nextobjectid="229">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="28" nextobjectid="240">
  <editorsettings>
   <export target="world-1-1-map.xml" format="tmx"/>
  </editorsettings>
@@ -416,6 +416,13 @@
   <object id="40" x="3841.47" y="1056.44" width="334.813" height="48.1928"/>
   <object id="41" x="3936.59" y="960.051" width="333.545" height="46.9245"/>
  </objectgroup>
+ <objectgroup id="25" name="CameraBound">
+  <object id="229" x="-56.7273" y="-8" width="63.6364" height="1384.85"/>
+  <object id="231" x="0.9697" y="1308.48" width="8451.52" height="24.2424"/>
+  <object id="233" x="-17.9697" y="579.364" width="2697.82" height="66.6667"/>
+  <object id="236" x="2612.97" y="55.0303" width="5848.48" height="42.4242"/>
+  <object id="237" x="8451.52" y="0" width="42.4242" height="1375.76"/>
+ </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
   <object id="47" name="bcoin" type="3" x="538.667" y="1065.33"/>
   <object id="49" name="powerup" type="1" x="586.667" y="1065.33"/>
@@ -543,6 +550,9 @@
     <property name="direction" value="up"/>
    </properties>
   </object>
+ </objectgroup>
+ <objectgroup id="27" name="Camera">
+  <object id="239" x="36" y="658" width="960" height="640"/>
  </objectgroup>
  <objectgroup id="21" name="Portal">
   <object id="135" name="hidden-scene" type="1" x="627.636" y="1161" width="88.9697" height="33.3333">

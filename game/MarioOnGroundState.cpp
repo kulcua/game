@@ -115,30 +115,16 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     {
         if (mario.isGrounded) // check isGrounded to jump again
         {
-            if (mario.GetPower() == MARIO_MAX_POWER)
-            { // if can Fly
-                if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-                {
-                    mario.vy = -MARIO_FLY_SPEED_Y;
-                }
-                else
-                {
-                    mario.vy = -MARIO_JUMP_FLY_SPEED_Y;
-                }
-                mario.state_ = MarioState::flying.GetInstance();
+            mario.isHighJump = true;
+            if (mario.isSit == true) // if isSit, don't change state
+            {
+                MarioState::ducking.GetInstance()->StartJump();
             }
-            else { // if not, Jump normally
-                mario.isHighJump = true;
-                if (mario.isSit == true) // if isSit, don't change state
-                {
-                    MarioState::ducking.GetInstance()->StartJump();
-                }
-                else {
-                    mario.state_ = MarioState::jumping.GetInstance();
-                    MarioState::jumping.GetInstance()->StartJump();
-                }
-                mario.vy = -MARIO_JUMP_SPEED_Y;
+            else {
+                mario.state_ = MarioState::jumping.GetInstance();
+                MarioState::jumping.GetInstance()->StartJump();
             }
+            mario.vy = -MARIO_JUMP_SPEED_Y;
             mario.isGrounded = false;
         }  
     }

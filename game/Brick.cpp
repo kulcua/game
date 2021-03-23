@@ -7,7 +7,7 @@ CBrick::CBrick(float x, float y, int type)
 	this->y = y;
 	start_y = y; //save y
 	this->typeItem = type;
-	SetAnimation(22);
+	SetAnimation(BRICK_ANI_ID);
 }
 
 void CBrick::SetAnimation(int ani)

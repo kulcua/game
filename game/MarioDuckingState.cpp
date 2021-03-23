@@ -9,7 +9,6 @@ MarioDuckingState* MarioDuckingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioDuckingState();
-        DebugOut(L"Init MarioDuckingState\n");
     }
     return __instance;
 }

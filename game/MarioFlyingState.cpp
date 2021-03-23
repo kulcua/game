@@ -8,7 +8,6 @@ MarioFlyingState* MarioFlyingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioFlyingState();
-        DebugOut(L"Init MarioFlyingState\n");
     }
     return __instance;
 }

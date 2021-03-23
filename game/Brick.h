@@ -13,6 +13,7 @@
 
 #define BRICK_JUMP_DEFLECT_Y 8.0f
 #define BRICK_DROP_SPEED_Y	0.0002f
+#define BRICK_ANI_ID 22
 
 class CBrick: public CGameObject
 {

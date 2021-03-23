@@ -8,7 +8,6 @@ MarioStoppingState* MarioStoppingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioStoppingState();
-        DebugOut(L"Init MarioStoppingState\n");
     }
     return __instance;
 }

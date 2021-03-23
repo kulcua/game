@@ -8,7 +8,6 @@ MarioRunningState* MarioRunningState::GetInstance()
 	if (__instance == NULL)
 	{
 		__instance = new MarioRunningState();
-		DebugOut(L"Init MarioRunningState\n");
 	}
 	return __instance;
 }

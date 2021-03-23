@@ -9,7 +9,6 @@ MarioKickState* MarioKickState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioKickState();
-        DebugOut(L"Init MarioKickState\n");
     }
     return __instance;
 }
