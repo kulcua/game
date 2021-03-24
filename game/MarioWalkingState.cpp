@@ -1,5 +1,6 @@
 #include "MarioWalkingState.h"
 #include "MarioStandingState.h"
+#include "MarioDroppingState.h"
 #include "Mario.h"
 
 MarioWalkingState* MarioWalkingState::__instance = NULL;
@@ -9,7 +10,6 @@ MarioWalkingState* MarioWalkingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioWalkingState();
-        DebugOut(L"Init MarioWalkingState\n");
     }
     return __instance;
 }
@@ -64,6 +64,10 @@ void MarioWalkingState::HandleInput(CMario& mario, Input input)
 void MarioWalkingState::Update(CMario& mario, DWORD dt)
 {
     MarioState::Update(mario, dt);
+    if (mario.isGrounded == false)
+    {
+        mario.state_ = MarioState::dropping.GetInstance();
+    }
     //DebugOut(L"Walking\n");
 }
 

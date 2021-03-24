@@ -1,10 +1,20 @@
 #include "Brick.h"
 #include "Utils.h"
 
-CBrick::CBrick(float y, int type)
+CBrick::CBrick(float x, float y, int type)
 {
+	this->x = x;
+	this->y = y;
 	start_y = y; //save y
 	this->typeItem = type;
+	SetAnimation(BRICK_ANI_ID);
+}
+
+void CBrick::SetAnimation(int ani)
+{
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	LPANIMATION_SET ani_set = animation_sets->Get(ani);
+	SetAnimationSet(ani_set);
 }
 
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

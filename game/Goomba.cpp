@@ -98,7 +98,7 @@ void CGoomba::Render()
 		ani = GOOMBA_ANI_WALKING;	
 		animation_set->at(ani)->Render(x, y, nx);
 	}
-	else if (GetTickCount() - die_time_start <= GOOMBA_DIE_TIME)
+	else if (GetTickCount64() - die_time_start <= GOOMBA_DIE_TIME)
 	{
 		ani = GOOMBA_ANI_DIE;
 		animation_set->at(ani)->Render(x, y, nx);

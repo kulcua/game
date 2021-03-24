@@ -11,7 +11,6 @@ class FireBallPool
 	CFireBall* firstAvailable_;
 public:
 	FireBallPool(vector<LPGAMEOBJECT> &objects);
-	void Create(CMario* mario, CPlant* plant);
 	CFireBall* Create();
 	void Animate();
 };

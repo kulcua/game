@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-
 #include "PlayScene.h"
 #include "Utils.h"
 #include "Sprites.h"
@@ -13,6 +12,7 @@
 #include "Pipe.h"
 #include "FireBall.h"
 #include "MarioKickState.h"
+#include "Camera.h"
 
 using namespace std;
 
@@ -20,11 +20,6 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 {
 	keyHandler = new CPlaySceneKeyHandler(this);
 }
-
-/*
-	Load scene resources from scene file (textures, sprites, animations and objects)
-	See scene1.txt, scene2.txt for detail format specification
-*/
 
 #define SCENE_SECTION_UNKNOWN -1
 #define SCENE_SECTION_TEXTURES 2
@@ -34,30 +29,20 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define SCENE_SECTION_OBJECTS	6
 #define SCENE_SECTION_MAPS	7
 
-#define OBJECT_TYPE_MARIO	0	//set object nhan dang file txt
-#define OBJECT_TYPE_BRICK	1
+#define OBJECT_TYPE_MARIO	0
 #define OBJECT_TYPE_ITEM	11
 #define OBJECT_TYPE_GOOMBA	2
 #define OBJECT_TYPE_KOOPAS	3
 #define OBJECT_TYPE_PLANT	6
 #define OBJECT_TYPE_POOL_FIREBALL	69
-
-#define OBJECT_TYPE_PIPE	66
-#define OBJECT_TYPE_BIGBOX	10
-#define OBJECT_TYPE_GROUND	20
-
 #define OBJECT_TYPE_PORTAL	50
 
 #define MAX_SCENE_LINE 1024
-
-#define CAM_BOTTOM_CHECK 200
-#define CAM_TOP_CHECK 40 //chua 1 khoang de mario o giua camera/ vi tri dep
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
 	vector<string> tokens = split(line);
 
-	// skip invalid lines
 	if (tokens.size() < 5) return;
 
 	int texID = atoi(tokens[0].c_str());
@@ -72,7 +57,7 @@ void CPlayScene::_ParseSection_TEXTURES(string line)
 void CPlayScene::_ParseSection_SPRITES(string line)
 {
 	vector<string> tokens = split(line);
-	if (tokens.size() < 6) return; // skip invalid lines
+	if (tokens.size() < 6) return;
 
 	int ID = atoi(tokens[0].c_str());
 	int l = atoi(tokens[1].c_str());
@@ -95,7 +80,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 3) return; // skip invalid lines - an animation must at least has 1 frame and 1 frame time
+	if (tokens.size() < 3) return;
 
 	LPANIMATION ani = new CAnimation();
 
@@ -108,14 +93,13 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	}
 
 	CAnimations::GetInstance()->Add(ani_id, ani);
-	//DebugOut(L"ani: %d\n", ani_id);
 }
 
 void CPlayScene::_ParseSection_ANIMATION_SETS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 2) return; // skip invalid lines - an animation set must at least id and one animation id
+	if (tokens.size() < 2) return; 
 
 	int ani_set_id = atoi(tokens[0].c_str());
 
@@ -134,16 +118,11 @@ void CPlayScene::_ParseSection_ANIMATION_SETS(string line)
 	CAnimationSets::GetInstance()->Add(ani_set_id, s);
 }
 
-/*
-	Parse a line in section [OBJECTS]
-*/
 void CPlayScene::_ParseSection_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
 
-	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
-
-	if (tokens.size() < 3) return; // skip invalid lines - an object set must have at least id, x, y
+	if (tokens.size() < 3) return; 
 
 	int object_type = atoi(tokens[0].c_str());
 	float x = atof(tokens[1].c_str());
@@ -170,13 +149,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[INFO] Player object created!\n");
 	}
 		break;
-	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
-	case OBJECT_TYPE_BRICK:
-	{
-		int typeItem = atoi(tokens[4].c_str()); //coin 25, level 26
-		obj = new CBrick(y, typeItem);
-	} 
-	break;
+	/*case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
 	case OBJECT_TYPE_KOOPAS:
 	{
 		float start_x, end_x;
@@ -189,41 +162,20 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	{
 		obj = new CPlant(player, pool);
 	}
-	break;
-	case OBJECT_TYPE_BIGBOX:
-	{
-		float r = atof(tokens[4].c_str());
-		float b = atof(tokens[5].c_str());
-		obj = new CBigBox(x, y, r, b);
-	}
-	break;
-	case OBJECT_TYPE_GROUND:
-	{
-		float r = atof(tokens[4].c_str());
-		float b = atof(tokens[5].c_str());
-		int scene_id = atoi(tokens[6].c_str());
-		obj = new CGround(x, y, r, b);
-	}
-	break;
-	case OBJECT_TYPE_PIPE:
-	{
-		int spriteId = atoi(tokens[4].c_str());
-		obj = new CPipe(x, y, spriteId);
-	}
-	break;
+	break;*/
 	case OBJECT_TYPE_POOL_FIREBALL:
 	{
 		pool = new FireBallPool(objects);
 	}
 	break;
-	case OBJECT_TYPE_PORTAL:
+	/*case OBJECT_TYPE_PORTAL:
 	{
 		float r = atof(tokens[4].c_str());
 		float b = atof(tokens[5].c_str());
 		int scene_id = atoi(tokens[6].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
 	}
-	break;
+	break;*/
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -231,7 +183,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	if (obj != NULL) //check if not a pool
 	{
-		// General object setup
 		obj->SetPosition(x, y);
 
 		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
@@ -239,28 +190,22 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		obj->SetAnimationSet(ani_set);
 		objects.push_back(obj);
 	}	
-	//DebugOut(L"obj id: %d ani: %d\n", object_type, ani_set_id);
 }
 
 void CPlayScene::_ParseSection_MAPS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 10) return;
+	if (tokens.size() < 5) return;
 
 	int id = atoi(tokens[0].c_str());
-	wstring path_img = ToWSTR(tokens[1]);
+	const char* pathTmx = tokens[1].c_str();
 	int R = atoi(tokens[2].c_str());
 	int G = atoi(tokens[3].c_str());
 	int B = atoi(tokens[4].c_str());
-	int width = atoi(tokens[5].c_str());
-	int height = atoi(tokens[6].c_str());
-	int num_tile_x = atoi(tokens[7].c_str());
-	int num_tile_y = atoi(tokens[8].c_str());
-	wstring path_txt = ToWSTR(tokens[9]);
 
-	CMaps::GetInstance()->Add(id, path_img.c_str(), width, height,
-		num_tile_x, num_tile_y, path_txt.c_str(), D3DCOLOR_XRGB(R, G, B));
+	tileMap = new TileMap();
+	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects, player);
 }
 
 void CPlayScene::Load()
@@ -270,7 +215,6 @@ void CPlayScene::Load()
 	ifstream f;
 	f.open(sceneFilePath);
 
-	// current resource section flag
 	int section = SCENE_SECTION_UNKNOWN;
 
 	char str[MAX_SCENE_LINE];
@@ -278,7 +222,7 @@ void CPlayScene::Load()
 	{
 		string line(str);
 
-		if (line[0] == '#') continue;	// skip comment lines	
+		if (line[0] == '#') continue;
 
 		if (line == "[TEXTURES]") { section = SCENE_SECTION_TEXTURES; continue; }
 		if (line == "[SPRITES]") {
@@ -298,9 +242,6 @@ void CPlayScene::Load()
 		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
-		//
-		// data section
-		//
 		switch (section)
 		{
 		case SCENE_SECTION_TEXTURES: _ParseSection_TEXTURES(line); break;
@@ -320,45 +261,36 @@ void CPlayScene::Load()
 }
 void CPlayScene::Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
-	// TO-DO: This is a "dirty" way, need a more organized way 
-
 	vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
-		if (objects[i]->die)
+		if (dynamic_cast<CBrick*>(objects[i]))
 		{
-			//objects.erase(objects.begin() + i);
-		}
-		else {
-			if (dynamic_cast<CBrick*>(objects[i]))
+			CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
+			if (brick->GetState() == BRICK_STATE_DISABLE && !brick->dropItem)
 			{
-				CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
-				if (brick->GetState() == BRICK_STATE_DISABLE && !brick->dropItem)
+				brick->dropItem = true;
+				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+
+				int type = brick->GetTypeItem();
+
+				if (type == ITEM_STATE_RED_MUSHROOM) //check neu item set theo level 1
 				{
-					brick->dropItem = true;
-					CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-
-					int type = brick->GetTypeItem();
-
-					if (type == ITEM_STATE_RED_MUSHROOM) //check neu item set theo level 1
-					{
-						type += player->GetLevel() - 1; //-1 de lay level mario can upgrade theo item
-						if (type > ITEM_STATE_LEVEL_MAX)
-							type = ITEM_STATE_LEVEL_MAX;
-					}
-
-					CItem* item = new CItem(type, player);
-
-					item->SetPosition(brick->x, brick->y);
-
-					LPANIMATION_SET ani_set = animation_sets->Get(type);
-					item->SetAnimationSet(ani_set);
-					objects.insert(objects.begin() + i, item);
+					type += player->GetLevel() - 1; //-1 de lay level mario can upgrade theo item
+					if (type > ITEM_STATE_LEVEL_MAX)
+						type = ITEM_STATE_LEVEL_MAX;
 				}
+
+				CItem* item = new CItem(type, player);
+
+				item->SetPosition(brick->x, brick->y);
+
+				LPANIMATION_SET ani_set = animation_sets->Get(type);
+				item->SetAnimationSet(ani_set);
+				objects.insert(objects.begin() + i, item);
 			}
-			coObject.push_back(objects[i]);
 		}
+		coObject.push_back(objects[i]);
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
@@ -367,48 +299,15 @@ void CPlayScene::Update(DWORD dt)
 	}
 	pool->Animate();
 
-	/*DebugOut(L"size coo: %d\n", coObject.size());
-	DebugOut(L"size: %d\n", objects.size());*/
-
-	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
-	if (player == NULL) return;
-
-	// Update camera to follow mario
-	float cx, cy;
-	player->GetPosition(cx, cy);
-
-	CGame* game = CGame::GetInstance();
-
-	cx -= game->GetScreenWidth() / 2;
-
-	if (cy != CAM_BOTTOM_CHECK) //< or > cambottom deu set ve pos bottom
-	{
-		if (player->GetLevel() != MARIO_LEVEL_RACCOON)
-			cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK; //check pos mario & set cung pos cam tai do khi cam ko di chuyen
-		else { //neu la raccoon
-			if (cy > CAM_BOTTOM_CHECK)
-				//&& !player->isFly)
-				cy = CAM_BOTTOM_CHECK + CAM_TOP_CHECK;
-			else
-				cy -= game->GetScreenHeight() / 2;
-			if (cy < CAM_TOP_CHECK)
-			{
-				cy = CAM_TOP_CHECK;
-			}
-		}
-	}
-		
-	if (cx < 0)	
-		cx = 0;
-
-	CGame::GetInstance()->SetCamPos(cx, cy);
-	//DebugOut(L"cx: %f cy: %f\n", cx, cy);
+	//DebugOut(L"size coo: %d\n", coObject.size());
+	//DebugOut(L"size: %d\n", objects.size());
 }
 
 void CPlayScene::Render()
 {
-	int idMario = 0; //default id = 0 if not have pool 
-	CMaps::GetInstance()->Render();
+	tileMap->GetInstance()->Render();
+
+	int idMario = 0;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (dynamic_cast<CMario*>(objects[i]))
@@ -416,10 +315,9 @@ void CPlayScene::Render()
 		else
 			objects[i]->Render();
 	}	
-	objects[idMario]->Render(); // render mario lastest
+	objects[idMario]->Render();
 }
 
-//Unload current scene
 void CPlayScene::Unload()
 {
 	for (int i = 0; i < objects.size(); i++)
@@ -432,7 +330,6 @@ void CPlayScene::Unload()
 
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	//DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
 	Input input;
 	
@@ -478,7 +375,6 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
-	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
 	Input input;
 	
@@ -511,7 +407,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
 	CGame* game = CGame::GetInstance();
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
-	// disable control key when Mario die 
+
 	if (mario->GetState() == MARIO_STATE_DIE) return;
 
 	Input input = KEY_STATE;

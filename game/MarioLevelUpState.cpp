@@ -9,7 +9,6 @@ MarioLevelUpState* MarioLevelUpState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioLevelUpState();
-        DebugOut(L"Init MarioLevelUpState\n");
     }
     return __instance;
 }

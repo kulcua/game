@@ -11,7 +11,6 @@ MarioTailHitState* MarioTailHitState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioTailHitState();
-        DebugOut(L"Init MarioTailHitState\n");
     }
     return __instance;
 }

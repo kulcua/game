@@ -4,10 +4,8 @@
 #include <d3dx9.h>
 #include <unordered_map>
 #include <dinput.h>
-
 #include "PlayScene.h"
 #include "Scene.h"
-
 using namespace std;
 
 #define DIRECTINPUT_VERSION 0x0800
@@ -19,17 +17,6 @@ using namespace std;
 #define GAME_FILE_SECTION_UNKNOWN -1
 #define GAME_FILE_SECTION_SETTINGS 1
 #define GAME_FILE_SECTION_SCENES 2
-
-//Abstract class to define keyboard event handlers
-//class CKeyEventHandler
-//{
-//public:
-//	virtual void KeyState(BYTE* state) = 0;
-//	virtual void OnKeyDown(int KeyCode) = 0;
-//	virtual void OnKeyUp(int KeyCode) = 0;
-//};
-//
-//typedef CKeyEventHandler* LPKEYEVENTHANDLER;
 
 class CGame {
 	static CGame* __instance;

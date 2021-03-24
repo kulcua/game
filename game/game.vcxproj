@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -150,10 +150,13 @@
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BigBox.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraBound.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="MarioAttackState.cpp" />
     <ClCompile Include="MarioDropFlyState.cpp" />
@@ -172,8 +175,15 @@
     <ClCompile Include="MarioStoppingState.cpp" />
     <ClCompile Include="MarioTailHitState.cpp" />
     <ClCompile Include="MarioWalkingState.cpp" />
+    <ClCompile Include="ObjectMap.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Plant.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="Tileset.cpp" />
+    <ClCompile Include="tinystr.cpp" />
+    <ClCompile Include="tinyxml.cpp" />
+    <ClCompile Include="tinyxmlerror.cpp" />
+    <ClCompile Include="tinyxmlparser.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -191,10 +201,13 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BigBox.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraBound.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="Layer.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="MarioAttackState.h" />
     <ClInclude Include="MarioDropFlyState.h" />
@@ -213,8 +226,13 @@
     <ClInclude Include="MarioStoppingState.h" />
     <ClInclude Include="MarioTailHitState.h" />
     <ClInclude Include="MarioWalkingState.h" />
+    <ClInclude Include="ObjectMap.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Plant.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="Tileset.h" />
+    <ClInclude Include="tinystr.h" />
+    <ClInclude Include="tinyxml.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

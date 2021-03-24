@@ -1,4 +1,5 @@
 #include "MarioPreFlyState.h"
+#include "MarioFlyingState.h"
 #include "Mario.h"
 
 MarioPreFlyState* MarioPreFlyState::__instance = NULL;
@@ -8,7 +9,6 @@ MarioPreFlyState* MarioPreFlyState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioPreFlyState();
-        DebugOut(L"Init MarioPreFlyState\n");
     }
     return __instance;
 }
@@ -16,6 +16,23 @@ MarioPreFlyState* MarioPreFlyState::GetInstance()
 void MarioPreFlyState::HandleInput(CMario& mario, Input input)
 {
     MarioOnGroundState::HandleInput(mario, input);
+
+    if (input == PRESS_S)
+    {
+        if (mario.GetPower() == MARIO_MAX_POWER)
+        { // if can Fly
+            if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+            {
+                mario.vy = -MARIO_FLY_SPEED_Y;
+            }
+            else
+            {
+                mario.vy = -MARIO_JUMP_FLY_SPEED_Y;
+            }
+            mario.state_ = MarioState::flying.GetInstance();
+            mario.isGrounded = false;
+        }
+    }
 }
 
 void MarioPreFlyState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioPreFlyState
@@ -68,5 +85,5 @@ void MarioPreFlyState::GetBoundingBox(CMario& mario, float& left, float& top, fl
 void MarioPreFlyState::Update(CMario& mario, DWORD dt)
 {
     MarioState::Update(mario, dt);
-    //DebugOut(L"Running\n");
+    //DebugOut(L"PreFly\n");
 }

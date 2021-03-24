@@ -11,7 +11,6 @@ MarioDroppingState* MarioDroppingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioDroppingState();
-        DebugOut(L"Init MarioDroppingState\n");
     }
     return __instance;
 }

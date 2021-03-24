@@ -8,7 +8,6 @@ MarioFlyingState* MarioFlyingState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioFlyingState();
-        DebugOut(L"Init MarioFlyingState\n");
     }
     return __instance;
 }
@@ -75,7 +74,4 @@ void MarioFlyingState::GetBoundingBox(CMario& mario, float& left, float& top, fl
 void MarioFlyingState::Update(CMario& mario, DWORD dt)
 {
     MarioJumpingState::Update(mario, dt);
-    //if (mario.isHandleShell)
-    //    mario.PowerUp();
-    //DebugOut(L"Flying power %d\n", mario.GetPower());
 }
