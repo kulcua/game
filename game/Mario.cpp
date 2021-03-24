@@ -13,7 +13,9 @@
 #include "MarioDuckingState.h"
 #include "MarioKickState.h"
 #include "MarioLevelUpState.h"
+#include "MarioFlyingState.h"
 #include "FireBallPool.h"
+#include "CameraBound.h"
 
 void CMario::PowerReset()
 {
@@ -98,7 +100,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
 
-	DebugOut(L"vy %f\n", vy);
+	/*DebugOut(L"vy %f\n", vy);*/
 
 	state_->Update(*this, dt);
 
@@ -252,6 +254,27 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
+			else if (dynamic_cast<CCameraBound*>(e->obj))
+			{
+				CCameraBound* camBound = dynamic_cast<CCameraBound*>(e->obj);
+				if (e->ny > 0)
+				{
+					if (camBound->GetType() == 1)
+					{
+						if (dynamic_cast<MarioFlyingState*>(state_))
+						{
+							y += dy;
+						}
+					}
+				}
+				else if (e->ny < 0)
+				{
+					if (camBound->GetType() == 1)
+					{
+						y += dy;
+					}
+				}
+			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -341,7 +364,6 @@ void CMario::Reset()
 	isPower = false;
 	isHandleShell = false;
 	SetLevel(MARIO_LEVEL_SMALL);
-	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
 }
 

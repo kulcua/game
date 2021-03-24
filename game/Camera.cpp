@@ -1,6 +1,7 @@
 #include "Camera.h"
 #include "Game.h"
 #include "CameraBound.h"
+#include "MarioFlyingState.h"
 
 CCamera::CCamera(CMario* mario, float x, float y, float width, float height)
 {
@@ -28,7 +29,7 @@ void CCamera::FollowMario()
 	else
 		marioOnTopCam = false;
 
-	if (mario->isGrounded == false && mario->GetLevel() == MARIO_LEVEL_RACCOON)
+	if (mario->isGrounded == false)
 	{
 		if ((marioOnTopCam == true && mario->vy < 0) // when mario fly
 			|| (marioOnTopCam == false && mario->vy > 0)) // when mario drop
@@ -79,7 +80,21 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CCameraBound*>(e->obj) == false)
+			if (dynamic_cast<CCameraBound*>(e->obj))
+			{
+				CCameraBound* camBound = dynamic_cast<CCameraBound*>(e->obj);
+				if (e->ny > 0)
+				{
+					if (camBound->GetType() == 1)
+					{
+						if (dynamic_cast<MarioFlyingState*>(mario->state_))
+						{
+							y += dy;
+						}
+					}
+				}
+			}
+			else
 			{
 				if (e->ny) y += dy;
 				else if (e->nx) x += dx;
@@ -93,15 +108,13 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CCamera::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CCamera::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + 30;
-	b = y + 30;
-	//r = x + width;
-	//b = y + height;
+	r = x + width;
+	b = y + height;
 }

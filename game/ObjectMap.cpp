@@ -66,6 +66,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	}
 	else if (name.compare("CameraBound") == 0)
 	{
+		int type;
 		TiXmlElement* element = objectGroupElement->FirstChildElement();
 		while (element)
 		{
@@ -73,7 +74,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("y", &y);
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
-			obj = new CCameraBound(x, y, width, height);
+			element->QueryIntAttribute("type", &type);
+			obj = new CCameraBound(x, y, width, height, type);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

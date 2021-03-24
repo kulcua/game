@@ -2,8 +2,10 @@
 #include "GameObject.h"
 class CCameraBound : public CGameObject
 {
+	int type;
 public:
-	CCameraBound(float l, float t, float w, float h);
+	CCameraBound(float l, float t, float w, float h, int type);
+	int GetType() { return type; }
 	virtual void Render();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

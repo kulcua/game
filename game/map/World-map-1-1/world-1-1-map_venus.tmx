@@ -367,10 +367,10 @@
 </data>
  </layer>
  <objectgroup id="13" name="Solid">
-  <object id="1" x="2" y="1246" width="1869.82" height="48"/>
+  <object id="1" x="2" y="1250" width="1869.82" height="44"/>
   <object id="2" x="1057.42" y="1101.33" width="95.9091" height="144.394"/>
-  <object id="3" x="1872" y="1198" width="1392" height="96"/>
-  <object id="4" x="3458" y="1248" width="1004" height="46"/>
+  <object id="3" x="1872" y="1203.33" width="1392" height="90.6667"/>
+  <object id="4" x="3458" y="1252" width="1004" height="42"/>
   <object id="5" x="4562" y="1244" width="236" height="52"/>
   <object id="6" x="4752" y="1104.25" width="47.5" height="143.75"/>
   <object id="7" x="4655.75" y="1200.25" width="51.25" height="45.75"/>
@@ -378,7 +378,7 @@
   <object id="10" x="4944.5" y="1104" width="47.5" height="146"/>
   <object id="11" x="4990" y="1151.75" width="49.5" height="50.25"/>
   <object id="12" x="5036.5" y="1200" width="51.5" height="46"/>
-  <object id="13" x="4944" y="1246" width="1718.67" height="50"/>
+  <object id="13" x="4944" y="1251.33" width="1718.67" height="44.6667"/>
   <object id="14" x="5330" y="1150" width="94" height="100"/>
   <object id="15" x="5520" y="1102" width="98" height="150"/>
   <object id="16" x="6718" y="1244" width="1732" height="54"/>
@@ -417,11 +417,11 @@
   <object id="41" x="3936.59" y="960.051" width="333.545" height="46.9245"/>
  </objectgroup>
  <objectgroup id="25" name="CameraBound">
-  <object id="229" x="-56.7273" y="-8" width="63.6364" height="1384.85"/>
-  <object id="231" x="0.9697" y="1308.48" width="8451.52" height="24.2424"/>
-  <object id="233" x="-17.9697" y="579.364" width="2697.82" height="66.6667"/>
-  <object id="236" x="2612.97" y="55.0303" width="5848.48" height="42.4242"/>
-  <object id="237" x="8451.52" y="0" width="42.4242" height="1375.76"/>
+  <object id="229" type="0" x="-56.7273" y="-8" width="63.6364" height="1384.85"/>
+  <object id="231" type="0" x="0.9697" y="1303.15" width="8451.52" height="24.2424"/>
+  <object id="233" type="1" x="-15.303" y="618.031" width="8485.82" height="34.6667"/>
+  <object id="236" type="2" x="2612.97" y="55.0303" width="5848.48" height="42.4242"/>
+  <object id="237" type="0" x="8451.52" y="0" width="42.4242" height="1375.76"/>
  </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
   <object id="47" name="bcoin" type="3" x="538.667" y="1065.33"/>
