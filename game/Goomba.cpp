@@ -1,7 +1,5 @@
 #include "Goomba.h"
 #include "Utils.h"
-#include "Ground.h"
-#include "Pipe.h"
 
 #define GOOMBA_DIE_TIME 200
 
@@ -29,12 +27,14 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		CGameObject::Update(dt, coObjects);
 
+		vy += GOOMBA_GRAVITY * dt;
+
 		vector<LPCOLLISIONEVENT> coEvents;
 		vector<LPCOLLISIONEVENT> coEventsResult;
 
 		coEvents.clear();
 		CalcPotentialCollisions(coObjects, coEvents);
-		//TO-DO: make sure Goomba can interact with the world and to each of them too!
+
 		if (coEvents.size() == 0)
 		{
 			x += dx;
@@ -46,42 +46,20 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			float rdx = 0;
 			float rdy = 0;
 
-			// TODO: This is a very ugly designed function!!!!
 			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-			// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-			//if (rdx != 0 && rdx!=dx)
-			//	x += nx*abs(rdx); 
-
-			// block every object first!
 			x += min_tx * dx + nx * 0.4f;
 			y += min_ty * dy + ny * 0.4f;
 
-			//if (nx != 0) vx = 0;
-			//if (ny != 0) vy = 0;
-			//
-			// Collision logic with other objects
-			//
+			if (nx != 0) vx = 0;
+			if (ny != 0) vy = 0;
+
 			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
 				LPCOLLISIONEVENT e = coEventsResult[i];
-				if (dynamic_cast<CGround*>(e->obj))
+				if (e->nx)
 				{
-					if (e->nx)
-					{
-						vx = -vx;
-					}			
-				}
-				else if (dynamic_cast<CPipe*>(e->obj))
-				{
-					if (e->nx)
-					{
-						vx = -vx;
-					}
-				}
-				else
-				{
-					x += dx;
+					vx = -vx;
 				}
 			}
 		}

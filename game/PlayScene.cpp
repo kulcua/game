@@ -264,32 +264,6 @@ void CPlayScene::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
-		if (dynamic_cast<CBrick*>(objects[i]))
-		{
-			CBrick* brick = dynamic_cast<CBrick*>(objects[i]);
-			if (brick->GetState() == BRICK_STATE_DISABLE && !brick->dropItem)
-			{
-				brick->dropItem = true;
-				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-
-				int type = brick->GetTypeItem();
-
-				if (type == ITEM_STATE_RED_MUSHROOM) //check neu item set theo level 1
-				{
-					type += player->GetLevel() - 1; //-1 de lay level mario can upgrade theo item
-					if (type > ITEM_STATE_LEVEL_MAX)
-						type = ITEM_STATE_LEVEL_MAX;
-				}
-
-				CItem* item = new CItem(type, player);
-
-				item->SetPosition(brick->x, brick->y);
-
-				LPANIMATION_SET ani_set = animation_sets->Get(type);
-				item->SetAnimationSet(ani_set);
-				objects.insert(objects.begin() + i, item);
-			}
-		}
 		coObject.push_back(objects[i]);
 	}
 
