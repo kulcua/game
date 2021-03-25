@@ -297,7 +297,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		objects[i]->Update(dt, &coObject);
 	}
-	pool->Animate();
+	pool->GetBackToPool();
 
 	//DebugOut(L"size coo: %d\n", coObject.size());
 	//DebugOut(L"size: %d\n", objects.size());

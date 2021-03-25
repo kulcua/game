@@ -24,11 +24,11 @@ CFireBall* FireBallPool::Create() {
     else return NULL;
 }
 
-void FireBallPool::Animate()
+void FireBallPool::GetBackToPool()
 {
     for (int i = 0; i < POOL_SIZE; i++)
     {  
-        if (fireBall_[i].Animate()) // return fireball
+        if (fireBall_[i].GetBackToPool()) // return fireball
         {         
             fireBall_[i].SetNext(firstAvailable_);
             firstAvailable_ = &fireBall_[i];

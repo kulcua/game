@@ -42,6 +42,12 @@ void CFireBall::SetAnimationFireBall()
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)
+	{
+		destroyTimeStart = 0;
+		isDestroyed = false;
+	}
+
 	if (die == false)
 	{
 		CGameObject::Update(dt, coObjects);
@@ -104,8 +110,11 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						{
 							vy = -FIREBALL_DEFLECT_Y;
 						}
+						else {
+							die = true;
+						}
 					}
-					else
+					else if(e->nx)
 					{
 						die = true;
 					}
@@ -128,10 +137,13 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBall::Render()
 {
-	if (die == false)
+	if (isDestroyed)
 	{
-		animation_set->at(0)->Render(x, y, NULL);
-		//RenderBoundingBox();
+		animation_set->at(FIREBALL_ANI_DESTROYED)->Render(x, y, NULL);
+	}
+	else if (inUse)
+	{
+		animation_set->at(FIREBALL_ANI_BALL)->Render(x, y, NULL);
 	}
 }
 
