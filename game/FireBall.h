@@ -55,14 +55,5 @@ public:
 	void Init(CMario* mario, CPlant* plant);
 	void Init(CMario* mario);
 
-	bool GetBackToPool() { 
-		if (!inUse) return false;		
-		else if (die)
-		{
-			inUse = false;
-			StartDestroy();
-			return true;
-		}
-		return false;
-	}
+	bool GetBackToPool();
 };

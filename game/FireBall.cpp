@@ -40,6 +40,18 @@ void CFireBall::SetAnimationFireBall()
 	SetAnimationSet(ani_set);
 }
 
+bool CFireBall::GetBackToPool()
+{
+	if (!inUse) return false;
+	else if (die)
+	{
+		inUse = false;
+		StartDestroy();
+		return true;
+	}
+	return false;
+}
+
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)

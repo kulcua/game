@@ -401,25 +401,25 @@
   <object id="209" x="6720" y="1104.67" width="94.6666" height="47.3333"/>
  </objectgroup>
  <objectgroup id="14" name="Ghost">
-  <object id="28" x="720.523" y="1104.97" width="142.597" height="47.1135"/>
-  <object id="29" x="817.891" y="1008.86" width="140.712" height="47.7417"/>
-  <object id="30" x="1200.45" y="1104.34" width="239.337" height="47.1135"/>
-  <object id="31" x="1392.68" y="1008.23" width="190.967" height="47.1135"/>
-  <object id="32" x="1537.16" y="912.118" width="189.71" height="47.7417"/>
-  <object id="33" x="1537.16" y="1152.71" width="285.194" height="48.3699"/>
+  <object id="28" x="720.523" y="1104.97" width="142.597" height="144.447"/>
+  <object id="29" x="817.891" y="1008.86" width="140.712" height="239.742"/>
+  <object id="30" x="1200.45" y="1104.34" width="239.337" height="143.113"/>
+  <object id="31" x="1392.68" y="1008.23" width="190.967" height="239.113"/>
+  <object id="32" x="1537.16" y="912.118" width="189.71" height="335.742"/>
+  <object id="33" x="1537.16" y="1152.71" width="285.194" height="95.0366"/>
   <object id="34" x="3889.06" y="433.444" width="190.967" height="45.229"/>
   <object id="35" x="4176.77" y="576.041" width="190.967" height="47.1135"/>
   <object id="36" x="4418" y="529.339" width="667.487" height="43.7697"/>
-  <object id="37" x="6385.12" y="1104.31" width="142.349" height="47.2642"/>
-  <object id="38" x="6480.76" y="816.281" width="142.349" height="47.2642"/>
-  <object id="39" x="3745.09" y="1152.82" width="333.545" height="46.9245"/>
-  <object id="40" x="3841.47" y="1056.44" width="334.813" height="48.1928"/>
-  <object id="41" x="3936.59" y="960.051" width="333.545" height="46.9245"/>
+  <object id="37" x="6385.12" y="1104.31" width="142.349" height="143.264"/>
+  <object id="38" x="6480.76" y="816.281" width="142.349" height="428.598"/>
+  <object id="39" x="3745.09" y="1152.82" width="333.545" height="92.2578"/>
+  <object id="40" x="3841.47" y="1056.44" width="334.813" height="189.526"/>
+  <object id="41" x="3936.59" y="960.051" width="333.545" height="288.258"/>
  </objectgroup>
  <objectgroup id="25" name="CameraBound">
   <object id="229" type="0" x="-56.7273" y="-8" width="63.6364" height="1384.85"/>
   <object id="231" type="0" x="0.9697" y="1303.15" width="8451.52" height="24.2424"/>
-  <object id="233" type="1" x="-15.303" y="618.031" width="8485.82" height="34.6667"/>
+  <object id="233" type="1" x="-11.303" y="621.031" width="8485.82" height="34.6667"/>
   <object id="236" type="2" x="2612.97" y="55.0303" width="5848.48" height="42.4242"/>
   <object id="237" type="0" x="8451.52" y="0" width="42.4242" height="1375.76"/>
  </objectgroup>
@@ -528,7 +528,6 @@
   </object>
  </objectgroup>
  <objectgroup id="15" name="Enemy">
-  <!-- <object id="55" name="goomba" type="tan" x="1510" y="1189.33"/> -->
   <object id="91" name="koopa" type="red" x="1641.33" y="1034.66"/>
   <object id="95" name="piranha" type="basic" x="5375" y="1212.53"/>
   <object id="96" name="venus" type="green" x="5568" y="1189.64"/>
@@ -556,7 +555,7 @@
   </object>
  </objectgroup>
  <objectgroup id="27" name="Camera">
-  <object id="239" x="36" y="658" width="960" height="640"/>
+  <object id="239" x="26.6667" y="659.667" width="960" height="640"/>
  </objectgroup>
  <objectgroup id="21" name="Portal">
   <object id="135" name="hidden-scene" type="1" x="627.636" y="1161" width="88.9697" height="33.3333">

@@ -29,7 +29,12 @@ void CCamera::FollowMario()
 	else
 		marioOnTopCam = false;
 
-	if (mario->isGrounded == false)
+	if (mario->vy < 0 && mario->GetLevel() < MARIO_LEVEL_RACCOON)
+	{
+		// prevent camera move when mario on ground
+		vy = 0;
+	}	
+	else if (mario->isGrounded == false)
 	{
 		if ((marioOnTopCam == true && mario->vy < 0) // when mario fly
 			|| (marioOnTopCam == false && mario->vy > 0)) // when mario drop
@@ -37,7 +42,6 @@ void CCamera::FollowMario()
 			vy = mario->vy;
 		}
 	}
-	else vy = 0;
 }
 
 void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
