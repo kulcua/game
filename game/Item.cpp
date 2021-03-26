@@ -146,20 +146,6 @@ void CItem::CollisionAABB(vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 	}
-	//	else if (state == ITEM_STATE_LEAF)
-	//	{
-	//		if (dynamic_cast<CGround*>(coObjects->at(i)))
-	//		{
-	//			if (AABB(coObjects->at(i)))
-	//			{
-	//				die = true;
-	//				DebugOut(L"die\n");
-	//				break;
-	//			}
-	//		}
-	//	}
-	//}	
-	//DebugOut(L"aabb\n");
 	//set dieu kien sau khi check aabb
 	if (state == ITEM_STATE_RED_MUSHROOM)
 	{

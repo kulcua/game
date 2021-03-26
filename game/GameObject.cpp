@@ -77,7 +77,7 @@ void CGameObject::CalcPotentialCollisions(
 {
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		//if (!coObjects->at(i)->die)
+		if (coObjects->at(i)->die == false)
 		{
 			LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
@@ -149,13 +149,6 @@ void CGameObject::RenderBoundingBox()
 
 	CGame::GetInstance()->Draw(x, y, nx, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
 }
-
-//void CGameObject::SetAnimation(int ani) {
-//	this->ani = ani;
-//	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-//	LPANIMATION_SET ani_set = animation_sets->Get(ani);
-//	SetAnimationSet(ani_set);
-//}
 
 CGameObject::~CGameObject()
 {

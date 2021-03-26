@@ -187,11 +187,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					isGrounded = true;
 				}
-				else if (e->ny > 0 && isHighJump)
-				{
-					vy = -MARIO_JUMP_SPEED_Y / 2; // jump little to avoid object on mario head
-					y += dy;
-				}
 				else {
 					x += dx;
 				}				

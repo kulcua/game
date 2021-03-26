@@ -12,5 +12,5 @@ class FireBallPool
 public:
 	FireBallPool(vector<LPGAMEOBJECT> &objects);
 	CFireBall* Create();
-	void Animate();
+	void GetBackToPool();
 };

@@ -26,7 +26,7 @@ void MarioLevelUpState::Enter(CMario& mario) // declare (CMario& mario) means in
     }
     else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
     {
-        mario.SetAnimation(MARIO_ANI_ITEM_BOOM);
+        mario.SetAnimation(MARIO_ANI_ITEM_BIG_TO_RACOON);
     }
 }
 

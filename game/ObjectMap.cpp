@@ -4,6 +4,7 @@
 #include "Brick.h"
 #include "CameraBound.h"
 #include "Camera.h"
+#include "Goomba.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, CMario* mario)
 {
@@ -51,15 +52,19 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	else if (name.compare("QuestionBlocks") == 0)
 	{
 		string typeName;
-		int type;
 		TiXmlElement* element = objectGroupElement->FirstChildElement();
 		while (element)
 		{
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
-			element->QueryIntAttribute("type", &type);
-			//typeName = objectGroupElement->Attribute("name");
-			obj = new CBrick(x, y, type);
+			typeName = objectGroupElement->Attribute("name");
+
+			if (typeName.compare("powerup") == 0)
+			{
+				
+			}
+
+			obj = new CBrick(x, y, typeName);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -91,6 +96,34 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("height", &height);
 			obj = new CCamera(mario, x, y, width, height);
 			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("Enemy") == 0)
+	{		
+		TiXmlElement* element = objectGroupElement->FirstChildElement();		
+		string enemyName;
+		while (element)
+		{
+			enemyName = element->Attribute("name");
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+
+			if (enemyName.compare("goomba") == 0)
+			{
+				obj = new CGoomba();
+
+				TiXmlElement* properties = element->FirstChildElement();
+				TiXmlElement* property = properties->FirstChildElement();
+				int ani_id;
+				property->QueryIntAttribute("value", &ani_id);
+
+				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+				LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
+				obj->SetAnimationSet(ani_set);
+				obj->SetPosition(x, y);
+				objects.push_back(obj);
+			}
 			element = element->NextSiblingElement();
 		}
 	}
