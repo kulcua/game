@@ -29,7 +29,7 @@ void CCamera::FollowMario()
 	else
 		marioOnTopCam = false;
 
-	if (mario->vy < 0 && mario->GetLevel() < MARIO_LEVEL_RACCOON)
+	if (mario->vy < 0 && mario->GetLevel() != MARIO_LEVEL_RACCOON)
 	{
 		// prevent camera move when mario on ground
 		vy = 0;
