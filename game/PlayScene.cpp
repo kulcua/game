@@ -264,12 +264,18 @@ void CPlayScene::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
-		coObject.push_back(objects[i]);
+		if (objects[i]->die == false)
+		{
+			coObject.push_back(objects[i]);
+		}	
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObject);
+		if (objects[i]->die == false)
+		{
+			objects[i]->Update(dt, &coObject);
+		}
 	}
 	pool->GetBackToPool();
 

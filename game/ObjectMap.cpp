@@ -109,21 +109,37 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 
+			TiXmlElement* properties = element->FirstChildElement();
+			TiXmlElement* property = properties->FirstChildElement();
+			int ani_id;
+			property->QueryIntAttribute("value", &ani_id);
+
 			if (enemyName.compare("goomba") == 0)
 			{
 				obj = new CGoomba();
-
-				TiXmlElement* properties = element->FirstChildElement();
-				TiXmlElement* property = properties->FirstChildElement();
-				int ani_id;
-				property->QueryIntAttribute("value", &ani_id);
-
-				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-				LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
-				obj->SetAnimationSet(ani_set);
-				obj->SetPosition(x, y);
-				objects.push_back(obj);
 			}
+			else if (enemyName.compare("koopa") == 0)
+			{
+				float start_x, end_x;
+				property = property->NextSiblingElement();
+				while (property)
+				{
+					string propertyName = property->Attribute("name");
+					if (propertyName.compare("start_x") == 0)
+						property->QueryFloatAttribute("value", &start_x);
+					else if (propertyName.compare("end_x") == 0)
+						property->QueryFloatAttribute("value", &end_x);
+					property = property->NextSiblingElement();
+				}
+				obj = new CKoopas(start_x, end_x);
+			}
+
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
+			obj->SetAnimationSet(ani_set);
+			obj->SetPosition(x, y);
+			objects.push_back(obj);
+				
 			element = element->NextSiblingElement();
 		}
 	}

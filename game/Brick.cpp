@@ -5,7 +5,7 @@ CBrick::CBrick(float x, float y, string name)
 {
 	this->x = x;
 	this->y = y;
-	start_y = y; //save y
+	start_y = y;
 	this->name = name;
 	//this->typeItem = type;
 	SetAnimation(BRICK_ANI_ID);
@@ -45,8 +45,11 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		if (y < start_y) // take brick to start_y after deflect cause disable
 		{
-			vy = 0;
-			y++;		
+			vy = BRICK_RETURN_START_POS_VY;
+		}
+		else
+		{
+			y = start_y;
 		}
 
 		if (dropItem == false)
