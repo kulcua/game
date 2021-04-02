@@ -272,10 +272,7 @@ void CPlayScene::Update(DWORD dt)
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->die == false)
-		{
-			objects[i]->Update(dt, &coObject);
-		}
+		objects[i]->Update(dt, &coObject);
 	}
 	pool->GetBackToPool();
 

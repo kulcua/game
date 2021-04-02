@@ -100,8 +100,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
 
-	/*DebugOut(L"vy %f\n", vy);*/
-
 	state_->Update(*this, dt);
 
 	vy += MARIO_GRAVITY * dt;
@@ -138,10 +136,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (rdx != 0 && rdx!=dx)
 			x += nx*abs(rdx); 
 
-		// block every object first!
-		//fix 0.4f to 0.2f
-		x += min_tx * dx + nx * 0.2f;
-		y += min_ty * dy + ny * 0.2f;
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -198,7 +194,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					isGrounded = true;
 				}
-				if (brick->GetState() != BRICK_STATE_DISABLE)
+				else if (brick->GetState() != BRICK_STATE_DISABLE)
 				{
 					if (e->ny > 0)
 					{

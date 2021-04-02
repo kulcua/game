@@ -19,9 +19,12 @@ void CCamera::FollowMario()
 	if ((mario->vx > 0 && mario->x > xCenter) // walk right
 		|| (mario->vx < 0 && mario->x < xCenter)) // walk left
 	{
-		vx = mario->vx;		
+		vx = mario->vx;
 	}
-	else vx = 0;
+	else 
+	{
+		vx = 0;
+	}
 		
 	bool marioOnTopCam;
 	if (mario->y < yCenter) // mario on top camera
@@ -49,7 +52,7 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt);
 
 	xCenter = x + (width / 2);
-	yCenter = y + (height / 2) - MARIO_BIG_BBOX_WIDTH;
+	yCenter = y + (height / 2) - MARIO_BIG_BBOX_HEIGHT;
 
 	FollowMario();
 
@@ -73,9 +76,6 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float rdy = 0;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
 		
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
@@ -94,6 +94,8 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						}
 					}
 				}
+				else if (ny != 0) vy = 0;
+				else if (nx != 0) vx = 0;
 			}
 			else
 			{

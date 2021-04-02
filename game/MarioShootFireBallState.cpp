@@ -11,7 +11,6 @@ MarioShootFireBallState* MarioShootFireBallState::GetInstance()
     if (__instance == NULL)
     {
         __instance = new MarioShootFireBallState();
-        //DebugOut(L"Init MarioShootFireBallState\n");
     }
     return __instance;
 }
