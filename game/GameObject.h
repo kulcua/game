@@ -76,8 +76,6 @@ public:
 	void RenderBoundingBox();
 
 	void SetAnimationSet(LPANIMATION_SET ani_set) { animation_set = ani_set; }
-	//void SetAnimation(int ani);
-	//int GetAnimation() { return ani; }
 
 	bool AABB(CGameObject *obj);
 	

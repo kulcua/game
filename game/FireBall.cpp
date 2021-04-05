@@ -12,8 +12,8 @@ CFireBall::CFireBall()
 	die = true;
 }
 
-void CFireBall::Init(CMario* mario, CPlant* plant) {
-  	this->state_.live.mario = mario;
+void CFireBall::InitForPlant(CPlant* plant) {
+  	this->state_.live.mario = CMario::GetInstance();
 	this->state_.live.plant = plant;
 	die = false;
 	inUse = true;
@@ -21,15 +21,15 @@ void CFireBall::Init(CMario* mario, CPlant* plant) {
 	isForPlant = true;
 }
 
-void CFireBall::Init(CMario* mario)
+void CFireBall::InitForMario()
 {
-	this->state_.live.mario = mario;
+	this->state_.live.mario = CMario::GetInstance();
 	die = false;
 	inUse = true;
-	SetPosition(mario->x, mario->y);
+	SetPosition(state_.live.mario->x, state_.live.mario->y);
 	isForPlant = false;
 
-	if (mario->nx > 0)
+	if (state_.live.mario->nx > 0)
 		vx = FIREBALL_VELOCITY_X;
 	else
 		vx = -FIREBALL_VELOCITY_X;

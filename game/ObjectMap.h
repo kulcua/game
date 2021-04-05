@@ -3,6 +3,7 @@
 #include "tinyxml.h"
 #include "GameObject.h"
 #include "Mario.h"
+#include "FireBallPool.h"
 
 class ObjectMap
 {
@@ -10,8 +11,9 @@ class ObjectMap
 	int objectGroupId;
 	string name;
 	CMario* mario;
+	FireBallPool* pool;
 public:
-	ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, CMario *mario);
+	ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects);
 	void ImportData(vector<LPGAMEOBJECT>& objects);
 };
 

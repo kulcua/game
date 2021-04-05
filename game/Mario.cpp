@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdlib>
 #include "Mario.h"
 #include "Game.h"
 #include "Goomba.h"
@@ -16,6 +17,17 @@
 #include "MarioFlyingState.h"
 #include "FireBallPool.h"
 #include "CameraBound.h"
+
+CMario* CMario::__instance = NULL;
+
+CMario* CMario::GetInstance()
+{
+	if (__instance == NULL)
+	{
+		__instance = new CMario();
+	}
+	return __instance;
+}
 
 void CMario::PowerReset()
 {
@@ -82,7 +94,7 @@ void CMario::HandleInput(Input input)
 	state_->Enter(*this);
 }
 
-CMario::CMario(float x, float y, FireBallPool* pool) : CGameObject()
+CMario::CMario() : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
@@ -93,7 +105,8 @@ CMario::CMario(float x, float y, FireBallPool* pool) : CGameObject()
 	start_y = y;
 	this->x = x;
 	this->y = y;
-	this->pool_ = pool;
+
+	pool = FireBallPool::GetInstance();
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -108,8 +121,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isGrounded = false;
 
 	PowerControl();
-
-	//CollisionAABB(coObjects);
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -272,29 +283,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-//void CMario::CollisionAABB(vector<LPGAMEOBJECT>* coObjects)
-//{	
-//	for (int i = 0; i < coObjects->size(); i++) //need filter to box
-//	{
-//		if (dynamic_cast<CItem*>(coObjects->at(i)))
-//		{
-//			CItem* item = dynamic_cast<CItem*>(coObjects->at(i));
-//			if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
-//			{
-//				SetLevel(level + 1);
-//				y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
-//				item->die = true;
-//			}
-//			else if (item->GetState() == ITEM_STATE_LEAF)
-//			{
-//				SetLevel(level + 1);
-//				y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
-//				item->die = true;
-//			}
-//		}
-//	}
-//}
-
 void CMario::Render()
 {
 	int animation = -1;
@@ -304,6 +292,11 @@ void CMario::Render()
 		animation = GetAnimation();
 
 	int alpha = 255;
+	//if (isUntouchable && isGrounded == false)
+	//{
+	//	srand(time(NULL));
+	//	alpha = rand() % (255 - 0 + 1);
+	//}	
 
 	animation_set->at(animation)->Render(x, y, nx, alpha);
 

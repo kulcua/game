@@ -5,14 +5,16 @@
 #include "CameraBound.h"
 #include "Camera.h"
 #include "Goomba.h"
+#include "Plant.h"
 
-ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, CMario* mario)
+ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
 	this->objectGroupElement = objectGroupElement;
 	objectGroupElement->QueryIntAttribute("objectGroupId", &objectGroupId);
 	name = objectGroupElement->Attribute("name");
-	this->mario = mario;
 	ImportData(objects);
+	mario =mario->GetInstance();
+	pool = FireBallPool::GetInstance();
 }
 
 void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
@@ -94,7 +96,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("y", &y);
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
-			obj = new CCamera(mario, x, y, width, height);
+			obj = new CCamera(x, y, width, height);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -133,13 +135,17 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				}
 				obj = new CKoopas(start_x, end_x);
 			}
+			else if (enemyName.compare("venus") == 0)
+			{
+				obj = new CPlant();
+			}
 
+			DebugOut(L"name %s\n", ToLPCWSTR(enemyName));
 			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 			LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
 			obj->SetAnimationSet(ani_set);
 			obj->SetPosition(x, y);
 			objects.push_back(obj);
-				
 			element = element->NextSiblingElement();
 		}
 	}

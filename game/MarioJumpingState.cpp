@@ -50,7 +50,10 @@ void MarioJumpingState::Enter(CMario& mario)
         }
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
-            mario.SetAnimation(MARIO_ANI_RACCOON_JUMP);
+            if (mario.isUntouchable)
+                mario.SetAnimation(MARIO_ANI_RACCOON_ROLL);
+            else
+                mario.SetAnimation(MARIO_ANI_RACCOON_ROLL);
         }
         else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
         {
@@ -94,12 +97,12 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
         }
         else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
         {
-            CFireBall* fireBall = mario.pool_->Create();
+            CFireBall* fireBall = mario.pool->Create();
             if (fireBall != NULL)
             {
                 mario.state_ = MarioState::shootFireball.GetInstance();
                 MarioState::shootFireball.GetInstance()->StartHit();
-                fireBall->Init(&mario);
+                fireBall->InitForMario();
             }
         }
     }
@@ -126,7 +129,7 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
         else if (mario.vy > 0 && mario.GetPower() < 6)
             mario.state_ = MarioState::dropping.GetInstance();
     }
-    //DebugOut(L"Jumping %f\n", mario.vx);
+    DebugOut(L"Jumping %f\n", mario.vx);
 }
 
 void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

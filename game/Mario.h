@@ -81,7 +81,9 @@
 #define MARIO_ANI_FIRE_SHOOT_FIREBALL_IDLE				57
 #define MARIO_ANI_FIRE_SHOOT_FIREBALL_JUMP				58
 
-#define MARIO_ANI_FX_TAIL_ATTACK				59
+#define MARIO_ANI_FX_TAIL_ATTACK	59
+
+#define MARIO_ANI_RACCOON_ROLL	60
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
@@ -132,7 +134,10 @@ class CMario : public CGameObject
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
+	static CMario* __instance;
 public:
+	static CMario* GetInstance();
+
 	DWORD powerStartTime;
 	DWORD powerEndTime;
 
@@ -140,15 +145,16 @@ public:
 	bool isPower;
 	bool isHandleShell;
 	MarioState* state_;
-	FireBallPool* pool_;
+	FireBallPool* pool;
 
 	void HandleInput(Input input);
 
 	bool isSit;
 	bool isHighJump;
 	bool isAttack;
+	bool isUntouchable;
 
-	CMario(float x, float y, FireBallPool* pool);
+	CMario();
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();
@@ -165,10 +171,6 @@ public:
 	void PowerReset();
 	int GetPower() { return power; }
 	void PowerControl();
-
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
-
-	//void CollisionAABB(vector<LPGAMEOBJECT> *coObjects);
 	
 	void Reset();
 	void LevelUp();

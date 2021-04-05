@@ -151,12 +151,12 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         } 
         else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
         {
-            CFireBall* fireBall = mario.pool_->Create();
+            CFireBall* fireBall = mario.pool->Create();
             if (fireBall != NULL)
             {
                 mario.state_ = MarioState::shootFireball.GetInstance();
                 MarioState::shootFireball.GetInstance()->StartHit();
-                fireBall->Init(&mario);
+                fireBall->InitForMario();
             }
         }
     }

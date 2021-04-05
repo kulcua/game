@@ -2,23 +2,21 @@
 #include "Ground.h"
 #include "Pipe.h"
 #include "PlayScene.h"
-#include "FireBallPool.h"
 
-CPlant::CPlant(CMario * mario, FireBallPool* pool) {
-	SetState(PLANT_STATE_ENABLE);
-	die = false;
-	shoot = false;
-	fireball = false;
-	this->mario = mario;
-	this->pool = pool;
-	vy = -PLANT_SPEED;
+CPlant::CPlant() {
+	//vy = -PLANT_SPEED;
+	mario = CMario::GetInstance();
+	pool = FireBallPool::GetInstance();
 }
 
 void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!die)
 	{
+		//DebugOut(L"vy %f\n", vy);
 		CGameObject::Update(dt, coObjects);
+
+		y += dy;
 
 		if (fireball)
 		{
@@ -34,58 +32,47 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else	
 			nx = 1;
 
-		if (GetTickCount() - shoot_time_start > PLANT_SHOOT_TIME || !shoot)
+		if (GetTickCount64() - shoot_time_start > PLANT_SHOOT_TIME || shoot == false)
 		{
 			if (y_mario > y)
 				isUp = false;
 			else if (y_mario < y)
 				isUp = true;
 		}
-		
-		y += dy;// di chuyen theo y bt
 
 		//xet len xuong bang va cham aabb
-		int pipe = 0;
-		for (int i = 0; i < coObjects->size(); i++)
+		/*for (int i = 0; i < coObjects->size(); i++)
 		{
-			if (dynamic_cast<CPipe*>(coObjects->at(i)))
-			{	
-				if (AABB(coObjects->at(i)))
-				{
-					pipe++;
-				}	
-			}
 			if (dynamic_cast<CGround*>(coObjects->at(i)))
-			{
-				if (AABB(coObjects->at(i)))
+			{	
+				if (AABB(coObjects->at(i)) == false)
 				{
 					vy = -vy;
-					break;
-				}
-			}	
-		}	
-
-		if (!shoot)
-		{
-			if (pipe == 0) //ko con aabb voi pipe
-			{
-				vy = 0.0f;
-				StartShootTime();
+				}	
 			}
-		}
-		else if (GetTickCount() - shoot_time_start > PLANT_SHOOT_TIME)
-		{
-			shoot = false;
-			vy = PLANT_SPEED;
-		}
+		}	*/
+
+		//if (!shoot)
+		//{
+		//	if (pipe == 0) //ko con aabb voi pipe
+		//	{
+		//		vy = 0.0f;
+		//		StartShootTime();
+		//	}
+		//}
+		//else if (GetTickCount64() - shoot_time_start > PLANT_SHOOT_TIME)
+		//{
+		//	shoot = false;
+		//	vy = PLANT_SPEED;
+		//}
 	}	
 }
 
 void CPlant::Render()
 {
-	int ani;
-	if (state == PLANT_STATE_ENABLE)
+	if (die == false)
 	{
+		int ani = 0;
 		if (!shoot)
 		{
 			if (isUp)
@@ -99,9 +86,9 @@ void CPlant::Render()
 				ani = PLANT_ANI_SHOOT_UP;
 			else ani = PLANT_ANI_SHOOT_DOWN;
 		}		
+		animation_set->at(ani)->Render(x, y, nx);
 	}
-	animation_set->at(ani)->Render(x, y, nx);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CPlant::GetBoundingBox(float& l, float& t, float& r, float& b)

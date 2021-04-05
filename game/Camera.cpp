@@ -3,9 +3,9 @@
 #include "CameraBound.h"
 #include "MarioFlyingState.h"
 
-CCamera::CCamera(CMario* mario, float x, float y, float width, float height)
+CCamera::CCamera(float x, float y, float width, float height)
 {
-	this->mario = mario;
+	mario = CMario::GetInstance();
 	game = CGame::GetInstance();
 	this->width = width;
 	this->height = height;

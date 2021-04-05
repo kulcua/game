@@ -35,8 +35,6 @@ public:
 	virtual void Unload();
 
 	CMario* GetPlayer() { return player; }
-	FireBallPool* pool;
-	//friend class CPlayScenceKeyHandler;
 };
 
 
