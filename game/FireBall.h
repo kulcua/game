@@ -52,8 +52,8 @@ public:
 	CFireBall* GetNext() const { return state_.next; }
 	void SetNext(CFireBall* next) { state_.next = next; }
 
-	void Init(CMario* mario, CPlant* plant);
-	void Init(CMario* mario);
+	void InitForPlant(CPlant* plant);
+	void InitForMario();
 
 	bool GetBackToPool();
 };

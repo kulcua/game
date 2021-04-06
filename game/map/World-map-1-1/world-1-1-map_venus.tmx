@@ -381,7 +381,7 @@
   <object id="13" x="4944" y="1251.33" width="1718.67" height="44.6667"/>
   <object id="14" x="5330" y="1150" width="94" height="100"/>
   <object id="15" x="5520" y="1102" width="98" height="150"/>
-  <object id="16" x="6718" y="1244" width="1732" height="54"/>
+  <object id="16" x="6718" y="1250.67" width="1732" height="47.3333"/>
   <object id="17" x="6723.33" y="1150.67" width="89.3333" height="93.3333"/>
   <object id="18" x="6914" y="1150" width="94" height="98"/>
   <object id="19" x="6720" y="478" width="96" height="530"/>
@@ -419,8 +419,8 @@
  <objectgroup id="25" name="CameraBound">
   <object id="229" type="0" x="-56.7273" y="-8" width="63.6364" height="1384.85"/>
   <object id="231" type="0" x="0.9697" y="1303.15" width="8451.52" height="24.2424"/>
-  <object id="233" type="1" x="-11.303" y="621.031" width="8485.82" height="34.6667"/>
-  <object id="236" type="2" x="2612.97" y="55.0303" width="5848.48" height="42.4242"/>
+  <object id="233" type="1" x="103.849" y="-251.696" width="8485.82" height="34.6667"/>
+  <object id="236" type="2" x="2619.03" y="-41.9394" width="5848.48" height="42.4242"/>
   <object id="237" type="0" x="8451.52" y="0" width="42.4242" height="1375.76"/>
  </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
@@ -528,19 +528,23 @@
   </object>
  </objectgroup>
  <objectgroup id="15" name="Enemy">
-  <object id="91" name="koopa" type="red" x="1641.33" y="1034.66"/>
-  <object id="95" name="piranha" type="basic" x="5375" y="1212.53"/>
-  <object id="96" name="venus" type="green" x="5568" y="1189.64"/>
-  <object id="98" name="venus" type="red" x="1103.82" y="1180.64"/>
-  <object id="186" name="para-goomba" type="tan" x="2663.82" y="1105.5"/>
+  <object id="91" name="koopa" type="red" x="1641.33" y="1034.66">
+   <properties>
+    <property name="ani_id" value="70"/>
+    <property name="end_x" value="1818"/>
+    <property name="start_x" value="1542"/>
+   </properties>
+  </object>
   <object id="187" name="goomba" type="tan" x="2251.33" y="1108.67">
    <properties>
     <property name="ani_id" value="3"/>
    </properties>
   </object>
-  <object id="190" name="para-koopa" type="red" x="3893" y="958"/>
-  <object id="192" name="koopa" type="green" x="4320" y="1122"/>
-  <object id="196" name="koopa" type="red" x="6262.5" y="1082"/>
+  <object id="98" name="venus" type="red" x="1079.82" y="1107.64" width="45" height="35">
+   <properties>
+    <property name="ani_id" value="60"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="20" name="Label">
   <object id="131" name="warp-pipe" type="down" x="624" y="1090" width="96" height="28">
@@ -555,7 +559,7 @@
   </object>
  </objectgroup>
  <objectgroup id="27" name="Camera">
-  <object id="239" x="26.6667" y="659.667" width="960" height="640"/>
+  <object id="239" x="26.6667" y="699.061" width="960" height="600.606"/>
  </objectgroup>
  <objectgroup id="21" name="Portal">
   <object id="135" name="hidden-scene" type="1" x="627.636" y="1161" width="88.9697" height="33.3333">

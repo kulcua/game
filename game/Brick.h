@@ -12,6 +12,7 @@
 #define BRICK_ANI_DISABLE	1
 
 #define BRICK_JUMP_DEFLECT_Y 0.8f
+#define BRICK_RETURN_START_POS_VY 0.05f
 #define BRICK_ANI_ID 22
 
 class CBrick: public CGameObject

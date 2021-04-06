@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <cstdlib>
 #include "Mario.h"
 #include "Game.h"
 #include "Goomba.h"
@@ -13,9 +14,21 @@
 #include "MarioDuckingState.h"
 #include "MarioKickState.h"
 #include "MarioLevelUpState.h"
+#include "MarioDroppingState.h"
 #include "MarioFlyingState.h"
 #include "FireBallPool.h"
 #include "CameraBound.h"
+
+CMario* CMario::__instance = NULL;
+
+CMario* CMario::GetInstance()
+{
+	if (__instance == NULL)
+	{
+		__instance = new CMario();
+	}
+	return __instance;
+}
 
 void CMario::PowerReset()
 {
@@ -82,7 +95,7 @@ void CMario::HandleInput(Input input)
 	state_->Enter(*this);
 }
 
-CMario::CMario(float x, float y, FireBallPool* pool) : CGameObject()
+CMario::CMario() : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
 	untouchable = 0;
@@ -93,14 +106,13 @@ CMario::CMario(float x, float y, FireBallPool* pool) : CGameObject()
 	start_y = y;
 	this->x = x;
 	this->y = y;
-	this->pool_ = pool;
+
+	pool = FireBallPool::GetInstance();
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
-
-	/*DebugOut(L"vy %f\n", vy);*/
 
 	state_->Update(*this, dt);
 
@@ -110,8 +122,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		isGrounded = false;
 
 	PowerControl();
-
-	//CollisionAABB(coObjects);
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -135,13 +145,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		if (rdx != 0 && rdx!=dx)
-			x += nx*abs(rdx); 
+		//if (rdx != 0 && rdx!=dx)
+		//	x += nx*abs(rdx); 
 
-		// block every object first!
-		//fix 0.4f to 0.2f
-		x += min_tx * dx + nx * 0.2f;
-		y += min_ty * dy + ny * 0.2f;
+		x += min_tx * dx + nx * 0.4f;
+		if (ny != -1) // handle case obj fall down
+			y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -163,7 +172,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (e->nx != 0)
 				{
-					if (isAttack || level == MARIO_LEVEL_RACCOON)
+					if (isAttack && level == MARIO_LEVEL_RACCOON)
 						goomba->SetState(GOOMBA_STATE_DIE);
 				}
 			}
@@ -198,7 +207,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					isGrounded = true;
 				}
-				if (brick->GetState() != BRICK_STATE_DISABLE)
+				else if (brick->GetState() != BRICK_STATE_DISABLE)
 				{
 					if (e->ny > 0)
 					{
@@ -252,52 +261,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CCameraBound*>(e->obj))
 			{
-				CCameraBound* camBound = dynamic_cast<CCameraBound*>(e->obj);
 				if (e->ny > 0)
 				{
-					if (camBound->GetType() == 1)
-					{
-						if (dynamic_cast<MarioFlyingState*>(state_))
-						{
-							y += dy;
-						}
-					}
-				}
-				else if (e->ny < 0)
-				{
-					if (camBound->GetType() == 1)
-					{
-						y += dy;
-					}
-				}
+					state_ = MarioState::dropping.GetInstance();
+					PowerReset();
+				}		
 			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
-
-//void CMario::CollisionAABB(vector<LPGAMEOBJECT>* coObjects)
-//{	
-//	for (int i = 0; i < coObjects->size(); i++) //need filter to box
-//	{
-//		if (dynamic_cast<CItem*>(coObjects->at(i)))
-//		{
-//			CItem* item = dynamic_cast<CItem*>(coObjects->at(i));
-//			if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
-//			{
-//				SetLevel(level + 1);
-//				y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
-//				item->die = true;
-//			}
-//			else if (item->GetState() == ITEM_STATE_LEAF)
-//			{
-//				SetLevel(level + 1);
-//				y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
-//				item->die = true;
-//			}
-//		}
-//	}
-//}
 
 void CMario::Render()
 {
@@ -307,9 +280,7 @@ void CMario::Render()
 	else 
 		animation = GetAnimation();
 
-	int alpha = 255;
-
-	animation_set->at(animation)->Render(x, y, nx, alpha);
+	animation_set->at(animation)->Render(x, y, nx, 255);
 
 	//RenderBoundingBox();
 }
@@ -327,30 +298,7 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	//state_->GetBoundingBox(*this, left, top, right, bottom);
-	left = x;
-	top = y;
-
-	if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_FIRE)
-	{
-		right = x + MARIO_BIG_BBOX_WIDTH;
-		bottom = y + MARIO_BIG_BBOX_HEIGHT;
-	}
-	else if (level == MARIO_LEVEL_RACCOON)
-	{
-		right = x + MARIO_RACCOON_BBOX_WIDTH;
-		bottom = y + MARIO_RACCOON_BBOX_HEIGHT;
-	}
-	else
-	{
-		right = x + MARIO_SMALL_BBOX_WIDTH;
-		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
-	}
-	
-	if (isSit)
-	{
-		bottom = y + MARIO_SIT_BBOX_HEIGHT;
-	}
+	state_->GetBoundingBox(*this, left, top, right, bottom);
 }
 
 void CMario::Reset()
@@ -359,6 +307,7 @@ void CMario::Reset()
 	isAttack = false;
 	isPower = false;
 	isHandleShell = false;
+	isUntouchable = false;
 	SetLevel(MARIO_LEVEL_SMALL);
 	SetSpeed(0, 0);
 }

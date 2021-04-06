@@ -1,6 +1,17 @@
 #include "FireBallPool.h"
 
-FireBallPool::FireBallPool(vector<LPGAMEOBJECT> &objects)
+FireBallPool* FireBallPool::__instance = NULL;
+
+FireBallPool* FireBallPool::GetInstance()
+{
+    if (__instance == NULL)
+    {
+        __instance = new FireBallPool();
+    }
+    return __instance;
+}
+
+void FireBallPool::InitPool(vector<LPGAMEOBJECT>& objects)
 {
     firstAvailable_ = &fireBall_[0];
 

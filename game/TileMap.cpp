@@ -39,7 +39,7 @@ bool TileMap::ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor, vect
 		}
 		else if (elementName.compare("objectgroup") == 0)
 		{
-			objectMap = new ObjectMap(element, objects, mario);
+			objectMap = new ObjectMap(element, objects);
 		}
 		element = element->NextSiblingElement();
 	}

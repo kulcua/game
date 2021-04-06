@@ -143,29 +143,17 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			DebugOut(L"[ERROR] MARIO object was created before!\n");
 			return;
 		}
-		obj = new CMario(x, y, pool);
+		obj = CMario::GetInstance();
+
 		player = (CMario*)obj;
 
 		DebugOut(L"[INFO] Player object created!\n");
 	}
 		break;
-	/*case OBJECT_TYPE_GOOMBA: obj = new CGoomba(); break;
-	case OBJECT_TYPE_KOOPAS:
-	{
-		float start_x, end_x;
-		start_x = atof(tokens[4].c_str());
-		end_x = atof(tokens[5].c_str());
-		obj = new CKoopas(start_x, end_x);
-	}
-	break;
-	case OBJECT_TYPE_PLANT:
-	{
-		obj = new CPlant(player, pool);
-	}
-	break;*/
 	case OBJECT_TYPE_POOL_FIREBALL:
 	{
-		pool = new FireBallPool(objects);
+		FireBallPool::GetInstance()->InitPool(objects);
+		// need to fix load number of pool from file
 	}
 	break;
 	/*case OBJECT_TYPE_PORTAL:
@@ -264,14 +252,17 @@ void CPlayScene::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
-		coObject.push_back(objects[i]);
+		if (objects[i]->die == false)
+		{
+			coObject.push_back(objects[i]);
+		}	
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObject);
 	}
-	pool->GetBackToPool();
+	FireBallPool::GetInstance()->GetBackToPool();
 
 	//DebugOut(L"size coo: %d\n", coObject.size());
 	//DebugOut(L"size: %d\n", objects.size());
@@ -305,13 +296,12 @@ void CPlayScene::Unload()
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
-	Input input;
+	Input input = NO_INPUT;
 	
 	switch (KeyCode)
 	{
 	case DIK_S:
 		input = PRESS_S;
-		mario->HandleInput(input);
 		break;
 	case DIK_F1:
 		mario->Reset();
@@ -319,62 +309,67 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_F2:
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		mario->y -= MARIO_BIG_BBOX_HEIGHT;
+		mario->isUntouchable = false;
 		break;
 	case DIK_F3:
 		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
+		mario->isUntouchable = false;
 		break;
 	case DIK_F4:
 		mario->SetLevel(MARIO_LEVEL_FIRE);
 		mario->y -= MARIO_BIG_BBOX_HEIGHT;
+		mario->isUntouchable = false;
+		break;
+	case DIK_F5:
+		mario->SetLevel(MARIO_LEVEL_RACCOON);
+		mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
+		mario->isUntouchable = true;
 		break;
 	case DIK_DOWN:
 		input = PRESS_DOWN;
-		mario->HandleInput(input);
 		break;
 	case DIK_A:
 		input = PRESS_A;
-		mario->HandleInput(input);
 		break;
 	case DIK_LEFT:
 		input = PRESS_LEFT;
-		mario->HandleInput(input);
 		break;
 	case DIK_RIGHT:
 		input = PRESS_RIGHT;
-		mario->HandleInput(input);
 		break;
 	}
+
+	if (input != NO_INPUT)
+		mario->HandleInput(input);
 }
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
-	Input input;
+	Input input = NO_INPUT;
 	
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
 		input = RELEASE_DOWN;
-		mario->HandleInput(input);
 		break;
 	case DIK_A:
 		input = RELEASE_A;
-		mario->HandleInput(input);
 		break;
 	case DIK_S:
 		input = RELEASE_S;
-		mario->HandleInput(input);
 		break;
 	case DIK_LEFT:
 		input = RELEASE_LEFT;
-		mario->HandleInput(input);
 		break;
 	case DIK_RIGHT:
 		input = RELEASE_RIGHT;
-		mario->HandleInput(input);
 		break;
 	}
+
+	if (input != NO_INPUT)
+		mario->HandleInput(input);
 }
 
 void CPlaySceneKeyHandler::KeyState(BYTE* states)

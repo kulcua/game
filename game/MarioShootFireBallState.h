@@ -1,7 +1,7 @@
 #pragma once 
-#include "MarioAttackState.h"
+#include "MarioState.h"
 
-class MarioShootFireBallState : public MarioAttackState
+class MarioShootFireBallState : public MarioState
 {
 	static MarioShootFireBallState* __instance;
 	DWORD hitStartTime;

@@ -19,7 +19,7 @@ void MarioStandingState::HandleInput(CMario& mario, Input input)
     MarioOnGroundState::HandleInput(mario, input);
 }
 
-void MarioStandingState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioStandingState
+void MarioStandingState::Enter(CMario& mario) 
 {
     if (mario.isHandleShell)
     {

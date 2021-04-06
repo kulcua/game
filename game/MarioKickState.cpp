@@ -53,5 +53,4 @@ void MarioKickState::Update(CMario& mario, DWORD dt)
         mario.state_ = MarioState::standing.GetInstance();
         kickStartTime = 0;
     }
-    //DebugOut(L"Kick %d\n", GetTickCount64() - kick_time_start);
 }

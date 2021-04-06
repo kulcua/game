@@ -1,8 +1,10 @@
 #include "FireBall.h"
 #include "Utils.h"
 #include "Animations.h"
-#include "Ground.h"
+#include "BigBox.h"
 #include "Camera.h"
+#include "Goomba.h"
+#include "Koopas.h"
 
 CFireBall::CFireBall()
 {
@@ -10,8 +12,8 @@ CFireBall::CFireBall()
 	die = true;
 }
 
-void CFireBall::Init(CMario* mario, CPlant* plant) {
-  	this->state_.live.mario = mario;
+void CFireBall::InitForPlant(CPlant* plant) {
+  	this->state_.live.mario = CMario::GetInstance();
 	this->state_.live.plant = plant;
 	die = false;
 	inUse = true;
@@ -19,15 +21,15 @@ void CFireBall::Init(CMario* mario, CPlant* plant) {
 	isForPlant = true;
 }
 
-void CFireBall::Init(CMario* mario)
+void CFireBall::InitForMario()
 {
-	this->state_.live.mario = mario;
+	this->state_.live.mario = CMario::GetInstance();
 	die = false;
 	inUse = true;
-	SetPosition(mario->x, mario->y);
+	SetPosition(state_.live.mario->x, state_.live.mario->y);
 	isForPlant = false;
 
-	if (mario->nx > 0)
+	if (state_.live.mario->nx > 0)
 		vx = FIREBALL_VELOCITY_X;
 	else
 		vx = -FIREBALL_VELOCITY_X;
@@ -46,15 +48,14 @@ bool CFireBall::GetBackToPool()
 	else if (die)
 	{
 		inUse = false;
-		StartDestroy();
 		return true;
 	}
 	return false;
 }
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	if (GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)
+{	
+	if (isDestroyed && GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)
 	{
 		destroyTimeStart = 0;
 		isDestroyed = false;
@@ -115,20 +116,30 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					LPCOLLISIONEVENT e = coEventsResult[i];
 
-					if (dynamic_cast<CGround*>(e->obj))
+					if (dynamic_cast<CBigBox*>(e->obj))
 					{
-						CGround* ground = dynamic_cast<CGround*>(e->obj);
+						if (e->nx)
+							x += dx;
+						else if (e->ny)
+							vy = -FIREBALL_DEFLECT_Y;
+					}
+					else if (dynamic_cast<CGoomba*>(e->obj) 
+						|| dynamic_cast<CKoopas*>(e->obj))
+					{
+						e->obj->die = true;
+						die = true;
+						StartDestroy();
+					}
+					else
+					{
 						if (e->ny < 0)
 						{
 							vy = -FIREBALL_DEFLECT_Y;
 						}
 						else {
 							die = true;
+							StartDestroy();
 						}
-					}
-					else if(e->nx)
-					{
-						die = true;
 					}
 				}
 			}
@@ -149,13 +160,13 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBall::Render()
 {
-	if (isDestroyed)
-	{
-		animation_set->at(FIREBALL_ANI_DESTROYED)->Render(x, y, NULL);
-	}
-	else if (inUse)
+	if (inUse)
 	{
 		animation_set->at(FIREBALL_ANI_BALL)->Render(x, y, NULL);
+	}
+	else if (isDestroyed)
+	{
+		animation_set->at(FIREBALL_ANI_DESTROYED)->Render(x, y, NULL);
 	}
 }
 

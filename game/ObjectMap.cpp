@@ -5,14 +5,16 @@
 #include "CameraBound.h"
 #include "Camera.h"
 #include "Goomba.h"
+#include "Plant.h"
 
-ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, CMario* mario)
+ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
 	this->objectGroupElement = objectGroupElement;
 	objectGroupElement->QueryIntAttribute("objectGroupId", &objectGroupId);
 	name = objectGroupElement->Attribute("name");
-	this->mario = mario;
 	ImportData(objects);
+	mario =mario->GetInstance();
+	pool = FireBallPool::GetInstance();
 }
 
 void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
@@ -94,7 +96,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("y", &y);
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
-			obj = new CCamera(mario, x, y, width, height);
+			obj = new CCamera(x, y, width, height);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -109,21 +111,41 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 
+			TiXmlElement* properties = element->FirstChildElement();
+			TiXmlElement* property = properties->FirstChildElement();
+			int ani_id;
+			property->QueryIntAttribute("value", &ani_id);
+
 			if (enemyName.compare("goomba") == 0)
 			{
 				obj = new CGoomba();
-
-				TiXmlElement* properties = element->FirstChildElement();
-				TiXmlElement* property = properties->FirstChildElement();
-				int ani_id;
-				property->QueryIntAttribute("value", &ani_id);
-
-				CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-				LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
-				obj->SetAnimationSet(ani_set);
-				obj->SetPosition(x, y);
-				objects.push_back(obj);
 			}
+			else if (enemyName.compare("koopa") == 0)
+			{
+				float start_x, end_x;
+				property = property->NextSiblingElement();
+				while (property)
+				{
+					string propertyName = property->Attribute("name");
+					if (propertyName.compare("start_x") == 0)
+						property->QueryFloatAttribute("value", &start_x);
+					else if (propertyName.compare("end_x") == 0)
+						property->QueryFloatAttribute("value", &end_x);
+					property = property->NextSiblingElement();
+				}
+				obj = new CKoopas(start_x, end_x);
+			}
+			else if (enemyName.compare("venus") == 0)
+			{
+				obj = new CPlant();
+			}
+
+			DebugOut(L"name %s\n", ToLPCWSTR(enemyName));
+			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+			LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
+			obj->SetAnimationSet(ani_set);
+			obj->SetPosition(x, y);
+			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
 	}
