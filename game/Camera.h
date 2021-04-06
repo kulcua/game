@@ -10,6 +10,8 @@ class CCamera : public CGameObject
 
 	float xCenter;
 	float yCenter;
+
+	bool onGroundMode;
 public:
 	CCamera(float x, float y, float width, float height);
 	void FollowMario();

@@ -419,8 +419,8 @@
  <objectgroup id="25" name="CameraBound">
   <object id="229" type="0" x="-56.7273" y="-8" width="63.6364" height="1384.85"/>
   <object id="231" type="0" x="0.9697" y="1303.15" width="8451.52" height="24.2424"/>
-  <object id="233" type="1" x="-11.303" y="621.031" width="8485.82" height="34.6667"/>
-  <object id="236" type="2" x="2612.97" y="55.0303" width="5848.48" height="42.4242"/>
+  <object id="233" type="1" x="103.849" y="-251.696" width="8485.82" height="34.6667"/>
+  <object id="236" type="2" x="2619.03" y="-41.9394" width="5848.48" height="42.4242"/>
   <object id="237" type="0" x="8451.52" y="0" width="42.4242" height="1375.76"/>
  </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
@@ -559,7 +559,7 @@
   </object>
  </objectgroup>
  <objectgroup id="27" name="Camera">
-  <object id="239" x="26.6667" y="659.667" width="960" height="640"/>
+  <object id="239" x="26.6667" y="699.061" width="960" height="600.606"/>
  </objectgroup>
  <objectgroup id="21" name="Portal">
   <object id="135" name="hidden-scene" type="1" x="627.636" y="1161" width="88.9697" height="33.3333">

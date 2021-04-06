@@ -53,7 +53,7 @@ void MarioJumpingState::Enter(CMario& mario)
             if (mario.isUntouchable)
                 mario.SetAnimation(MARIO_ANI_RACCOON_ROLL);
             else
-                mario.SetAnimation(MARIO_ANI_RACCOON_ROLL);
+                mario.SetAnimation(MARIO_ANI_RACCOON_JUMP);
         }
         else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
         {
@@ -110,8 +110,9 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
-    //region check highJump
-    if (mario.isHighJump)
+    if (mario.isGrounded) // if mario suddenly get on Ground
+        mario.state_ = MarioState::standing.GetInstance();
+    else if (mario.isHighJump)
     {
         if (GetTickCount64() - jumpStartTime > MARIO_HIGH_JUMP_TIME)
         {
@@ -122,14 +123,11 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
             mario.vy = -MARIO_JUMP_SPEED_Y;
         }   
     }
-    else
+    else if(mario.vy > 0 && mario.GetPower() < 6)
     {
-        if (mario.isGrounded) // if mario suddenly get on Ground
-            mario.state_ = MarioState::standing.GetInstance();
-        else if (mario.vy > 0 && mario.GetPower() < 6)
-            mario.state_ = MarioState::dropping.GetInstance();
+         mario.state_ = MarioState::dropping.GetInstance();
     }
-    DebugOut(L"Jumping %f\n", mario.vx);
+    //DebugOut(L"Jumping %f\n", mario.vx);
 }
 
 void MarioJumpingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

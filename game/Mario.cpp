@@ -257,27 +257,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
-			else if (dynamic_cast<CCameraBound*>(e->obj))
-			{
-				CCameraBound* camBound = dynamic_cast<CCameraBound*>(e->obj);
-				if (e->ny > 0)
-				{
-					if (camBound->GetType() == 1)
-					{
-						if (dynamic_cast<MarioFlyingState*>(state_))
-						{
-							y += dy;
-						}
-					}
-				}
-				else if (e->ny < 0)
-				{
-					if (camBound->GetType() == 1)
-					{
-						y += dy;
-					}
-				}
-			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -291,14 +270,7 @@ void CMario::Render()
 	else 
 		animation = GetAnimation();
 
-	int alpha = 255;
-	//if (isUntouchable && isGrounded == false)
-	//{
-	//	srand(time(NULL));
-	//	alpha = rand() % (255 - 0 + 1);
-	//}	
-
-	animation_set->at(animation)->Render(x, y, nx, alpha);
+	animation_set->at(animation)->Render(x, y, nx, 255);
 
 	//RenderBoundingBox();
 }
@@ -348,6 +320,7 @@ void CMario::Reset()
 	isAttack = false;
 	isPower = false;
 	isHandleShell = false;
+	isUntouchable = false;
 	SetLevel(MARIO_LEVEL_SMALL);
 	SetSpeed(0, 0);
 }

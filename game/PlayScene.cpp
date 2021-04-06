@@ -309,14 +309,17 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_F2:
 		mario->SetLevel(MARIO_LEVEL_BIG);
 		mario->y -= MARIO_BIG_BBOX_HEIGHT;
+		mario->isUntouchable = false;
 		break;
 	case DIK_F3:
 		mario->SetLevel(MARIO_LEVEL_RACCOON);
 		mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
+		mario->isUntouchable = false;
 		break;
 	case DIK_F4:
 		mario->SetLevel(MARIO_LEVEL_FIRE);
 		mario->y -= MARIO_BIG_BBOX_HEIGHT;
+		mario->isUntouchable = false;
 		break;
 	case DIK_F5:
 		mario->SetLevel(MARIO_LEVEL_RACCOON);
