@@ -29,7 +29,7 @@ void MarioState::GetBoundingBox(CMario &mario, float& left, float& top, float& r
 	left = mario.x;
 	top = mario.y;
 
-	if (mario.GetLevel() == MARIO_LEVEL_BIG)
+	if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
 	{
 		right = mario.x + MARIO_BIG_BBOX_WIDTH;
 		bottom = mario.y + MARIO_BIG_BBOX_HEIGHT;

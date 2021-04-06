@@ -23,7 +23,7 @@ void CKoopas::HandleByMario(CMario* mario)
 void CKoopas::KickByMario(CMario* mario)
 {
 	isHandled = false;	 
-	vx = mario->nx * KOOPAS_BALL_SPEED; // mario->nx;
+	vx = mario->nx * KOOPAS_BALL_SPEED;
 }
 
 void CKoopas::SetPositionHandled()
@@ -116,8 +116,9 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 			x += min_tx * dx + nx * 0.4f;
-			y += min_ty * dy + ny * 0.4f;
-
+			if (ny != -1) // handle case obj fall down
+				y += min_ty * dy + ny * 0.4f;
+				
 			if (ny != 0) vy = 0;
 
 			for (UINT i = 0; i < coEventsResult.size(); i++)

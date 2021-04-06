@@ -14,6 +14,7 @@
 #include "MarioDuckingState.h"
 #include "MarioKickState.h"
 #include "MarioLevelUpState.h"
+#include "MarioDroppingState.h"
 #include "MarioFlyingState.h"
 #include "FireBallPool.h"
 #include "CameraBound.h"
@@ -144,11 +145,12 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		if (rdx != 0 && rdx!=dx)
-			x += nx*abs(rdx); 
+		//if (rdx != 0 && rdx!=dx)
+		//	x += nx*abs(rdx); 
 
 		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+		if (ny != -1) // handle case obj fall down
+			y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -170,7 +172,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (e->nx != 0)
 				{
-					if (isAttack || level == MARIO_LEVEL_RACCOON)
+					if (isAttack && level == MARIO_LEVEL_RACCOON)
 						goomba->SetState(GOOMBA_STATE_DIE);
 				}
 			}
@@ -257,6 +259,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
+			else if (dynamic_cast<CCameraBound*>(e->obj))
+			{
+				if (e->ny > 0)
+				{
+					state_ = MarioState::dropping.GetInstance();
+					PowerReset();
+				}		
+			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -288,30 +298,7 @@ void CMario::SetState(int state)
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	//state_->GetBoundingBox(*this, left, top, right, bottom);
-	left = x;
-	top = y;
-
-	if (level == MARIO_LEVEL_BIG || level == MARIO_LEVEL_FIRE)
-	{
-		right = x + MARIO_BIG_BBOX_WIDTH;
-		bottom = y + MARIO_BIG_BBOX_HEIGHT;
-	}
-	else if (level == MARIO_LEVEL_RACCOON)
-	{
-		right = x + MARIO_RACCOON_BBOX_WIDTH;
-		bottom = y + MARIO_RACCOON_BBOX_HEIGHT;
-	}
-	else
-	{
-		right = x + MARIO_SMALL_BBOX_WIDTH;
-		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
-	}
-	
-	if (isSit)
-	{
-		bottom = y + MARIO_SIT_BBOX_HEIGHT;
-	}
+	state_->GetBoundingBox(*this, left, top, right, bottom);
 }
 
 void CMario::Reset()
