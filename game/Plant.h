@@ -17,7 +17,7 @@
 class CPlant : public CGameObject
 {
 	friend class FireBallPool;
-	void CollisionAABBForShooting(vector<LPGAMEOBJECT>* coObjects);
+	void FindPositionForShooting();
 	void SetDirectionShootingFollowMario();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();	
@@ -25,11 +25,13 @@ class CPlant : public CGameObject
 	CMario* mario;
 	FireBallPool* pool;
 	bool shootingTime;
+
+	float startY;
 	
 public:
 	bool isUp;
 	bool createFireball;
-	CPlant();
+	CPlant(float y);
 	void StartShootTime() {
 		shootingTime = true;
 		shootTimeStart = GetTickCount64();

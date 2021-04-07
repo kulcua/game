@@ -50,6 +50,13 @@ void TileMap::Render()
 {
 	for (int i = 0; i < layers.size(); i++)
 	{
-		layers[i]->Render();
+		if (layers[i]->GetName().compare("Foreground") == 0)
+			foreground = layers[i];
+		else layers[i]->Render();
 	}
+}
+
+void TileMap::RenderForeground()
+{
+	foreground->Render();
 }

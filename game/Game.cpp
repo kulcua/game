@@ -72,7 +72,6 @@ void CGame::Draw(float x, float y, int nx, LPDIRECT3DTEXTURE9 texture, int left,
 	D3DXMATRIX newtrans;
 	D3DXVECTOR2 rotation;
 
-	//lat animation bang cach nhan vs matrix 2x2 => nhan posX voi -1
 	if (nx > 0)
 	{	
 		rotation = D3DXVECTOR2(-1, 1);	
@@ -82,7 +81,7 @@ void CGame::Draw(float x, float y, int nx, LPDIRECT3DTEXTURE9 texture, int left,
 	}
 
 	D3DXVECTOR2 center = D3DXVECTOR2(p.x + (right - left) / 2, p.y + (bottom - top) / 2);
-	//center point of obj
+
 	D3DXMatrixTransformation2D(&newtrans, &center, 0, &rotation, NULL, 0, NULL);
 	spriteHandler->SetTransform(&newtrans);
 	

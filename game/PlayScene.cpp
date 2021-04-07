@@ -281,6 +281,8 @@ void CPlayScene::Render()
 			objects[i]->Render();
 	}	
 	objects[idMario]->Render();
+
+	tileMap->GetInstance()->RenderForeground();
 }
 
 void CPlayScene::Unload()

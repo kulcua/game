@@ -22,4 +22,5 @@ public:
 	Layer(TiXmlElement* layerElement);
 	void ImportData();
 	void Render();
+	string GetName() { return name; }
 };

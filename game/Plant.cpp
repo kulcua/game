@@ -3,30 +3,18 @@
 #include "Pipe.h"
 #include "PlayScene.h"
 
-CPlant::CPlant() {
+CPlant::CPlant(float y) {
+	startY = y;
 	vy = -PLANT_SPEED;
 	mario = CMario::GetInstance();
 	pool = FireBallPool::GetInstance();
 }
 
-void CPlant::CollisionAABBForShooting(vector<LPGAMEOBJECT>* coObjects)
+void CPlant::FindPositionForShooting()
 {
-	int aabb = 0;
-
-	for (int i = 0; i < coObjects->size(); i++)
-	{
-		if (dynamic_cast<CGround*>(coObjects->at(i)))
-		{	
-			if (AABB(coObjects->at(i)))
-			{
-				aabb++;
-			}	
-		}
-	}
-
 	if (shootingTime == false)
 	{
-		if (aabb == 0) //ko con aabb voi pipe
+		if (y < startY - PLANT_HEIGHT) // have not overlap with pipe
 		{
 			vy = 0.0f;
 			StartShootTime();
@@ -34,6 +22,7 @@ void CPlant::CollisionAABBForShooting(vector<LPGAMEOBJECT>* coObjects)
 	}
 	else if (GetTickCount64() - shootTimeStart > PLANT_SHOOT_TIME)
 	{
+		shootTimeStart = 0;
 		shootingTime = false;
 		vy = PLANT_SPEED;
 	}
@@ -48,7 +37,7 @@ void CPlant::SetDirectionShootingFollowMario()
 	else
 		nx = 1;
 
-	if (GetTickCount64() - shootTimeStart > PLANT_SHOOT_TIME || shootingTime == false)
+	if (shootingTime == false)
 	{
 		if (y_mario > y)
 			isUp = false;
@@ -65,7 +54,10 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		y += dy;
 
-		if (createFireball) // check only shoot 1 fireball
+		if (y > startY && vy > 0)
+			vy = -vy;
+
+		if (createFireball) // check shoot only 1 fireball
 		{
 			CFireBall* fireBall = pool->Create();
 			if (fireBall != NULL)
@@ -76,7 +68,7 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		SetDirectionShootingFollowMario();
 
-		CollisionAABBForShooting(coObjects);
+		FindPositionForShooting();
 	}	
 }
 
@@ -100,7 +92,7 @@ void CPlant::Render()
 		}		
 		animation_set->at(ani)->Render(x, y, nx);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CPlant::GetBoundingBox(float& l, float& t, float& r, float& b)
