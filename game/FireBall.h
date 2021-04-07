@@ -45,6 +45,8 @@ class CFireBall : public CGameObject
 public:
 	bool inUse;
 	CFireBall();
+	void UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);

@@ -53,6 +53,92 @@ bool CFireBall::GetBackToPool()
 	return false;
 }
 
+void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vy += FIREBALL_GRAVITY * dt;
+
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+	coEvents.clear();
+	CalcPotentialCollisions(coObjects, coEvents);
+
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<CBigBox*>(e->obj))
+			{
+				if (e->nx)
+					x += dx;
+				else if (e->ny)
+					vy = -FIREBALL_DEFLECT_Y;
+			}
+			else if (dynamic_cast<CGoomba*>(e->obj)
+				|| dynamic_cast<CKoopas*>(e->obj))
+			{
+				e->obj->die = true;
+				die = true;
+				StartDestroy();
+			}
+			else
+			{
+				if (e->ny < 0)
+				{
+					vy = -FIREBALL_DEFLECT_Y;
+				}
+				else {
+					die = true;
+					StartDestroy();
+				}
+			}
+		}
+	}
+}
+
+void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	x += dx;
+	y += dy;
+
+	float x_mario, y_mario, x_plant, y_plant;
+
+	state_.live.mario->GetPosition(x_mario, y_mario);
+	state_.live.plant->GetPosition(x_plant, y_plant);
+
+	if (state_.live.plant->createFireball)
+	{
+		nx = state_.live.plant->nx;
+
+		if (state_.live.plant->isUp)
+			vy = -FIREBALL_SPEED;
+		else
+			vy = FIREBALL_SPEED;
+
+		if (abs(x_mario - x_plant) < FIREBALL_CHECK_POS_SHOOT_X)
+			vx = FIREBALL_SPEED * nx;
+		else
+			vx = FIREBALL_SPEED * nx * 2;
+
+		state_.live.plant->createFireball = false;
+	}
+}
+
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	if (isDestroyed && GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)
@@ -67,82 +153,11 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (isForPlant)
 		{
-			x += dx;
-			y += dy;
-
-			float x_mario, y_mario, x_plant, y_plant;
-
-			state_.live.mario->GetPosition(x_mario, y_mario);
-			state_.live.plant->GetPosition(x_plant, y_plant);
-
-			nx = state_.live.plant->nx;
-
-			if (state_.live.plant->isUp)
-				vy = -FIREBALL_SPEED;
-			else
-				vy = FIREBALL_SPEED;
-
-			if (abs(x_mario - x_plant) < FIREBALL_CHECK_POS_SHOOT_X)
-				vx = FIREBALL_SPEED * nx;
-			else
-				vx = FIREBALL_SPEED * nx * 2;
+			UpdateForPlant(dt, coObjects);
 		}
 		else
 		{
-			vy += FIREBALL_GRAVITY * dt;
-
-			vector<LPCOLLISIONEVENT> coEvents;
-			vector<LPCOLLISIONEVENT> coEventsResult;
-			coEvents.clear();
-			CalcPotentialCollisions(coObjects, coEvents);
-
-			if (coEvents.size() == 0)
-			{
-				x += dx;
-				y += dy;
-			}
-			else
-			{
-				float min_tx, min_ty, nx = 0, ny;
-				float rdx = 0;
-				float rdy = 0;
-
-				FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-				x += min_tx * dx + nx * 0.4f;
-				y += min_ty * dy + ny * 0.4f;
-
-				for (UINT i = 0; i < coEventsResult.size(); i++)
-				{
-					LPCOLLISIONEVENT e = coEventsResult[i];
-
-					if (dynamic_cast<CBigBox*>(e->obj))
-					{
-						if (e->nx)
-							x += dx;
-						else if (e->ny)
-							vy = -FIREBALL_DEFLECT_Y;
-					}
-					else if (dynamic_cast<CGoomba*>(e->obj) 
-						|| dynamic_cast<CKoopas*>(e->obj))
-					{
-						e->obj->die = true;
-						die = true;
-						StartDestroy();
-					}
-					else
-					{
-						if (e->ny < 0)
-						{
-							vy = -FIREBALL_DEFLECT_Y;
-						}
-						else {
-							die = true;
-							StartDestroy();
-						}
-					}
-				}
-			}
+			UpdateForMario(dt, coObjects);
 		}
 
 		for (int i = 0; i < coObjects->size(); i++)

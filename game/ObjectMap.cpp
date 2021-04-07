@@ -137,7 +137,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			}
 			else if (enemyName.compare("venus") == 0)
 			{
-				obj = new CPlant();
+				obj = new CPlant(y);
 			}
 
 			DebugOut(L"name %s\n", ToLPCWSTR(enemyName));
