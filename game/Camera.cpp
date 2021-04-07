@@ -21,10 +21,7 @@ void CCamera::FollowMario()
 	{
 		vx = mario->vx;
 	}
-	else 
-	{
-		vx = 0;
-	}
+	else vx = 0;
 		
 	bool marioOnTopCam;
 	if (mario->y < yCenter) // mario on top camera

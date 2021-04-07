@@ -192,6 +192,12 @@
     <ClCompile Include="CameraBound.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="FireballForMario.cpp">
+      <Filter>Fireball</Filter>
+    </ClCompile>
+    <ClCompile Include="FireballForPlant.cpp">
+      <Filter>Fireball</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -331,6 +337,12 @@
     </ClInclude>
     <ClInclude Include="CameraBound.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="FireballForMario.h">
+      <Filter>Fireball</Filter>
+    </ClInclude>
+    <ClInclude Include="FireballForPlant.h">
+      <Filter>Fireball</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

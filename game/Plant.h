@@ -9,7 +9,7 @@
 #define PLANT_ANI_SHOOT_UP 3
 
 #define PLANT_WIDTH 50
-#define PLANT_HEIGHT 96
+#define PLANT_HEIGHT 94
 #define PLANT_SPEED 0.04f
 
 #define PLANT_SHOOT_TIME 2000
@@ -17,22 +17,23 @@
 class CPlant : public CGameObject
 {
 	friend class FireBallPool;
-	
+	void CollisionAABBForShooting(vector<LPGAMEOBJECT>* coObjects);
+	void SetDirectionShootingFollowMario();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();	
-	DWORD shoot_time_start;
+	DWORD shootTimeStart;
 	CMario* mario;
 	FireBallPool* pool;
-	bool shoot;
+	bool shootingTime;
 	
 public:
 	bool isUp;
-	bool fireball; //check ban only 1 vien dan
+	bool createFireball;
 	CPlant();
 	void StartShootTime() {
-		shoot = true;
-		shoot_time_start = GetTickCount64();
-		fireball = true;
+		shootingTime = true;
+		shootTimeStart = GetTickCount64();
+		createFireball = true;
 	}
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

@@ -1,4 +1,9 @@
 #pragma once
+class FireballForPlant
+{
+};
+
+#pragma once
 #include "GameObject.h"
 #include "Plant.h"
 #include "Mario.h"
@@ -27,7 +32,7 @@ class CFireBall : public CGameObject
 	DWORD destroyTimeStart;
 
 	void StartDestroy() { isDestroyed = true; destroyTimeStart = GetTickCount64(); }
-	
+
 	union
 	{
 		// State when it's in use.
