@@ -153,8 +153,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBound.cpp" />
     <ClCompile Include="FireBall.cpp" />
-    <ClCompile Include="FireballForMario.cpp" />
-    <ClCompile Include="FireballForPlant.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -205,8 +203,6 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBound.h" />
     <ClInclude Include="FireBall.h" />
-    <ClInclude Include="FireballForMario.h" />
-    <ClInclude Include="FireballForPlant.h" />
     <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Item.h" />

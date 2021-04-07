@@ -124,18 +124,19 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state_.live.plant->createFireball)
 	{
 		nx = state_.live.plant->nx;
+
+		if (state_.live.plant->isUp)
+			vy = -FIREBALL_SPEED;
+		else
+			vy = FIREBALL_SPEED;
+
+		if (abs(x_mario - x_plant) < FIREBALL_CHECK_POS_SHOOT_X)
+			vx = FIREBALL_SPEED * nx;
+		else
+			vx = FIREBALL_SPEED * nx * 2;
+
 		state_.live.plant->createFireball = false;
 	}
-	
-	if (state_.live.plant->isUp)
-		vy = -FIREBALL_SPEED;
-	else
-		vy = FIREBALL_SPEED;
-
-	if (abs(x_mario - x_plant) < FIREBALL_CHECK_POS_SHOOT_X)
-		vx = FIREBALL_SPEED * nx;
-	else
-		vx = FIREBALL_SPEED * nx * 2;
 }
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
