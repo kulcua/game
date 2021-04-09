@@ -201,6 +201,9 @@
     <ClCompile Include="FontManager.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -345,6 +348,9 @@
       <Filter>HUD</Filter>
     </ClInclude>
     <ClInclude Include="FontManager.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
       <Filter>HUD</Filter>
     </ClInclude>
   </ItemGroup>

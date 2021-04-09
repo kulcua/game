@@ -179,6 +179,7 @@
     <ClCompile Include="ObjectMap.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Plant.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Tileset.cpp" />
     <ClCompile Include="tinystr.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="ObjectMap.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Plant.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Tileset.h" />
     <ClInclude Include="tinystr.h" />

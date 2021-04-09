@@ -319,8 +319,6 @@ void CPlayScene::Render()
 	tileMap->GetInstance()->RenderForeground();
 
 	HUD::GetInstance()->Render();
-
-	fontManager->GetInstance()->Render("7", 1000, 1100);
 }
 
 void CPlayScene::Unload()
