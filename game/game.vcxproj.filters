@@ -46,6 +46,9 @@
     <Filter Include="Camera">
       <UniqueIdentifier>{2cf3720b-9535-4e3b-9886-1f4ac3eb3481}</UniqueIdentifier>
     </Filter>
+    <Filter Include="HUD">
+      <UniqueIdentifier>{b6a33fe3-d992-4235-8c20-c56ae9c45cb1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -192,6 +195,12 @@
     <ClCompile Include="CameraBound.cpp">
       <Filter>Camera</Filter>
     </ClCompile>
+    <ClCompile Include="HUD.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>HUD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -331,6 +340,12 @@
     </ClInclude>
     <ClInclude Include="CameraBound.h">
       <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="HUD.h">
+      <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>HUD</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

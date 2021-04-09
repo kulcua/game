@@ -141,14 +141,14 @@ public:
 	DWORD powerStartTime;
 	DWORD powerEndTime;
 
-	bool isGrounded;
-	bool isPower;
-	bool isHandleShell;
 	MarioState* state_;
 	FireBallPool* pool;
 
 	void HandleInput(Input input);
 
+	bool isGrounded;
+	bool isPower;
+	bool isHandleShell;
 	bool isSit;
 	bool isHighJump;
 	bool isAttack;

@@ -1,27 +1,23 @@
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-
 #include "Utils.h"
 #include "Game.h"
 #include "GameObject.h"
 #include "Textures.h"
-
-#include "Mario.h"
-#include "Brick.h"
-#include "Goomba.h"
-
+#include "HUD.h"
 #include "PlayScene.h"
+#include "d2d1.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Game"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(156, 252, 240)
-#define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 720
+#define SCREEN_WIDTH 800
+#define SCREEN_HEIGHT 800
 
-#define WINDOW_WIDTH 960	
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 800	
+#define WINDOW_HEIGHT 800
 
 #define MAX_FRAME_RATE 120
 

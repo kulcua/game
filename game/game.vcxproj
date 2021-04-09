@@ -154,7 +154,9 @@
     <ClCompile Include="CameraBound.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Maps.cpp" />
@@ -204,7 +206,9 @@
     <ClInclude Include="CameraBound.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FireBallPool.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Maps.h" />

@@ -13,6 +13,7 @@
 #include "FireBall.h"
 #include "MarioKickState.h"
 #include "Camera.h"
+#include "HUD.h"
 
 using namespace std;
 
@@ -28,6 +29,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_OBJECTS	6
 #define SCENE_SECTION_MAPS	7
+#define SCENE_SECTION_FONT	8
+#define SCENE_SECTION_HUD	9
 
 #define OBJECT_TYPE_MARIO	0
 #define OBJECT_TYPE_ITEM	11
@@ -180,6 +183,29 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}	
 }
 
+void CPlayScene::_ParseSection_FONT(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 2) return;
+
+	string name = tokens[0].c_str();
+	int spriteId = atoi(tokens[1].c_str());
+
+	fontManager->GetInstance()->characters[name] = spriteId;
+}
+
+void CPlayScene::_ParseSection_HUD(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() != 1) return;
+
+	int spriteId = atoi(tokens[0].c_str());
+
+	HUD::GetInstance()->SetSpriteId(spriteId);
+}
+
 void CPlayScene::_ParseSection_MAPS(string line)
 {
 	vector<string> tokens = split(line);
@@ -228,6 +254,12 @@ void CPlayScene::Load()
 		if (line == "[MAP]") {
 			section = SCENE_SECTION_MAPS; continue;
 		}
+		if (line == "[FONT]") {
+			section = SCENE_SECTION_FONT; continue;
+		}
+		if (line == "[HUD]") {
+			section = SCENE_SECTION_HUD; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		switch (section)
@@ -238,6 +270,8 @@ void CPlayScene::Load()
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
 		case SCENE_SECTION_MAPS: _ParseSection_MAPS(line); break;
+		case SCENE_SECTION_FONT: _ParseSection_FONT(line); break;
+		case SCENE_SECTION_HUD: _ParseSection_HUD(line); break;
 		}
 	}
 
@@ -270,19 +304,23 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	tileMap->GetInstance()->Render();
+	tileMap->GetInstance()->RenderBackground();
 
-	int idMario = 0;
+	int marioId = 0;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (dynamic_cast<CMario*>(objects[i]))
-			idMario = i;	
+			marioId = i;
 		else
 			objects[i]->Render();
 	}	
-	objects[idMario]->Render();
+	objects[marioId]->Render();
 
 	tileMap->GetInstance()->RenderForeground();
+
+	HUD::GetInstance()->Render();
+
+	fontManager->GetInstance()->Render("7", 1000, 1100);
 }
 
 void CPlayScene::Unload()
@@ -290,7 +328,10 @@ void CPlayScene::Unload()
 	for (int i = 0; i < objects.size(); i++)
 		delete objects[i];
 	objects.clear();
+
 	player = NULL;
+	tileMap = NULL;
+	fontManager = NULL;
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

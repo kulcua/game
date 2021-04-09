@@ -9,6 +9,7 @@
 #include "Koopas.h"
 #include "FireBallPool.h"
 #include "TileMap.h"
+#include "FontManager.h"
 
 class CPlayScene : public CScene
 {
@@ -16,6 +17,8 @@ protected:
 	CMario* player;
 
 	TileMap* tileMap;
+
+	FontManager* fontManager;
 
 	vector<LPGAMEOBJECT> objects;
 
@@ -25,7 +28,8 @@ protected:
 	void _ParseSection_ANIMATION_SETS(string line);
 	void _ParseSection_OBJECTS(string line);
 	void _ParseSection_MAPS(string line);
-
+	void _ParseSection_FONT(string line);
+	void _ParseSection_HUD(string line);
 public:
 	CPlayScene(int id, LPCWSTR filePath);
 

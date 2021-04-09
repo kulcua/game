@@ -16,11 +16,11 @@ class TileMap
 	static TileMap* __instance;
 	Tileset* tileSet;
 	vector<LPLAYER> layers;
-	Layer* foreground;
+	Layer* foregroundLayer;
 	ObjectMap* objectMap;
 public:
 	bool ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor, vector<LPGAMEOBJECT> &objects, CMario *mario);
-	void Render();
+	void RenderBackground();
 	void RenderForeground();
 	static TileMap* GetInstance();
 };

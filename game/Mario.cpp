@@ -11,11 +11,9 @@
 #include "Pipe.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
-#include "MarioDuckingState.h"
 #include "MarioKickState.h"
 #include "MarioLevelUpState.h"
 #include "MarioDroppingState.h"
-#include "MarioFlyingState.h"
 #include "FireBallPool.h"
 #include "CameraBound.h"
 
