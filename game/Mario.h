@@ -113,7 +113,7 @@
 #define MARIO_HIGH_JUMP_TIME 200
 #define MARIO_SPIN_TIME	200
 
-#define MARIO_MAX_POWER	6
+#define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
 
 class CMario : public CGameObject
@@ -167,7 +167,7 @@ public:
 	int GetAnimation() { return ani; }
 
 	void PowerUp() { powerStartTime = GetTickCount64(); savePower = 0; }
-	void PowerDown() { powerEndTime = GetTickCount64(); }
+	void PowerDown() { powerEndTime = GetTickCount64(); savePower = 0; }
 	void PowerReset();
 	int GetPower() { return power; }
 	void PowerControl();

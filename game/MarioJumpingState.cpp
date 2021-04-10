@@ -81,7 +81,8 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     else if (input == RELEASE_A)
     {
         mario.PowerReset();
-        mario.KickShell();
+        if (mario.isHandleShell)
+            mario.KickShell();
     }
     else if (input == RELEASE_S)
     {
@@ -105,6 +106,10 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
                 fireBall->InitForMario();
             }
         }
+    }
+    else if (input == RELEASE_LEFT || input == RELEASE_RIGHT)
+    {
+        mario.PowerReset();
     }
 }
 

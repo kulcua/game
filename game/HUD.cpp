@@ -12,11 +12,23 @@ HUD* HUD::GetInstance()
 
 HUD::HUD()
 {
-	
+	world = new Text(TEXT_NUM_WORLD);
+	life = new Text(TEXT_NUM_LIFE);
+	point = new Text(TEXT_NUM_POINT);
+	power = new TextPowerSign(TEXT_NUM_POWER);
+	money = new Text(TEXT_NUM_MONEY);
+	time = new Text(TEXT_NUM_TIME);
 }
 
 void HUD::SetPosition(float x, float y)
 {
+	world->SetContent(1);
+	life->SetContent(4);
+	//power->SetPower(2);
+	point->SetContent(3979);
+	money->SetContent(15);
+	time->SetContent(300);
+
 	x = floor(x);
 	y = floor(y);
 	this->x = x;
@@ -35,13 +47,6 @@ void HUD::SetPosition(float x, float y)
 	point->SetPosition(xPoint, yBottom);
 	money->SetPosition(xMoney, yTop);
 	time->SetPosition(xTime, yBottom);
-
-	world->SetContent(1);
-	life->SetContent(4);
-	power->SetContent(0);
-	point->SetContent(13979);
-	money->SetContent(15);
-	time->SetContent(300);
 }
 
 RECT* HUD::GetRectHUD()
@@ -67,4 +72,5 @@ void HUD::Render()
 	point->Render();
 	money->Render();
 	time->Render();
+	power->Render();
 }
