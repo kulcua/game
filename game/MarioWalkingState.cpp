@@ -59,6 +59,11 @@ void MarioWalkingState::Enter(CMario& mario)
 void MarioWalkingState::HandleInput(CMario& mario, Input input)
 {
     MarioOnGroundState::HandleInput(mario, input);
+    if (input == PRESS_A)
+    {
+        mario.isPower = true;
+        mario.PowerUp();
+    }
 }
 
 void MarioWalkingState::Update(CMario& mario, DWORD dt)
