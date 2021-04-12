@@ -3,6 +3,8 @@
 #include <d3dx9.h>
 #include <unordered_map>
 
+#define ID_TEX_BBOX -100
+
 using namespace std;
 
 class CSprite

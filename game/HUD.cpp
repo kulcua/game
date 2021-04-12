@@ -1,6 +1,8 @@
 #include "HUD.h"
 #include "Sprites.h"
 #include "FontManager.h"
+#include "Textures.h"
+#include "Game.h"
 
 HUD* HUD::__instance = NULL;
 
@@ -24,7 +26,6 @@ void HUD::SetPosition(float x, float y)
 {
 	world->SetContent(1);
 	life->SetContent(4);
-	//power->SetPower(2);
 	point->SetContent(3979);
 	money->SetContent(15);
 	time->SetContent(300);
@@ -49,22 +50,36 @@ void HUD::SetPosition(float x, float y)
 	time->SetPosition(xTime, yBottom);
 }
 
-RECT* HUD::GetRectHUD()
+void HUD::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
+	l = x;
+	t = y;
+	r = x + SCREEN_WIDTH;
+	b = y + HUD_HEIGHT;
+}
+
+void HUD::RenderBoundingBox()
+{
+	D3DXVECTOR3 p(x, y, 0);
 	RECT rect;
 
-	rect.left = x;
-	rect.top = y;
-	rect.right = x + SCREEN_WIDTH;
-	rect.bottom = y + HUD_HEIGHT;
+	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
 
-	//DebugOut(L"%d %d %d %d\n", rect.left, rect.right, rect.top, rect.bottom);
+	float l, t, r, b;
 
-	return &rect;
+	GetBoundingBox(l, t, r, b);
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = (int)r - (int)l;
+	rect.bottom = (int)b - (int)t;
+
+	CGame::GetInstance()->Draw(x, y, NULL, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
 }
 
 void HUD::Render()
 {
+	RenderBoundingBox();
+
 	CSprites::GetInstance()->Get(spriteId)->Draw(x, y, NULL);
 	
 	world->Render();
