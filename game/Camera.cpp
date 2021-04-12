@@ -2,6 +2,10 @@
 #include "Game.h"
 #include "CameraBound.h"
 #include "MarioFlyingState.h"
+#include "HUD.h"
+
+#define SCREEN_WIDTH 960
+#define SCREEN_HEIGHT 720
 
 CCamera::CCamera(float x, float y, float width, float height)
 {
@@ -73,7 +77,7 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		x += min_tx * dx + nx * 0.4f;
+		//x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
 		if (ny != 0) vy = 0;
@@ -104,6 +108,7 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
 	game->SetCamPos(x, y);
+	HUD::GetInstance()->SetPosition(x, y + SCREEN_HEIGHT - HUD_HEIGHT);
 }
 
 void CCamera::Render()

@@ -154,7 +154,9 @@
     <ClCompile Include="CameraBound.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Maps.cpp" />
@@ -177,6 +179,7 @@
     <ClCompile Include="ObjectMap.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Plant.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Tileset.cpp" />
     <ClCompile Include="tinystr.cpp" />
@@ -204,7 +207,9 @@
     <ClInclude Include="CameraBound.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FireBallPool.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="Ground.h" />
+    <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Maps.h" />
@@ -227,6 +232,7 @@
     <ClInclude Include="ObjectMap.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Plant.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Tileset.h" />
     <ClInclude Include="tinystr.h" />

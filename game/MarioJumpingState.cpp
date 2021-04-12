@@ -81,7 +81,8 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     else if (input == RELEASE_A)
     {
         mario.PowerReset();
-        mario.KickShell();
+        if (mario.isHandleShell)
+            mario.KickShell();
     }
     else if (input == RELEASE_S)
     {
@@ -106,24 +107,27 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
             }
         }
     }
+    else if (input == RELEASE_LEFT || input == RELEASE_RIGHT)
+    {
+        mario.PowerReset();
+    }
 }
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
-    if (mario.isGrounded) // if mario suddenly get on Ground
-        mario.state_ = MarioState::standing.GetInstance();
-    else if (mario.isHighJump)
+    if (mario.isHighJump)
     {
         if (GetTickCount64() - jumpStartTime > MARIO_HIGH_JUMP_TIME)
         {
             jumpStartTime = 0;
+            mario.isHighJump = false;
         }
         else
         {
             mario.vy = -MARIO_JUMP_SPEED_Y;
         }   
     }
-    else if(mario.vy > 0 && mario.GetPower() < 6)
+    else if (mario.vy > 0 && mario.GetPower() < 6)
     {
          mario.state_ = MarioState::dropping.GetInstance();
     }

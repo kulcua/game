@@ -11,13 +11,12 @@
 #include "Pipe.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
-#include "MarioDuckingState.h"
 #include "MarioKickState.h"
 #include "MarioLevelUpState.h"
 #include "MarioDroppingState.h"
-#include "MarioFlyingState.h"
 #include "FireBallPool.h"
 #include "CameraBound.h"
+#include "HUD.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -34,51 +33,58 @@ void CMario::PowerReset()
 {
 	isPower = false; 
 	powerStartTime = 0;
-	savePower = 0;
 	PowerDown();
 }
 
 void CMario::KickShell()
 {
-	if (isHandleShell)
-	{
-		isHandleShell = false;
-		koopaShell->KickByMario(this);
-		state_ = MarioState::kick.GetInstance();
-		MarioState::kick.GetInstance()->StartKick();
-	}
+	isHandleShell = false;
+	koopaShell->KickByMario(this);
+	state_ = MarioState::kick.GetInstance();
+	MarioState::kick.GetInstance()->StartKick();
+}
+
+int CalculatePowerTimePassed(int time)
+{
+	return (GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
 }
 
 void CMario::PowerControl()
 {
-	if (isPower)
-	{
-		int temp;
-		if (((GetTickCount64() - powerStartTime) / MARIO_POWERUP_PER_SECOND) < MARIO_MAX_POWER)
+	int timePassed;
+	if (isPower && powerStartTime > 0)
+	{	
+		timePassed = CalculatePowerTimePassed(powerStartTime);
+		if (timePassed < MARIO_MAX_POWER)
 		{
-			temp = (GetTickCount64() - powerStartTime) / MARIO_POWERUP_PER_SECOND; //1
-			if (power > 0 && savePower == 0)
+			if (power == 0)
+				power = timePassed;
+			else if (savePower == 0)
 			{
 				savePower = power;
 			}
-			if (temp <= MARIO_MAX_POWER - savePower) //temp_power = 2
-			{
-				power = savePower + temp;
+
+			if (timePassed <= MARIO_MAX_POWER - savePower) {
+				power = savePower + timePassed;
 			}
-			if (power == 0)
-				power = temp;
-			//DebugOut(L"temp %d - temp-power %d - power %d\n", temp, temp_power, power);
 		}
 	}
-	if (powerEndTime > 0 && isPower == false)
+	else if (powerEndTime > 0)
 	{
+		timePassed = CalculatePowerTimePassed(powerEndTime);
 		if (power == 0)
-		{
 			powerEndTime = 0;
+		else if (savePower == 0)
+		{
+			savePower = power;
 		}
-		else
-			power = MARIO_MAX_POWER - ((GetTickCount64() - powerEndTime) / MARIO_POWERUP_PER_SECOND);
+
+		if (savePower - timePassed >= 0) {
+			power = savePower - timePassed;
+		}
 	}
+
+	HUD::GetInstance()->power->SetPower(this->GetPower());
 }
 
 void CMario::LevelUp()
@@ -249,6 +255,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (isPower && e->nx != 0) //handleShell
 					{
 						isHandleShell = true;
+						DebugOut(L"true\n");
 						koopas->HandleByMario(this);
 						koopaShell = koopas;
 					}
