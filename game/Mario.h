@@ -129,9 +129,6 @@ class CMario : public CGameObject
 	int power;
 	int savePower;
 
-	int untouchable;
-	DWORD untouchable_start;
-
 	float start_x;			// initial position of Mario at scene
 	float start_y;
 	static CMario* __instance;

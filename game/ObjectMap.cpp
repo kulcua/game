@@ -7,6 +7,7 @@
 #include "Goomba.h"
 #include "VenusFireTrap.h"
 #include "PiranhaPlant.h"
+#include "ParaGoomba.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -119,7 +120,11 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 
 			if (enemyName.compare("goomba") == 0)
 			{
-				obj = new CGoomba();
+				string type = element->Attribute("type");
+				if (type.compare("tan") == 0)
+					obj = new CGoomba();
+				else
+					obj = new ParaGoomba();
 			}
 			else if (enemyName.compare("koopa") == 0)
 			{

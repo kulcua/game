@@ -1,12 +1,11 @@
 #include "Goomba.h"
-#include "Utils.h"
-
-#define GOOMBA_DIE_TIME 200
+#include "Ground.h"
 
 CGoomba::CGoomba()
 {
 	SetState(GOOMBA_STATE_WALKING);
 	die = false;
+	level = GOOMBA_MAX_LEVEL;
 }
 
 void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -23,9 +22,17 @@ void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (GetTickCount64() - dieTimeStart > GOOMBA_DIE_TIME)
+	{
+		dieTimeStart = 0;
+	}
+
 	if (!die)
 	{
 		CGameObject::Update(dt, coObjects);
+
+		if (level == 0)
+			SetState(GOOMBA_STATE_DIE);
 
 		vy += GOOMBA_GRAVITY * dt;
 
@@ -53,6 +60,16 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (nx != 0) vx = -vx;
 			if (ny != 0) vy = 0;
+
+			for (UINT i = 0; i < coEventsResult.size(); i++)
+			{
+				LPCOLLISIONEVENT e = coEventsResult[i];
+
+				if (dynamic_cast<CGround*>(e->obj))
+				{
+					if (e->ny < 0) isOnGround = true;
+				}
+			}
 		}
 		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
@@ -66,7 +83,7 @@ void CGoomba::Render()
 		ani = GOOMBA_ANI_WALKING;	
 		animation_set->at(ani)->Render(x, y, nx);
 	}
-	else if (GetTickCount64() - die_time_start <= GOOMBA_DIE_TIME)
+	else if (dieTimeStart > 0)
 	{
 		ani = GOOMBA_ANI_DIE;
 		animation_set->at(ani)->Render(x, y, nx);

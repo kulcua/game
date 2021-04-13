@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="28" nextobjectid="242">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="28" nextobjectid="243">
  <editorsettings>
   <export target="world-1-1-map.xml" format="tmx"/>
  </editorsettings>
@@ -552,6 +552,11 @@
   <object id="241" name="piranha" x="5353.5" y="1156.5" width="45" height="35">
    <properties>
     <property name="ani_id" value="64"/>
+   </properties>
+  </object>
+  <object id="242" name="goomba" type="para" x="2451" y="1101" width="34" height="24">
+   <properties>
+    <property name="ani_id" value="31"/>
    </properties>
   </object>
  </objectgroup>

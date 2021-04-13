@@ -177,6 +177,7 @@
     <ClCompile Include="MarioTailHitState.cpp" />
     <ClCompile Include="MarioWalkingState.cpp" />
     <ClCompile Include="ObjectMap.cpp" />
+    <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Plant.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="MarioTailHitState.h" />
     <ClInclude Include="MarioWalkingState.h" />
     <ClInclude Include="ObjectMap.h" />
+    <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="Plant.h" />

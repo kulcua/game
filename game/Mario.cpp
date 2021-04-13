@@ -104,7 +104,6 @@ void CMario::HandleInput(Input input)
 CMario::CMario() : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
-	untouchable = 0;
 
 	state_ = MarioState::standing.GetInstance();
 
@@ -172,14 +171,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
 					{
-						goomba->SetState(GOOMBA_STATE_DIE);
+						goomba->DowngradeLevel();
+					/*	goomba->SetState(GOOMBA_STATE_DIE);*/
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 				}
 				else if (e->nx != 0)
 				{
 					if (isAttack && level == MARIO_LEVEL_RACCOON)
-						goomba->SetState(GOOMBA_STATE_DIE);
+						goomba->DowngradeLevel();
+						//goomba->SetState(GOOMBA_STATE_DIE);
 				}
 			}
 			else if (dynamic_cast<CGround*>(e->obj))

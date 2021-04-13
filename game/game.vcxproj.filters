@@ -49,8 +49,11 @@
     <Filter Include="HUD">
       <UniqueIdentifier>{b6a33fe3-d992-4235-8c20-c56ae9c45cb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Plant">
+    <Filter Include="Enermies\Plant">
       <UniqueIdentifier>{e75ee2f6-f407-4e9d-a1f9-77a61ccafd2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enermies\Goomba">
+      <UniqueIdentifier>{a6e9ecc0-e20f-499c-81ea-848c60ba4539}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -101,9 +104,6 @@
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Mics</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Enermies</Filter>
     </ClCompile>
     <ClCompile Include="Koopas.cpp">
       <Filter>Enermies</Filter>
@@ -205,13 +205,19 @@
       <Filter>HUD</Filter>
     </ClCompile>
     <ClCompile Include="Plant.cpp">
-      <Filter>Plant</Filter>
+      <Filter>Enermies\Plant</Filter>
     </ClCompile>
     <ClCompile Include="VenusFireTrap.cpp">
-      <Filter>Plant</Filter>
+      <Filter>Enermies\Plant</Filter>
     </ClCompile>
     <ClCompile Include="PiranhaPlant.cpp">
-      <Filter>Plant</Filter>
+      <Filter>Enermies\Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Enermies\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaGoomba.cpp">
+      <Filter>Enermies\Goomba</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,9 +271,6 @@
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Enermies</Filter>
     </ClInclude>
     <ClInclude Include="Koopas.h">
       <Filter>Enermies</Filter>
@@ -360,13 +363,19 @@
       <Filter>HUD</Filter>
     </ClInclude>
     <ClInclude Include="Plant.h">
-      <Filter>Plant</Filter>
+      <Filter>Enermies\Plant</Filter>
     </ClInclude>
     <ClInclude Include="VenusFireTrap.h">
-      <Filter>Plant</Filter>
+      <Filter>Enermies\Plant</Filter>
     </ClInclude>
     <ClInclude Include="PiranhaPlant.h">
-      <Filter>Plant</Filter>
+      <Filter>Enermies\Plant</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Enermies\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaGoomba.h">
+      <Filter>Enermies\Goomba</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

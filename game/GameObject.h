@@ -54,15 +54,10 @@ public:
 
 	int width;
 	int height;
-
-	DWORD die_time_start;
-
 	LPANIMATION_SET animation_set;
-	//int ani;
 
 public:
 	bool die;
-	void StartDieTime() { die = true; die_time_start = GetTickCount64(); }
 
 	void SetPosition(float x, float y) { this->x = x; this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx; this->vy = vy; }
