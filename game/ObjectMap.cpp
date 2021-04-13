@@ -5,7 +5,8 @@
 #include "CameraBound.h"
 #include "Camera.h"
 #include "Goomba.h"
-#include "Plant.h"
+#include "VenusFireTrap.h"
+#include "PiranhaPlant.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -137,7 +138,15 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			}
 			else if (enemyName.compare("venus") == 0)
 			{
-				obj = new CPlant(y);
+				string type = element->Attribute("type");
+				if (type.compare("red") == 0)
+					obj = new VenusFireTrap(y, VENUS_RED_TYPE);
+				else
+					obj = new VenusFireTrap(y, VENUS_GREEN_TYPE);
+			}
+			else if (enemyName.compare("piranha") == 0)
+			{
+				obj = new PiranhaPlant(y);
 			}
 
 			DebugOut(L"name %s\n", ToLPCWSTR(enemyName));

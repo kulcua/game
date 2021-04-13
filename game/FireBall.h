@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "Plant.h"
+#include "VenusFireTrap.h"
 #include "Mario.h"
 
 #define FIREBALL_WIDTH 25
@@ -34,7 +34,7 @@ class CFireBall : public CGameObject
 		struct
 		{
 			CMario* mario;
-			CPlant* plant;
+			VenusFireTrap* venus;
 		} live;
 
 		// State when it's available.
@@ -54,7 +54,7 @@ public:
 	CFireBall* GetNext() const { return state_.next; }
 	void SetNext(CFireBall* next) { state_.next = next; }
 
-	void InitForPlant(CPlant* plant);
+	void InitForPlant(VenusFireTrap* venus);
 	void InitForMario();
 
 	bool GetBackToPool();

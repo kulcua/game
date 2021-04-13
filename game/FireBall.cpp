@@ -12,12 +12,12 @@ CFireBall::CFireBall()
 	die = true;
 }
 
-void CFireBall::InitForPlant(CPlant* plant) {
+void CFireBall::InitForPlant(VenusFireTrap* venus) {
   	this->state_.live.mario = CMario::GetInstance();
-	this->state_.live.plant = plant;
+	this->state_.live.venus = venus;
 	die = false;
 	inUse = true;
-	SetPosition(plant->x, plant->y);
+	SetPosition(venus->x, venus->y);
 	isForPlant = true;
 }
 
@@ -119,13 +119,13 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float x_mario, y_mario, x_plant, y_plant;
 
 	state_.live.mario->GetPosition(x_mario, y_mario);
-	state_.live.plant->GetPosition(x_plant, y_plant);
+	state_.live.venus->GetPosition(x_plant, y_plant);
 
-	if (state_.live.plant->createFireball)
+	if (state_.live.venus->createFireball)
 	{
-		nx = state_.live.plant->nx;
+		nx = state_.live.venus->nx;
 
-		if (state_.live.plant->isUp)
+		if (state_.live.venus->isUp)
 			vy = -FIREBALL_SPEED;
 		else
 			vy = FIREBALL_SPEED;
@@ -135,7 +135,7 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 			vx = FIREBALL_SPEED * nx * 2;
 
-		state_.live.plant->createFireball = false;
+		state_.live.venus->createFireball = false;
 	}
 }
 
