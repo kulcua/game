@@ -17,7 +17,7 @@
 #define PARAGOOMBA_HIGH_JUMP_SPEED 0.5f
 #define PARAGOOMBA_WALK_TIME 2000
 
-#define PARAGOOMBA_MAX_LEVEL 2
+#define	PARAGOOMBA_LEVEL_JUMP 2
 
 class ParaGoomba : public CGoomba
 {

@@ -5,7 +5,6 @@ CPipe::CPipe(float x, float y, int spriteId)
 {
 	this->x = x;
 	this->y = y;
-	nx = NULL;
 	this->spriteId = spriteId;
 }
 

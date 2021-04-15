@@ -17,6 +17,7 @@
 #include "FireBallPool.h"
 #include "CameraBound.h"
 #include "HUD.h"
+#include "KoopaBound.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -104,14 +105,10 @@ void CMario::HandleInput(Input input)
 CMario::CMario() : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
-
 	state_ = MarioState::standing.GetInstance();
-
 	start_x = x;
 	start_y = y;
-	this->x = x;
-	this->y = y;
-
+	nx = 1;
 	pool = FireBallPool::GetInstance();
 }
 
@@ -150,8 +147,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		//if (rdx != 0 && rdx!=dx)
-		//	x += nx*abs(rdx); 
+		if (rdx != 0 && rdx!=dx)
+			x += nx*abs(rdx); 
 
 		x += min_tx * dx + nx * 0.4f;
 		if (ny != -1) // handle case obj fall down
@@ -172,7 +169,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
 					{
 						goomba->DowngradeLevel();
-					/*	goomba->SetState(GOOMBA_STATE_DIE);*/
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 				}
@@ -241,27 +237,26 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CKoopas*>(e->obj))
 			{
-				CKoopas* koopas = dynamic_cast<CKoopas*>(e->obj);
-				if (koopas->GetState() != KOOPAS_STATE_BALL) {
+				CKoopas* koopa = dynamic_cast<CKoopas*>(e->obj);
+				if (koopa->GetState() != KOOPA_STATE_BALL) {
 					if (e->ny < 0)
 					{
-						koopas->SetState(KOOPAS_STATE_BALL);
+						koopa->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 					else if (e->nx != 0 && isAttack && level == MARIO_LEVEL_RACCOON) // tail hit
-						koopas->SetState(KOOPAS_STATE_BALL);							
+						koopa->SetState(KOOPA_STATE_BALL);	
 				}
 				else
 				{
 					if (isPower && e->nx != 0) //handleShell
 					{
 						isHandleShell = true;
-						DebugOut(L"true\n");
-						koopas->HandleByMario(this);
-						koopaShell = koopas;
+						koopa->HandleByMario(this);
+						koopaShell = koopa;
 					}
 					else { // kick normally
-						koopas->vx = this->nx * KOOPAS_BALL_SPEED;
+						koopa->vx = this->nx * KOOPA_BALL_SPEED;
 						MarioState::kick.GetInstance()->StartKick();
 						state_ = MarioState::kick.GetInstance();
 					}
@@ -274,6 +269,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					state_ = MarioState::dropping.GetInstance();
 					PowerReset();
 				}		
+			}
+			else if (dynamic_cast<KoopaBound*>(e->obj))
+			{
+				x += dx;
+				y += dy;
 			}
 		}
 	}

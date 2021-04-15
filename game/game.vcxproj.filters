@@ -55,6 +55,9 @@
     <Filter Include="Enermies\Goomba">
       <UniqueIdentifier>{a6e9ecc0-e20f-499c-81ea-848c60ba4539}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enermies\Koopa">
+      <UniqueIdentifier>{01bfef41-b727-4774-84b6-a3bb563dba4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -104,9 +107,6 @@
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Mics</Filter>
-    </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Enermies</Filter>
     </ClCompile>
     <ClCompile Include="MarioState.cpp">
       <Filter>Mario\MarioState</Filter>
@@ -219,6 +219,15 @@
     <ClCompile Include="ParaGoomba.cpp">
       <Filter>Enermies\Goomba</Filter>
     </ClCompile>
+    <ClCompile Include="Koopas.cpp">
+      <Filter>Enermies\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaKoopa.cpp">
+      <Filter>Enermies\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="KoopaBound.cpp">
+      <Filter>Enermies\Koopa</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -271,9 +280,6 @@
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Enermies</Filter>
     </ClInclude>
     <ClInclude Include="MarioDuckingState.h">
       <Filter>Mario\MarioState\OnGroundState</Filter>
@@ -376,6 +382,15 @@
     </ClInclude>
     <ClInclude Include="ParaGoomba.h">
       <Filter>Enermies\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopas.h">
+      <Filter>Enermies\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaKoopa.h">
+      <Filter>Enermies\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopaBound.h">
+      <Filter>Enermies\Koopa</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

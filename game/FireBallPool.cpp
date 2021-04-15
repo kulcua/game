@@ -39,7 +39,7 @@ void FireBallPool::GetBackToPool()
 {
     for (int i = 0; i < POOL_SIZE; i++)
     {  
-        if (fireBall_[i].GetBackToPool()) // return fireball
+        if (fireBall_[i].GetBackToPool())
         {         
             fireBall_[i].SetNext(firstAvailable_);
             firstAvailable_ = &fireBall_[i];

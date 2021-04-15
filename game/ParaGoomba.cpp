@@ -4,7 +4,7 @@ ParaGoomba::ParaGoomba()
 {
 	SetState(PARAGOOMBA_STATE_LOW_JUMP);
 	die = false;
-	level = PARAGOOMBA_MAX_LEVEL;
+	level = PARAGOOMBA_LEVEL_JUMP;
 	jumpTimes = PARAGOOMBA_JUMP_TIMES;
 	mario = CMario::GetInstance();
 }
@@ -19,7 +19,7 @@ void ParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bo
 		bottom = y + GOOMBA_BBOX_HEIGHT_DIE;
 	else 
 	{
-		if (level == PARAGOOMBA_MAX_LEVEL)
+		if (level == PARAGOOMBA_LEVEL_JUMP)
 		{
 			if (isOnGround)
 				bottom = y + PARAGOOMBA_BBOX_WALK_HEIGHT;
@@ -38,7 +38,7 @@ void ParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		vx = -GOOMBA_WALKING_SPEED;
 
-		if (level == PARAGOOMBA_MAX_LEVEL)
+		if (level == PARAGOOMBA_LEVEL_JUMP)
 		{
 			if (jumpTimes > 0 && isOnGround)
 			{
@@ -62,24 +62,19 @@ void ParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void ParaGoomba::Render()
 {
 	int ani;
-	if (!die)
-	{
-		if (level == PARAGOOMBA_MAX_LEVEL)
-		{
-			if (isOnGround)
-				ani = PARAGOOMBA_ANI_WALKING;
-			else
-				ani = PARAGOOMBA_ANI_FLYING;
-		}
-		else ani = PARAGOOMBA_ANI_NO_WING;
-		animation_set->at(ani)->Render(x, y, nx);
-	}
-	else if (dieTimeStart > 0)
+	if (dieTimeStart > 0)
 	{
 		ani = PARAGOOMBA_ANI_DIE;
-		animation_set->at(ani)->Render(x, y, nx);
 	}
-	//RenderBoundingBox();
+	else if (level == PARAGOOMBA_LEVEL_JUMP)
+	{
+		if (isOnGround)
+			ani = PARAGOOMBA_ANI_WALKING;
+		else
+			ani = PARAGOOMBA_ANI_FLYING;
+	}
+	else ani = PARAGOOMBA_ANI_NO_WING;
+	animation_set->at(ani)->Render(x, y, nx);
 }
 
 void ParaGoomba::SetState(int state)

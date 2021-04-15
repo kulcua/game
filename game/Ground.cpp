@@ -2,10 +2,8 @@
 #include "Animations.h"
 #include "Utils.h"
 
-CGround::CGround(float l, float t, float w, float h)
+CGround::CGround(float w, float h)
 {
-	x = l;
-	y = t;
 	width = w;
 	height = h;
 }

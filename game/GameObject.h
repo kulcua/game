@@ -47,7 +47,7 @@ public:
 	float vx;
 	float vy;
 
-	int nx;
+	int nx = -1;
 	int state;
 
 	DWORD dt;
@@ -57,7 +57,7 @@ public:
 	LPANIMATION_SET animation_set;
 
 public:
-	bool die;
+	bool die = false;
 
 	void SetPosition(float x, float y) { this->x = x; this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx; this->vy = vy; }

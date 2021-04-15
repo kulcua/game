@@ -48,6 +48,7 @@ bool CFireBall::GetBackToPool()
 	else if (die)
 	{
 		inUse = false;
+		destroyTimeStart = 0;
 		return true;
 	}
 	return false;
@@ -55,6 +56,11 @@ bool CFireBall::GetBackToPool()
 
 void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	if (destroyTimeStart > 0 && GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)
+	{
+		die = true;
+	}
+
 	vy += FIREBALL_GRAVITY * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -93,7 +99,6 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				|| dynamic_cast<CKoopas*>(e->obj))
 			{
 				e->obj->die = true;
-				die = true;
 				StartDestroy();
 			}
 			else
@@ -103,7 +108,6 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vy = -FIREBALL_DEFLECT_Y;
 				}
 				else {
-					die = true;
 					StartDestroy();
 				}
 			}
@@ -141,33 +145,24 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
-	if (isDestroyed && GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)
+	CGameObject::Update(dt, coObjects);
+
+	if (isForPlant)
 	{
-		destroyTimeStart = 0;
-		isDestroyed = false;
+		UpdateForPlant(dt, coObjects);
+	}
+	else
+	{
+		UpdateForMario(dt, coObjects);
 	}
 
-	if (die == false)
+	for (int i = 0; i < coObjects->size(); i++)
 	{
-		CGameObject::Update(dt, coObjects);
-
-		if (isForPlant)
+		if (dynamic_cast<CCamera*>(coObjects->at(i)))
 		{
-			UpdateForPlant(dt, coObjects);
-		}
-		else
-		{
-			UpdateForMario(dt, coObjects);
-		}
-
-		for (int i = 0; i < coObjects->size(); i++)
-		{
-			if (dynamic_cast<CCamera*>(coObjects->at(i)))
+			if (AABB(coObjects->at(i)) == false)
 			{
-				if (AABB(coObjects->at(i)) == false)
-				{
-					die = true;
-				}
+				die = true;
 			}
 		}
 	}
@@ -175,14 +170,12 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBall::Render()
 {
-	if (inUse)
-	{
-		animation_set->at(FIREBALL_ANI_BALL)->Render(x, y, NULL);
-	}
-	else if (isDestroyed)
-	{
-		animation_set->at(FIREBALL_ANI_DESTROYED)->Render(x, y, NULL);
-	}
+	int ani;
+	if (destroyTimeStart == 0)
+		ani = FIREBALL_ANI_BALL;
+	else 
+		ani = FIREBALL_ANI_DESTROYED;
+	animation_set->at(ani)->Render(x, y, NULL);
 }
 
 void CFireBall::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -191,4 +184,12 @@ void CFireBall::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = y;
 	r = x + FIREBALL_WIDTH;
 	b = y + FIREBALL_HEIGHT;
+}
+
+void CFireBall::StartDestroy()
+{
+	if (destroyTimeStart == 0)
+	{
+		destroyTimeStart = GetTickCount64();
+	}
 }

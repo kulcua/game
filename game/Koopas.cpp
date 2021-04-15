@@ -2,16 +2,15 @@
 #include "Brick.h"
 #include "Ground.h"
 #include "BigBox.h"
-#include "Utils.h"
 #include "Pipe.h"
 #include "Goomba.h"
 #include "Mario.h"
+#include "KoopaBound.h"
 
-CKoopas::CKoopas(float start_x, float end_x)
+CKoopas::CKoopas()
 {
-	this->start_x = start_x;
-	this->end_x = end_x;
-	SetState(KOOPAS_STATE_WALKING);
+	SetState(KOOPA_STATE_WALKING);
+	level = KOOPA_LEVEL_WALK;
 }
 
 void CKoopas::HandleByMario(CMario* mario)
@@ -23,7 +22,8 @@ void CKoopas::HandleByMario(CMario* mario)
 void CKoopas::KickByMario(CMario* mario)
 {
 	isHandled = false;	 
-	vx = mario->nx * KOOPAS_BALL_SPEED;
+	nx = mario->nx;
+	vx = nx * KOOPA_BALL_SPEED;
 }
 
 void CKoopas::SetPositionHandled()
@@ -55,115 +55,128 @@ void CKoopas::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + KOOPAS_BBOX_WIDTH;
-	if (state == KOOPAS_STATE_WALKING)
-	{
-		b = y + KOOPAS_BBOX_HEIGHT;
-	}
+	r = x + KOOPA_BBOX_WIDTH;
+	if (state == KOOPA_STATE_WALKING)
+		b = y + KOOPA_BBOX_HEIGHT;
 	else
-	{
-		b = y + KOOPAS_BBOX_HEIGHT_DIE;
-	}
+		b = y + KOOPA_BBOX_HEIGHT_DIE;
 }
 
 void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (!die)
+	CGameObject::Update(dt, coObjects);
+
+	if (isHandled)
+		SetPositionHandled();
+	else
 	{
-		CGameObject::Update(dt, coObjects);
+		vy += KOOPA_GRAVITY * dt;
+	}
 
-		if (isHandled)
-		{
-			SetPositionHandled();
-		}
-		else
-		{
-			vy += KOOPAS_GRAVITY * dt;
-		}
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
 
-		if (state != KOOPAS_STATE_BALL)
+	coEvents.clear();
+	CalcPotentialCollisions(coObjects, coEvents);
+
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		x += min_tx * dx + nx * 0.4f;
+		//if (ny != -1) // handle case obj fall down
+		y += min_ty * dy + ny * 0.4f;
+
+		if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0;
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
-			if (vx < 0 && x < start_x)
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<CBrick*>(e->obj))
 			{
-				x = start_x;
-				vx = -vx;
-				nx = 1;
+				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
+				brick->SetState(BRICK_STATE_DISABLE);
 			}
-
-			if (vx > 0 && x > end_x - KOOPAS_BBOX_WIDTH) {
-				x = end_x - KOOPAS_BBOX_WIDTH;
-				vx = -vx;
-				nx = -1;
-			}
-		}
-		vector<LPCOLLISIONEVENT> coEvents;
-		vector<LPCOLLISIONEVENT> coEventsResult;
-
-		coEvents.clear();
-		CalcPotentialCollisions(coObjects, coEvents);
-
-		if (coEvents.size() == 0)
-		{
-			x += dx;
-			y += dy;
-		}
-		else
-		{
-			float min_tx, min_ty, nx = 0, ny;
-			float rdx = 0;
-			float rdy = 0;
-
-			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-			x += min_tx * dx + nx * 0.4f;
-			if (ny != -1) // handle case obj fall down
-				y += min_ty * dy + ny * 0.4f;
-				
-			if (ny != 0) vy = 0;
-
-			for (UINT i = 0; i < coEventsResult.size(); i++)
+			else if (dynamic_cast<CBigBox*>(e->obj))
 			{
-				LPCOLLISIONEVENT e = coEventsResult[i];
-
-				if (dynamic_cast<CBrick*>(e->obj))
+				if (e->ny < 0)
 				{
-					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-					brick->SetState(BRICK_STATE_DISABLE);
+					isOnGround = true;
 				}
-				else if (dynamic_cast<CBigBox*>(e->obj))
+				if (e->nx != 0)
 				{
+					if (state == KOOPA_STATE_BALL)
+						vx = this->nx * KOOPA_BALL_SPEED;
+					else
+						vx = this->nx * KOOPA_WALKING_SPEED;
 					x += dx;
 				}
-				else if (dynamic_cast<CGoomba*>(e->obj))
-				{
-					CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-					goomba->SetState(GOOMBA_STATE_DIE);
-				}
-				else if (e->nx)
+			}
+			else if (dynamic_cast<CGoomba*>(e->obj))
+			{
+				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+				goomba->SetState(GOOMBA_STATE_DIE);
+			}
+			else if (dynamic_cast<CGround*>(e->obj))
+			{
+				if (e->ny < 0)
+					isOnGround = true;
+				if (e->nx)
 					vx = -vx;
 			}
+			else if (dynamic_cast<KoopaBound*>(e->obj))
+			{
+				if (e->nx != 0)
+				{
+					if (state != KOOPA_STATE_BALL)
+					{
+						this->nx = -this->nx;
+						vx = this->nx * KOOPA_WALKING_SPEED;
+					}
+					else {
+						vx = this->nx * KOOPA_BALL_SPEED;
+						x += dx;
+					}
+				}
+			}
 		}
-		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	}
+	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void CKoopas::DowngradeLevel()
+{
+	level--;
+	if (level == KOOPA_LEVEL_BALL)
+		SetState(KOOPA_STATE_BALL);
+	else if (level == KOOPA_LEVEL_WALK)
+		SetState(KOOPA_STATE_WALKING);
 }
 
 void CKoopas::Render()
 {
-	if (die == false)
+	int ani;
+	if (state == KOOPA_STATE_BALL)
 	{
-		int ani;
-		if (state == KOOPAS_STATE_DIE)
-		{
-			ani = KOOPAS_ANI_DIE;
-		}
-		else if (state == KOOPAS_STATE_BALL)
-			ani = KOOPAS_ANI_BALL;
-		else
-			ani = KOOPAS_ANI_WALKING;
-		animation_set->at(ani)->Render(x, y, nx);
+		if (vx == 0)
+			ani = KOOPA_ANI_BALL;
+		else ani = KOOPA_ANI_BALL_ROLL;
 	}
-	
-	//RenderBoundingBox();
+	else
+		ani = KOOPA_ANI_WALKING;
+
+	animation_set->at(ani)->Render(x, y, nx);
 }
 
 void CKoopas::SetState(int state)
@@ -171,15 +184,13 @@ void CKoopas::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case KOOPAS_STATE_DIE:
-		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE;
-		break;
-	case KOOPAS_STATE_BALL:
-		y += KOOPAS_BBOX_HEIGHT - KOOPAS_BBOX_HEIGHT_DIE;
+	case KOOPA_STATE_BALL:
+		level = KOOPA_LEVEL_BALL;
+		y += KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE;
 		vx = 0;
 		break;
-	case KOOPAS_STATE_WALKING:
-		vx = KOOPAS_WALKING_SPEED;
+	case KOOPA_STATE_WALKING:
+		vx = nx * KOOPA_WALKING_SPEED;
 		break;
 	}
 }

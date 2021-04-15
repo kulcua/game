@@ -23,21 +23,17 @@ class CFireBall : public CGameObject
 	friend class FireBallPool;
 	bool isForPlant;
 
-	bool isDestroyed;
 	DWORD destroyTimeStart;
 
-	void StartDestroy() { isDestroyed = true; destroyTimeStart = GetTickCount64(); }
-	
+	void StartDestroy();
+
 	union
 	{
-		// State when it's in use.
 		struct
 		{
 			CMario* mario;
 			VenusFireTrap* venus;
 		} live;
-
-		// State when it's available.
 		CFireBall* next;
 	} state_;
 

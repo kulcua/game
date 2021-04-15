@@ -17,7 +17,7 @@
 #define GOOMBA_DIE_TIME 200
 #define GOOMBA_GRAVITY		0.0014f
 
-#define GOOMBA_MAX_LEVEL 1
+#define GOOMBA_LEVEL_WALK 1
 
 class CGoomba: public CGameObject
 {
@@ -27,8 +27,8 @@ protected:
 	bool isOnGround;
 public:
 	CGoomba();
-	void DowngradeLevel() { level--; }
-	void StartDieTime() { die = true; dieTimeStart = GetTickCount64(); }
+	void DowngradeLevel();
+	void StartDieTime() { dieTimeStart = GetTickCount64(); }
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();

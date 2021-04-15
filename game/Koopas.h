@@ -1,22 +1,22 @@
 #pragma once
 class CMario;
 #include "GameObject.h"
+#include "Utils.h"
 
-#define KOOPAS_WALKING_SPEED 0.04f
-#define KOOPAS_BALL_SPEED 0.4f
-#define KOOPAS_GRAVITY	0.004f
+#define KOOPA_WALKING_SPEED 0.04f
+#define KOOPA_BALL_SPEED 0.4f
+#define KOOPA_GRAVITY	0.001f
 
-#define KOOPAS_BBOX_WIDTH 50
-#define KOOPAS_BBOX_HEIGHT 82
-#define KOOPAS_BBOX_HEIGHT_DIE 50
+#define KOOPA_BBOX_WIDTH 50
+#define KOOPA_BBOX_HEIGHT 82
+#define KOOPA_BBOX_HEIGHT_DIE 50
 
-#define KOOPAS_STATE_WALKING 100
-#define KOOPAS_STATE_BALL 200
-#define KOOPAS_STATE_DIE 300
+#define KOOPA_STATE_WALKING 100
+#define KOOPA_STATE_BALL 200
 
-#define KOOPAS_ANI_WALKING 0
-#define KOOPAS_ANI_BALL 1
-#define KOOPAS_ANI_DIE 2
+#define KOOPA_ANI_WALKING 0
+#define KOOPA_ANI_BALL 1
+#define KOOPA_ANI_BALL_ROLL 2
 
 #define MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT 16
 #define MARIO_SMALL_HANDLED_SHELL_HEIGHT 4
@@ -24,19 +24,25 @@ class CMario;
 #define MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT 20
 #define MARIO_RACCOON_HANDLE_SHELL_WIDTH_RIGHT 36
 
+#define KOOPA_LEVEL_BALL 0
+#define KOOPA_LEVEL_WALK 1
+
 class CKoopas: public CGameObject
 {
-	float start_x, end_x;
+protected:
 	bool isHandled;
+	bool isOnGround;
 	CMario* mario_;
-	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	virtual void Render();
+	int level;
 public:
-	CKoopas(float start_x, float end_x);
+	CKoopas();
 	void HandleByMario(CMario* mario);
 	void SetPositionHandled();
 	void KickByMario(CMario* mario);
 	virtual void SetState(int state);
+	void DowngradeLevel();
+	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Render();
 };
 

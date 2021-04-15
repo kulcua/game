@@ -8,6 +8,8 @@
 #include "VenusFireTrap.h"
 #include "PiranhaPlant.h"
 #include "ParaGoomba.h"
+#include "ParaKoopa.h"
+#include "KoopaBound.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -25,30 +27,31 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	int objectId;
 	float x, y;
 	float width, height;
+	TiXmlElement* element = objectGroupElement->FirstChildElement();
 	if (name.compare("Solid") == 0)
-	{				
-		TiXmlElement* element = objectGroupElement->FirstChildElement();		
+	{					
 		while (element)
 		{
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
-			obj = new CGround(x, y, width, height);
+			obj = new CGround(width, height);
+			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}		
 	}
 	else if (name.compare("Ghost") == 0)
 	{
-		TiXmlElement* element = objectGroupElement->FirstChildElement();
 		while (element)
 		{
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
-			obj = new CBigBox(x, y, width, height);
+			obj = new CBigBox(width, height);
+			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -56,7 +59,6 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	else if (name.compare("QuestionBlocks") == 0)
 	{
 		string typeName;
-		TiXmlElement* element = objectGroupElement->FirstChildElement();
 		while (element)
 		{
 			element->QueryFloatAttribute("x", &x);
@@ -76,7 +78,6 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	else if (name.compare("CameraBound") == 0)
 	{
 		int type;
-		TiXmlElement* element = objectGroupElement->FirstChildElement();
 		while (element)
 		{
 			element->QueryFloatAttribute("x", &x);
@@ -84,14 +85,14 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
 			element->QueryIntAttribute("type", &type);
-			obj = new CCameraBound(x, y, width, height, type);
+			obj = new CCameraBound(width, height, type);
+			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
 	}
 	else if (name.compare("Camera") == 0)
 	{
-		TiXmlElement* element = objectGroupElement->FirstChildElement();
 		while (element)
 		{
 			element->QueryFloatAttribute("x", &x);
@@ -103,9 +104,22 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element = element->NextSiblingElement();
 		}
 	}
+	else if (name.compare("KoopaBound") == 0)
+	{
+		while (element)
+		{
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryFloatAttribute("width", &width);
+			element->QueryFloatAttribute("height", &height);
+			obj = new KoopaBound(width, height);
+			obj->SetPosition(x, y);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
 	else if (name.compare("Enemy") == 0)
-	{		
-		TiXmlElement* element = objectGroupElement->FirstChildElement();		
+	{				
 		string enemyName;
 		while (element)
 		{
@@ -123,23 +137,16 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				string type = element->Attribute("type");
 				if (type.compare("tan") == 0)
 					obj = new CGoomba();
-				else
+				else if (type.compare("para") == 0)
 					obj = new ParaGoomba();
 			}
 			else if (enemyName.compare("koopa") == 0)
 			{
-				float start_x, end_x;
-				property = property->NextSiblingElement();
-				while (property)
-				{
-					string propertyName = property->Attribute("name");
-					if (propertyName.compare("start_x") == 0)
-						property->QueryFloatAttribute("value", &start_x);
-					else if (propertyName.compare("end_x") == 0)
-						property->QueryFloatAttribute("value", &end_x);
-					property = property->NextSiblingElement();
-				}
-				obj = new CKoopas(start_x, end_x);
+				string type = element->Attribute("type");
+				if (type.compare("red") == 0)
+					obj = new CKoopas();
+				else if (type.compare("para") == 0)
+					obj = new ParaKoopa();
 			}
 			else if (enemyName.compare("venus") == 0)
 			{

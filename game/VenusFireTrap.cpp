@@ -57,46 +57,39 @@ void VenusFireTrap::StartShootTime()
 
 void VenusFireTrap::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (die == false)
+	CPlant::Update(dt, coObjects);
+
+	if (createFireball) // check shoot only 1 fireball
 	{
-		CPlant::Update(dt, coObjects);
-
-		if (createFireball) // check shoot only 1 fireball
+		CFireBall* fireBall = pool->Create();
+		if (fireBall != NULL)
 		{
-			CFireBall* fireBall = pool->Create();
-			if (fireBall != NULL)
-			{
-				fireBall->InitForPlant(this);
-			}
+			fireBall->InitForPlant(this);
 		}
-
-		SetDirectionShootingFollowMario();
-
-		FindPositionForShooting();
 	}
+
+	SetDirectionShootingFollowMario();
+
+	FindPositionForShooting();
 }
 
 void VenusFireTrap::Render()
 {
-	if (die == false)
+	int ani = 0;
+	if (shootingTime == false)
 	{
-		int ani = 0;
-		if (shootingTime == false)
-		{
-			if (isUp)
-				ani = VENUS_ANI_UP;
-			else
-				ani = VENUS_ANI_DOWN;
-		}
+		if (isUp)
+			ani = VENUS_ANI_UP;
 		else
-		{
-			if (isUp)
-				ani = VENUS_ANI_SHOOT_UP;
-			else ani = VENUS_ANI_SHOOT_DOWN;
-		}
-		animation_set->at(ani)->Render(x, y, nx);
+			ani = VENUS_ANI_DOWN;
 	}
-	//RenderBoundingBox();
+	else
+	{
+		if (isUp)
+			ani = VENUS_ANI_SHOOT_UP;
+		else ani = VENUS_ANI_SHOOT_DOWN;
+	}
+	animation_set->at(ani)->Render(x, y, nx);
 }
 
 void VenusFireTrap::GetBoundingBox(float& l, float& t, float& r, float& b)
