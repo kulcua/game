@@ -175,8 +175,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else if (e->nx != 0)
 				{
 					if (isAttack && level == MARIO_LEVEL_RACCOON)
-						goomba->DowngradeLevel();
-						//goomba->SetState(GOOMBA_STATE_DIE);
+						goomba->SetState(GOOMBA_STATE_DIE);
 				}
 			}
 			else if (dynamic_cast<CGround*>(e->obj))
