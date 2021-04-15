@@ -1,4 +1,4 @@
-#include "Koopas.h"
+#include "Koopa.h"
 #include "Brick.h"
 #include "Ground.h"
 #include "BigBox.h"
@@ -7,26 +7,26 @@
 #include "Mario.h"
 #include "KoopaBound.h"
 
-CKoopas::CKoopas()
+CKoopa::CKoopa()
 {
 	SetState(KOOPA_STATE_WALKING);
 	level = KOOPA_LEVEL_WALK;
 }
 
-void CKoopas::HandleByMario(CMario* mario)
+void CKoopa::HandleByMario(CMario* mario)
 {
 	isHandled = true;
 	mario_ = mario;
 }
 
-void CKoopas::KickByMario(CMario* mario)
+void CKoopa::KickByMario(CMario* mario)
 {
 	isHandled = false;	 
 	nx = mario->nx;
 	vx = nx * KOOPA_BALL_SPEED;
 }
 
-void CKoopas::SetPositionHandled()
+void CKoopa::SetPositionHandled()
 {
 	if (mario_->GetLevel() == MARIO_LEVEL_SMALL)
 	{
@@ -51,7 +51,7 @@ void CKoopas::SetPositionHandled()
 	}
 }
 
-void CKoopas::GetBoundingBox(float& l, float& t, float& r, float& b)
+void CKoopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
@@ -62,7 +62,7 @@ void CKoopas::GetBoundingBox(float& l, float& t, float& r, float& b)
 		b = y + KOOPA_BBOX_HEIGHT_DIE;
 }
 
-void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
@@ -155,7 +155,7 @@ void CKoopas::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void CKoopas::DowngradeLevel()
+void CKoopa::DowngradeLevel()
 {
 	level--;
 	if (level == KOOPA_LEVEL_BALL)
@@ -164,7 +164,7 @@ void CKoopas::DowngradeLevel()
 		SetState(KOOPA_STATE_WALKING);
 }
 
-void CKoopas::Render()
+void CKoopa::Render()
 {
 	int ani;
 	if (state == KOOPA_STATE_BALL)
@@ -179,7 +179,7 @@ void CKoopas::Render()
 	animation_set->at(ani)->Render(x, y, nx);
 }
 
-void CKoopas::SetState(int state)
+void CKoopa::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)

@@ -119,10 +119,10 @@
 class CMario : public CGameObject
 {
 	friend class MarioState;
-	friend class CKoopas;
+	friend class CKoopa;
 	friend class FireBallPool;
 
-	CKoopas* koopaShell;
+	CKoopa* koopaShell;
 	int level;
 	int ani;
 

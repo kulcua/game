@@ -144,7 +144,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			{
 				string type = element->Attribute("type");
 				if (type.compare("red") == 0)
-					obj = new CKoopas();
+					obj = new CKoopa();
 				else if (type.compare("para") == 0)
 					obj = new ParaKoopa();
 			}

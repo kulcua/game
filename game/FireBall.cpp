@@ -4,7 +4,7 @@
 #include "BigBox.h"
 #include "Camera.h"
 #include "Goomba.h"
-#include "Koopas.h"
+#include "Koopa.h"
 
 CFireBall::CFireBall()
 {
@@ -96,7 +96,7 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vy = -FIREBALL_DEFLECT_Y;
 			}
 			else if (dynamic_cast<CGoomba*>(e->obj)
-				|| dynamic_cast<CKoopas*>(e->obj))
+				|| dynamic_cast<CKoopa*>(e->obj))
 			{
 				e->obj->die = true;
 				StartDestroy();

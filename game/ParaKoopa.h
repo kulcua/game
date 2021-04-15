@@ -1,5 +1,5 @@
 #pragma once
-#include "Koopas.h"
+#include "Koopa.h"
 
 #define PARAKOOPA_BBOX_JUMP_HEIGHT 82
 
@@ -14,7 +14,7 @@
 
 #define PARAKOOPA_LEVEL_JUMP 2
 
-class ParaKoopa : public CKoopas
+class ParaKoopa : public CKoopa
 {
 public:
 	ParaKoopa();

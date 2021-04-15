@@ -21,7 +21,7 @@ void ParaKoopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void ParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CKoopas::Update(dt, coObjects);
+	CKoopa::Update(dt, coObjects);
 	
 	if (level == PARAKOOPA_LEVEL_JUMP && isOnGround)
 	{
@@ -48,7 +48,7 @@ void ParaKoopa::Render()
 
 void ParaKoopa::SetState(int state)
 {
-	CKoopas::SetState(state);
+	CKoopa::SetState(state);
 	switch (state)
 	{
 	case PARAKOOPA_STATE_JUMP:

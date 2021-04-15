@@ -219,13 +219,13 @@
     <ClCompile Include="ParaGoomba.cpp">
       <Filter>Enermies\Goomba</Filter>
     </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Enermies\Koopa</Filter>
-    </ClCompile>
     <ClCompile Include="ParaKoopa.cpp">
       <Filter>Enermies\Koopa</Filter>
     </ClCompile>
     <ClCompile Include="KoopaBound.cpp">
+      <Filter>Enermies\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopa.cpp">
       <Filter>Enermies\Koopa</Filter>
     </ClCompile>
   </ItemGroup>
@@ -383,13 +383,13 @@
     <ClInclude Include="ParaGoomba.h">
       <Filter>Enermies\Goomba</Filter>
     </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Enermies\Koopa</Filter>
-    </ClInclude>
     <ClInclude Include="ParaKoopa.h">
       <Filter>Enermies\Koopa</Filter>
     </ClInclude>
     <ClInclude Include="KoopaBound.h">
+      <Filter>Enermies\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopa.h">
       <Filter>Enermies\Koopa</Filter>
     </ClInclude>
   </ItemGroup>

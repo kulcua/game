@@ -7,7 +7,7 @@
 #include "BigBox.h"
 #include "Ground.h"
 #include "Item.h"
-#include "Koopas.h"
+#include "Koopa.h"
 #include "Pipe.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
@@ -235,9 +235,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				item->die = true;
 			}
-			else if (dynamic_cast<CKoopas*>(e->obj))
+			else if (dynamic_cast<CKoopa*>(e->obj))
 			{
-				CKoopas* koopa = dynamic_cast<CKoopas*>(e->obj);
+				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
 				if (koopa->GetState() != KOOPA_STATE_BALL) {
 					if (e->ny < 0)
 					{

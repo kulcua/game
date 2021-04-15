@@ -27,7 +27,7 @@ class CMario;
 #define KOOPA_LEVEL_BALL 0
 #define KOOPA_LEVEL_WALK 1
 
-class CKoopas: public CGameObject
+class CKoopa: public CGameObject
 {
 protected:
 	bool isHandled;
@@ -35,7 +35,7 @@ protected:
 	CMario* mario_;
 	int level;
 public:
-	CKoopas();
+	CKoopa();
 	void HandleByMario(CMario* mario);
 	void SetPositionHandled();
 	void KickByMario(CMario* mario);
