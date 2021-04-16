@@ -1,13 +1,11 @@
 #include "Brick.h"
 #include "Utils.h"
 
-CBrick::CBrick(float x, float y, string name)
+CBrick::CBrick(float x, float y)
 {
 	this->x = x;
 	this->y = y;
 	start_y = y;
-	this->name = name;
-	//this->typeItem = type;
 	SetAnimation(BRICK_ANI_ID);
 }
 
@@ -20,25 +18,8 @@ void CBrick::SetAnimation(int ani)
 
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt, coObjects);
+	CGameObject::Update(dt);
 
-	//if (brick->GetState() == BRICK_STATE_DISABLE && !brick->dropItem)
-	//{
-	//	brick->dropItem = true;
-	//	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	//	int type = brick->GetTypeItem();
-	//	if (type == ITEM_STATE_RED_MUSHROOM) //check neu item set theo level 1
-	//	{
-	//		type += player->GetLevel() - 1; //-1 de lay level mario can upgrade theo item
-	//		if (type > ITEM_STATE_LEVEL_MAX)
-	//			type = ITEM_STATE_LEVEL_MAX;
-	//	}
-	//	CItem* item = new CItem(type, player);
-	//	item->SetPosition(brick->x, brick->y);
-	//	LPANIMATION_SET ani_set = animation_sets->Get(type);
-	//	item->SetAnimationSet(ani_set);
-	//	objects.insert(objects.begin() + i, item);
-	//}
 	if (GetState() == BRICK_STATE_DISABLE)
 	{
 		y += dy;
@@ -59,13 +40,9 @@ void CBrick::Render()
 {
 	int ani;
 	if (state == BRICK_STATE_DISABLE)
-	{
-		ani = BRICK_ANI_DISABLE;
-	}	
+		ani = BRICK_ANI_DISABLE;	
 	else
-	{
 		ani = BRICK_ANI_ENABLE;
-	}
 	animation_set->at(ani)->Render(x, y, NULL);
 	//RenderBoundingBox();
 }

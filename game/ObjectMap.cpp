@@ -10,6 +10,7 @@
 #include "ParaGoomba.h"
 #include "ParaKoopa.h"
 #include "KoopaBound.h"
+#include "Coin.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -63,14 +64,22 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		{
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
-			typeName = objectGroupElement->Attribute("name");
-
-			if (typeName.compare("powerup") == 0)
+			typeName = element->Attribute("name");
+			obj = new CBrick(x, y);
+			CItem* item = NULL;
+			if (typeName.compare("coin") == 0)
 			{
-				
+				item = new Coin();
 			}
-
-			obj = new CBrick(x, y, typeName);
+			else {
+				DebugOut(L"%s\n", ToLPCWSTR(typeName));
+			}
+			if (item != NULL)
+			{
+				item->SetPosition(x, y);
+				item->SetBrick((CBrick*)obj);
+				objects.push_back(item);
+			}
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

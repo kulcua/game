@@ -151,8 +151,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			x += nx*abs(rdx); 
 
 		x += min_tx * dx + nx * 0.4f;
-		if (ny != -1) // handle case obj fall down
-			y += min_ty * dy + ny * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -216,23 +215,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						brick->SetState(BRICK_STATE_DISABLE);
 					}
 				}
-			}
-			else if (dynamic_cast<CItem*>(e->obj))
-			{
-				CItem* item = dynamic_cast<CItem*>(e->obj);
-				if (level < MARIO_LEVEL_MAX)
-				{
-					LevelUp();
-					if (item->GetState() == ITEM_STATE_RED_MUSHROOM)
-					{
-						y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SMALL_BBOX_HEIGHT;
-					}
-					else if (item->GetState() == ITEM_STATE_LEAF)
-					{
-						y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_BIG_BBOX_HEIGHT;
-					}
-				}
-				item->die = true;
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{

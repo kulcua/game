@@ -152,6 +152,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBound.cpp" />
+    <ClCompile Include="Coin.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="FontManager.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBound.h" />
+    <ClInclude Include="Coin.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="FontManager.h" />

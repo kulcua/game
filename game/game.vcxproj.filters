@@ -58,12 +58,15 @@
     <Filter Include="Enermies\Koopa">
       <UniqueIdentifier>{01bfef41-b727-4774-84b6-a3bb563dba4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Brick">
+      <UniqueIdentifier>{ce44b638-cb53-451c-8fc2-dacc8d6bd9de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Brick\Item">
+      <UniqueIdentifier>{461116ba-9a7a-4902-b7cb-d92876739436}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sprites.cpp">
@@ -87,16 +90,10 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Mario.cpp">
       <Filter>Mario</Filter>
     </ClCompile>
     <ClCompile Include="BigBox.cpp">
-      <Filter>Mics</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
@@ -228,6 +225,18 @@
     <ClCompile Include="Koopa.cpp">
       <Filter>Enermies\Koopa</Filter>
     </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -257,9 +266,6 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Mario.h">
       <Filter>Mario</Filter>
     </ClInclude>
@@ -267,9 +273,6 @@
       <Filter>Mario\MarioState</Filter>
     </ClInclude>
     <ClInclude Include="BigBox.h">
-      <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
@@ -391,6 +394,15 @@
     </ClInclude>
     <ClInclude Include="Koopa.h">
       <Filter>Enermies\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Brick\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
