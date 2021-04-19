@@ -5,6 +5,7 @@
 #include "Camera.h"
 #include "Goomba.h"
 #include "Koopa.h"
+#include "EffectPool.h"
 
 CFireBall::CFireBall()
 {
@@ -48,7 +49,6 @@ bool CFireBall::GetBackToPool()
 	else if (die)
 	{
 		inUse = false;
-		destroyTimeStart = 0;
 		return true;
 	}
 	return false;
@@ -56,11 +56,6 @@ bool CFireBall::GetBackToPool()
 
 void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	if (destroyTimeStart > 0 && GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)
-	{
-		die = true;
-	}
-
 	vy += FIREBALL_GRAVITY * dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -99,7 +94,10 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				|| dynamic_cast<CKoopa*>(e->obj))
 			{
 				e->obj->die = true;
-				StartDestroy();
+				die = true;
+				Effect* effect = EffectPool::GetInstance()->Create();
+				if (effect != NULL)
+					effect->Init(EffectName::fireballDestroy, x, y);
 			}
 			else
 			{
@@ -108,7 +106,10 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vy = -FIREBALL_DEFLECT_Y;
 				}
 				else {
-					StartDestroy();
+					die = true;
+					Effect* effect = EffectPool::GetInstance()->Create();
+					if (effect != NULL)
+						effect->Init(EffectName::fireballDestroy, x, y);
 				}
 			}
 		}
@@ -170,12 +171,7 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBall::Render()
 {
-	int ani;
-	if (destroyTimeStart == 0)
-		ani = FIREBALL_ANI_BALL;
-	else 
-		ani = FIREBALL_ANI_DESTROYED;
-	animation_set->at(ani)->Render(x, y, NULL);
+	animation_set->at(0)->Render(x, y, NULL);
 }
 
 void CFireBall::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -184,12 +180,4 @@ void CFireBall::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = y;
 	r = x + FIREBALL_WIDTH;
 	b = y + FIREBALL_HEIGHT;
-}
-
-void CFireBall::StartDestroy()
-{
-	if (destroyTimeStart == 0)
-	{
-		destroyTimeStart = GetTickCount64();
-	}
 }

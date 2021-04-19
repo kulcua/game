@@ -95,7 +95,7 @@
 
 #define MARIO_SIT_BBOX_HEIGHT 55
 
-#define MARIO_RACCOON_BBOX_WIDTH  63
+#define MARIO_RACCOON_BBOX_WIDTH  75
 #define MARIO_RACCOON_BBOX_HEIGHT 86
 
 #define MARIO_BIG_BBOX_WIDTH  42
@@ -155,7 +155,6 @@ public:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();
-
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	int GetLevel() { return level; }

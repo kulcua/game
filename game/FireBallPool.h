@@ -1,6 +1,4 @@
 #pragma once
-#include "Mario.h"
-#include "GameObject.h"
 #include "FireBall.h"
 
 class FireBallPool

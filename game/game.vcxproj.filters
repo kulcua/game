@@ -64,6 +64,9 @@
     <Filter Include="Brick\Item">
       <UniqueIdentifier>{461116ba-9a7a-4902-b7cb-d92876739436}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{ecb58eab-d89c-4c49-96c6-f46f7b391d80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -237,6 +240,15 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PowerUpItem.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectPool.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -403,6 +415,15 @@
     </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUpItem.h">
+      <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectPool.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Effect</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

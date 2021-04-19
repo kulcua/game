@@ -18,16 +18,9 @@
 #define ITEM_LEAF_DROP_SPEED	0.01f
 #define ITEM_LEAF_TIME	50
 
-enum class ItemType {
-	Coin,
-	RedMushroom,
-	Leaf
-};
-
 class CItem :public CGameObject
 {
 protected:
-	ItemType type;
 	CBrick* brick;
 public:
 	void SetBrick(CBrick* brick) { this->brick = brick; }

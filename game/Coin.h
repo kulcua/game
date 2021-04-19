@@ -7,7 +7,6 @@
 
 class Coin : public CItem
 {
-	ItemType type = ItemType::Coin;
 	int jumpTimeStart;
 public:
 	Coin();

@@ -18,6 +18,7 @@
 #include "CameraBound.h"
 #include "HUD.h"
 #include "KoopaBound.h"
+#include "EffectPool.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -173,8 +174,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (e->nx != 0)
 				{
-					if (isAttack && level == MARIO_LEVEL_RACCOON)
+					if (isAttack)
+					{
 						goomba->SetState(GOOMBA_STATE_DIE);
+						Effect* effect = EffectPool::GetInstance()->Create();
+						if (effect != NULL)
+							effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
+					}
 				}
 			}
 			else if (dynamic_cast<CGround*>(e->obj))
@@ -225,8 +231,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						koopa->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-					else if (e->nx != 0 && isAttack && level == MARIO_LEVEL_RACCOON) // tail hit
-						koopa->SetState(KOOPA_STATE_BALL);	
+					else if (e->nx != 0 && isAttack)
+					{
+						koopa->SetState(KOOPA_STATE_BALL);
+						Effect* effect = EffectPool::GetInstance()->Create();
+						if (effect != NULL)
+							effect->Init(EffectName::marioTailAttack, koopa->x, koopa->y);
+					}
 				}
 				else
 				{

@@ -507,6 +507,9 @@
 #PARA KOOPAS
 71	711	712	713	714
 
+#EFFECTPool
+65	621	202
+
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 11 = Item, 10 = BigBox, 20 = Ground, 50 = Portal, 6 = RedPlant
@@ -514,8 +517,10 @@
 #ITEM: 25 = coin, 26 = red_mushroom
 
 #POOL_FIREBALL
-# -1 means not have x y geometry
-69	-1	-1	62
+68	0	0	0
+
+#POOL_EFFECT
+69	0	0	0
 
 # MARIO
 0	1500	1100	1

@@ -153,6 +153,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBound.cpp" />
     <ClCompile Include="Coin.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectPool.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="FontManager.cpp" />
@@ -184,6 +186,7 @@
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Plant.cpp" />
+    <ClCompile Include="PowerUpItem.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Tileset.cpp" />
@@ -212,6 +215,8 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBound.h" />
     <ClInclude Include="Coin.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectPool.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="FontManager.h" />
@@ -243,6 +248,7 @@
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="Plant.h" />
+    <ClInclude Include="PowerUpItem.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Tileset.h" />
