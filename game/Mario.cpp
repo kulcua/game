@@ -176,10 +176,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (isAttack)
 					{
-						goomba->SetState(GOOMBA_STATE_DIE);
 						Effect* effect = EffectPool::GetInstance()->Create();
 						if (effect != NULL)
 							effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
+						goomba->vy = -GOOMBA_DEFLECT_SPEED;
+						goomba->SetState(GOOMBA_STATE_DIE);
 					}
 				}
 			}
@@ -233,10 +234,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					}
 					else if (e->nx != 0 && isAttack)
 					{
-						koopa->SetState(KOOPA_STATE_BALL);
 						Effect* effect = EffectPool::GetInstance()->Create();
 						if (effect != NULL)
 							effect->Init(EffectName::marioTailAttack, koopa->x, koopa->y);
+						koopa->vy = -KOOPA_DEFECT_SPEED;
+						koopa->SetState(KOOPA_STATE_BALL);
 					}
 				}
 				else
@@ -260,7 +262,9 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					state_ = MarioState::dropping.GetInstance();
 					PowerReset();
-				}		
+				}
+				else if (e->ny < 0)
+					isGrounded = true;
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj))
 			{

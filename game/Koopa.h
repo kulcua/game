@@ -5,6 +5,7 @@ class CMario;
 
 #define KOOPA_WALKING_SPEED 0.04f
 #define KOOPA_BALL_SPEED 0.4f
+#define KOOPA_DEFECT_SPEED 0.5f
 #define KOOPA_GRAVITY	0.001f
 
 #define KOOPA_BBOX_WIDTH 50

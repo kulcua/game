@@ -4,9 +4,6 @@
 #include "MarioFlyingState.h"
 #include "HUD.h"
 
-#define SCREEN_WIDTH 960
-#define SCREEN_HEIGHT 720
-
 CCamera::CCamera(float x, float y, float width, float height)
 {
 	mario = CMario::GetInstance();
@@ -20,13 +17,16 @@ CCamera::CCamera(float x, float y, float width, float height)
 
 void CCamera::FollowMario()
 {
-	if ((mario->vx > 0 && mario->x > xCenter) // walk right
-		|| (mario->vx < 0 && mario->x < xCenter)) // walk left
+	xCenter = x + (width / 2) - MARIO_BIG_BBOX_WIDTH / 2;
+	yCenter = y + (height / 2) + MARIO_BIG_BBOX_HEIGHT / 2;
+
+	if ((mario->vx > 0 && mario->x < xCenter) // walk right
+		|| (mario->vx < 0 && mario->x > xCenter))// walk left
 	{
-		vx = mario->vx;
+		vx = 0.0f;
 	}
-	else vx = 0;
-		
+	else vx = mario->vx;
+	
 	bool marioOnTopCam;
 	if (mario->y < yCenter) // mario on top camera
 		marioOnTopCam = true;	
@@ -43,16 +43,13 @@ void CCamera::FollowMario()
 		{
 			vy = mario->vy;
 		}
-		else vy = 0;
+		else vy = 0.0f;
 	}
 }
 
 void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-
-	xCenter = x + (width / 2);
-	yCenter = y + (height / 2) + MARIO_BIG_BBOX_HEIGHT / 2;
 
 	FollowMario();
 
@@ -77,9 +74,10 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
-		//x += min_tx * dx + nx * 0.4f;
+		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
+		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
@@ -93,15 +91,18 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (camBound->GetType() == 0)
 				{
 					if (e->ny < 0)
-					{
 						onGroundMode = true;
-					}
 				}		
 			}
-			else 
-			{
-				if (e->ny != 0) y += dy;
-				else if (e->nx != 0) x += dx;
+			else {
+				if (nx != 0)
+				{
+					vx = mario->vx;
+					x += dx;
+				}
+				if (ny != 0) {
+					y += dy;
+				}
 			}
 		}
 	}		

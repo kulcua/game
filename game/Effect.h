@@ -9,7 +9,8 @@
 
 enum class EffectName {
 	fireballDestroy,
-	marioTailAttack
+	marioTailAttack,
+	brickDestroy
 };
 
 class Effect : public CGameObject

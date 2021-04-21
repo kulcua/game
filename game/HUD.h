@@ -2,7 +2,7 @@
 #include "Utils.h"
 #include "Text.h"
 
-#define HUD_HEIGHT 125
+#define HUD_HEIGHT 155
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 750
 
@@ -31,7 +31,6 @@ public:
 
 	static HUD* GetInstance();
 	HUD();
-	RECT* GetRectHUD();
 	void SetPosition(float x, float y);
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void SetSpriteId(int spriteId) { this->spriteId = spriteId; }

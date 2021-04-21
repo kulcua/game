@@ -578,7 +578,7 @@
   </object>
  </objectgroup>
  <objectgroup id="27" name="Camera">
-  <object id="239" x="26.6667" y="699.061" width="960" height="600.606"/>
+  <object id="239" x="26.6667" y="699.061" width="800" height="600.606"/>
  </objectgroup>
  <objectgroup id="28" name="KoopaBound">
   <object id="244" x="1823" y="1056" width="24" height="93"/>
