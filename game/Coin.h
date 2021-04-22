@@ -2,8 +2,8 @@
 #include "Item.h"
 
 #define COIN_ANI_ID 25
-#define COIN_JUMP_SPEED	0.7f
-#define COIN_TIME 800
+#define COIN_JUMP_SPEED	0.5f
+#define COIN_TIME 700
 
 class Coin : public CItem
 {

@@ -1,8 +1,12 @@
 #include "Item.h"
 
+CItem::CItem() {
+	die = true;
+}
+
 void CItem::Render()
 {
-	animation_set->at(0)->Render(x, y, NULL);
+	animation_set->at(0)->Render(x, y, nx);
 }
 
 void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)

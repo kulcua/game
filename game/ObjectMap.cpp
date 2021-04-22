@@ -11,6 +11,7 @@
 #include "ParaKoopa.h"
 #include "KoopaBound.h"
 #include "Coin.h"
+#include "PowerUpItem.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -65,22 +66,23 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 			typeName = element->Attribute("name");
-			obj = new CBrick(x, y);
+			CBrick* br = new CBrick(x, y);
 			CItem* item = NULL;
 			if (typeName.compare("coin") == 0)
 			{
 				item = new Coin();
 			}
-			else {
-				DebugOut(L"%s\n", ToLPCWSTR(typeName));
+			else if (typeName.compare("powerup") == 0) 
+			{
+				item = new PowerUpItem();
 			}
 			if (item != NULL)
 			{
 				item->SetPosition(x, y);
-				item->SetBrick((CBrick*)obj);
 				objects.push_back(item);
 			}
-			objects.push_back(obj);
+			br->SetItem(item);
+			objects.push_back(br);
 			element = element->NextSiblingElement();
 		}
 	}

@@ -44,7 +44,6 @@ void CBrick::Render()
 	else
 		ani = BRICK_ANI_ENABLE;
 	animation_set->at(ani)->Render(x, y, NULL);
-	//RenderBoundingBox();
 }
 
 void CBrick::SetState(int state)
@@ -54,9 +53,7 @@ void CBrick::SetState(int state)
 	{
 	case BRICK_STATE_DISABLE:
 		vy -= BRICK_JUMP_DEFLECT_Y;
-		dropItem = true;
-		break;
-	default:
+		item->die = false;
 		break;
 	}
 }

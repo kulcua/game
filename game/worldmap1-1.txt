@@ -525,9 +525,6 @@
 # MARIO
 0	500	1100	1
 
-#REDPLANT
-#6	359	384	60
-
 # --- HIDEN OBJECT ----
 # type	l	t	ani_set_id	r	b	scene_id
 #SCENE PORTAL

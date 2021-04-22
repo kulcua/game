@@ -16,29 +16,24 @@ void Coin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	if (brick->dropItem)
+	if (jumpTimeStart == 0)
 	{
-		brick->dropItem = false;
 		StartJump();
 		vy = -COIN_JUMP_SPEED;
 	}
-
-	if (GetTickCount64() - jumpTimeStart > COIN_TIME && jumpTimeStart > 0)
+	else if (GetTickCount64() - jumpTimeStart > COIN_TIME)
 	{
 		jumpTimeStart = 0;
 		die = true;
 	}
-	else if (jumpTimeStart > 0)
+	else
 	{
 		vy += ITEM_GRAVITY * dt;
 		y += dy;
-	}	
+	}
 }
 
 void Coin::Render()
 {
-	if (jumpTimeStart > 0)
-	{
-		CItem::Render();
-	}
+	CItem::Render();
 }

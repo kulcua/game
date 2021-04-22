@@ -283,6 +283,7 @@ void CPlayScene::Load()
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
+
 void CPlayScene::Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObject;

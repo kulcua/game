@@ -7,8 +7,13 @@ class PowerUpItem : public CItem
 {
 	friend class CMario;
 	CMario* mario;
+	int ani = 0;
+	float startY;
+	bool outBrick;
+	void UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void UpdateLeaf(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 public:
-	PowerUpItem();
+	PowerUpItem();  
 	void SetAnimation(int ani);
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

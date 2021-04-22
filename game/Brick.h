@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Item.h"
 
 #define BRICK_BBOX_WIDTH  48
 #define BRICK_BBOX_HEIGHT 48
@@ -16,11 +17,13 @@
 
 class CBrick: public CGameObject
 {
-	float start_y;
 	void SetAnimation(int ani);
+	CItem* item;
 public:
-	bool dropItem = false;
+	float start_y;
 	CBrick(float x, float y);
+
+	void SetItem(CItem* item) { this->item = item; }
 	void SetState(int state);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
