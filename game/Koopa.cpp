@@ -96,7 +96,8 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				brick->SetState(BRICK_STATE_DISABLE);
+				if (brick->GetState() != BRICK_STATE_DISABLE)
+					brick->SetState(BRICK_STATE_DISABLE);
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{

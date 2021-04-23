@@ -262,9 +262,13 @@ void CMario::PowerControl()
 
 void CMario::LevelUp()
 {
-	SetLevel(level + 1);
-	state_ = MarioState::levelUp.GetInstance();
-	MarioState::levelUp.GetInstance()->StartLevelUp();
+	if (level < MARIO_LEVEL_RACCOON)
+	{
+		y -= MARIO_RACCOON_BBOX_HEIGHT;
+		SetLevel(level + 1);
+		state_ = MarioState::levelUp.GetInstance();
+		MarioState::levelUp.GetInstance()->StartLevelUp();
+	}
 }
 
 void CMario::HandleInput(Input input)
