@@ -69,8 +69,9 @@ void MarioWalkingState::HandleInput(CMario& mario, Input input)
 void MarioWalkingState::Update(CMario& mario, DWORD dt)
 {
     MarioState::Update(mario, dt);
-    if (mario.isGrounded == false)
+    if (mario.vy > MARIO_VY_DROP)
     {
+        mario.isGrounded = false;
         mario.state_ = MarioState::dropping.GetInstance();
     }
     //DebugOut(L"Walking\n");

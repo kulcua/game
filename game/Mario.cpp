@@ -197,9 +197,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	vy += MARIO_GRAVITY * dt;
 
-	if (vy > MARIO_VY_DROP)
-		isGrounded = false;
-
 	PowerControl();
 
 	HandleCollision(coObjects);
