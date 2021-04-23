@@ -1,6 +1,7 @@
 #include "PowerUpItem.h"
 #include "Animations.h"
 #include "Mario.h"
+#include "BigBox.h"
 
 PowerUpItem::PowerUpItem()
 {
@@ -20,7 +21,8 @@ void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (outBrick)
 	{
 		vy += ITEM_GRAVITY * dt;
-		vx = ITEM_RED_MR_VX;
+		if (vx == 0)
+			vx = ITEM_RED_MR_VX;
 	}
 	else vy = -ITEM_RED_MR_VY;
 
@@ -28,8 +30,7 @@ void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	if (state != MARIO_STATE_DIE)
-		CalcPotentialCollisions(coObjects, coEvents);
+	CalcPotentialCollisions(coObjects, coEvents);
 
 	if (coEvents.size() == 0)
 	{
@@ -48,6 +49,27 @@ void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
+
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<CBigBox*>(e->obj))
+			{
+				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
+				if (e->nx != 0)
+				{
+					vx = -nx * ITEM_RED_MR_VX;
+					x += dx;
+				}
+			}
+			else {
+				if (e->nx != 0)
+				{
+					vx = nx * ITEM_RED_MR_VX;
+				}
+			}
+		}
 	}
 
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];

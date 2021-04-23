@@ -19,6 +19,7 @@
 #include "HUD.h"
 #include "KoopaBound.h"
 #include "EffectPool.h"
+#include "PowerUpItem.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -31,107 +32,14 @@ CMario* CMario::GetInstance()
 	return __instance;
 }
 
-void CMario::PowerReset()
+void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
-	isPower = false; 
-	powerStartTime = 0;
-	PowerDown();
-}
-
-void CMario::KickShell()
-{
-	isHandleShell = false;
-	koopaShell->KickByMario(this);
-	state_ = MarioState::kick.GetInstance();
-	MarioState::kick.GetInstance()->StartKick();
-}
-
-int CalculatePowerTimePassed(int time)
-{
-	return (GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
-}
-
-void CMario::PowerControl()
-{
-	int timePassed;
-	if (isPower && powerStartTime > 0)
-	{	
-		timePassed = CalculatePowerTimePassed(powerStartTime);
-		if (timePassed < MARIO_MAX_POWER)
-		{
-			if (power == 0)
-				power = timePassed;
-			else if (savePower == 0)
-			{
-				savePower = power;
-			}
-
-			if (timePassed <= MARIO_MAX_POWER - savePower) {
-				power = savePower + timePassed;
-			}
-		}
-	}
-	else if (powerEndTime > 0)
-	{
-		timePassed = CalculatePowerTimePassed(powerEndTime);
-		if (power == 0)
-			powerEndTime = 0;
-		else if (savePower == 0)
-		{
-			savePower = power;
-		}
-
-		if (savePower - timePassed >= 0) {
-			power = savePower - timePassed;
-		}
-	}
-
-	HUD::GetInstance()->power->SetPower(this->GetPower());
-}
-
-void CMario::LevelUp()
-{
-	SetLevel(level + 1);
-	state_ = MarioState::levelUp.GetInstance();
-	MarioState::levelUp.GetInstance()->StartLevelUp();
-}
-
-void CMario::HandleInput(Input input)
-{
-	state_->HandleInput(*this, input);
-
-	state_->Enter(*this);
-}
-
-CMario::CMario() : CGameObject()
-{
-	level = MARIO_LEVEL_SMALL;
-	state_ = MarioState::standing.GetInstance();
-	start_x = x;
-	start_y = y;
-	nx = 1;
-	pool = FireBallPool::GetInstance();
-}
-
-void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{	
-	CGameObject::Update(dt);
-
-	state_->Update(*this, dt);
-
-	vy += MARIO_GRAVITY * dt;
-
-	if (vy > MARIO_VY_DROP)
-		isGrounded = false;
-
-	PowerControl();
-
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
 	coEvents.clear();
-	if (state != MARIO_STATE_DIE)
-		CalcPotentialCollisions(coObjects, coEvents);
+
+	CalcPotentialCollisions(coObjects, coEvents);
 
 	if (coEvents.size() == 0)
 	{
@@ -148,8 +56,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		if (rdx != 0 && rdx!=dx)
-			x += nx*abs(rdx); 
+		if (rdx != 0 && rdx != dx)
+			x += nx * abs(rdx);
 
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
@@ -189,7 +97,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 				{
 					isGrounded = true;
-				}		
+				}
 			}
 			else if (dynamic_cast<CPipe*>(e->obj))
 			{
@@ -199,14 +107,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
-			{				
+			{
 				if (e->ny < 0)
 				{
 					isGrounded = true;
 				}
 				else {
 					x += dx;
-				}				
+				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
@@ -271,9 +179,112 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				x += dx;
 				y += dy;
 			}
+			else if (dynamic_cast<PowerUpItem*>(e->obj))
+			{
+				e->obj->die = true;
+				LevelUp();
+			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{	
+	CGameObject::Update(dt);
+
+	state_->Update(*this, dt);
+
+	vy += MARIO_GRAVITY * dt;
+
+	if (vy > MARIO_VY_DROP)
+		isGrounded = false;
+
+	PowerControl();
+
+	HandleCollision(coObjects);
+}
+
+void CMario::PowerReset()
+{
+	isPower = false;
+	powerStartTime = 0;
+	PowerDown();
+}
+
+void CMario::KickShell()
+{
+	isHandleShell = false;
+	koopaShell->KickByMario(this);
+	state_ = MarioState::kick.GetInstance();
+	MarioState::kick.GetInstance()->StartKick();
+}
+
+int CalculatePowerTimePassed(int time)
+{
+	return (GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
+}
+
+void CMario::PowerControl()
+{
+	int timePassed;
+	if (isPower && powerStartTime > 0)
+	{
+		timePassed = CalculatePowerTimePassed(powerStartTime);
+		if (timePassed < MARIO_MAX_POWER)
+		{
+			if (power == 0)
+				power = timePassed;
+			else if (savePower == 0)
+			{
+				savePower = power;
+			}
+
+			if (timePassed <= MARIO_MAX_POWER - savePower) {
+				power = savePower + timePassed;
+			}
+		}
+	}
+	else if (powerEndTime > 0)
+	{
+		timePassed = CalculatePowerTimePassed(powerEndTime);
+		if (power == 0)
+			powerEndTime = 0;
+		else if (savePower == 0)
+		{
+			savePower = power;
+		}
+
+		if (savePower - timePassed >= 0) {
+			power = savePower - timePassed;
+		}
+	}
+
+	HUD::GetInstance()->power->SetPower(this->GetPower());
+}
+
+void CMario::LevelUp()
+{
+	SetLevel(level + 1);
+	state_ = MarioState::levelUp.GetInstance();
+	MarioState::levelUp.GetInstance()->StartLevelUp();
+}
+
+void CMario::HandleInput(Input input)
+{
+	state_->HandleInput(*this, input);
+
+	state_->Enter(*this);
+}
+
+CMario::CMario() : CGameObject()
+{
+	level = MARIO_LEVEL_SMALL;
+	state_ = MarioState::standing.GetInstance();
+	start_x = x;
+	start_y = y;
+	nx = 1;
+	pool = FireBallPool::GetInstance();
 }
 
 void CMario::Render()

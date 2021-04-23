@@ -62,17 +62,8 @@ void CKoopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 		b = y + KOOPA_BBOX_HEIGHT_DIE;
 }
 
-void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt, coObjects);
-
-	if (isHandled)
-		SetPositionHandled();
-	else
-	{
-		vy += KOOPA_GRAVITY * dt;
-	}
-
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -93,7 +84,6 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		x += min_tx * dx + nx * 0.4f;
-		//if (ny != -1) // handle case obj fall down
 		y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
@@ -153,6 +143,20 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	CGameObject::Update(dt, coObjects);
+
+	if (isHandled)
+		SetPositionHandled();
+	else
+	{
+		vy += KOOPA_GRAVITY * dt;
+	}
+
+	HandleCollision(coObjects);
 }
 
 void CKoopa::DowngradeLevel()

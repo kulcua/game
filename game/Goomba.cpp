@@ -20,18 +20,8 @@ void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& botto
 		bottom = y + GOOMBA_BBOX_HEIGHT;
 }
 
-void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CGoomba::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt, coObjects);
-
-	if (GetTickCount64() - dieTimeStart > GOOMBA_DIE_TIME && dieTimeStart > 0)
-	{
-		dieTimeStart = 0;
-		die = true;
-	}
-
-	vy += GOOMBA_GRAVITY * dt;
-
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -68,6 +58,21 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	CGameObject::Update(dt, coObjects);
+
+	if (GetTickCount64() - dieTimeStart > GOOMBA_DIE_TIME && dieTimeStart > 0)
+	{
+		dieTimeStart = 0;
+		die = true;
+	}
+
+	vy += GOOMBA_GRAVITY * dt;
+
+	HandleCollision(coObjects);
 }
 
 void CGoomba::Render()
