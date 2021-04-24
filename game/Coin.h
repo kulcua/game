@@ -1,18 +1,16 @@
 #pragma once
-#include "Item.h"
+#include "GameObject.h"
+#define COIN_BBOX_WIDTH  48
+#define COIN_BBOX_HEIGHT 48
+#define COIN_ANI_ID 28
 
-#define COIN_ANI_ID 25
-#define COIN_JUMP_SPEED	0.5f
-#define COIN_TIME 700
-
-class Coin : public CItem
+class Coin : public CGameObject
 {
-	int jumpTimeStart;
+	void SetAnimation(int ani);
 public:
 	Coin();
-	void SetAnimation(int ani);
-	void StartJump() { jumpTimeStart = GetTickCount64(); }
-	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Render();
+	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
 

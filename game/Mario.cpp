@@ -20,6 +20,7 @@
 #include "KoopaBound.h"
 #include "EffectPool.h"
 #include "PowerUpItem.h"
+#include "Coin.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -183,6 +184,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				e->obj->die = true;
 				LevelUp();
+			}
+			else if (dynamic_cast<Coin*>(e->obj))
+			{
+				e->obj->die = true;
 			}
 		}
 	}

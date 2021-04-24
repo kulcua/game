@@ -76,7 +76,7 @@ void MarioFlyingState::Update(CMario& mario, DWORD dt)
 {
     mario.isGrounded = false;
 
-    if (mario.vy > 0)
+    if (mario.isPower == false)
     {
         mario.state_ = MarioState::dropping.GetInstance();
     }

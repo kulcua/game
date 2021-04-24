@@ -234,9 +234,6 @@
     <ClCompile Include="Item.cpp">
       <Filter>Brick\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Coin.cpp">
-      <Filter>Brick\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -248,6 +245,12 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinBrick.cpp">
+      <Filter>Brick\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -413,9 +416,6 @@
     <ClInclude Include="Item.h">
       <Filter>Brick\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Coin.h">
-      <Filter>Brick\Item</Filter>
-    </ClInclude>
     <ClInclude Include="PowerUpItem.h">
       <Filter>Brick\Item</Filter>
     </ClInclude>
@@ -424,6 +424,12 @@
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinBrick.h">
+      <Filter>Brick\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
