@@ -12,6 +12,7 @@
 #include "KoopaBound.h"
 #include "CoinBrick.h"
 #include "PowerUpItem.h"
+#include "BrickBlock.h"
 #include "Coin.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
@@ -54,6 +55,18 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
 			obj = new CBigBox(width, height);
+			obj->SetPosition(x, y);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("Brick") == 0)
+	{
+		while (element)
+		{
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			obj = new BrickBlock();
 			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();

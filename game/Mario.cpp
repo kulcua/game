@@ -20,6 +20,7 @@
 #include "KoopaBound.h"
 #include "EffectPool.h"
 #include "PowerUpItem.h"
+#include "BrickBlock.h"
 #include "Coin.h"
 
 CMario* CMario::__instance = NULL;
@@ -93,38 +94,28 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
-			else if (dynamic_cast<CGround*>(e->obj))
+			else if (dynamic_cast<CGround*>(e->obj)
+				|| dynamic_cast<CBigBox*>(e->obj)
+				|| dynamic_cast<CPipe*>(e->obj)
+				|| dynamic_cast<CBrick*>(e->obj)
+				|| dynamic_cast<BrickBlock*>(e->obj))
 			{
 				if (e->ny)
 				{
 					isGrounded = true;
 				}
 			}
-			else if (dynamic_cast<CPipe*>(e->obj))
-			{
-				if (e->ny < 0)
-				{
-					isGrounded = true;
-				}
-			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{
-				if (e->ny < 0)
+				if (e->nx < 0)
 				{
-					isGrounded = true;
-				}
-				else {
 					x += dx;
 				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				if (e->ny < 0)
-				{
-					isGrounded = true;
-				}
-				else if (brick->GetState() != BRICK_STATE_DISABLE)
+				if (brick->GetState() != BRICK_STATE_DISABLE)
 				{
 					if (e->ny > 0)
 					{

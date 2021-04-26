@@ -6,11 +6,12 @@
 #define EFFECT_ANI_ID	65
 #define EFFECT_ANI_FIREBALL_DESTROYED	0
 #define EFFECT_ANI_MARIO_TAIL_ATTACK	1
+#define EFFECT_ANI_DEBRIS_BRICK		2
 
 enum class EffectName {
 	fireballDestroy,
 	marioTailAttack,
-	brickDestroy
+	debrisBrick
 };
 
 class Effect : public CGameObject

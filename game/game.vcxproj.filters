@@ -252,6 +252,9 @@
     <ClCompile Include="CoinBrick.cpp">
       <Filter>Brick\Item</Filter>
     </ClCompile>
+    <ClCompile Include="BrickBlock.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -430,6 +433,9 @@
     </ClInclude>
     <ClInclude Include="CoinBrick.h">
       <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBlock.h">
+      <Filter>Brick</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
