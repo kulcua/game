@@ -14,6 +14,7 @@
 #include "PowerUpItem.h"
 #include "BrickBlock.h"
 #include "Coin.h"
+#include "GreenMushroom.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -89,6 +90,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			else if (typeName.compare("powerup") == 0) 
 			{
 				item = new PowerUpItem();
+			}
+			else if (typeName.compare("1upMushroom") == 0)
+			{
+				item = new GreenMushroom(y);
 			}
 			if (item != NULL)
 			{

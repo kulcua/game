@@ -119,6 +119,8 @@ public:
 	MarioState* state_;
 	FireBallPool* pool;
 
+	int life = 3;
+
 	void HandleInput(Input input);
 
 	bool isGrounded;
@@ -133,6 +135,7 @@ public:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();
+	void HUDControl();
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	int GetLevel() { return level; }

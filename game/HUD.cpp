@@ -25,7 +25,7 @@ HUD::HUD()
 void HUD::SetPosition(float x, float y)
 {
 	world->SetContent(1);
-	life->SetContent(4);
+	//life->SetContent(4);
 	point->SetContent(3979);
 	money->SetContent(15);
 	time->SetContent(300);

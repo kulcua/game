@@ -160,6 +160,7 @@
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="GreenMushroom.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="HUD.cpp" />
     <ClCompile Include="Item.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="FontManager.h" />
+    <ClInclude Include="GreenMushroom.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HUD.h" />
     <ClInclude Include="Item.h" />

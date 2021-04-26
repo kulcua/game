@@ -22,6 +22,7 @@
 #include "PowerUpItem.h"
 #include "BrickBlock.h"
 #include "Coin.h"
+#include "GreenMushroom.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -94,20 +95,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
-			else if (dynamic_cast<CGround*>(e->obj)
-				|| dynamic_cast<CBigBox*>(e->obj)
-				|| dynamic_cast<CPipe*>(e->obj)
-				|| dynamic_cast<CBrick*>(e->obj)
-				|| dynamic_cast<BrickBlock*>(e->obj))
-			{
-				if (e->ny)
-				{
-					isGrounded = true;
-				}
-			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{
-				if (e->nx < 0)
+				if (e->nx)
 				{
 					x += dx;
 				}
@@ -176,9 +166,26 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				e->obj->die = true;
 				LevelUp();
 			}
+			else if (dynamic_cast<GreenMushroom*>(e->obj))
+			{
+				e->obj->die = true;
+				life++;
+			}
 			else if (dynamic_cast<Coin*>(e->obj))
 			{
 				e->obj->die = true;
+			}
+
+			if (dynamic_cast<CGround*>(e->obj)
+				|| dynamic_cast<CBigBox*>(e->obj)
+				|| dynamic_cast<CPipe*>(e->obj)
+				|| dynamic_cast<CBrick*>(e->obj)
+				|| dynamic_cast<BrickBlock*>(e->obj))
+			{
+				if (e->ny)
+				{
+					isGrounded = true;
+				}
 			}
 		}
 	}
@@ -196,6 +203,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	PowerControl();
 
 	HandleCollision(coObjects);
+
+	HUDControl();
 }
 
 void CMario::PowerReset()
@@ -203,6 +212,12 @@ void CMario::PowerReset()
 	isPower = false;
 	powerStartTime = 0;
 	PowerDown();
+}
+
+void CMario::HUDControl()
+{
+	HUD::GetInstance()->power->SetPower(this->GetPower());
+	HUD::GetInstance()->life->SetContent(life);
 }
 
 void CMario::KickShell()
@@ -251,9 +266,7 @@ void CMario::PowerControl()
 		if (savePower - timePassed >= 0) {
 			power = savePower - timePassed;
 		}
-	}
-
-	HUD::GetInstance()->power->SetPower(this->GetPower());
+	}	
 }
 
 void CMario::LevelUp()

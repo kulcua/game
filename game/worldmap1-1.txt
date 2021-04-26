@@ -162,6 +162,9 @@
 					
 #LEAF					
 52001	528	361	589	413	40
+
+#GREEN_MUSHROOM					
+53001	856	361	907	413	40
 					
 #VENUS-red -- first sprite for shooting					
 #down					
@@ -449,6 +452,9 @@
 # ==== LEAF =========
 520	52001	100
 
+# ==== GREEN_MUSHROOM =========
+530	53001	100
+
 # ==== RED venus=========
 #down
 601	61001	100	61002	100
@@ -516,6 +522,9 @@
 #coin item
 28	502
 
+#GREEN_MUSHROOM
+29	530
+
 #RED PLANT
 60	601	602	603	604
 
@@ -549,7 +558,7 @@
 69	0	0	0
 
 # MARIO
-0	6000	1100	1
+0	2000	1100	1
 
 # --- HIDEN OBJECT ----
 # type	l	t	ani_set_id	r	b	scene_id

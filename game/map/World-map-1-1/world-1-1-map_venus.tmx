@@ -431,7 +431,7 @@
   <object id="104" name="powerup" type="1" x="1976.55" y="1154.01"/>
   <object id="105" name="coin" type="1" x="2120.61" y="1058.91"/>
   <object id="106" name="powerup" type="1" x="4381.21" y="1109.55"/>
-  <object id="213" name="1upMushroom" type="1" x="4283" y="395.333"/>
+  <object id="213" name="1upMushroom" type="1" x="4282" y="385.333"/>
  </objectgroup>
  <objectgroup id="15" name="Coin">
   <object id="59" x="3227.17" y="970.833"/>
