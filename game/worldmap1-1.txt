@@ -6,6 +6,7 @@
 30	textures\fireball.png	255	255	255
 40	textures\misc.png	225	255	255
 50	textures\effect.png	0	0	0
+60	textures\brick-debris.png	255	255	255
 
 # id	left	top	right	bottom	texture_id
 [SPRITES]
@@ -137,10 +138,10 @@
 40004	645	563	693	613	40
 40005	705	563	753	613	40
 #brick-debris					
-41001	461	1052	496	1093	40
-41002	497	1052	538	1093	40
-41003	539	1052	574	1093	40
-41004	575	1052	616	1093	40
+41001	0	0	21	23	60
+41002	21	0	46	23	60
+41003	46	0	68	23	60
+41004	68	0	93	23	60
 #brickblock					
 42001	821	563	871	613	40
 42002	878	563	928	613	40
@@ -505,7 +506,7 @@
 31	311	312	313	314
 
 # QUESTION BRICK 
-22	401	402
+22	401	420	402
 
 #block brick
 23	420
@@ -558,7 +559,7 @@
 69	0	0	0
 
 # MARIO
-0	2000	1100	1
+0	6000	1100	1
 
 # --- HIDEN OBJECT ----
 # type	l	t	ani_set_id	r	b	scene_id

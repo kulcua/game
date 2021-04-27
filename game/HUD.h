@@ -38,6 +38,7 @@ public:
 	void SetSpriteId(int spriteId) { this->spriteId = spriteId; }
 	void Update();
 	void Render();
+	void RenderBoundingBox();
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };
 

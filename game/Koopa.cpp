@@ -6,6 +6,8 @@
 #include "Goomba.h"
 #include "Mario.h"
 #include "KoopaBound.h"
+#include "BrickBlock.h"
+#include "EffectPool.h"
 
 CKoopa::CKoopa()
 {
@@ -125,6 +127,15 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					isOnGround = true;
 				if (e->nx)
 					vx = -vx;
+			}
+			else if (dynamic_cast<BrickBlock*>(e->obj) && state == KOOPA_STATE_BALL)
+			{
+				if (e->nx != 0)
+				{
+					EffectPool::GetInstance()->CreateDebris(e->obj->x, e->obj->y);
+					e->obj->die = true;
+					vx = e->nx * KOOPA_BALL_SPEED;
+				}
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj))
 			{

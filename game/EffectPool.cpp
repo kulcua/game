@@ -34,6 +34,22 @@ Effect* EffectPool::Create() {
     else return NULL;
 }
 
+void EffectPool::CreateDebris(float x, float y)
+{
+    Effect* e1 = EffectPool::GetInstance()->Create();
+    Effect* e2 = EffectPool::GetInstance()->Create();
+    Effect* e3 = EffectPool::GetInstance()->Create();
+    Effect* e4 = EffectPool::GetInstance()->Create();
+
+    if (e1 != NULL && e2 != NULL && e3 != NULL && e4 != NULL)
+    {
+        e1->InitDebris(1, x, y);
+        e2->InitDebris(2, x, y);
+        e3->InitDebris(3, x, y);
+        e4->InitDebris(4, x, y);
+    }
+}
+
 void EffectPool::GetBackToPool()
 {
     for (int i = 0; i < POOL_SIZE; i++)

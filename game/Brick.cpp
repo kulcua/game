@@ -1,11 +1,12 @@
 #include "Brick.h"
 #include "Utils.h"
 
-CBrick::CBrick(float x, float y)
+CBrick::CBrick(int type, float x, float y)
 {
 	this->x = x;
 	this->y = y;
 	start_y = y;
+	this->type = type;
 	SetAnimation(BRICK_ANI_ID);
 }
 
@@ -41,8 +42,10 @@ void CBrick::Render()
 	int ani;
 	if (state == BRICK_STATE_DISABLE)
 		ani = BRICK_ANI_DISABLE;	
-	else
-		ani = BRICK_ANI_ENABLE;
+	else if (type == 1)
+		ani = BRICK_ANI_QUESTION;
+	else if (type == 2)
+		ani = BRICK_ANI_BLOCK;
 	animation_set->at(ani)->Render(x, y, NULL);
 }
 

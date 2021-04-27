@@ -76,12 +76,14 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	else if (name.compare("QuestionBlocks") == 0)
 	{
 		string typeName;
+		int type;
 		while (element)
 		{
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 			typeName = element->Attribute("name");
-			CBrick* br = new CBrick(x, y);
+			element->QueryIntAttribute("type", &type);
+			CBrick* br = new CBrick(type, x, y);
 			CItem* item = NULL;
 			if (typeName.compare("coin") == 0)
 			{

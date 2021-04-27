@@ -7,21 +7,21 @@
 
 #define BRICK_STATE_ENABLE 100
 #define BRICK_STATE_DISABLE	200
-
-#define BRICK_ANI_ENABLE	0
-#define BRICK_ANI_DISABLE	1
-
 #define BRICK_JUMP_DEFLECT_Y 0.8f
 #define BRICK_RETURN_START_POS_VY 0.05f
 #define BRICK_ANI_ID 22
+#define BRICK_ANI_QUESTION 0
+#define BRICK_ANI_BLOCK 1
+#define BRICK_ANI_DISABLE	2
 
 class CBrick: public CGameObject
 {
 	void SetAnimation(int ani);
 	CItem* item;
+	int type;
 public:
 	float start_y;
-	CBrick(float x, float y);
+	CBrick(int type, float x, float y);
 
 	void SetItem(CItem* item) { this->item = item; }
 	void SetState(int state);

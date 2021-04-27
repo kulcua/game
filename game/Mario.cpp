@@ -16,7 +16,6 @@
 #include "MarioDroppingState.h"
 #include "FireBallPool.h"
 #include "CameraBound.h"
-//#include "HUD.h"
 #include "KoopaBound.h"
 #include "EffectPool.h"
 #include "PowerUpItem.h"
@@ -175,6 +174,14 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<Coin*>(e->obj))
 			{
 				e->obj->die = true;
+			}
+			else if (dynamic_cast<BrickBlock*>(e->obj))
+			{
+				if (e->nx != 0 && isAttack)
+				{
+					EffectPool::GetInstance()->CreateDebris(e->obj->x, e->obj->y);
+					e->obj->die = true;
+				}
 			}
 
 			if (dynamic_cast<CGround*>(e->obj)
