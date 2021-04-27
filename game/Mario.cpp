@@ -16,7 +16,7 @@
 #include "MarioDroppingState.h"
 #include "FireBallPool.h"
 #include "CameraBound.h"
-#include "HUD.h"
+//#include "HUD.h"
 #include "KoopaBound.h"
 #include "EffectPool.h"
 #include "PowerUpItem.h"
@@ -110,6 +110,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny > 0)
 					{
 						brick->SetState(BRICK_STATE_DISABLE);
+						isHighJump = false;
 					}
 				}
 			}
@@ -203,8 +204,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	PowerControl();
 
 	HandleCollision(coObjects);
-
-	HUDControl();
 }
 
 void CMario::PowerReset()
@@ -212,12 +211,6 @@ void CMario::PowerReset()
 	isPower = false;
 	powerStartTime = 0;
 	PowerDown();
-}
-
-void CMario::HUDControl()
-{
-	HUD::GetInstance()->power->SetPower(this->GetPower());
-	HUD::GetInstance()->life->SetContent(life);
 }
 
 void CMario::KickShell()

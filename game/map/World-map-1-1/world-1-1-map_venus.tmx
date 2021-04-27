@@ -378,7 +378,7 @@
   <object id="10" x="4944.5" y="1104" width="47.5" height="146"/>
   <object id="11" x="4990" y="1151.75" width="49.5" height="50.25"/>
   <object id="12" x="5036.5" y="1200" width="51.5" height="46"/>
-  <object id="13" x="4944" y="1251.33" width="1718.67" height="44.6667"/>
+  <object id="13" x="4944" y="1251.33" width="1726" height="44.6667"/>
   <object id="14" x="5330" y="1150" width="94" height="100"/>
   <object id="15" x="5520" y="1102" width="98" height="150"/>
   <object id="16" x="6718" y="1250.67" width="1732" height="47.3333"/>
@@ -403,7 +403,7 @@
  <objectgroup id="14" name="Ghost">
   <object id="28" x="720.523" y="1104.97" width="142.597" height="144.447"/>
   <object id="29" x="817.891" y="1008.86" width="140.712" height="239.742"/>
-  <object id="30" x="1200.45" y="1104.34" width="239.337" height="143.113"/>
+  <object id="30" x="1200.45" y="1107.01" width="239.337" height="140.446"/>
   <object id="31" x="1392.68" y="1008.23" width="190.967" height="239.113"/>
   <object id="32" x="1537.16" y="912.118" width="189.71" height="335.742"/>
   <object id="33" x="1537.16" y="1152.71" width="285.194" height="95.0366"/>
@@ -427,7 +427,7 @@
   <object id="49" name="coin" type="1" x="586.667" y="1065.33"/>
   <object id="50" name="coin" type="1" x="683.333" y="920.667"/>
   <object id="51" name="powerup" type="1" x="730.667" y="920.667"/>
-  <object id="53" name="coin" type="1" x="1258.67" y="969.333"/>
+  <object id="53" name="coin" type="1" x="1257.34" y="964"/>
   <object id="104" name="powerup" type="1" x="1976.55" y="1154.01"/>
   <object id="105" name="coin" type="1" x="2120.61" y="1058.91"/>
   <object id="106" name="powerup" type="1" x="4381.21" y="1109.55"/>

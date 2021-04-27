@@ -8,7 +8,7 @@
 #define ITEM_GRAVITY	0.001f
 
 #define ITEM_STATE_RED_MUSHROOM	26
-#define ITEM_RED_MR_VY 0.03f
+#define ITEM_RED_MR_VY 0.05f
 #define ITEM_RED_MR_VX 0.1f
 
 #define ITEM_STATE_LEAF	27

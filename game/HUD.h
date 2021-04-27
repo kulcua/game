@@ -1,6 +1,8 @@
 #pragma once
 #include "Utils.h"
 #include "Text.h"
+#include "GameObject.h"
+#include "Mario.h"
 
 #define HUD_HEIGHT 155
 #define SCREEN_WIDTH 800
@@ -13,7 +15,7 @@
 #define HUD_ALIGN_TOP 21
 #define HUD_ALIGN_BOTTOM 46
 
-class HUD
+class HUD : public CGameObject
 {
 	static HUD* __instance;
 	float x, y;
@@ -21,6 +23,7 @@ class HUD
 	float xWorld, xM;
 	float xPower, xPoint;
 	float xMoney, xTime;
+	CMario* mario;
 public:
 	Text* world;
 	Text* life;
@@ -32,10 +35,9 @@ public:
 	static HUD* GetInstance();
 	HUD();
 	void SetPosition(float x, float y);
-	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void SetSpriteId(int spriteId) { this->spriteId = spriteId; }
+	void Update();
 	void Render();
-	void RenderBoundingBox();
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };
 

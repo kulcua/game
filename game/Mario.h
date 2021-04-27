@@ -135,7 +135,6 @@ public:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();
-	void HUDControl();
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	int GetLevel() { return level; }
@@ -152,6 +151,8 @@ public:
 	void Reset();
 	void LevelUp();
 	void KickShell();
+
+	int GetLife() { return life; }
 
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

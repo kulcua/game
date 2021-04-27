@@ -300,6 +300,7 @@ void CPlayScene::Update(DWORD dt)
 	}
 	FireBallPool::GetInstance()->GetBackToPool();
 	EffectPool::GetInstance()->GetBackToPool();
+	HUD::GetInstance()->Update();
 
 	//DebugOut(L"size coo: %d\n", coObject.size());
 	//DebugOut(L"size: %d\n", objects.size());

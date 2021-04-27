@@ -20,16 +20,23 @@ HUD::HUD()
 	power = new TextPowerSign(TEXT_NUM_POWER);
 	money = new Text(TEXT_NUM_MONEY);
 	time = new Text(TEXT_NUM_TIME);
+
+	mario = CMario::GetInstance();
+}
+
+void HUD::Update()
+{
+	life->SetContent(mario->GetLife());
+	power->SetPower(mario->GetPower());
+
+	world->SetContent(1);
+	point->SetContent(3979);
+	money->SetContent(15);
+	time->SetContent(300);
 }
 
 void HUD::SetPosition(float x, float y)
 {
-	world->SetContent(1);
-	//life->SetContent(4);
-	point->SetContent(3979);
-	money->SetContent(15);
-	time->SetContent(300);
-
 	x = floor(x);
 	y = floor(y);
 	this->x = x;
@@ -56,24 +63,6 @@ void HUD::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = y;
 	r = x + SCREEN_WIDTH;
 	b = y + HUD_HEIGHT;
-}
-
-void HUD::RenderBoundingBox()
-{
-	D3DXVECTOR3 p(x, y, 0);
-	RECT rect;
-
-	LPDIRECT3DTEXTURE9 bbox = CTextures::GetInstance()->Get(ID_TEX_BBOX);
-
-	float l, t, r, b;
-
-	GetBoundingBox(l, t, r, b);
-	rect.left = 0;
-	rect.top = 0;
-	rect.right = (int)r - (int)l;
-	rect.bottom = (int)b - (int)t;
-
-	CGame::GetInstance()->Draw(x, y, NULL, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
 }
 
 void HUD::Render()
