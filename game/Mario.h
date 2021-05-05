@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "Utils.h"
-
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
 #define MARIO_JUMP_SPEED_Y		0.5f
@@ -13,9 +12,7 @@
 #define MARIO_VY_DROP			0.07f
 #define MARIO_DIE_DEFLECT_SPEED	 1.0f
 #define MARIO_ACCELERATION		0.001f
-
 #define MARIO_STATE_DIE				999
-
 #define MARIO_ANI_SMALL_IDLE		0 
 #define MARIO_ANI_SMALL_WALK		1
 #define MARIO_ANI_SMALL_JUMP		2
@@ -26,7 +23,6 @@
 #define MARIO_ANI_SMALL_KICK		7
 #define MARIO_ANI_SMALL_DROP		8
 #define MARIO_ANI_DIE				9 
-
 #define MARIO_ANI_BIG_IDLE			10
 #define MARIO_ANI_BIG_WALK			11
 #define MARIO_ANI_BIG_SIT			12
@@ -37,7 +33,6 @@
 #define MARIO_ANI_BIG_STOP			17
 #define MARIO_ANI_BIG_KICK			18
 #define MARIO_ANI_BIG_DROP			19
-
 #define MARIO_ANI_RACCOON_IDLE		20
 #define MARIO_ANI_RACCOON_WALK		21
 #define MARIO_ANI_RACCOON_SIT		22
@@ -51,10 +46,8 @@
 #define MARIO_ANI_RACCOON_KICK		30
 #define MARIO_ANI_RACCOON_DROP		31
 #define MARIO_ANI_RACCOON_DROP_FLY	32
-
 #define MARIO_ANI_ITEM_SMALL_TO_BIG			33
 #define MARIO_ANI_ITEM_BIG_TO_RACOON		34
-
 #define MARIO_ANI_SMALL_HANDLESHELL_IDLE			35
 #define MARIO_ANI_SMALL_HANDLESHELL_RUN				36
 #define MARIO_ANI_SMALL_HANDLESHELL_JUMP_DROP		37
@@ -64,7 +57,6 @@
 #define MARIO_ANI_RACCOON_HANDLESHELL_IDLE			41
 #define MARIO_ANI_RACCOON_HANDLESHELL_RUN			42
 #define MARIO_ANI_RACCOON_HANDLESHELL_JUMP_FLY_DROP 43
-
 #define MARIO_ANI_FIRE_IDLE			44
 #define MARIO_ANI_FIRE_WALK			45
 #define MARIO_ANI_FIRE_SIT			46
@@ -80,57 +72,40 @@
 #define MARIO_ANI_FIRE_HANDLESHELL_JUMP_DROP		56
 #define MARIO_ANI_FIRE_SHOOT_FIREBALL_IDLE				57
 #define MARIO_ANI_FIRE_SHOOT_FIREBALL_JUMP				58
-
-#define MARIO_ANI_FX_TAIL_ATTACK	59
-
-#define MARIO_ANI_RACCOON_ROLL	60
-
+#define MARIO_ANI_RACCOON_ROLL	59
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
 #define	MARIO_LEVEL_RACCOON	3
 #define	MARIO_LEVEL_FIRE	4
-
-#define MARIO_LEVEL_MIN	1
-#define MARIO_LEVEL_MAX 3
-
 #define MARIO_SIT_BBOX_HEIGHT 55
-
-#define MARIO_RACCOON_BBOX_WIDTH  63
+#define MARIO_RACCOON_BBOX_WIDTH  75
 #define MARIO_RACCOON_BBOX_HEIGHT 86
-
 #define MARIO_BIG_BBOX_WIDTH  42
 #define MARIO_BIG_BBOX_HEIGHT 81
-
 #define MARIO_SMALL_BBOX_WIDTH  40
 #define MARIO_SMALL_BBOX_HEIGHT 48
-
 #define MARIO_BBOX_TAIL_HIT_RIGHT 30
 #define MARIO_BBOX_TAIL_HIT_LEFT 5
-
 #define MARIO_UNTOUCHABLE_TIME 1500
 #define MARIO_LEVEL_UP_TIME	1100
 #define MARIO_KICK_TIME	500
 #define MARIO_HIGH_JUMP_TIME 200
 #define MARIO_SPIN_TIME	200
-
 #define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
 
 class CMario : public CGameObject
 {
 	friend class MarioState;
-	friend class CKoopas;
+	friend class CKoopa;
 	friend class FireBallPool;
 
-	CKoopas* koopaShell;
+	CKoopa* koopaShell;
 	int level;
 	int ani;
 
 	int power;
 	int savePower;
-
-	int untouchable;
-	DWORD untouchable_start;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
@@ -143,6 +118,9 @@ public:
 
 	MarioState* state_;
 	FireBallPool* pool;
+
+	int life = 3;
+	bool switchItem;
 
 	void HandleInput(Input input);
 
@@ -158,7 +136,6 @@ public:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();
-
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	int GetLevel() { return level; }
@@ -176,5 +153,8 @@ public:
 	void LevelUp();
 	void KickShell();
 
+	int GetLife() { return life; }
+
+	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

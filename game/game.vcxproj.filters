@@ -49,12 +49,27 @@
     <Filter Include="HUD">
       <UniqueIdentifier>{b6a33fe3-d992-4235-8c20-c56ae9c45cb1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enermies\Plant">
+      <UniqueIdentifier>{e75ee2f6-f407-4e9d-a1f9-77a61ccafd2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enermies\Goomba">
+      <UniqueIdentifier>{a6e9ecc0-e20f-499c-81ea-848c60ba4539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enermies\Koopa">
+      <UniqueIdentifier>{01bfef41-b727-4774-84b6-a3bb563dba4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Brick">
+      <UniqueIdentifier>{ce44b638-cb53-451c-8fc2-dacc8d6bd9de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Brick\Item">
+      <UniqueIdentifier>{461116ba-9a7a-4902-b7cb-d92876739436}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{ecb58eab-d89c-4c49-96c6-f46f7b391d80}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sprites.cpp">
@@ -78,16 +93,10 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Mario.cpp">
       <Filter>Mario</Filter>
     </ClCompile>
     <ClCompile Include="BigBox.cpp">
-      <Filter>Mics</Filter>
-    </ClCompile>
-    <ClCompile Include="Brick.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
@@ -98,15 +107,6 @@
     </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Mics</Filter>
-    </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Enermies</Filter>
-    </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Enermies</Filter>
-    </ClCompile>
-    <ClCompile Include="Plant.cpp">
-      <Filter>Enermies</Filter>
     </ClCompile>
     <ClCompile Include="MarioState.cpp">
       <Filter>Mario\MarioState</Filter>
@@ -204,6 +204,63 @@
     <ClCompile Include="Text.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Enermies\Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="VenusFireTrap.cpp">
+      <Filter>Enermies\Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="PiranhaPlant.cpp">
+      <Filter>Enermies\Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Enermies\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaGoomba.cpp">
+      <Filter>Enermies\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaKoopa.cpp">
+      <Filter>Enermies\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="KoopaBound.cpp">
+      <Filter>Enermies\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopa.cpp">
+      <Filter>Enermies\Koopa</Filter>
+    </ClCompile>
+    <ClCompile Include="Brick.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerUpItem.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectPool.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinBrick.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickBlock.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
+    <ClCompile Include="GreenMushroom.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchItem.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -233,9 +290,6 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Mario.h">
       <Filter>Mario</Filter>
     </ClInclude>
@@ -243,9 +297,6 @@
       <Filter>Mario\MarioState</Filter>
     </ClInclude>
     <ClInclude Include="BigBox.h">
-      <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
@@ -256,15 +307,6 @@
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Enermies</Filter>
-    </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Enermies</Filter>
-    </ClInclude>
-    <ClInclude Include="Plant.h">
-      <Filter>Enermies</Filter>
     </ClInclude>
     <ClInclude Include="MarioDuckingState.h">
       <Filter>Mario\MarioState\OnGroundState</Filter>
@@ -352,6 +394,60 @@
     </ClInclude>
     <ClInclude Include="Text.h">
       <Filter>HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Plant.h">
+      <Filter>Enermies\Plant</Filter>
+    </ClInclude>
+    <ClInclude Include="VenusFireTrap.h">
+      <Filter>Enermies\Plant</Filter>
+    </ClInclude>
+    <ClInclude Include="PiranhaPlant.h">
+      <Filter>Enermies\Plant</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>Enermies\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaGoomba.h">
+      <Filter>Enermies\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaKoopa.h">
+      <Filter>Enermies\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopaBound.h">
+      <Filter>Enermies\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopa.h">
+      <Filter>Enermies\Koopa</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerUpItem.h">
+      <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectPool.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinBrick.h">
+      <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickBlock.h">
+      <Filter>Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="GreenMushroom.h">
+      <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchItem.h">
+      <Filter>Brick\Item</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

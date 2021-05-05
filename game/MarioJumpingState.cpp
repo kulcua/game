@@ -115,6 +115,8 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
+    mario.isGrounded = false;
+
     if (mario.isHighJump)
     {
         if (GetTickCount64() - jumpStartTime > MARIO_HIGH_JUMP_TIME)
@@ -127,7 +129,7 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
             mario.vy = -MARIO_JUMP_SPEED_Y;
         }   
     }
-    else if (mario.vy > 0 && mario.GetPower() < 6)
+    else if (mario.vy > 0)
     {
          mario.state_ = MarioState::dropping.GetInstance();
     }

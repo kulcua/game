@@ -74,7 +74,9 @@ void MarioFlyingState::GetBoundingBox(CMario& mario, float& left, float& top, fl
 
 void MarioFlyingState::Update(CMario& mario, DWORD dt)
 {
-    if (mario.vy > 0)
+    mario.isGrounded = false;
+
+    if (mario.isPower == false)
     {
         mario.state_ = MarioState::dropping.GetInstance();
     }

@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "Plant.h"
+#include "VenusFireTrap.h"
 #include "Mario.h"
 
 #define FIREBALL_WIDTH 25
@@ -8,8 +8,6 @@
 #define FIREBALL_SPEED 0.1f
 
 #define FIREBALL_ANI_ID 62
-#define FIREBALL_ANI_BALL	0
-#define FIREBALL_ANI_DESTROYED	1
 #define FIREBALL_CHECK_POS_SHOOT_X 72
 #define FIREBALL_CHECK_X 150
 #define FIREBALL_CHECK_Y 120
@@ -23,21 +21,17 @@ class CFireBall : public CGameObject
 	friend class FireBallPool;
 	bool isForPlant;
 
-	bool isDestroyed;
 	DWORD destroyTimeStart;
 
-	void StartDestroy() { isDestroyed = true; destroyTimeStart = GetTickCount64(); }
-	
+	void StartDestroy();
+
 	union
 	{
-		// State when it's in use.
 		struct
 		{
 			CMario* mario;
-			CPlant* plant;
+			VenusFireTrap* venus;
 		} live;
-
-		// State when it's available.
 		CFireBall* next;
 	} state_;
 
@@ -54,7 +48,7 @@ public:
 	CFireBall* GetNext() const { return state_.next; }
 	void SetNext(CFireBall* next) { state_.next = next; }
 
-	void InitForPlant(CPlant* plant);
+	void InitForPlant(VenusFireTrap* venus);
 	void InitForMario();
 
 	bool GetBackToPool();

@@ -4,7 +4,8 @@
 #include "BigBox.h"
 #include "Camera.h"
 #include "Goomba.h"
-#include "Koopas.h"
+#include "Koopa.h"
+#include "EffectPool.h"
 
 CFireBall::CFireBall()
 {
@@ -12,12 +13,12 @@ CFireBall::CFireBall()
 	die = true;
 }
 
-void CFireBall::InitForPlant(CPlant* plant) {
+void CFireBall::InitForPlant(VenusFireTrap* venus) {
   	this->state_.live.mario = CMario::GetInstance();
-	this->state_.live.plant = plant;
+	this->state_.live.venus = venus;
 	die = false;
 	inUse = true;
-	SetPosition(plant->x, plant->y);
+	SetPosition(venus->x, venus->y);
 	isForPlant = true;
 }
 
@@ -90,11 +91,13 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					vy = -FIREBALL_DEFLECT_Y;
 			}
 			else if (dynamic_cast<CGoomba*>(e->obj)
-				|| dynamic_cast<CKoopas*>(e->obj))
+				|| dynamic_cast<CKoopa*>(e->obj))
 			{
 				e->obj->die = true;
 				die = true;
-				StartDestroy();
+				Effect* effect = EffectPool::GetInstance()->Create();
+				if (effect != NULL)
+					effect->Init(EffectName::fireballDestroy, x, y);
 			}
 			else
 			{
@@ -104,7 +107,9 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				else {
 					die = true;
-					StartDestroy();
+					Effect* effect = EffectPool::GetInstance()->Create();
+					if (effect != NULL)
+						effect->Init(EffectName::fireballDestroy, x, y);
 				}
 			}
 		}
@@ -119,13 +124,13 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float x_mario, y_mario, x_plant, y_plant;
 
 	state_.live.mario->GetPosition(x_mario, y_mario);
-	state_.live.plant->GetPosition(x_plant, y_plant);
+	state_.live.venus->GetPosition(x_plant, y_plant);
 
-	if (state_.live.plant->createFireball)
+	if (state_.live.venus->createFireball)
 	{
-		nx = state_.live.plant->nx;
+		nx = state_.live.venus->nx;
 
-		if (state_.live.plant->isUp)
+		if (state_.live.venus->isUp)
 			vy = -FIREBALL_SPEED;
 		else
 			vy = FIREBALL_SPEED;
@@ -135,39 +140,30 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else
 			vx = FIREBALL_SPEED * nx * 2;
 
-		state_.live.plant->createFireball = false;
+		state_.live.venus->createFireball = false;
 	}
 }
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
-	if (isDestroyed && GetTickCount64() - destroyTimeStart > FIREBALL_DESTROYED_TIME)
+	CGameObject::Update(dt, coObjects);
+
+	if (isForPlant)
 	{
-		destroyTimeStart = 0;
-		isDestroyed = false;
+		UpdateForPlant(dt, coObjects);
+	}
+	else
+	{
+		UpdateForMario(dt, coObjects);
 	}
 
-	if (die == false)
+	for (int i = 0; i < coObjects->size(); i++)
 	{
-		CGameObject::Update(dt, coObjects);
-
-		if (isForPlant)
+		if (dynamic_cast<CCamera*>(coObjects->at(i)))
 		{
-			UpdateForPlant(dt, coObjects);
-		}
-		else
-		{
-			UpdateForMario(dt, coObjects);
-		}
-
-		for (int i = 0; i < coObjects->size(); i++)
-		{
-			if (dynamic_cast<CCamera*>(coObjects->at(i)))
+			if (AABB(coObjects->at(i)) == false)
 			{
-				if (AABB(coObjects->at(i)) == false)
-				{
-					die = true;
-				}
+				die = true;
 			}
 		}
 	}
@@ -175,14 +171,7 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBall::Render()
 {
-	if (inUse)
-	{
-		animation_set->at(FIREBALL_ANI_BALL)->Render(x, y, NULL);
-	}
-	else if (isDestroyed)
-	{
-		animation_set->at(FIREBALL_ANI_DESTROYED)->Render(x, y, NULL);
-	}
+	animation_set->at(0)->Render(x, y, NULL);
 }
 
 void CFireBall::GetBoundingBox(float& l, float& t, float& r, float& b)

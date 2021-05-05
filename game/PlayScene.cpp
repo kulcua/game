@@ -14,6 +14,7 @@
 #include "MarioKickState.h"
 #include "Camera.h"
 #include "HUD.h"
+#include "EffectPool.h"
 
 using namespace std;
 
@@ -37,7 +38,8 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define OBJECT_TYPE_GOOMBA	2
 #define OBJECT_TYPE_KOOPAS	3
 #define OBJECT_TYPE_PLANT	6
-#define OBJECT_TYPE_POOL_FIREBALL	69
+#define OBJECT_TYPE_POOL_FIREBALL	68
+#define OBJECT_TYPE_POOL_EFFECT	69
 #define OBJECT_TYPE_PORTAL	50
 
 #define MAX_SCENE_LINE 1024
@@ -125,7 +127,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() < 3) return; 
+	if (tokens.size() < 3) return;
 
 	int object_type = atoi(tokens[0].c_str());
 	float x = atof(tokens[1].c_str());
@@ -154,11 +156,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 		break;
 	case OBJECT_TYPE_POOL_FIREBALL:
-	{
 		FireBallPool::GetInstance()->InitPool(objects);
-		// need to fix load number of pool from file
-	}
-	break;
+		break;
+	case OBJECT_TYPE_POOL_EFFECT:
+		EffectPool::GetInstance()->InitPool(objects);
+		break;
 	/*case OBJECT_TYPE_PORTAL:
 	{
 		float r = atof(tokens[4].c_str());
@@ -281,22 +283,24 @@ void CPlayScene::Load()
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
+
 void CPlayScene::Update(DWORD dt)
 {
 	vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
 		if (objects[i]->die == false)
-		{
 			coObject.push_back(objects[i]);
-		}	
 	}
 
 	for (size_t i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt, &coObject);
+		if (objects[i]->die == false)
+			objects[i]->Update(dt, &coObject);
 	}
 	FireBallPool::GetInstance()->GetBackToPool();
+	EffectPool::GetInstance()->GetBackToPool();
+	HUD::GetInstance()->Update();
 
 	//DebugOut(L"size coo: %d\n", coObject.size());
 	//DebugOut(L"size: %d\n", objects.size());
@@ -311,7 +315,7 @@ void CPlayScene::Render()
 	{
 		if (dynamic_cast<CMario*>(objects[i]))
 			marioId = i;
-		else
+		else if (objects[i]->die == false)
 			objects[i]->Render();
 	}	
 	objects[marioId]->Render();

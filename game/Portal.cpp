@@ -7,7 +7,6 @@ CPortal::CPortal(float l, float t, float r, float b, int scene_id)
 	y = t;
 	width = r - l + 1;
 	height = b - t + 1;
-	nx = NULL; //gan bang null cho khoi chay lung tung
 }
 
 void CPortal::Render()
