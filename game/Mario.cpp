@@ -21,7 +21,9 @@
 #include "PowerUpItem.h"
 #include "BrickBlock.h"
 #include "Coin.h"
+#include "SwitchItem.h"
 #include "GreenMushroom.h"
+#include "Plant.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -82,16 +84,13 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
 				}
-				else if (e->nx != 0)
+				else if (e->nx != 0 && isAttack)
 				{
-					if (isAttack)
-					{
-						Effect* effect = EffectPool::GetInstance()->Create();
-						if (effect != NULL)
-							effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
-						goomba->vy = -GOOMBA_DEFLECT_SPEED;
-						goomba->SetState(GOOMBA_STATE_DIE);
-					}
+					Effect* effect = EffectPool::GetInstance()->Create();
+					if (effect != NULL)
+						effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
+					goomba->vy = -GOOMBA_DEFLECT_SPEED;
+					goomba->SetState(GOOMBA_STATE_DIE);
 				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
@@ -110,6 +109,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					{
 						brick->SetState(BRICK_STATE_DISABLE);
 						isHighJump = false;
+					}
+					else if (e->nx != 0 && isAttack)
+					{
+						brick->SetState(BRICK_STATE_DISABLE);
 					}
 				}
 			}
@@ -161,10 +164,32 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				x += dx;
 				y += dy;
 			}
+			else if (dynamic_cast<CPlant*>(e->obj))
+			{
+				if (e->nx != 0 && isAttack)
+				{
+					e->obj->die = true;
+					Effect* effect = EffectPool::GetInstance()->Create();
+					if (effect != NULL)
+						effect->Init(EffectName::fireballDestroy, e->obj->x, e->obj->y);
+				}	
+			}
 			else if (dynamic_cast<PowerUpItem*>(e->obj))
 			{
 				e->obj->die = true;
 				LevelUp();
+			}
+			else if (dynamic_cast<SwitchItem*>(e->obj))
+			{
+				SwitchItem* sItem = dynamic_cast<SwitchItem*>(e->obj);
+				if (sItem->GetState() != SWITCH_STATE_DISABLE)
+				{
+					sItem->SetState(SWITCH_STATE_DISABLE);
+					switchItem = true;
+				}
+				else {
+					y += dy;
+				}
 			}
 			else if (dynamic_cast<GreenMushroom*>(e->obj))
 			{
@@ -177,10 +202,17 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
-				if (e->nx != 0 && isAttack)
+				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
+				if (block->isCoin == false)
 				{
-					EffectPool::GetInstance()->CreateDebris(e->obj->x, e->obj->y);
-					e->obj->die = true;
+					if (e->nx != 0 && isAttack)
+					{
+						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
+						block->die = true;
+					}
+				}
+				else {
+					block->die = true;
 				}
 			}
 

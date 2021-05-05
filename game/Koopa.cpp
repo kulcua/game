@@ -128,13 +128,24 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->nx)
 					vx = -vx;
 			}
-			else if (dynamic_cast<BrickBlock*>(e->obj) && state == KOOPA_STATE_BALL)
+			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
-				if (e->nx != 0)
+				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
+				if (block->isCoin == false)
 				{
-					EffectPool::GetInstance()->CreateDebris(e->obj->x, e->obj->y);
-					e->obj->die = true;
-					vx = e->nx * KOOPA_BALL_SPEED;
+					if (e->nx != 0 && state == KOOPA_STATE_BALL)
+					{
+						EffectPool::GetInstance()->CreateDebris(e->obj->x, e->obj->y);
+						e->obj->die = true;
+						vx = e->nx * KOOPA_BALL_SPEED;
+					}
+				}
+				else {
+					if (e->nx != 0) {
+						vx = this->nx * KOOPA_WALKING_SPEED;
+						x += dx;
+					}
+					if (e->ny != 0) y += dy;
 				}
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj))

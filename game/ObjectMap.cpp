@@ -15,6 +15,7 @@
 #include "BrickBlock.h"
 #include "Coin.h"
 #include "GreenMushroom.h"
+#include "SwitchItem.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -85,6 +86,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryIntAttribute("type", &type);
 			CBrick* br = new CBrick(type, x, y);
 			CItem* item = NULL;
+			DebugOut(L"item %s\n", ToLPCWSTR(typeName));
 			if (typeName.compare("coin") == 0)
 			{
 				item = new CoinBrick();
@@ -96,6 +98,11 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			else if (typeName.compare("1upMushroom") == 0)
 			{
 				item = new GreenMushroom(y);
+			}
+			else if (typeName.compare("switch") == 0)
+			{
+				item = new SwitchItem();
+				y -= ITEM_BBOX_HEIGHT;
 			}
 			if (item != NULL)
 			{

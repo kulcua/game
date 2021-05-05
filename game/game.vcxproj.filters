@@ -258,6 +258,9 @@
     <ClCompile Include="GreenMushroom.cpp">
       <Filter>Brick\Item</Filter>
     </ClCompile>
+    <ClCompile Include="SwitchItem.cpp">
+      <Filter>Brick\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -441,6 +444,9 @@
       <Filter>Brick</Filter>
     </ClInclude>
     <ClInclude Include="GreenMushroom.h">
+      <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchItem.h">
       <Filter>Brick\Item</Filter>
     </ClInclude>
   </ItemGroup>

@@ -120,6 +120,7 @@ public:
 	FireBallPool* pool;
 
 	int life = 3;
+	bool switchItem;
 
 	void HandleInput(Input input);
 

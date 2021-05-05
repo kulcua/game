@@ -10,7 +10,7 @@
 #define EFFECT_DEBRIS_DELFECT_VY_12	0.8f
 #define EFFECT_DEBRIS_DELFECT_VY_34	0.5f
 #define EFFECT_DEBRIS_GRAVITY	0.0015f
-#define  EFFECT_DEBRIS_VX 0.2f
+#define EFFECT_DEBRIS_VX 0.2f
 
 enum class EffectName {
 	fireballDestroy,
