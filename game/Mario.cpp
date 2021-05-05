@@ -80,6 +80,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (goomba->GetState() != GOOMBA_STATE_DIE)
 					{
+						Effect* effect = EffectPool::GetInstance()->Create();
+						if (effect != NULL)
+							effect->Init(EffectName::p100, goomba->x, goomba->y);
 						goomba->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}

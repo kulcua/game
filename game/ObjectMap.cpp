@@ -16,6 +16,7 @@
 #include "Coin.h"
 #include "GreenMushroom.h"
 #include "SwitchItem.h"
+#include "Card.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -73,6 +74,15 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
+	}
+	else if (name.compare("Card") == 0)
+	{
+		element->QueryFloatAttribute("x", &x);
+		element->QueryFloatAttribute("y", &y);
+		obj = new Card();
+		obj->SetPosition(x, y);
+		objects.push_back(obj);
+		element = element->NextSiblingElement();
 	}
 	else if (name.compare("QuestionBlocks") == 0)
 	{

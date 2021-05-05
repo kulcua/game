@@ -7,15 +7,22 @@
 #define EFFECT_ANI_FIREBALL_DESTROYED	0
 #define EFFECT_ANI_MARIO_TAIL_ATTACK	1
 #define EFFECT_ANI_DEBRIS_BRICK		2
+#define EFFECT_ANI_POINT_100	3
+#define EFFECT_ANI_POINT_200		4
+#define EFFECT_ANI_POINT_1000		5
 #define EFFECT_DEBRIS_DELFECT_VY_12	0.8f
 #define EFFECT_DEBRIS_DELFECT_VY_34	0.5f
 #define EFFECT_DEBRIS_GRAVITY	0.0015f
 #define EFFECT_DEBRIS_VX 0.2f
+#define EFFECT_POIINT_DELFECT_VY	0.1f
 
 enum class EffectName {
 	fireballDestroy,
 	marioTailAttack,
-	debrisBrick
+	debrisBrick,
+	p100,
+	p200,
+	p1000
 };
 
 class Effect : public CGameObject

@@ -71,6 +71,12 @@ void Effect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 	}
+
+	if (name == EffectName::p100 || name == EffectName::p200 || name == EffectName::p1000)
+	{
+		vy = -EFFECT_POIINT_DELFECT_VY;
+		y += dy;
+	}
 }
 
 void Effect::Render()
@@ -82,6 +88,12 @@ void Effect::Render()
 		ani = EFFECT_ANI_MARIO_TAIL_ATTACK;
 	else if (name == EffectName::debrisBrick)
 		ani = EFFECT_ANI_DEBRIS_BRICK;
+	else if (name == EffectName::p100)
+		ani = EFFECT_ANI_POINT_100;
+	else if (name == EffectName::p200)
+		ani = EFFECT_ANI_POINT_200;
+	else if (name == EffectName::p1000)
+		ani = EFFECT_ANI_POINT_1000;
 	animation_set->at(ani)->Render(x, y, NULL);
 }
 
