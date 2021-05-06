@@ -228,6 +228,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 				{
 					isGrounded = true;
+					state_ = MarioState::standing.GetInstance();
 				}
 			}
 		}
