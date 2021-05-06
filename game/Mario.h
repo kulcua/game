@@ -107,6 +107,7 @@ class CMario : public CGameObject
 	int power;
 	int savePower;
 	int point = 0;
+	int money = 0;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
@@ -143,6 +144,10 @@ public:
 
 	void SetPoint(int point) { this->point += point; }
 	int GetPoint() { return point; }
+
+	void SetMoney(int money) { this->money += money; }
+	int GetMoney() { return money; }
+
 	void SetAnimation(int a) { ani = a; }
 	int GetAnimation() { return ani; }
 

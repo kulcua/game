@@ -26,12 +26,11 @@ HUD::HUD()
 
 void HUD::Update()
 {
+	world->SetContent(1);
 	life->SetContent(mario->GetLife());
 	power->SetPower(mario->GetPower());
-
-	world->SetContent(1);
 	point->SetContent(mario->GetPoint());
-	money->SetContent(15);
+	money->SetContent(mario->GetMoney());
 	time->SetContent(300);
 }
 

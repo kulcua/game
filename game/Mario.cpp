@@ -199,6 +199,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				e->obj->die = true;
 				SetPoint(100);
+				SetMoney(1);
 			}
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
@@ -213,6 +214,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				}
 				else {
 					SetPoint(100);
+					SetMoney(1);
 					block->die = true;
 				}
 			}

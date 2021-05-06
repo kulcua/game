@@ -32,9 +32,6 @@ enum class EffectPoint {
 class Effect : public CGameObject
 {
 	friend class EffectPool;
-	friend class CMario;
-
-	CMario* mario;
 	EffectName name;
 	EffectPoint ePoint;
 	Effect* next;

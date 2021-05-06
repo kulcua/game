@@ -6,7 +6,6 @@ Effect::Effect()
 {
 	SetAnimation();
 	die = true;
-	mario = CMario::GetInstance();
 }
 
 void Effect::Init(EffectName name, float x, float y)
@@ -28,7 +27,7 @@ void Effect::InitPoint(EffectPoint ePoint, float x, float y)
 		point = 200;
 	else if (ePoint == EffectPoint::p1000)
 		point = 1000;
-	mario->SetPoint(point);
+	CMario::GetInstance()->SetPoint(point);
 }
 
 void Effect::InitDebris(int pos, float x, float y)

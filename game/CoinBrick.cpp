@@ -1,5 +1,6 @@
 #include "CoinBrick.h"
 #include "EffectPool.h"
+#include "Mario.h"
 
 CoinBrick::CoinBrick()
 {
@@ -26,6 +27,7 @@ void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		jumpTimeStart = 0;
 		die = true;
+		CMario::GetInstance()->SetMoney(1);
 		Effect* effect = EffectPool::GetInstance()->Create();
 		if (effect != NULL)
 			effect->InitPoint(EffectPoint::p100, x, y);
