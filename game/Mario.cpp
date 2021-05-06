@@ -24,6 +24,7 @@
 #include "SwitchItem.h"
 #include "GreenMushroom.h"
 #include "Plant.h"
+#include "Card.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -96,9 +97,13 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{
 				if (e->nx)
-				{
 					x += dx;
-				}
+			}
+			else if (dynamic_cast<Card*>(e->obj))
+			{
+				Card* card = dynamic_cast<Card*>(e->obj);
+				if (e->ny)
+					card->GetCard();
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
