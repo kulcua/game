@@ -42,9 +42,9 @@ void CBrick::Render()
 	int ani;
 	if (state == BRICK_STATE_DISABLE)
 		ani = BRICK_ANI_DISABLE;	
-	else if (type == 1)
+	else if (type == BRICK_TYPE_QUESTION)
 		ani = BRICK_ANI_QUESTION;
-	else if (type == 2)
+	else if (type == BRICK_TYPE_BLOCK)
 		ani = BRICK_ANI_BLOCK;
 	animation_set->at(ani)->Render(x, y, NULL);
 }

@@ -20,6 +20,10 @@ enum class EffectName {
 	fireballDestroy,
 	marioTailAttack,
 	debrisBrick,
+	point
+};
+
+enum class EffectPoint {
 	p100,
 	p200,
 	p1000
@@ -28,13 +32,18 @@ enum class EffectName {
 class Effect : public CGameObject
 {
 	friend class EffectPool;
+	friend class CMario;
+
+	CMario* mario;
 	EffectName name;
+	EffectPoint ePoint;
 	Effect* next;
 	int animateTimeStart;
 public:
 	Effect();
 	bool inUse;
 	void Init(EffectName name, float x, float y);
+	void InitPoint(EffectPoint point, float x, float y);
 	void InitDebris(int position, float x, float y);
 	void SetAnimation();
 	void SetName(EffectName name) { this->name = name; }

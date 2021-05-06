@@ -30,7 +30,7 @@ void HUD::Update()
 	power->SetPower(mario->GetPower());
 
 	world->SetContent(1);
-	point->SetContent(3979);
+	point->SetContent(mario->GetPoint());
 	money->SetContent(15);
 	time->SetContent(300);
 }

@@ -106,6 +106,7 @@ class CMario : public CGameObject
 
 	int power;
 	int savePower;
+	int point = 0;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
@@ -140,6 +141,8 @@ public:
 	void SetLevel(int l) { level = l; }
 	int GetLevel() { return level; }
 
+	void SetPoint(int point) { this->point += point; }
+	int GetPoint() { return point; }
 	void SetAnimation(int a) { ani = a; }
 	int GetAnimation() { return ani; }
 
@@ -153,6 +156,7 @@ public:
 	void LevelUp();
 	void KickShell();
 
+	void SetLife(int life);
 	int GetLife() { return life; }
 
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);

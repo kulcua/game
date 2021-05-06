@@ -142,7 +142,10 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				}
 				else {
 					if (e->nx != 0) {
-						vx = this->nx * KOOPA_WALKING_SPEED;
+						if (state == KOOPA_LEVEL_WALK)
+							vx = this->nx * KOOPA_WALKING_SPEED;
+						else if (state == KOOPA_LEVEL_BALL)
+							vx = this->nx * KOOPA_BALL_SPEED;
 						x += dx;
 					}
 					if (e->ny != 0) y += dy;
@@ -188,7 +191,12 @@ void CKoopa::DowngradeLevel()
 	if (level == KOOPA_LEVEL_BALL)
 		SetState(KOOPA_STATE_BALL);
 	else if (level == KOOPA_LEVEL_WALK)
+	{
+		Effect* effect = EffectPool::GetInstance()->Create();
+		if (effect != NULL)
+			effect->InitPoint(EffectPoint::p100, x, y);
 		SetState(KOOPA_STATE_WALKING);
+	}	
 }
 
 void CKoopa::Render()
@@ -211,13 +219,20 @@ void CKoopa::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case KOOPA_STATE_BALL:
-		level = KOOPA_LEVEL_BALL;
-		y += KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE;
-		vx = 0;
-		break;
-	case KOOPA_STATE_WALKING:
-		vx = nx * KOOPA_WALKING_SPEED;
-		break;
+		case KOOPA_STATE_BALL:
+		{
+			Effect* effect = EffectPool::GetInstance()->Create();
+			if (effect != NULL)
+				effect->InitPoint(EffectPoint::p200, x, y);
+			level = KOOPA_LEVEL_BALL;
+			y += KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE;
+			vx = 0;
+			break;
+		}
+		case KOOPA_STATE_WALKING:
+		{
+			vx = nx * KOOPA_WALKING_SPEED;
+			break;
+		}
 	}
 }

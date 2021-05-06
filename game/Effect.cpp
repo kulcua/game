@@ -1,10 +1,12 @@
 #include "Effect.h"
 #include "Utils.h"
+#include "Mario.h"
 
 Effect::Effect()
 {
 	SetAnimation();
 	die = true;
+	mario = CMario::GetInstance();
 }
 
 void Effect::Init(EffectName name, float x, float y)
@@ -13,6 +15,20 @@ void Effect::Init(EffectName name, float x, float y)
 	die = false;
 	inUse = true;
 	SetPosition(x, y);
+}
+
+void Effect::InitPoint(EffectPoint ePoint, float x, float y)
+{
+	Effect::Init(EffectName::point, x, y);
+	this->ePoint = ePoint;
+	int point = 0;
+	if (ePoint == EffectPoint::p100)
+		point = 100;
+	else if (ePoint == EffectPoint::p200)
+		point = 200;
+	else if (ePoint == EffectPoint::p1000)
+		point = 1000;
+	mario->SetPoint(point);
 }
 
 void Effect::InitDebris(int pos, float x, float y)
@@ -72,7 +88,7 @@ void Effect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y += dy;
 	}
 
-	if (name == EffectName::p100 || name == EffectName::p200 || name == EffectName::p1000)
+	if (name == EffectName::point)
 	{
 		vy = -EFFECT_POIINT_DELFECT_VY;
 		y += dy;
@@ -88,12 +104,15 @@ void Effect::Render()
 		ani = EFFECT_ANI_MARIO_TAIL_ATTACK;
 	else if (name == EffectName::debrisBrick)
 		ani = EFFECT_ANI_DEBRIS_BRICK;
-	else if (name == EffectName::p100)
-		ani = EFFECT_ANI_POINT_100;
-	else if (name == EffectName::p200)
-		ani = EFFECT_ANI_POINT_200;
-	else if (name == EffectName::p1000)
-		ani = EFFECT_ANI_POINT_1000;
+	else if (name == EffectName::point)
+	{
+		if (ePoint == EffectPoint::p100)
+			ani = EFFECT_ANI_POINT_100;
+		else if (ePoint == EffectPoint::p200)
+			ani = EFFECT_ANI_POINT_200;
+		else if (ePoint == EffectPoint::p1000)
+			ani = EFFECT_ANI_POINT_1000;
+	}
 	animation_set->at(ani)->Render(x, y, NULL);
 }
 

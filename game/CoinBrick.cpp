@@ -28,7 +28,7 @@ void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		die = true;
 		Effect* effect = EffectPool::GetInstance()->Create();
 		if (effect != NULL)
-			effect->Init(EffectName::p100, x, y);
+			effect->InitPoint(EffectPoint::p100, x, y);
 	}
 	else
 	{
