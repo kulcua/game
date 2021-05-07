@@ -62,6 +62,7 @@ void MarioRunningState::HandleInput(CMario& mario, Input input)
 void MarioRunningState::Update(CMario& mario, DWORD dt)
 {
 	MarioState::Update(mario, dt);
+	mario.isAttack = false;
 	//DebugOut(L"Running\n");
 }
 

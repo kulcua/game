@@ -24,6 +24,16 @@ HUD::HUD()
 	mario = CMario::GetInstance();
 }
 
+int HUD::CountDownTimer()
+{
+	int timeLeft = HUD_TIMER - (GetTickCount64() - timeStart) / 1000;
+
+	if (timeLeft < 0)
+		return 0;
+
+	return timeLeft;
+}
+
 void HUD::Update()
 {
 	world->SetContent(1);
@@ -31,7 +41,7 @@ void HUD::Update()
 	power->SetPower(mario->GetPower());
 	point->SetContent(mario->GetPoint());
 	money->SetContent(mario->GetMoney());
-	time->SetContent(300);
+	time->SetContent(CountDownTimer());
 }
 
 void HUD::SetPosition(float x, float y)

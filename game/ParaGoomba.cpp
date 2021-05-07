@@ -92,8 +92,8 @@ void ParaGoomba::SetState(int state)
 		Effect* effect = EffectPool::GetInstance()->Create();
 		if (effect != NULL)
 			effect->InitPoint(EffectPoint::p100, x, y);
-		break;
 	}	
+	break;
 	case PARAGOOMBA_STATE_LOW_JUMP:
 		vy = -PARAGOOMBA_LOW_JUMP_SPEED;
 		isOnGround = false;

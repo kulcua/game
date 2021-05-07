@@ -77,21 +77,21 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-				if (e->ny < 0)
+				if (goomba->GetState() != GOOMBA_STATE_DIE)
 				{
-					if (goomba->GetState() != GOOMBA_STATE_DIE)
+					if (e->ny < 0)
 					{
 						goomba->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-				}
-				else if (e->nx != 0 && isAttack)
-				{
-					Effect* effect = EffectPool::GetInstance()->Create();
-					if (effect != NULL)
-						effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
-					goomba->vy = -GOOMBA_DEFLECT_SPEED;
-					goomba->SetState(GOOMBA_STATE_DIE);
+					else if (e->nx != 0 && isAttack)
+					{
+						Effect* effect = EffectPool::GetInstance()->Create();
+						if (effect != NULL)
+							effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
+						goomba->vy = -GOOMBA_DEFLECT_SPEED;
+						goomba->SetState(GOOMBA_STATE_DIE);
+					}
 				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
@@ -233,7 +233,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 				{
 					isGrounded = true;
-					state_ = MarioState::standing.GetInstance();
+					if (isSit == false)
+						state_ = MarioState::standing.GetInstance();
 				}
 			}
 		}

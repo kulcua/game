@@ -613,7 +613,7 @@
 69	0	0	0
 
 # MARIO
-0	7000	1000	1
+0	2000	1000	1
 
 # --- HIDEN OBJECT ----
 # type	l	t	ani_set_id	r	b	scene_id

@@ -14,6 +14,7 @@
 #define HUD_ALIGN_TIME 376
 #define HUD_ALIGN_TOP 21
 #define HUD_ALIGN_BOTTOM 46
+#define HUD_TIMER 300
 
 class HUD : public CGameObject
 {
@@ -24,6 +25,7 @@ class HUD : public CGameObject
 	float xPower, xPoint;
 	float xMoney, xTime;
 	CMario* mario;
+	int timeStart = GetTickCount64();
 public:
 	Text* world;
 	Text* life;
@@ -34,6 +36,7 @@ public:
 
 	static HUD* GetInstance();
 	HUD();
+	int CountDownTimer();
 	void SetPosition(float x, float y);
 	void SetSpriteId(int spriteId) { this->spriteId = spriteId; }
 	void Update();
