@@ -159,9 +159,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		{
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
-			obj = new CCamera(x, y, width, height);
+			obj = new CCamera(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

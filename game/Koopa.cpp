@@ -133,38 +133,38 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
 				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
-				if (block->isCoin == false)
+				if (block->isCoin)
 				{
-					if (e->nx != 0 && state == KOOPA_STATE_BALL)
-					{
-						EffectPool::GetInstance()->CreateDebris(e->obj->x, e->obj->y);
-						e->obj->die = true;
-						this->nx = -this->nx;
-						vx = e->nx * KOOPA_BALL_SPEED;
-					}
-				}
-				else {
 					if (e->nx != 0) {
-						this->nx = -this->nx;
-						if (state == KOOPA_LEVEL_WALK)
+						if (state == KOOPA_STATE_WALKING)
 							vx = this->nx * KOOPA_WALKING_SPEED;
-						else if (state == KOOPA_LEVEL_BALL)
+						else if (state == KOOPA_STATE_BALL)
 							vx = this->nx * KOOPA_BALL_SPEED;
 						x += dx;
 					}
 					if (e->ny != 0) y += dy;
+				}
+				else {
+					if (e->nx != 0 && state == KOOPA_STATE_BALL)
+					{
+						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
+						block->die = true;
+						this->nx = -this->nx;
+						vx = this->nx * KOOPA_BALL_SPEED;
+					}
 				}
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj))
 			{
 				if (e->nx != 0)
 				{
-					this->nx = -this->nx;
-					if (state != KOOPA_STATE_BALL)
-						vx = this->nx * KOOPA_WALKING_SPEED;
-					else {
+					if (state == KOOPA_STATE_BALL) {
 						vx = this->nx * KOOPA_BALL_SPEED;
 						x += dx;
+					}	
+					else {
+						this->nx = -this->nx;
+						vx = this->nx * KOOPA_WALKING_SPEED;
 					}
 				}
 			}

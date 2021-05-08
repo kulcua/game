@@ -13,7 +13,7 @@ class CCamera : public CGameObject
 
 	bool onGroundMode;
 public:
-	CCamera(float x, float y, float width, float height);
+	CCamera(float x, float y);
 	void FollowMario();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object);
 	virtual void Render();

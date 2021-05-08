@@ -546,10 +546,10 @@
   <object id="268" x="6214.75" y="1105.5" width="8.5" height="47"/>
  </objectgroup>
  <objectgroup id="21" name="Portal">
-  <object id="274" name="out" type="2" x="6915.5" y="1143" width="91" height="40"/>
+  <object id="274" name="out" type="2" x="6914.5" y="1162" width="91" height="40"/>
   <object id="276" name="in" type="2" x="6915.5" y="1455" width="91" height="40"/>
   <object id="275" name="out" type="1" x="6240.5" y="1457" width="97" height="40"/>
-  <object id="273" name="in" type="1" x="6818" y="1097" width="91" height="40"/>
+  <object id="273" name="in" type="1" x="6819" y="1113" width="91" height="40"/>
  </objectgroup>
  <objectgroup id="24" name="Card">
   <object id="271" x="8039.33" y="1030" width="50" height="50"/>

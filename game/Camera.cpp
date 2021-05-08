@@ -4,12 +4,15 @@
 #include "MarioFlyingState.h"
 #include "HUD.h"
 
-CCamera::CCamera(float x, float y, float width, float height)
+#define CAM_WIDTH 800
+#define CAM_HEIGHT 600
+
+CCamera::CCamera(float x, float y)
 {
 	mario = CMario::GetInstance();
 	game = CGame::GetInstance();
-	this->width = width;
-	this->height = height;
+	this->width = CAM_WIDTH;
+	this->height = CAM_HEIGHT;
 	x = mario->x - width / 2;
 	if (x < 0) x = 0;
 	SetPosition(x, y);

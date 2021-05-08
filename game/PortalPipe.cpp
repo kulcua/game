@@ -21,7 +21,7 @@ void PortalPipe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void PortalPipe::Render()
 {
-
+	RenderBoundingBox();
 }
 
 void PortalPipe::GetBoundingBox(float& l, float& t, float& r, float& b)

@@ -40,3 +40,10 @@ void CPlant::SetState(int state)
 	}
 }
 
+void CPlant::GetBoundingBox(float& l, float& t, float& r, float& b) {
+	l = x;
+	t = y;
+	r = x + PLANT_WIDTH;
+	b = y + PLANT_HEIGHT;
+}
+
