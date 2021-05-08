@@ -8,14 +8,6 @@ PowerUpItem::PowerUpItem()
 	mario = CMario::GetInstance();
 }
 
-void PowerUpItem::SetAnimation(int ani)
-{
-	this->ani = ani;
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(ani);
-	SetAnimationSet(ani_set);
-}
-
 void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (outBrick)

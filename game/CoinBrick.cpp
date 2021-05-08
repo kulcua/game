@@ -7,13 +7,6 @@ CoinBrick::CoinBrick()
 	SetAnimation(COIN_BRICK_ANI_ID);
 }
 
-void CoinBrick::SetAnimation(int ani)
-{
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(ani);
-	SetAnimationSet(ani_set);
-}
-
 void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);

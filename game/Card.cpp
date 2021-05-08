@@ -7,13 +7,6 @@ Card::Card()
 	SetAnimation(CARD_ANI_ID);
 }
 
-void Card::SetAnimation(int ani)
-{
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(ani);
-	SetAnimationSet(ani_set);
-}
-
 void Card::GetCard() {
 	active = true;
 	// random 0-2 CardType

@@ -10,13 +10,6 @@ CBrick::CBrick(int type, float x, float y)
 	SetAnimation(BRICK_ANI_ID);
 }
 
-void CBrick::SetAnimation(int ani)
-{
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(ani);
-	SetAnimationSet(ani_set);
-}
-
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);

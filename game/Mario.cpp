@@ -8,7 +8,6 @@
 #include "Ground.h"
 #include "Item.h"
 #include "Koopa.h"
-#include "Pipe.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
 #include "MarioKickState.h"
@@ -25,6 +24,7 @@
 #include "GreenMushroom.h"
 #include "Plant.h"
 #include "Card.h"
+#include "PortalPipe.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -223,10 +223,18 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					block->die = true;
 				}
 			}
+			/*else if (dynamic_cast<PortalPipe*>(e->obj))
+			{
+				PortalPipe* port = dynamic_cast<PortalPipe*>(e->obj);
+				if (e->ny)
+				{
+					PortalPipe* portOut = PortalPipeOutManager::GetInstance()->GetPortalPipeOut(port->GetType());
+					SetPosition(portOut->x, portOut->y);
+				}
+			}*/
 
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
-				|| dynamic_cast<CPipe*>(e->obj)
 				|| dynamic_cast<CBrick*>(e->obj)
 				|| dynamic_cast<BrickBlock*>(e->obj))
 			{

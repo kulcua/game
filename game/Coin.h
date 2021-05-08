@@ -6,7 +6,6 @@
 
 class Coin : public CGameObject
 {
-	void SetAnimation(int ani);
 public:
 	Coin();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

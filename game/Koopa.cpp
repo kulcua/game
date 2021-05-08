@@ -2,7 +2,6 @@
 #include "Brick.h"
 #include "Ground.h"
 #include "BigBox.h"
-#include "Pipe.h"
 #include "Goomba.h"
 #include "Mario.h"
 #include "KoopaBound.h"

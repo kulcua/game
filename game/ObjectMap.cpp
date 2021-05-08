@@ -17,6 +17,7 @@
 #include "GreenMushroom.h"
 #include "SwitchItem.h"
 #include "Card.h"
+#include "PortalPipe.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -229,6 +230,25 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("Portal") == 0)
+	{
+		while (element)
+		{
+			string name;
+			int type;
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryFloatAttribute("width", &width);
+			element->QueryFloatAttribute("height", &height);
+			name = element->Attribute("name");
+			element->QueryIntAttribute("type", &type);
+			obj = new PortalPipe(name, type, width, height);
+			obj->SetPosition(x, y);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+			DebugOut(L"port %d\n", type);
 		}
 	}
 }

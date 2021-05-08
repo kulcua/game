@@ -8,7 +8,6 @@ class GreenMushroom : public CItem
 	float startY;
 public:
 	GreenMushroom(float y);
-	void SetAnimation(int ani);
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 };

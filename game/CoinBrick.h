@@ -8,7 +8,6 @@
 class CoinBrick : public CItem
 {
 	int jumpTimeStart;
-	void SetAnimation(int ani);
 public:
 	CoinBrick();
 	void StartJump() { jumpTimeStart = GetTickCount64(); }

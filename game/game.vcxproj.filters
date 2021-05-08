@@ -102,9 +102,6 @@
     <ClCompile Include="Ground.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
-    <ClCompile Include="Pipe.cpp">
-      <Filter>Mics</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
@@ -264,6 +261,9 @@
     <ClCompile Include="Card.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
+    <ClCompile Include="PortalPipe.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -303,9 +303,6 @@
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
-      <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="Pipe.h">
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="Portal.h">
@@ -453,6 +450,9 @@
       <Filter>Brick\Item</Filter>
     </ClInclude>
     <ClInclude Include="Card.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalPipe.h">
       <Filter>Mics</Filter>
     </ClInclude>
   </ItemGroup>

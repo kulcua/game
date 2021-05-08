@@ -18,7 +18,6 @@ enum class CardType {
 
 class Card : public CGameObject
 {
-	void SetAnimation(int ani);
 	bool active;
 	CardType card;
 public:

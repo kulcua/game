@@ -187,9 +187,9 @@
     <ClCompile Include="ObjectMap.cpp" />
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="ParaKoopa.cpp" />
-    <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Plant.cpp" />
+    <ClCompile Include="PortalPipe.cpp" />
     <ClCompile Include="PowerUpItem.cpp" />
     <ClCompile Include="SwitchItem.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -254,9 +254,9 @@
     <ClInclude Include="ObjectMap.h" />
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="ParaKoopa.h" />
-    <ClInclude Include="Pipe.h" />
     <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="Plant.h" />
+    <ClInclude Include="PortalPipe.h" />
     <ClInclude Include="PowerUpItem.h" />
     <ClInclude Include="SwitchItem.h" />
     <ClInclude Include="Text.h" />

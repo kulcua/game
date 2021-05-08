@@ -13,8 +13,7 @@ class PowerUpItem : public CItem
 	void UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void UpdateLeaf(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 public:
-	PowerUpItem();  
-	void SetAnimation(int ani);
+	PowerUpItem();
 	virtual void Render();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 };

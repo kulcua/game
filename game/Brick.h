@@ -19,7 +19,6 @@
 
 class CBrick: public CGameObject
 {
-	void SetAnimation(int ani);
 	CItem* item;
 	int type;
 public:
