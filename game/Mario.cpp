@@ -25,6 +25,7 @@
 #include "Plant.h"
 #include "Card.h"
 #include "PortalPipe.h"
+#include "Camera.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -223,15 +224,16 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					block->die = true;
 				}
 			}
-			/*else if (dynamic_cast<PortalPipe*>(e->obj))
+			else if (dynamic_cast<PortalPipe*>(e->obj))
 			{
 				PortalPipe* port = dynamic_cast<PortalPipe*>(e->obj);
-				if (e->ny)
+				if (e->ny && port->GetName() == PortalName::in)
 				{
 					PortalPipe* portOut = PortalPipeOutManager::GetInstance()->GetPortalPipeOut(port->GetType());
 					SetPosition(portOut->x, portOut->y);
+					CCamera::GetInstance()->SetPosition(portOut->GetCamY());
 				}
-			}*/
+			}
 
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)

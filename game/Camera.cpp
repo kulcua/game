@@ -7,15 +7,26 @@
 #define CAM_WIDTH 800
 #define CAM_HEIGHT 600
 
-CCamera::CCamera(float x, float y)
+CCamera* CCamera::__instance = NULL;
+
+CCamera* CCamera::GetInstance()
+{
+	if (__instance == NULL) __instance = new CCamera();
+	return __instance;
+}
+
+CCamera::CCamera()
 {
 	mario = CMario::GetInstance();
-	game = CGame::GetInstance();
 	this->width = CAM_WIDTH;
 	this->height = CAM_HEIGHT;
+}
+
+void CCamera::SetPosition(float y) {
 	x = mario->x - width / 2;
 	if (x < 0) x = 0;
-	SetPosition(x, y);
+
+	this->y = y;
 }
 
 void CCamera::FollowMario()
@@ -111,7 +122,7 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}		
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	game->SetCamPos(x, y);
+	CGame::GetInstance()->SetCamPos(x, y);
 	HUD::GetInstance()->SetPosition(x, y + SCREEN_HEIGHT - HUD_HEIGHT);
 }
 

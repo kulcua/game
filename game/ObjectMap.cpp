@@ -9,6 +9,7 @@
 #include "PiranhaPlant.h"
 #include "ParaGoomba.h"
 #include "ParaKoopa.h"
+#include "Game.h"
 #include "KoopaBound.h"
 #include "CoinBrick.h"
 #include "PowerUpItem.h"
@@ -157,10 +158,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
-			obj = new CCamera(x, y);
-			objects.push_back(obj);
+			CCamera* cam = CCamera::GetInstance();
+			cam->SetPosition(y);
+			objects.push_back(cam);
 			element = element->NextSiblingElement();
 		}
 	}
@@ -236,17 +237,21 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		{
 			string name;
 			int type;
+			float camY = 0;
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
 			name = element->Attribute("name");
 			element->QueryIntAttribute("type", &type);
-			obj = new PortalPipe(name, type, width, height);
+			if (name.compare("out") == 0)
+			{
+				TiXmlElement* propCam = element->FirstChildElement()->FirstChildElement();
+				propCam->QueryFloatAttribute("value", &camY);
+			}
+			obj = new PortalPipe(name, type, camY);
 			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
-			DebugOut(L"port %d\n", type);
+			DebugOut(L"port %d %f\n", type, camY);
 		}
 	}
 }

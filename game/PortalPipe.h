@@ -1,5 +1,7 @@
 #pragma once
 #include "GameObject.h"
+#define PORT_WIDTH 90
+#define PORT_HEIGHT 40
 
 enum class PortalName {
 	in,
@@ -10,11 +12,13 @@ class PortalPipe : public CGameObject
 {
 	PortalName name;
 	int type;
+	float camY;
 public:
-	PortalPipe(string name, int type, float width, float height);
+	PortalPipe(string name, int type, float camY);
 
 	PortalName GetName() { return name; }
 	int GetType() { return type; }
+	float GetCamY() { return camY; }
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();

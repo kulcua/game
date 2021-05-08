@@ -1,6 +1,6 @@
 #include "PortalPipe.h"
 
-PortalPipe::PortalPipe(string name, int type, float width, float height)
+PortalPipe::PortalPipe(string name, int type, float camY)
 {
 	if (name.compare("in") == 0)
 		this->name = PortalName::in;
@@ -10,8 +10,7 @@ PortalPipe::PortalPipe(string name, int type, float width, float height)
 	}
 
 	this->type = type;
-	this->width = width;
-	this->height = height;
+	this->camY = camY;
 }
 
 void PortalPipe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -28,8 +27,8 @@ void PortalPipe::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + width;
-	b = y + height;
+	r = x + PORT_WIDTH;
+	b = y + PORT_HEIGHT;
 }
 
 PortalPipeOutManager* PortalPipeOutManager::__instance = NULL;

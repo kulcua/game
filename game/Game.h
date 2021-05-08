@@ -6,6 +6,7 @@
 #include <dinput.h>
 #include "PlayScene.h"
 #include "Scene.h"
+
 using namespace std;
 
 #define DIRECTINPUT_VERSION 0x0800
@@ -47,7 +48,6 @@ class CGame {
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
-
 public:
 	void InitKeyBoard();
 	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
