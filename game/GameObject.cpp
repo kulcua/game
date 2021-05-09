@@ -12,6 +12,13 @@ CGameObject::CGameObject()
 	vx = vy = 0;
 }
 
+void CGameObject::SetAnimation(int ani)
+{
+	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
+	LPANIMATION_SET ani_set = animation_sets->Get(ani);
+	SetAnimationSet(ani_set);
+}
+
 void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	this->dt = dt;

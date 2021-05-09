@@ -3,7 +3,7 @@
 class MarioStandingState;
 class MarioWalkingState;
 class MarioJumpingState;
-class MarioDuckingState;
+class MarioSittingState;
 class MarioStoppingState;
 class MarioRunningState;
 class MarioPreFlyState;
@@ -14,6 +14,7 @@ class MarioKickState;
 class MarioLevelUpState;
 class MarioTailHitState;
 class MarioShootFireBallState;
+class MarioFrontState;
 
 class MarioState
 {
@@ -22,7 +23,7 @@ public:
 	static MarioStandingState standing;
 	static MarioWalkingState walking;
 	static MarioJumpingState jumping;
-	static MarioDuckingState ducking;
+	static MarioSittingState sitting;
 	static MarioStoppingState stopping;
 	static MarioRunningState running;
 	static MarioPreFlyState preFly;
@@ -33,6 +34,7 @@ public:
 	static MarioLevelUpState levelUp;
 	static MarioTailHitState tailHit;
 	static MarioShootFireBallState shootFireball;
+	static MarioFrontState front;
 
 	virtual void HandleInput(CMario& mario, Input input) = 0;
 	virtual void Update(CMario& mario, DWORD dt);

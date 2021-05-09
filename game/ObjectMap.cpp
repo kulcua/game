@@ -9,6 +9,7 @@
 #include "PiranhaPlant.h"
 #include "ParaGoomba.h"
 #include "ParaKoopa.h"
+#include "Game.h"
 #include "KoopaBound.h"
 #include "CoinBrick.h"
 #include "PowerUpItem.h"
@@ -16,6 +17,8 @@
 #include "Coin.h"
 #include "GreenMushroom.h"
 #include "SwitchItem.h"
+#include "Card.h"
+#include "PortalPipe.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -73,6 +76,15 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
+	}
+	else if (name.compare("Card") == 0)
+	{
+		element->QueryFloatAttribute("x", &x);
+		element->QueryFloatAttribute("y", &y);
+		obj = new Card();
+		obj->SetPosition(x, y);
+		objects.push_back(obj);
+		element = element->NextSiblingElement();
 	}
 	else if (name.compare("QuestionBlocks") == 0)
 	{
@@ -146,12 +158,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
-			obj = new CCamera(x, y, width, height);
-			objects.push_back(obj);
+			CCamera* cam = CCamera::GetInstance();
+			cam->SetPosition(y);
+			objects.push_back(cam);
 			element = element->NextSiblingElement();
 		}
 	}
@@ -219,6 +229,29 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("Portal") == 0)
+	{
+		while (element)
+		{
+			string name;
+			int type;
+			float camY = 0;
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			name = element->Attribute("name");
+			element->QueryIntAttribute("type", &type);
+			if (name.compare("out") == 0)
+			{
+				TiXmlElement* propCam = element->FirstChildElement()->FirstChildElement();
+				propCam->QueryFloatAttribute("value", &camY);
+			}
+			obj = new PortalPipe(name, type, camY);
+			obj->SetPosition(x, y);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+			DebugOut(L"port %d %f\n", type, camY);
 		}
 	}
 }

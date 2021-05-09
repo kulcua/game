@@ -14,15 +14,18 @@
 #define BRICK_ANI_BLOCK 1
 #define BRICK_ANI_DISABLE	2
 
+#define BRICK_TYPE_QUESTION	1
+#define BRICK_TYPE_BLOCK	2
+
 class CBrick: public CGameObject
 {
-	void SetAnimation(int ani);
 	CItem* item;
 	int type;
 public:
 	float start_y;
 	CBrick(int type, float x, float y);
 
+	int GetType() { return type; }
 	void SetItem(CItem* item) { this->item = item; }
 	void SetState(int state);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

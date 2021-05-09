@@ -11,7 +11,6 @@ class BrickBlock : public CGameObject
 {
 	friend class CMario;
 	CMario* mario;
-	void SetAnimation(int ani);
 public:
 	BrickBlock();
 	bool isCoin;

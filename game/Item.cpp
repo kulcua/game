@@ -7,6 +7,7 @@ CItem::CItem() {
 void CItem::Render()
 {
 	animation_set->at(0)->Render(x, y, nx);
+	//RenderBoundingBox();
 }
 
 void CItem::GetBoundingBox(float& l, float& t, float& r, float& b)

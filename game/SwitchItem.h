@@ -8,7 +8,6 @@
 
 class SwitchItem : public CItem
 {
-	void SetAnimation(int ani);
 public:
 	SwitchItem();
 	virtual void Render();

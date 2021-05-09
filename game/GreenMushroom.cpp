@@ -7,13 +7,6 @@ GreenMushroom::GreenMushroom(float y)
 	SetAnimation(GREEN_MUSHROOM_ANI_ID);
 }
 
-void GreenMushroom::SetAnimation(int ani)
-{
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(ani);
-	SetAnimationSet(ani_set);
-}
-
 void GreenMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);

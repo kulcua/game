@@ -1,5 +1,6 @@
 #include "Goomba.h"
 #include "Ground.h"
+#include "EffectPool.h"
 
 CGoomba::CGoomba()
 {
@@ -94,12 +95,17 @@ void CGoomba::SetState(int state)
 	switch (state)
 	{
 	case GOOMBA_STATE_DIE:
+	{
+		Effect* effect = EffectPool::GetInstance()->Create();
+		if (effect != NULL)
+			effect->InitPoint(EffectPoint::p100, x, y);
 		y += GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE + 1;
 		level = 0;
 		StartDieTime();
 		vx = 0;
 		vy = 0;
 		break;
+	}
 	case GOOMBA_STATE_WALKING:
 		vx = -GOOMBA_WALKING_SPEED;
 		break;
@@ -111,4 +117,9 @@ void CGoomba::DowngradeLevel()
 	level--;
 	if (level == 0)
 		SetState(GOOMBA_STATE_DIE);
+	else {
+		Effect* effect = EffectPool::GetInstance()->Create();
+		if (effect != NULL)
+			effect->InitPoint(EffectPoint::p100, x, y);
+	}
 }

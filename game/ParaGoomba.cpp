@@ -1,4 +1,5 @@
 #include "ParaGoomba.h" 
+#include "EffectPool.h"
 
 ParaGoomba::ParaGoomba()
 {
@@ -83,11 +84,16 @@ void ParaGoomba::SetState(int state)
 	switch (state)
 	{
 	case GOOMBA_STATE_DIE:
+	{
 		y += GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE + 1;
 		StartDieTime();
 		vx = 0;
 		vy = 0;
-		break;
+		Effect* effect = EffectPool::GetInstance()->Create();
+		if (effect != NULL)
+			effect->InitPoint(EffectPoint::p100, x, y);
+	}	
+	break;
 	case PARAGOOMBA_STATE_LOW_JUMP:
 		vy = -PARAGOOMBA_LOW_JUMP_SPEED;
 		isOnGround = false;

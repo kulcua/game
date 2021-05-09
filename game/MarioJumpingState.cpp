@@ -5,6 +5,7 @@
 #include "MarioDroppingState.h"
 #include "MarioTailHitState.h"
 #include "MarioShootFireBallState.h"
+#include "MarioFrontState.h"
 
 MarioJumpingState* MarioJumpingState::__instance = NULL;
 
@@ -86,13 +87,13 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     }
     else if (input == RELEASE_S)
     {
-        mario.isHighJump = false;
+        isHighJump = false;
     }
     else if (input == PRESS_A)
     {
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
-            mario.isAttack = true;
+            MarioTailHitState::GetInstance()->tailHitting = true;
             mario.state_ = MarioState::tailHit.GetInstance();
             MarioState::tailHit.GetInstance()->StartHit();
         }
@@ -117,12 +118,12 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
     mario.isGrounded = false;
 
-    if (mario.isHighJump)
+    if (isHighJump)
     {
         if (GetTickCount64() - jumpStartTime > MARIO_HIGH_JUMP_TIME)
         {
             jumpStartTime = 0;
-            mario.isHighJump = false;
+            isHighJump = false;
         }
         else
         {
@@ -132,6 +133,11 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
     else if (mario.vy > 0)
     {
          mario.state_ = MarioState::dropping.GetInstance();
+    }
+
+    if (MarioFrontState::GetInstance()->onPortalPipe)
+    {
+        mario.state_ = MarioState::front.GetInstance();
     }
     //DebugOut(L"Jumping %f\n", mario.vx);
 }

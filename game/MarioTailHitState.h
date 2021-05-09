@@ -6,6 +6,7 @@ class MarioTailHitState : public MarioState
 	static MarioTailHitState* __instance;
 	DWORD hitStartTime;
 public:
+	bool tailHitting;
 	static MarioTailHitState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);
 	virtual void Update(CMario& mario, DWORD dt);

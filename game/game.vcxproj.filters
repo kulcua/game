@@ -102,17 +102,11 @@
     <ClCompile Include="Ground.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
-    <ClCompile Include="Pipe.cpp">
-      <Filter>Mics</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
     <ClCompile Include="MarioState.cpp">
       <Filter>Mario\MarioState</Filter>
-    </ClCompile>
-    <ClCompile Include="MarioDuckingState.cpp">
-      <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClCompile>
     <ClCompile Include="MarioKickState.cpp">
       <Filter>Mario\MarioState\OnGroundState</Filter>
@@ -261,6 +255,18 @@
     <ClCompile Include="SwitchItem.cpp">
       <Filter>Brick\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Card.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="PortalPipe.cpp">
+      <Filter>Mics</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioFrontState.cpp">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioSittingState.cpp">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -302,14 +308,8 @@
     <ClInclude Include="Ground.h">
       <Filter>Mics</Filter>
     </ClInclude>
-    <ClInclude Include="Pipe.h">
-      <Filter>Mics</Filter>
-    </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="MarioDuckingState.h">
-      <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClInclude>
     <ClInclude Include="MarioKickState.h">
       <Filter>Mario\MarioState\OnGroundState</Filter>
@@ -448,6 +448,18 @@
     </ClInclude>
     <ClInclude Include="SwitchItem.h">
       <Filter>Brick\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Card.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalPipe.h">
+      <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioFrontState.h">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioSittingState.h">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

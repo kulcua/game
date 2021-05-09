@@ -6,6 +6,7 @@ class MarioJumpingState : public MarioState
 	static MarioJumpingState* __instance;
 	DWORD jumpStartTime;
 public:
+	bool isHighJump;
 	static MarioJumpingState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);
 	virtual void Update(CMario& mario, DWORD dt);

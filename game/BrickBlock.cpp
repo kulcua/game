@@ -8,13 +8,6 @@ BrickBlock::BrickBlock()
 	mario = CMario::GetInstance();
 }
 
-void BrickBlock::SetAnimation(int ani)
-{
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(ani);
-	SetAnimationSet(ani_set);
-}
-
 void BrickBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);

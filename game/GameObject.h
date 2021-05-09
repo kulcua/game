@@ -55,7 +55,7 @@ public:
 	int width;
 	int height;
 	LPANIMATION_SET animation_set;
-
+	void SetAnimation(int ani);
 public:
 	bool die = false;
 

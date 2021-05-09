@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Utils.h"
+
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
 #define MARIO_JUMP_SPEED_Y		0.5f
@@ -73,6 +74,10 @@
 #define MARIO_ANI_FIRE_SHOOT_FIREBALL_IDLE				57
 #define MARIO_ANI_FIRE_SHOOT_FIREBALL_JUMP				58
 #define MARIO_ANI_RACCOON_ROLL	59
+#define MARIO_ANI_FRONT_SMALL			60
+#define MARIO_ANI_FRONT_BIG				61
+#define MARIO_ANI_FRONT_RACCOON			62
+#define MARIO_ANI_FRONT_FIRE			63
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
 #define	MARIO_LEVEL_RACCOON	3
@@ -106,6 +111,8 @@ class CMario : public CGameObject
 
 	int power;
 	int savePower;
+	int point = 0;
+	int money = 0;
 
 	float start_x;			// initial position of Mario at scene
 	float start_y;
@@ -127,9 +134,6 @@ public:
 	bool isGrounded;
 	bool isPower;
 	bool isHandleShell;
-	bool isSit;
-	bool isHighJump;
-	bool isAttack;
 	bool isUntouchable;
 
 	CMario();
@@ -139,6 +143,12 @@ public:
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	int GetLevel() { return level; }
+
+	void SetPoint(int point) { this->point += point; }
+	int GetPoint() { return point; }
+
+	void SetMoney(int money) { this->money += money; }
+	int GetMoney() { return money; }
 
 	void SetAnimation(int a) { ani = a; }
 	int GetAnimation() { return ani; }
@@ -153,6 +163,7 @@ public:
 	void LevelUp();
 	void KickShell();
 
+	void SetLife(int life);
 	int GetLife() { return life; }
 
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);

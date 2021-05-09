@@ -26,7 +26,7 @@ void MarioFlyingState::HandleInput(CMario& mario, Input input)
 
 }
 
-void MarioFlyingState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioFlyingState
+void MarioFlyingState::Enter(CMario& mario) 
 {
     if (mario.isHandleShell)
     {

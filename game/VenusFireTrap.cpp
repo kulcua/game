@@ -6,17 +6,13 @@ VenusFireTrap::VenusFireTrap(float y, int type) : CPlant(y)
 {
 	pool = FireBallPool::GetInstance();
 	this->type = type;
-	if (type == VENUS_RED_TYPE)
-		height = VENUS_RED_HEIGHT;
-	else
-		height = VENUS_GREEN_HEIGHT;
 }
 
 void VenusFireTrap::FindPositionForShooting()
 {
 	if (shootingTime == false)
 	{
-		if (y < startY - height) // have not overlap with pipe
+		if (y < startY - PLANT_HEIGHT) // have not overlap with pipe
 		{
 			vy = 0.0f;
 			StartShootTime();
@@ -90,12 +86,4 @@ void VenusFireTrap::Render()
 		else ani = VENUS_ANI_SHOOT_DOWN;
 	}
 	animation_set->at(ani)->Render(x, y, nx);
-}
-
-void VenusFireTrap::GetBoundingBox(float& l, float& t, float& r, float& b)
-{
-	l = x;
-	t = y;
-	r = x + VENUS_WIDTH;
-	b = y + height;
 }

@@ -10,13 +10,6 @@ CBrick::CBrick(int type, float x, float y)
 	SetAnimation(BRICK_ANI_ID);
 }
 
-void CBrick::SetAnimation(int ani)
-{
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-	LPANIMATION_SET ani_set = animation_sets->Get(ani);
-	SetAnimationSet(ani_set);
-}
-
 void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
@@ -42,9 +35,9 @@ void CBrick::Render()
 	int ani;
 	if (state == BRICK_STATE_DISABLE)
 		ani = BRICK_ANI_DISABLE;	
-	else if (type == 1)
+	else if (type == BRICK_TYPE_QUESTION)
 		ani = BRICK_ANI_QUESTION;
-	else if (type == 2)
+	else if (type == BRICK_TYPE_BLOCK)
 		ani = BRICK_ANI_BLOCK;
 	animation_set->at(ani)->Render(x, y, NULL);
 }

@@ -8,9 +8,9 @@
 #include "Ground.h"
 #include "Item.h"
 #include "Koopa.h"
-#include "Pipe.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
+#include "MarioTailHitState.h"
 #include "MarioKickState.h"
 #include "MarioLevelUpState.h"
 #include "MarioDroppingState.h"
@@ -18,12 +18,17 @@
 #include "CameraBound.h"
 #include "KoopaBound.h"
 #include "EffectPool.h"
+#include "MarioSittingState.h"
 #include "PowerUpItem.h"
 #include "BrickBlock.h"
 #include "Coin.h"
 #include "SwitchItem.h"
 #include "GreenMushroom.h"
 #include "Plant.h"
+#include "Card.h"
+#include "PortalPipe.h"
+#include "Camera.h"
+#include "MarioFrontState.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -76,29 +81,33 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-				if (e->ny < 0)
+				if (goomba->GetState() != GOOMBA_STATE_DIE)
 				{
-					if (goomba->GetState() != GOOMBA_STATE_DIE)
+					if (e->ny < 0)
 					{
 						goomba->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-				}
-				else if (e->nx != 0 && isAttack)
-				{
-					Effect* effect = EffectPool::GetInstance()->Create();
-					if (effect != NULL)
-						effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
-					goomba->vy = -GOOMBA_DEFLECT_SPEED;
-					goomba->SetState(GOOMBA_STATE_DIE);
+					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
+					{
+						Effect* effect = EffectPool::GetInstance()->Create();
+						if (effect != NULL)
+							effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
+						goomba->vy = -GOOMBA_DEFLECT_SPEED;
+						goomba->SetState(GOOMBA_STATE_DIE);
+					}
 				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{
 				if (e->nx)
-				{
 					x += dx;
-				}
+			}
+			else if (dynamic_cast<Card*>(e->obj))
+			{
+				Card* card = dynamic_cast<Card*>(e->obj);
+				if (e->ny)
+					card->GetCard();
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
@@ -108,9 +117,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny > 0)
 					{
 						brick->SetState(BRICK_STATE_DISABLE);
-						isHighJump = false;
+						MarioJumpingState::GetInstance()->isHighJump = false;
 					}
-					else if (e->nx != 0 && isAttack)
+					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting && brick->GetType() == BRICK_TYPE_BLOCK)
 					{
 						brick->SetState(BRICK_STATE_DISABLE);
 					}
@@ -123,13 +132,14 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny < 0)
 					{
 						koopa->DowngradeLevel();
-						vy = -MARIO_JUMP_DEFLECT_SPEED;
+						vy = -MARIO_JUMP_DEFLECT_SPEED; 
 					}
-					else if (e->nx != 0 && isAttack)
+					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
 					{
 						Effect* effect = EffectPool::GetInstance()->Create();
 						if (effect != NULL)
 							effect->Init(EffectName::marioTailAttack, koopa->x, koopa->y);
+
 						koopa->vy = -KOOPA_DEFECT_SPEED;
 						koopa->SetState(KOOPA_STATE_BALL);
 					}
@@ -166,12 +176,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CPlant*>(e->obj))
 			{
-				if (e->nx != 0 && isAttack)
+				CPlant* plant = dynamic_cast<CPlant*>(e->obj);
+				if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
 				{
-					e->obj->die = true;
-					Effect* effect = EffectPool::GetInstance()->Create();
-					if (effect != NULL)
-						effect->Init(EffectName::fireballDestroy, e->obj->x, e->obj->y);
+					plant->SetState(PLANT_STATE_DIE);
 				}	
 			}
 			else if (dynamic_cast<PowerUpItem*>(e->obj))
@@ -194,37 +202,56 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<GreenMushroom*>(e->obj))
 			{
 				e->obj->die = true;
-				life++;
+				SetLife(1);
 			}
 			else if (dynamic_cast<Coin*>(e->obj))
 			{
 				e->obj->die = true;
+				SetPoint(100);
+				SetMoney(1);
 			}
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
 				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
 				if (block->isCoin == false)
 				{
-					if (e->nx != 0 && isAttack)
+					if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
 					{
 						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
 						block->die = true;
 					}
 				}
 				else {
+					SetPoint(100);
+					SetMoney(1);
 					block->die = true;
+				}
+			}
+			else if (dynamic_cast<PortalPipe*>(e->obj))
+			{
+				PortalPipe* port = dynamic_cast<PortalPipe*>(e->obj);
+				if (e->ny)
+				{
+					if (e->ny < 0)
+						isGrounded = true;
+					if (port->GetName() == PortalName::in)
+						MarioFrontState::GetInstance()->GetPortal(*this, port, e->ny);
+					else
+						MarioFrontState::GetInstance()->onPortalPipe = false;
 				}
 			}
 
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
-				|| dynamic_cast<CPipe*>(e->obj)
 				|| dynamic_cast<CBrick*>(e->obj)
 				|| dynamic_cast<BrickBlock*>(e->obj))
 			{
-				if (e->ny)
+				if (e->ny < 0)
 				{
+					MarioFrontState::GetInstance()->onPortalPipe = false;
 					isGrounded = true;
+					if (MarioSittingState::GetInstance()->isSit == false)
+						state_ = MarioState::standing.GetInstance();
 				}
 			}
 		}
@@ -310,6 +337,10 @@ void CMario::LevelUp()
 		state_ = MarioState::levelUp.GetInstance();
 		MarioState::levelUp.GetInstance()->StartLevelUp();
 	}
+
+	Effect* effect = EffectPool::GetInstance()->Create();
+	if (effect != NULL)
+		effect->InitPoint(EffectPoint::p1000, x, y);
 }
 
 void CMario::HandleInput(Input input)
@@ -361,7 +392,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CMario::Reset()
 {
 	state_ = MarioState::standing.GetInstance();
-	isAttack = false;
+	MarioTailHitState::GetInstance()->tailHitting = false;
 	isPower = false;
 	isHandleShell = false;
 	isUntouchable = false;
@@ -369,3 +400,10 @@ void CMario::Reset()
 	SetSpeed(0, 0);
 }
 
+void CMario::SetLife(int life)
+{
+	this->life += life;
+	Effect* effect = EffectPool::GetInstance()->Create();
+	if (effect != NULL)
+		effect->InitPoint(EffectPoint::p1000, x, y);
+}

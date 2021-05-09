@@ -23,7 +23,7 @@ void MarioShootFireBallState::HandleInput(CMario& mario, Input input)
     }
 }
 
-void MarioShootFireBallState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioShootFireBallState
+void MarioShootFireBallState::Enter(CMario& mario) 
 {
     if (mario.GetLevel() == MARIO_LEVEL_FIRE)
     {

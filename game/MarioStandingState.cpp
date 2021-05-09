@@ -1,7 +1,7 @@
 #include "MarioStandingState.h"
 #include "Mario.h"
-#include "MarioWalkingState.h"
 #include "MarioRunningState.h"
+#include "MarioFrontState.h"
 
 MarioStandingState* MarioStandingState::__instance = NULL;
 
@@ -16,7 +16,13 @@ MarioStandingState* MarioStandingState::GetInstance()
 
 void MarioStandingState::HandleInput(CMario& mario, Input input)
 {
-    MarioOnGroundState::HandleInput(mario, input);
+    if (input == PRESS_DOWN && MarioFrontState::GetInstance()->onPortalPipe)
+    {
+        mario.state_ = MarioState::front.GetInstance();
+    }
+    else {
+        MarioOnGroundState::HandleInput(mario, input);
+    }
 }
 
 void MarioStandingState::Enter(CMario& mario) 
