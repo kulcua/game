@@ -98,14 +98,18 @@ void PowerUpItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
-	if (ani == 0)
+	if (setItem == PowerUp::none)
 	{
 		startY = y;
 
 		if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+		{
 			SetAnimation(RED_MUSHROOM_ANI_ID);
+			setItem = PowerUp::mushroom;
+		}
 		else
 		{
+			setItem = PowerUp::leaf;
 			SetAnimation(LEAF_ANI_ID);
 			vy = -LEAF_DEFLECT_SPEED;
 		}
@@ -116,7 +120,7 @@ void PowerUpItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		outBrick = true;
 	}
 	
-	if (ani == RED_MUSHROOM_ANI_ID)
+	if (setItem == PowerUp::mushroom)
 	{
 		UpdateMushroom(dt, coObjects);
 	}
@@ -125,6 +129,5 @@ void PowerUpItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void PowerUpItem::Render()
 {
-	if (ani != 0)
-		CItem::Render();
+	CItem::Render();
 }

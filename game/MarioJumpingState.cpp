@@ -87,13 +87,13 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     }
     else if (input == RELEASE_S)
     {
-        mario.isHighJump = false;
+        isHighJump = false;
     }
     else if (input == PRESS_A)
     {
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
-            mario.isAttack = true;
+            MarioTailHitState::GetInstance()->tailHitting = true;
             mario.state_ = MarioState::tailHit.GetInstance();
             MarioState::tailHit.GetInstance()->StartHit();
         }
@@ -118,12 +118,12 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
     mario.isGrounded = false;
 
-    if (mario.isHighJump)
+    if (isHighJump)
     {
         if (GetTickCount64() - jumpStartTime > MARIO_HIGH_JUMP_TIME)
         {
             jumpStartTime = 0;
-            mario.isHighJump = false;
+            isHighJump = false;
         }
         else
         {

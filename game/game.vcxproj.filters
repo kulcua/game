@@ -108,9 +108,6 @@
     <ClCompile Include="MarioState.cpp">
       <Filter>Mario\MarioState</Filter>
     </ClCompile>
-    <ClCompile Include="MarioDuckingState.cpp">
-      <Filter>Mario\MarioState\OnGroundState</Filter>
-    </ClCompile>
     <ClCompile Include="MarioKickState.cpp">
       <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClCompile>
@@ -267,6 +264,9 @@
     <ClCompile Include="MarioFrontState.cpp">
       <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClCompile>
+    <ClCompile Include="MarioSittingState.cpp">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -310,9 +310,6 @@
     </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="MarioDuckingState.h">
-      <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClInclude>
     <ClInclude Include="MarioKickState.h">
       <Filter>Mario\MarioState\OnGroundState</Filter>
@@ -459,6 +456,9 @@
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="MarioFrontState.h">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioSittingState.h">
       <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClInclude>
   </ItemGroup>

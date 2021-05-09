@@ -10,6 +10,7 @@
 #include "Koopa.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
+#include "MarioTailHitState.h"
 #include "MarioKickState.h"
 #include "MarioLevelUpState.h"
 #include "MarioDroppingState.h"
@@ -17,6 +18,7 @@
 #include "CameraBound.h"
 #include "KoopaBound.h"
 #include "EffectPool.h"
+#include "MarioSittingState.h"
 #include "PowerUpItem.h"
 #include "BrickBlock.h"
 #include "Coin.h"
@@ -86,7 +88,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						goomba->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-					else if (e->nx != 0 && isAttack)
+					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
 					{
 						Effect* effect = EffectPool::GetInstance()->Create();
 						if (effect != NULL)
@@ -115,9 +117,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny > 0)
 					{
 						brick->SetState(BRICK_STATE_DISABLE);
-						isHighJump = false;
+						MarioJumpingState::GetInstance()->isHighJump = false;
 					}
-					else if (e->nx != 0 && isAttack && brick->GetType() == BRICK_TYPE_BLOCK)
+					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting && brick->GetType() == BRICK_TYPE_BLOCK)
 					{
 						brick->SetState(BRICK_STATE_DISABLE);
 					}
@@ -132,7 +134,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopa->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED; 
 					}
-					else if (e->nx != 0 && isAttack)
+					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
 					{
 						Effect* effect = EffectPool::GetInstance()->Create();
 						if (effect != NULL)
@@ -175,7 +177,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CPlant*>(e->obj))
 			{
 				CPlant* plant = dynamic_cast<CPlant*>(e->obj);
-				if (e->nx != 0 && isAttack)
+				if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
 				{
 					plant->SetState(PLANT_STATE_DIE);
 				}	
@@ -213,7 +215,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
 				if (block->isCoin == false)
 				{
-					if (e->nx != 0 && isAttack)
+					if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
 					{
 						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
 						block->die = true;
@@ -248,7 +250,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
 					isGrounded = true;
-					if (isSit == false)
+					if (MarioSittingState::GetInstance()->isSit == false)
 						state_ = MarioState::standing.GetInstance();
 				}
 			}
@@ -390,7 +392,7 @@ void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom
 void CMario::Reset()
 {
 	state_ = MarioState::standing.GetInstance();
-	isAttack = false;
+	MarioTailHitState::GetInstance()->tailHitting = false;
 	isPower = false;
 	isHandleShell = false;
 	isUntouchable = false;

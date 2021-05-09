@@ -4,7 +4,7 @@
 #include "MarioJumpingState.h"
 #include "MarioWalkingState.h"
 #include "MarioStandingState.h"
-#include "MarioDuckingState.h"
+#include "MarioSittingState.h"
 #include "MarioRunningState.h"
 #include "MarioStoppingState.h"
 #include "MarioPreFlyState.h"
@@ -12,20 +12,11 @@
 #include "MarioTailHitState.h"
 #include "MarioShootFireBallState.h"
 
-void SwitchSittingToWalking(CMario& mario)
-{
-    mario.isSit = false;
-    if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
-        mario.y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-    else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-        mario.y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-}
-
 void SetPositionGetInSitState(CMario& mario)
 {
     if (mario.GetLevel() != MARIO_LEVEL_SMALL)
     {
-        mario.isSit = true;
+        MarioSittingState::GetInstance()->isSit = true;
         if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
             mario.y += MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
@@ -37,7 +28,7 @@ void SetPositionGetOutSitState(CMario& mario)
 {
     if (mario.GetLevel() != MARIO_LEVEL_SMALL)
     {
-        mario.isSit = false;
+        MarioSittingState::GetInstance()->isSit = false;
         if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
             mario.y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
@@ -88,9 +79,6 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         if (game->IsKeyDown(DIK_RIGHT))
         {
             mario.nx = 1;
-
-            if (mario.isSit)
-                SwitchSittingToWalking(mario);
             if (mario.vx < 0)
             {
                 SetStopStateWhenHandleShell(mario);
@@ -100,9 +88,6 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         else if (game->IsKeyDown(DIK_LEFT))
         {
             mario.nx = -1;
-
-            if (mario.isSit) // if Mario is sitting
-                SwitchSittingToWalking(mario);
             if (mario.vx > 0)
             {
                 SetStopStateWhenHandleShell(mario);
@@ -115,10 +100,10 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     {
         if (mario.isGrounded) // check isGrounded to jump again
         {
-            mario.isHighJump = true;
-            if (mario.isSit == true) // if isSit, don't change state
+            MarioJumpingState::GetInstance()->isHighJump = true;
+            if (MarioSittingState::GetInstance()->isSit) // if isSit, don't change state
             {
-                MarioState::ducking.GetInstance()->StartJump();
+                MarioState::sitting.GetInstance()->StartJump();
             }
             else {
                 mario.state_ = MarioState::jumping.GetInstance();
@@ -132,7 +117,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     // mario.vx == 0: prevent multiple key when walk and sit
     else if (input == PRESS_DOWN && mario.vx == 0)
     {
-        mario.state_ = MarioState::ducking.GetInstance();
+        mario.state_ = MarioState::sitting.GetInstance();
         SetPositionGetInSitState(mario);
     }
     else if (input == RELEASE_DOWN && mario.vx == 0)
@@ -145,7 +130,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         mario.isPower = true;
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
-            mario.isAttack = true;
+            MarioTailHitState::GetInstance()->tailHitting = true;
             mario.state_ = MarioState::tailHit.GetInstance();
             MarioState::tailHit.GetInstance()->StartHit();
         } 

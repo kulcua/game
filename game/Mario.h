@@ -134,9 +134,6 @@ public:
 	bool isGrounded;
 	bool isPower;
 	bool isHandleShell;
-	bool isSit;
-	bool isHighJump;
-	bool isAttack;
 	bool isUntouchable;
 
 	CMario();

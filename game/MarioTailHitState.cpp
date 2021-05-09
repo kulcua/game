@@ -42,7 +42,7 @@ void MarioTailHitState::Update(CMario& mario, DWORD dt)
     {
         hitStartTime = 0;
         mario.state_ = MarioState::standing.GetInstance();
-        mario.isAttack = false;
+        tailHitting = false;
     }
     //DebugOut(L"MarioTailHitState\n");
 }

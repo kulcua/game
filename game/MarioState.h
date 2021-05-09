@@ -3,7 +3,7 @@
 class MarioStandingState;
 class MarioWalkingState;
 class MarioJumpingState;
-class MarioDuckingState;
+class MarioSittingState;
 class MarioStoppingState;
 class MarioRunningState;
 class MarioPreFlyState;
@@ -23,7 +23,7 @@ public:
 	static MarioStandingState standing;
 	static MarioWalkingState walking;
 	static MarioJumpingState jumping;
-	static MarioDuckingState ducking;
+	static MarioSittingState sitting;
 	static MarioStoppingState stopping;
 	static MarioRunningState running;
 	static MarioPreFlyState preFly;

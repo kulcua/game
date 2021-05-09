@@ -1,5 +1,6 @@
 #include "MarioRunningState.h"
 #include "Mario.h"
+#include "MarioTailHitState.h"
 
 MarioRunningState* MarioRunningState::__instance = NULL;
 
@@ -62,7 +63,7 @@ void MarioRunningState::HandleInput(CMario& mario, Input input)
 void MarioRunningState::Update(CMario& mario, DWORD dt)
 {
 	MarioState::Update(mario, dt);
-	mario.isAttack = false;
+	MarioTailHitState::GetInstance()->tailHitting = false;
 	//DebugOut(L"Running\n");
 }
 
