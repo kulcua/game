@@ -23,7 +23,7 @@ void MarioTailHitState::HandleInput(CMario& mario, Input input)
     }
 }
 
-void MarioTailHitState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioTailHitState
+void MarioTailHitState::Enter(CMario& mario)
 {
     if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
     {

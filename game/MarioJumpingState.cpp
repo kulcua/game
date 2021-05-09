@@ -5,6 +5,7 @@
 #include "MarioDroppingState.h"
 #include "MarioTailHitState.h"
 #include "MarioShootFireBallState.h"
+#include "MarioFrontState.h"
 
 MarioJumpingState* MarioJumpingState::__instance = NULL;
 
@@ -132,6 +133,11 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
     else if (mario.vy > 0)
     {
          mario.state_ = MarioState::dropping.GetInstance();
+    }
+
+    if (MarioFrontState::GetInstance()->onPortalPipe)
+    {
+        mario.state_ = MarioState::front.GetInstance();
     }
     //DebugOut(L"Jumping %f\n", mario.vx);
 }

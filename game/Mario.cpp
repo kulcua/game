@@ -26,6 +26,7 @@
 #include "Card.h"
 #include "PortalPipe.h"
 #include "Camera.h"
+#include "MarioFrontState.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -227,11 +228,14 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<PortalPipe*>(e->obj))
 			{
 				PortalPipe* port = dynamic_cast<PortalPipe*>(e->obj);
-				if (e->ny && port->GetName() == PortalName::in)
+				if (e->ny)
 				{
-					PortalPipe* portOut = PortalPipeOutManager::GetInstance()->GetPortalPipeOut(port->GetType());
-					SetPosition(portOut->x, portOut->y);
-					CCamera::GetInstance()->SetPosition(portOut->GetCamY());
+					if (e->ny < 0)
+						isGrounded = true;
+					if (port->GetName() == PortalName::in)
+						MarioFrontState::GetInstance()->GetPortal(*this, port, e->ny);
+					else
+						MarioFrontState::GetInstance()->onPortalPipe = false;
 				}
 			}
 
@@ -240,8 +244,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				|| dynamic_cast<CBrick*>(e->obj)
 				|| dynamic_cast<BrickBlock*>(e->obj))
 			{
-				if (e->ny)
+				if (e->ny < 0)
 				{
+					MarioFrontState::GetInstance()->onPortalPipe = false;
 					isGrounded = true;
 					if (isSit == false)
 						state_ = MarioState::standing.GetInstance();

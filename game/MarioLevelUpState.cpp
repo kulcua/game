@@ -18,7 +18,7 @@ void MarioLevelUpState::HandleInput(CMario& mario, Input input)
 
 }
 
-void MarioLevelUpState::Enter(CMario& mario) // declare (CMario& mario) means in CMario has a friend class MarioLevelUpState
+void MarioLevelUpState::Enter(CMario& mario)
 {
     if (mario.GetLevel() == MARIO_LEVEL_BIG)
     {

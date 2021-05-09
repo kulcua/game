@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="31" nextobjectid="277">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="31" nextobjectid="284">
  <editorsettings>
   <export target="world-1-1-map.xml" format="tmx"/>
  </editorsettings>
@@ -383,7 +383,6 @@
   <object id="15" x="5520" y="1102" width="98" height="150"/>
   <object id="16" x="6721.33" y="1250.67" width="1728.67" height="47.3333"/>
   <object id="17" x="6723.33" y="1150.67" width="89.3333" height="98.6666"/>
-  <object id="18" x="6914" y="1150" width="94" height="98"/>
   <object id="19" x="6720" y="478" width="96" height="530"/>
   <object id="48" x="4463.5" y="1008.09" width="96.3636" height="47.4091"/>
   <object id="107" x="5856" y="1392.67" width="382" height="589.333"/>
@@ -396,9 +395,7 @@
   <object id="115" x="6816" y="1632" width="202" height="58"/>
   <object id="116" x="6864" y="1581" width="153" height="55"/>
   <object id="117" x="6336" y="1391.33" width="575" height="48.6667"/>
-  <object id="145" x="6912.33" y="1390" width="97.6667" height="99"/>
   <object id="209" x="6720" y="1104.67" width="94.6666" height="47.3333"/>
-  <object id="272" x="6815" y="1105" width="94" height="143"/>
  </objectgroup>
  <objectgroup id="14" name="Ghost">
   <object id="28" x="720.523" y="1104.97" width="142.597" height="144.447"/>
@@ -545,18 +542,18 @@
   <object id="268" x="6214.75" y="1105.5" width="8.5" height="47"/>
  </objectgroup>
  <objectgroup id="21" name="Portal">
-  <object id="274" name="out" type="2" x="6914.5" y="1162" width="91" height="40">
+  <object id="274" name="out" type="2" x="6917.17" y="1154" width="86" height="93.3333">
    <properties>
     <property name="camY" value="700"/>
    </properties>
   </object>
-  <object id="276" name="in" type="2" x="6915.5" y="1455" width="91" height="40"/>
-  <object id="275" name="out" type="1" x="6241.83" y="1387.67" width="97" height="96">
+  <object id="276" name="in" type="2" x="6911.5" y="1391" width="96.6667" height="100"/>
+  <object id="275" name="out" type="1" x="6241.83" y="1393" width="92.6667" height="92">
    <properties>
     <property name="camY" value="1365"/>
    </properties>
   </object>
-  <object id="273" name="in" type="1" x="6819" y="1097" width="91" height="40"/>
+  <object id="273" name="in" type="1" x="6817.67" y="1102.33" width="91.3333" height="142.667"/>
  </objectgroup>
  <objectgroup id="24" name="Card">
   <object id="271" x="8039.33" y="1030" width="50" height="50"/>

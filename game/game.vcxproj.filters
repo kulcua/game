@@ -264,6 +264,9 @@
     <ClCompile Include="PortalPipe.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
+    <ClCompile Include="MarioFrontState.cpp">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -454,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="PortalPipe.h">
       <Filter>Mics</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioFrontState.h">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

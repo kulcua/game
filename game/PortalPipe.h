@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #define PORT_WIDTH 90
-#define PORT_HEIGHT 40
+#define PORT_HEIGHT 90
 
 enum class PortalName {
 	in,
