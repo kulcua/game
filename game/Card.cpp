@@ -37,7 +37,7 @@ void Card::Render()
 		else if (card == CardType::white_flower)
 			ani = CARD_ANI_WHITE_FLOWER;
 	}
-	animation_set->at(ani)->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void Card::GetBoundingBox(float& l, float& t, float& r, float& b)

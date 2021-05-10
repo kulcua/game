@@ -12,7 +12,7 @@ void Coin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void Coin::Render()
 {
-	animation_set->at(0)->Render(x, y, nx);
+	animation_set->at(0)->Render(x, y, nx, ny);
 }
 
 void Coin::GetBoundingBox(float& l, float& t, float& r, float& b)

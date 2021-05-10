@@ -53,7 +53,7 @@ void CMaps::Render()
 	for (int i = 0; i < num_tile_y; i++)
 		for (int j = 0; j < num_tile_x; j++)
 		{
-			CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE, NULL);
+			CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE, -1, -1);
 		}
 }
 

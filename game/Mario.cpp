@@ -94,6 +94,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						if (effect != NULL)
 							effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
 						goomba->vy = -GOOMBA_DEFLECT_SPEED;
+						goomba->ny = -goomba->ny;
 						goomba->SetState(GOOMBA_STATE_DIE);
 					}
 				}
@@ -141,6 +142,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 							effect->Init(EffectName::marioTailAttack, koopa->x, koopa->y);
 
 						koopa->vy = -KOOPA_DEFECT_SPEED;
+						koopa->ny = -koopa->ny;
 						koopa->SetState(KOOPA_STATE_BALL);
 					}
 				}
@@ -250,7 +252,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
 					isGrounded = true;
-					if (MarioSittingState::GetInstance()->isSit == false)
+					if (MarioSittingState::GetInstance()->isSit == false
+						&& MarioTailHitState::GetInstance()->tailHitting == false)
 						state_ = MarioState::standing.GetInstance();
 				}
 			}
@@ -368,7 +371,7 @@ void CMario::Render()
 	else 
 		animation = GetAnimation();
 
-	animation_set->at(animation)->Render(x, y, nx, 255);
+	animation_set->at(animation)->Render(x, y, nx, ny, 255);
 
 	//RenderBoundingBox();
 }

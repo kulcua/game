@@ -130,7 +130,6 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         mario.isPower = true;
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
-            MarioTailHitState::GetInstance()->tailHitting = true;
             mario.state_ = MarioState::tailHit.GetInstance();
             MarioState::tailHit.GetInstance()->StartHit();
         } 

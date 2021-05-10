@@ -43,7 +43,7 @@ void ParaKoopa::Render()
 		ani = PARAKOOPA_ANI_WALK;
 	else
 		ani = PARAKOOPA_ANI_JUMP;
-	animation_set->at(ani)->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void ParaKoopa::SetState(int state)

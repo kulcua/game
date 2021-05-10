@@ -39,7 +39,7 @@ void CBrick::Render()
 		ani = BRICK_ANI_QUESTION;
 	else if (type == BRICK_TYPE_BLOCK)
 		ani = BRICK_ANI_BLOCK;
-	animation_set->at(ani)->Render(x, y, NULL);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void CBrick::SetState(int state)

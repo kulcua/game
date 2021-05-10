@@ -85,5 +85,5 @@ void VenusFireTrap::Render()
 			ani = VENUS_ANI_SHOOT_UP;
 		else ani = VENUS_ANI_SHOOT_DOWN;
 	}
-	animation_set->at(ani)->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }

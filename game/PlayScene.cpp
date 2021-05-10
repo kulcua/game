@@ -31,6 +31,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define SCENE_SECTION_MAPS	7
 #define SCENE_SECTION_FONT	8
 #define SCENE_SECTION_HUD	9
+#define SCENE_SECTION_BGCOLOR	10
 
 #define OBJECT_TYPE_MARIO	0
 #define OBJECT_TYPE_ITEM	11
@@ -196,6 +197,19 @@ void CPlayScene::_ParseSection_FONT(string line)
 	fontManager->GetInstance()->characters[name] = spriteId;
 }
 
+void CPlayScene::_ParseSection_BGColor(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 3) return;
+
+	int r = atoi(tokens[0].c_str());
+	int g = atoi(tokens[1].c_str());
+	int b = atoi(tokens[2].c_str());
+
+	CGame::GetInstance()->SetBackgroundColor(D3DCOLOR_XRGB(r, g, b));
+}
+
 void CPlayScene::_ParseSection_HUD(string line)
 {
 	vector<string> tokens = split(line);
@@ -261,6 +275,9 @@ void CPlayScene::Load()
 		if (line == "[HUD]") {
 			section = SCENE_SECTION_HUD; continue;
 		}
+		if (line == "[BGCOLOR]") {
+			section = SCENE_SECTION_BGCOLOR; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		switch (section)
@@ -273,6 +290,7 @@ void CPlayScene::Load()
 		case SCENE_SECTION_MAPS: _ParseSection_MAPS(line); break;
 		case SCENE_SECTION_FONT: _ParseSection_FONT(line); break;
 		case SCENE_SECTION_HUD: _ParseSection_HUD(line); break;
+		case SCENE_SECTION_BGCOLOR: _ParseSection_BGColor(line); break;
 		}
 	}
 

@@ -30,6 +30,7 @@ protected:
 	void _ParseSection_MAPS(string line);
 	void _ParseSection_FONT(string line);
 	void _ParseSection_HUD(string line);
+	void _ParseSection_BGColor(string line);
 public:
 	CPlayScene(int id, LPCWSTR filePath);
 

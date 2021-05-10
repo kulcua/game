@@ -89,14 +89,14 @@ void HUD::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, nx, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
+	CGame::GetInstance()->Draw(x, y, nx, ny, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
 }
 
 void HUD::Render()
 {
 	RenderBoundingBox();
 
-	CSprites::GetInstance()->Get(spriteId)->Draw(x, y, NULL);
+	CSprites::GetInstance()->Get(spriteId)->Draw(x, y, -1, -1);
 	
 	world->Render();
 	life->Render();

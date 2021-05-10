@@ -75,7 +75,7 @@ void ParaGoomba::Render()
 			ani = PARAGOOMBA_ANI_FLYING;
 	}
 	else ani = PARAGOOMBA_ANI_NO_WING;
-	animation_set->at(ani)->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void ParaGoomba::SetState(int state)
