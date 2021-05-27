@@ -19,7 +19,7 @@ class TileMap
 	Layer* foregroundLayer;
 	ObjectMap* objectMap;
 public:
-	bool ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor, vector<LPGAMEOBJECT> &objects, CMario *mario);
+	bool ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor, vector<LPGAMEOBJECT> &objects, string prefixPath);
 	void RenderBackground();
 	void RenderForeground();
 	static TileMap* GetInstance();

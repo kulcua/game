@@ -6,7 +6,8 @@
 
 class Tileset
 {
-	const string prefix = "map/World-map-1-1/";
+	//const string prefix = "map/World-map-1-1/";
+	string prefixPath;
 	TiXmlElement* tileset;
 	int textureId;
 	D3DCOLOR transColor;
@@ -18,7 +19,7 @@ class Tileset
 	int rows;
 	LPCWSTR pathImage;
 public:
-	Tileset(TiXmlElement* tileset, int id, D3DCOLOR transColor);
+	Tileset(TiXmlElement* tileset, int id, D3DCOLOR transColor, string prefixPath);
 	void SplitImageToTile();
 };
 

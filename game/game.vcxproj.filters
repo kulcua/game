@@ -67,6 +67,9 @@
     <Filter Include="Effect">
       <UniqueIdentifier>{ecb58eab-d89c-4c49-96c6-f46f7b391d80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Intro">
+      <UniqueIdentifier>{fecdbc29-bac6-48b8-99dd-a57b1d9a9926}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -267,6 +270,12 @@
     <ClCompile Include="MarioSittingState.cpp">
       <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioTail.cpp">
+      <Filter>Mario\MarioState\AttackState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -460,6 +469,12 @@
     </ClInclude>
     <ClInclude Include="MarioSittingState.h">
       <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioTail.h">
+      <Filter>Mario\MarioState\AttackState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

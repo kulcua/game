@@ -38,7 +38,7 @@ void SetPositionGetOutSitState(CMario& mario)
 
 void SetStateWalk_Run_PreFly(CMario &mario)
 {
-    if (mario.isGrounded) {
+    if (mario.isGrounded && mario.state_ != MarioState::tailHit.GetInstance()) {
         if (mario.isPower)
         {
             if (mario.GetPower() < MARIO_MAX_POWER)
@@ -131,6 +131,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
             mario.state_ = MarioState::tailHit.GetInstance();
+            MarioState::tailHit.GetInstance()->tailHitting = true;
             MarioState::tailHit.GetInstance()->StartHit();
         } 
         else if (mario.GetLevel() == MARIO_LEVEL_FIRE)

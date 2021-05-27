@@ -83,7 +83,7 @@
 #define	MARIO_LEVEL_RACCOON	3
 #define	MARIO_LEVEL_FIRE	4
 #define MARIO_SIT_BBOX_HEIGHT 55
-#define MARIO_RACCOON_BBOX_WIDTH  75
+#define MARIO_RACCOON_BBOX_WIDTH  65
 #define MARIO_RACCOON_BBOX_HEIGHT 86
 #define MARIO_BIG_BBOX_WIDTH  42
 #define MARIO_BIG_BBOX_HEIGHT 81
@@ -98,6 +98,7 @@
 #define MARIO_SPIN_TIME	200
 #define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
+#define MARIO_ANI_SET_ID	1
 
 class CMario : public CGameObject
 {
@@ -114,8 +115,6 @@ class CMario : public CGameObject
 	int point = 0;
 	int money = 0;
 
-	float start_x;			// initial position of Mario at scene
-	float start_y;
 	static CMario* __instance;
 public:
 	static CMario* GetInstance();

@@ -10,6 +10,7 @@
 #include "FireBallPool.h"
 #include "TileMap.h"
 #include "FontManager.h"
+#include "Intro.h"
 
 class CPlayScene : public CScene
 {
@@ -33,7 +34,6 @@ protected:
 	void _ParseSection_BGColor(string line);
 public:
 	CPlayScene(int id, LPCWSTR filePath);
-
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();

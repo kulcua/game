@@ -3,7 +3,7 @@
 
 ParaGoomba::ParaGoomba()
 {
-	SetState(PARAGOOMBA_STATE_LOW_JUMP);
+	SetState(PARAGOOMBA_STATE_JUMP);
 	die = false;
 	level = PARAGOOMBA_LEVEL_JUMP;
 	jumpTimes = PARAGOOMBA_JUMP_TIMES;
@@ -35,27 +35,17 @@ void ParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGoomba::Update(dt, coObjects);
 
-	if (die == false)
+	if (level == PARAGOOMBA_LEVEL_JUMP)
 	{
-		vx = -GOOMBA_WALKING_SPEED;
-
-		if (level == PARAGOOMBA_LEVEL_JUMP)
+		if (jumpTimes > 0 && isOnGround)
 		{
-			if (jumpTimes > 0 && isOnGround)
-			{
-				SetState(PARAGOOMBA_STATE_LOW_JUMP);
-				if (jumpTimes == 0)
-				{
-					vy = -PARAGOOMBA_HIGH_JUMP_SPEED;
-					StartWalkingTime();
-				}
-			}
+			SetState(PARAGOOMBA_STATE_JUMP);
+		}
 
-			if (GetTickCount64() - walkingTimeStart > PARAGOOMBA_WALK_TIME && walkingTimeStart > 0)
-			{
-				walkingTimeStart = 0;
-				jumpTimes = PARAGOOMBA_JUMP_TIMES;
-			}
+		if (GetTickCount64() - walkingTimeStart > PARAGOOMBA_WALK_TIME && walkingTimeStart > 0)
+		{
+			walkingTimeStart = 0;
+			jumpTimes = PARAGOOMBA_JUMP_TIMES;
 		}
 	}
 }
@@ -83,21 +73,28 @@ void ParaGoomba::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case GOOMBA_STATE_DIE:
-	{
-		y += GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE + 1;
-		StartDieTime();
-		vx = 0;
-		vy = 0;
-		Effect* effect = EffectPool::GetInstance()->Create();
-		if (effect != NULL)
-			effect->InitPoint(EffectPoint::p100, x, y);
-	}	
-	break;
-	case PARAGOOMBA_STATE_LOW_JUMP:
-		vy = -PARAGOOMBA_LOW_JUMP_SPEED;
-		isOnGround = false;
-		jumpTimes--;
-		break;
+		case GOOMBA_STATE_DIE:
+		{
+			y += GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE + 1;
+			StartDieTime();
+			vx = 0;
+			vy = 0;
+			Effect* effect = EffectPool::GetInstance()->Create();
+			if (effect != NULL)
+				effect->InitPoint(EffectPoint::p100, x, y);
+			break;
+		}	
+		case PARAGOOMBA_STATE_JUMP:
+		{
+			jumpTimes--;
+			isOnGround = false;
+			if (jumpTimes == 0)
+			{
+				vy = -PARAGOOMBA_HIGH_JUMP_SPEED;
+				StartWalkingTime();
+			}
+			else vy = -PARAGOOMBA_LOW_JUMP_SPEED;
+			break;
+		}
 	}
 }

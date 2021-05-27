@@ -1,0 +1,16 @@
+[BGCOLOR]
+0	0	0
+
+[TEXTURES]
+0	textures\mario.png	255	255	255
+
+[SPRITES]
+
+
+[OBJECTS]
+# MARIO
+#0	500	400	1
+
+[MAP]
+#id	.tmx	r	g	b
+81000	map/Overworld/overworld-1-map.tmx	255	255	255	map/Overworld/

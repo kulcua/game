@@ -31,9 +31,6 @@ void CCamera::SetPosition(float y) {
 
 void CCamera::FollowMario()
 {
-	xCenter = x + (width / 2) - MARIO_BIG_BBOX_WIDTH / 2;
-	yCenter = y + (height / 2) + MARIO_BIG_BBOX_HEIGHT / 2;
-
 	if ((mario->vx > 0 && mario->x < xCenter) // walk right
 		|| (mario->vx < 0 && mario->x > xCenter))// walk left
 	{
@@ -64,6 +61,9 @@ void CCamera::FollowMario()
 void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+
+	xCenter = x + (width / 2) - MARIO_BIG_BBOX_WIDTH / 2;
+	yCenter = y + (height / 2) + MARIO_BIG_BBOX_HEIGHT / 2;
 
 	FollowMario();
 

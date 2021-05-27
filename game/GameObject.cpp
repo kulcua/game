@@ -119,7 +119,7 @@ void CGameObject::FilterCollision(
 			min_tx = c->t;
 			nx = c->nx;
 			min_ix = i;
-			rdx = c->dx; //???
+			rdx = c->dx;
 		}
 
 		if (c->t < min_ty && c->ny != 0)
