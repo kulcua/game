@@ -27,7 +27,7 @@ void SetPositionGetInSitState(CMario& mario)
 
 void SetStateWalk_Run_PreFly(CMario &mario)
 {
-    if (mario.isGrounded && mario.state_ != MarioState::tailHit.GetInstance()) {
+    if (mario.onGround && mario.state_ != MarioState::tailHit.GetInstance()) {
         if (mario.isPower)
         {
             if (mario.GetPower() < MARIO_MAX_POWER)
@@ -87,7 +87,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     
     if (input == PRESS_S)
     {
-        if (mario.isGrounded) // check isGrounded to jump again
+        if (mario.onGround) // check onGround to jump again
         {
             MarioJumpingState::GetInstance()->isHighJump = true;
             if (MarioSittingState::GetInstance()->isSit) // if isSit, don't change state
@@ -99,7 +99,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 MarioState::jumping.GetInstance()->StartJump();
             }
             mario.vy = -MARIO_JUMP_SPEED_Y;
-            mario.isGrounded = false;
+            mario.onGround = false;
         }  
     }
     // Mario is walking can't duck

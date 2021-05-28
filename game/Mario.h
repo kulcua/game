@@ -130,7 +130,7 @@ public:
 
 	void HandleInput(Input input);
 
-	bool isGrounded;
+	bool onGround;
 	bool isPower;
 	bool isHandleShell;
 	bool isUntouchable;

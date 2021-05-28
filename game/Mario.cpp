@@ -146,7 +146,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					PowerReset();
 				}
 				else if (e->ny < 0)
-					isGrounded = true;
+					onGround = true;
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj))
 			{
@@ -205,7 +205,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 				{
 					if (e->ny < 0)
-						isGrounded = true;
+						onGround = true;
 					if (port->GetName() == PortalName::in)
 						MarioFrontState::GetInstance()->GetPortal(*this, port, e->ny);
 					else
@@ -221,7 +221,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny < 0)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
-					isGrounded = true;
+					onGround = true;
 					if (MarioSittingState::GetInstance()->isSit == false
 						&& state_ != MarioState::tailHit.GetInstance())
 						state_ = MarioState::standing.GetInstance();

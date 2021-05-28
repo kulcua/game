@@ -71,7 +71,7 @@ void MarioWalkingState::Update(CMario& mario, DWORD dt)
     MarioState::Update(mario, dt);
     if (mario.vy > MARIO_VY_DROP)
     {
-        mario.isGrounded = false;
+        mario.onGround = false;
         mario.state_ = MarioState::dropping.GetInstance();
     }
     //DebugOut(L"Walking\n");

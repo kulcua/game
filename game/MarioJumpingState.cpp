@@ -116,7 +116,7 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
-    mario.isGrounded = false;
+    mario.onGround = false;
 
     if (isHighJump)
     {
