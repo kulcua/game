@@ -16,23 +16,12 @@ void SetPositionGetInSitState(CMario& mario)
 {
     if (mario.GetLevel() != MARIO_LEVEL_SMALL)
     {
+        mario.state_ = MarioState::sitting.GetInstance();
         MarioSittingState::GetInstance()->isSit = true;
         if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
             mario.y += MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
         else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
             mario.y += MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-    }
-}
-
-void SetPositionGetOutSitState(CMario& mario)
-{
-    if (mario.GetLevel() != MARIO_LEVEL_SMALL)
-    {
-        MarioSittingState::GetInstance()->isSit = false;
-        if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
-            mario.y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-        else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-            mario.y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
     }
 }
 
@@ -117,13 +106,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     // mario.vx == 0: prevent multiple key when walk and sit
     else if (input == PRESS_DOWN && mario.vx == 0)
     {
-        mario.state_ = MarioState::sitting.GetInstance();
         SetPositionGetInSitState(mario);
-    }
-    else if (input == RELEASE_DOWN && mario.vx == 0)
-    {
-        mario.state_ = MarioState::standing.GetInstance();
-        SetPositionGetOutSitState(mario);
     }
     else if (input == PRESS_A)
     {
