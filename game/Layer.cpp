@@ -43,7 +43,7 @@ void Layer::Render()
 			{
 				if (tile[i][j] != 0)
 				{
-					CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE, NULL);
+					CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE, -1, -1);
 				}
 			}
 		}

@@ -98,7 +98,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryIntAttribute("type", &type);
 			CBrick* br = new CBrick(type, x, y);
 			CItem* item = NULL;
-			DebugOut(L"item %s\n", ToLPCWSTR(typeName));
+			//DebugOut(L"item %s\n", ToLPCWSTR(typeName));
 			if (typeName.compare("coin") == 0)
 			{
 				item = new CoinBrick();
@@ -222,7 +222,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				obj = new PiranhaPlant(y);
 			}
 
-			DebugOut(L"name %s\n", ToLPCWSTR(enemyName));
+			//DebugOut(L"name %s\n", ToLPCWSTR(enemyName));
 			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 			LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
 			obj->SetAnimationSet(ani_set);
@@ -251,7 +251,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
-			DebugOut(L"port %d %f\n", type, camY);
+			//DebugOut(L"port %d %f\n", type, camY);
 		}
 	}
 }

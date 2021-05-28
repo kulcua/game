@@ -34,7 +34,7 @@ int HUD::CountDownTimer()
 	return timeLeft;
 }
 
-void HUD::Update()
+void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	world->SetContent(1);
 	life->SetContent(mario->GetLife());
@@ -70,7 +70,7 @@ void HUD::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + SCREEN_WIDTH;
+	r = x + HUD_WIDTH;
 	b = y + HUD_HEIGHT;
 }
 
@@ -89,19 +89,22 @@ void HUD::RenderBoundingBox()
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x, y, nx, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
+	CGame::GetInstance()->Draw(x, y, nx, ny, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
 }
 
 void HUD::Render()
 {
-	RenderBoundingBox();
+	if (spriteId != 0)
+	{
+		RenderBoundingBox();
 
-	CSprites::GetInstance()->Get(spriteId)->Draw(x, y, NULL);
-	
-	world->Render();
-	life->Render();
-	point->Render();
-	money->Render();
-	time->Render();
-	power->Render();
+		CSprites::GetInstance()->Get(spriteId)->Draw(x, y, -1, -1);
+
+		world->Render();
+		life->Render();
+		point->Render();
+		money->Render();
+		time->Render();
+		power->Render();
+	}	
 }

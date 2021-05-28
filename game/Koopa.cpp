@@ -119,6 +119,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 				goomba->SetState(GOOMBA_STATE_DIE);
+				goomba->ny = -goomba->ny;
 			}
 			else if (dynamic_cast<CGround*>(e->obj))
 			{
@@ -213,7 +214,7 @@ void CKoopa::Render()
 	else
 		ani = KOOPA_ANI_WALKING;
 
-	animation_set->at(ani)->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void CKoopa::SetState(int state)

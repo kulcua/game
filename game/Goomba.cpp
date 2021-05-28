@@ -86,7 +86,7 @@ void CGoomba::Render()
 	else {
 		ani = GOOMBA_ANI_DIE;
 	}
-	animation_set->at(ani)->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void CGoomba::SetState(int state)
@@ -107,7 +107,7 @@ void CGoomba::SetState(int state)
 		break;
 	}
 	case GOOMBA_STATE_WALKING:
-		vx = -GOOMBA_WALKING_SPEED;
+		vx = nx * GOOMBA_WALKING_SPEED;
 		break;
 	}
 }

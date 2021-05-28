@@ -1,6 +1,7 @@
 #include "MarioTailHitState.h"
 #include "Mario.h"
 #include "MarioStandingState.h"
+#include "Game.h"
 
 #define MARIO_HIT_TIME 210
 
@@ -17,7 +18,15 @@ MarioTailHitState* MarioTailHitState::GetInstance()
 
 void MarioTailHitState::HandleInput(CMario& mario, Input input)
 {
-    if (input == RELEASE_A)
+    CGame* game = CGame::GetInstance();
+    if (input == KEY_STATE)
+    {
+        if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))
+        {
+            mario.vx = 0;
+        }
+    }
+    else if (input == RELEASE_A)
     {
         mario.PowerReset();
     }
@@ -38,11 +47,9 @@ void MarioTailHitState::GetBoundingBox(CMario& mario, float& left, float& top, f
 
 void MarioTailHitState::Update(CMario& mario, DWORD dt)
 {
-    if (GetTickCount64() - hitStartTime > MARIO_HIT_TIME)
+    if (GetTickCount64() - hitStartTime > MARIO_HIT_TIME && hitStartTime > 0)
     {
         hitStartTime = 0;
         mario.state_ = MarioState::standing.GetInstance();
-        tailHitting = false;
-    }
-    //DebugOut(L"MarioTailHitState\n");
+    } 
 }

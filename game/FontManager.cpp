@@ -11,5 +11,5 @@ FontManager* FontManager::GetInstance()
 
 void FontManager::Render(string charName, float x, float y)
 {
-	CSprites::GetInstance()->Get(GetSpriteId(charName))->Draw(x, y, NULL);
+	CSprites::GetInstance()->Get(GetSpriteId(charName))->Draw(x, y, -1, -1);
 }

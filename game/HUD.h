@@ -5,9 +5,8 @@
 #include "Mario.h"
 
 #define HUD_HEIGHT 155
-#define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 750
-
+#define HUD_WIDTH 800
 #define HUD_ALIGN_LEFT 110
 #define HUD_ALIGN_CENTER 160
 #define HUD_ALIGN_MONEY	398
@@ -20,7 +19,7 @@ class HUD : public CGameObject
 {
 	static HUD* __instance;
 	float x, y;
-	int spriteId;
+	int spriteId = 0;
 	float xWorld, xM;
 	float xPower, xPoint;
 	float xMoney, xTime;
@@ -39,7 +38,7 @@ public:
 	int CountDownTimer();
 	void SetPosition(float x, float y);
 	void SetSpriteId(int spriteId) { this->spriteId = spriteId; }
-	void Update();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
 	void RenderBoundingBox();
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

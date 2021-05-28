@@ -112,7 +112,7 @@ void Effect::Render()
 		else if (ePoint == EffectPoint::p1000)
 			ani = EFFECT_ANI_POINT_1000;
 	}
-	animation_set->at(ani)->Render(x, y, NULL);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void Effect::GetBoundingBox(float& l, float& t, float& r, float& b)

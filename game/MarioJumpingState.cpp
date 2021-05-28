@@ -116,7 +116,7 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
 { 
-    mario.isGrounded = false;
+    mario.onGround = false;
 
     if (isHighJump)
     {
@@ -135,7 +135,7 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
          mario.state_ = MarioState::dropping.GetInstance();
     }
 
-    if (MarioFrontState::GetInstance()->onPortalPipe)
+    if (MarioFrontState::GetInstance()->onPortalPipe && MarioFrontState::GetInstance()->eny > 0)
     {
         mario.state_ = MarioState::front.GetInstance();
     }

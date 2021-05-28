@@ -31,6 +31,15 @@ void MarioSittingState::Enter(CMario& mario)
     }
 }
 
+void SetPositionGetOutSitState(CMario& mario)
+{
+    MarioSittingState::GetInstance()->isSit = false;
+    if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
+        mario.y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+    else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
+        mario.y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+}
+
 void MarioSittingState::HandleInput(CMario& mario, Input input)
 {
     CGame* game = CGame::GetInstance();
@@ -39,16 +48,17 @@ void MarioSittingState::HandleInput(CMario& mario, Input input)
     {
         if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))
         {
-            MarioSittingState::GetInstance()->isSit = false;
-            if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
-                mario.y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-            else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-                mario.y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
+            SetPositionGetOutSitState(mario);
         }
     }
     if (input == RELEASE_S)
     {
         MarioJumpingState::GetInstance()->isHighJump = false;
+    }
+    else if (input == RELEASE_DOWN && mario.vx == 0)
+    {
+        mario.state_ = MarioState::standing.GetInstance();
+        SetPositionGetOutSitState(mario);
     }
 }
 

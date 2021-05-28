@@ -129,5 +129,6 @@ void PowerUpItem::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void PowerUpItem::Render()
 {
-	CItem::Render();
+	if (setItem != PowerUp::none)
+		CItem::Render();
 }

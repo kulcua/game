@@ -164,6 +164,7 @@
     <ClCompile Include="GreenMushroom.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="HUD.cpp" />
+    <ClCompile Include="Intro.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KoopaBound.cpp" />
     <ClCompile Include="Layer.cpp" />
@@ -183,6 +184,7 @@
     <ClCompile Include="MarioOnGroundState.cpp" />
     <ClCompile Include="MarioState.cpp" />
     <ClCompile Include="MarioStoppingState.cpp" />
+    <ClCompile Include="MarioTail.cpp" />
     <ClCompile Include="MarioTailHitState.cpp" />
     <ClCompile Include="MarioWalkingState.cpp" />
     <ClCompile Include="ObjectMap.cpp" />
@@ -232,6 +234,7 @@
     <ClInclude Include="GreenMushroom.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="HUD.h" />
+    <ClInclude Include="Intro.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="KoopaBound.h" />
     <ClInclude Include="Layer.h" />
@@ -251,6 +254,7 @@
     <ClInclude Include="MarioOnGroundState.h" />
     <ClInclude Include="MarioState.h" />
     <ClInclude Include="MarioStoppingState.h" />
+    <ClInclude Include="MarioTail.h" />
     <ClInclude Include="MarioTailHitState.h" />
     <ClInclude Include="MarioWalkingState.h" />
     <ClInclude Include="ObjectMap.h" />

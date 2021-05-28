@@ -56,7 +56,15 @@ void MarioFrontState::Update(CMario& mario, DWORD dt)
 
     if (getOut)
     {
-        if ((mario.y > portOut->y + MARIO_RACCOON_BBOX_HEIGHT) || (mario.y < portOut->y - MARIO_RACCOON_BBOX_HEIGHT))
+        if (mario.GetLevel() == MARIO_LEVEL_SMALL)
+        {
+            if ((mario.y > portOut->y + MARIO_SMALL_BBOX_HEIGHT) || (mario.y < portOut->y - MARIO_SMALL_BBOX_HEIGHT))
+            {
+                mario.state_ = MarioState::standing.GetInstance();
+                getOut = false;
+            }
+        }
+        else if ((mario.y > portOut->y + MARIO_RACCOON_BBOX_HEIGHT) || (mario.y < portOut->y - MARIO_RACCOON_BBOX_HEIGHT))
         {
             mario.state_ = MarioState::standing.GetInstance();
             getOut = false;

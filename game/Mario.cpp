@@ -88,14 +88,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						goomba->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
-					{
-						Effect* effect = EffectPool::GetInstance()->Create();
-						if (effect != NULL)
-							effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
-						goomba->vy = -GOOMBA_DEFLECT_SPEED;
-						goomba->SetState(GOOMBA_STATE_DIE);
-					}
 				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
@@ -119,10 +111,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						brick->SetState(BRICK_STATE_DISABLE);
 						MarioJumpingState::GetInstance()->isHighJump = false;
 					}
-					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting && brick->GetType() == BRICK_TYPE_BLOCK)
-					{
-						brick->SetState(BRICK_STATE_DISABLE);
-					}
 				}
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
@@ -133,15 +121,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					{
 						koopa->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED; 
-					}
-					else if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
-					{
-						Effect* effect = EffectPool::GetInstance()->Create();
-						if (effect != NULL)
-							effect->Init(EffectName::marioTailAttack, koopa->x, koopa->y);
-
-						koopa->vy = -KOOPA_DEFECT_SPEED;
-						koopa->SetState(KOOPA_STATE_BALL);
 					}
 				}
 				else
@@ -167,21 +146,21 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					PowerReset();
 				}
 				else if (e->ny < 0)
-					isGrounded = true;
+					onGround = true;
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj))
 			{
 				x += dx;
 				y += dy;
 			}
-			else if (dynamic_cast<CPlant*>(e->obj))
+			/*else if (dynamic_cast<CPlant*>(e->obj))
 			{
 				CPlant* plant = dynamic_cast<CPlant*>(e->obj);
 				if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
 				{
 					plant->SetState(PLANT_STATE_DIE);
 				}	
-			}
+			}*/
 			else if (dynamic_cast<PowerUpItem*>(e->obj))
 			{
 				e->obj->die = true;
@@ -213,15 +192,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
 				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
-				if (block->isCoin == false)
+				if (block->isCoin)
 				{
-					if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
-					{
-						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
-						block->die = true;
-					}
-				}
-				else {
 					SetPoint(100);
 					SetMoney(1);
 					block->die = true;
@@ -233,7 +205,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 				{
 					if (e->ny < 0)
-						isGrounded = true;
+						onGround = true;
 					if (port->GetName() == PortalName::in)
 						MarioFrontState::GetInstance()->GetPortal(*this, port, e->ny);
 					else
@@ -249,8 +221,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny < 0)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
-					isGrounded = true;
-					if (MarioSittingState::GetInstance()->isSit == false)
+					onGround = true;
+					if (MarioSittingState::GetInstance()->isSit == false
+						&& state_ != MarioState::tailHit.GetInstance())
 						state_ = MarioState::standing.GetInstance();
 				}
 			}
@@ -354,10 +327,9 @@ CMario::CMario() : CGameObject()
 {
 	level = MARIO_LEVEL_SMALL;
 	state_ = MarioState::standing.GetInstance();
-	start_x = x;
-	start_y = y;
 	nx = 1;
 	pool = FireBallPool::GetInstance();
+	CGameObject::SetAnimation(MARIO_ANI_SET_ID);
 }
 
 void CMario::Render()
@@ -368,7 +340,7 @@ void CMario::Render()
 	else 
 		animation = GetAnimation();
 
-	animation_set->at(animation)->Render(x, y, nx, 255);
+	animation_set->at(animation)->Render(x, y, nx, ny, 255);
 
 	//RenderBoundingBox();
 }

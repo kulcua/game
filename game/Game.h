@@ -43,16 +43,20 @@ class CGame {
 	int screen_width;
 	int screen_height;
 
+	D3DCOLOR backgroundColor;
+
 	unordered_map<int, LPSCENE> scenes;
 	int current_scene;
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
 public:
+	void SetBackgroundColor(D3DCOLOR backgroundColor) { this->backgroundColor = backgroundColor; }
+	D3DCOLOR GetBackgroundColor() { return backgroundColor; }
 	void InitKeyBoard();
 	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
 	void Init(HWND hWnd);
-	void Draw(float x, float y, int nx, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
+	void Draw(float x, float y, int nx, int ny, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
 
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyBoard();

@@ -2,11 +2,12 @@
 #include "Textures.h"
 #include "Sprites.h"
 
-Tileset::Tileset(TiXmlElement* tileset, int id, D3DCOLOR transColor)
+Tileset::Tileset(TiXmlElement* tileset, int id, D3DCOLOR transColor, string prefixPath)
 {
 	this->tileset = tileset;
 	this->textureId = id;
 	this->transColor = transColor;
+	this->prefixPath = prefixPath;
 	SplitImageToTile();
 }
 
@@ -19,7 +20,7 @@ void Tileset::SplitImageToTile()
 	rows = tileCount / columns;
 
 	TiXmlElement* image = tileset->FirstChildElement();
-	pathImage = ToLPCWSTR(prefix + image->Attribute("source"));
+	pathImage = ToLPCWSTR(prefixPath + image->Attribute("source"));
 
 	CTextures::GetInstance()->Add(textureId, pathImage, transColor);
 	LPDIRECT3DTEXTURE9 texMap = CTextures::GetInstance()->Get(textureId);

@@ -16,5 +16,5 @@ void SwitchItem::Render()
 	if (state == SWITCH_STATE_DISABLE)
 		ani = SWITCH_ANI_DISABLE;
 	else ani = SWITCH_ANI_ENABLE;
-	animation_set->at(ani)->Render(x, y, nx);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }

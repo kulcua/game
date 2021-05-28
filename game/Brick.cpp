@@ -32,14 +32,14 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBrick::Render()
 {
-	int ani;
+	int ani = 0;
 	if (state == BRICK_STATE_DISABLE)
 		ani = BRICK_ANI_DISABLE;	
 	else if (type == BRICK_TYPE_QUESTION)
 		ani = BRICK_ANI_QUESTION;
 	else if (type == BRICK_TYPE_BLOCK)
 		ani = BRICK_ANI_BLOCK;
-	animation_set->at(ani)->Render(x, y, NULL);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void CBrick::SetState(int state)

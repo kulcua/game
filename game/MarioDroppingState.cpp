@@ -69,7 +69,7 @@ void MarioDroppingState::HandleInput(CMario& mario, Input input)
 
 void MarioDroppingState::Update(CMario& mario, DWORD dt)
 {
-    if (mario.isGrounded)
+    if (mario.onGround)
         mario.state_ = MarioState::standing.GetInstance();
     //DebugOut(L"Dropping %f\n", mario.vx);
 }

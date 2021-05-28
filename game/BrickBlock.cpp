@@ -23,7 +23,7 @@ void BrickBlock::Render()
 	if (isCoin)
 		ani = BRICK_ANI_COIN;
 	else ani = BRICK_ANI_BLOCK;
-	animation_set->at(ani)->Render(x, y, NULL);
+	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void BrickBlock::GetBoundingBox(float& l, float& t, float& r, float& b)

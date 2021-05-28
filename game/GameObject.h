@@ -48,6 +48,8 @@ public:
 	float vy;
 
 	int nx = -1;
+	int ny = -1;
+
 	int state;
 
 	DWORD dt;
@@ -64,7 +66,7 @@ public:
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }
 	void GetSpeed(float& vx, float& vy) { vx = this->vx; vy = this->vy; }
 
- 	int GetState() { return this->state; }
+	int GetState() { return this->state; }
 
 	void RenderBoundingBox();
 

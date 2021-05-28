@@ -16,6 +16,7 @@ void SetPositionGetInSitState(CMario& mario)
 {
     if (mario.GetLevel() != MARIO_LEVEL_SMALL)
     {
+        mario.state_ = MarioState::sitting.GetInstance();
         MarioSittingState::GetInstance()->isSit = true;
         if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
             mario.y += MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
@@ -24,21 +25,9 @@ void SetPositionGetInSitState(CMario& mario)
     }
 }
 
-void SetPositionGetOutSitState(CMario& mario)
-{
-    if (mario.GetLevel() != MARIO_LEVEL_SMALL)
-    {
-        MarioSittingState::GetInstance()->isSit = false;
-        if (mario.GetLevel() == MARIO_LEVEL_BIG || mario.GetLevel() == MARIO_LEVEL_FIRE)
-            mario.y -= MARIO_BIG_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-        else if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
-            mario.y -= MARIO_RACCOON_BBOX_HEIGHT - MARIO_SIT_BBOX_HEIGHT;
-    }
-}
-
 void SetStateWalk_Run_PreFly(CMario &mario)
 {
-    if (mario.isGrounded) {
+    if (mario.onGround && mario.state_ != MarioState::tailHit.GetInstance()) {
         if (mario.isPower)
         {
             if (mario.GetPower() < MARIO_MAX_POWER)
@@ -98,7 +87,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     
     if (input == PRESS_S)
     {
-        if (mario.isGrounded) // check isGrounded to jump again
+        if (mario.onGround) // check onGround to jump again
         {
             MarioJumpingState::GetInstance()->isHighJump = true;
             if (MarioSittingState::GetInstance()->isSit) // if isSit, don't change state
@@ -110,28 +99,22 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
                 MarioState::jumping.GetInstance()->StartJump();
             }
             mario.vy = -MARIO_JUMP_SPEED_Y;
-            mario.isGrounded = false;
+            mario.onGround = false;
         }  
     }
     // Mario is walking can't duck
     // mario.vx == 0: prevent multiple key when walk and sit
     else if (input == PRESS_DOWN && mario.vx == 0)
     {
-        mario.state_ = MarioState::sitting.GetInstance();
         SetPositionGetInSitState(mario);
-    }
-    else if (input == RELEASE_DOWN && mario.vx == 0)
-    {
-        mario.state_ = MarioState::standing.GetInstance();
-        SetPositionGetOutSitState(mario);
     }
     else if (input == PRESS_A)
     {
         mario.isPower = true;
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
-            MarioTailHitState::GetInstance()->tailHitting = true;
             mario.state_ = MarioState::tailHit.GetInstance();
+            MarioState::tailHit.GetInstance()->tailHitting = true;
             MarioState::tailHit.GetInstance()->StartHit();
         } 
         else if (mario.GetLevel() == MARIO_LEVEL_FIRE)

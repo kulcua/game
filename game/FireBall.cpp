@@ -171,7 +171,7 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBall::Render()
 {
-	animation_set->at(0)->Render(x, y, NULL);
+	animation_set->at(0)->Render(x, y, nx, ny);
 }
 
 void CFireBall::GetBoundingBox(float& l, float& t, float& r, float& b)

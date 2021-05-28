@@ -12,7 +12,6 @@
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"Game"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(156, 252, 240)
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 750
 
@@ -53,7 +52,7 @@ void Render()
 	if (d3ddv->BeginScene())
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		d3ddv->ColorFill(bb, NULL, CGame::GetInstance()->GetBackgroundColor());
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
@@ -161,7 +160,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game->Init(hWnd);
 	game->InitKeyBoard();
 
-	game->Load(L"mario-sample.txt");
+	game->Load(L"map/mario-sample.txt");
 
 	SetWindowPos(hWnd, 0, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 

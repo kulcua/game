@@ -14,6 +14,10 @@
 #include "Camera.h"
 #include "HUD.h"
 #include "EffectPool.h"
+#include "MarioTail.h"
+
+#define INTRO_SCENE 1
+#define PLAY_SCENE 3
 
 using namespace std;
 
@@ -31,6 +35,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define SCENE_SECTION_MAPS	7
 #define SCENE_SECTION_FONT	8
 #define SCENE_SECTION_HUD	9
+#define SCENE_SECTION_BGCOLOR	10
 
 #define OBJECT_TYPE_MARIO	0
 #define OBJECT_TYPE_ITEM	11
@@ -132,26 +137,32 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	float x = atof(tokens[1].c_str());
 	float y = atof(tokens[2].c_str());
 
-	int ani_set_id = atoi(tokens[3].c_str());
-
-	CAnimationSets* animation_sets = CAnimationSets::GetInstance();
-
-	CGameObject* obj = NULL;
-
 	switch (object_type)
 	{
 	case OBJECT_TYPE_MARIO:
 	{
-		if (player != NULL)
+		if (id != INTRO_SCENE)
 		{
-			DebugOut(L"[ERROR] MARIO object was created before!\n");
-			return;
+			if (player != NULL)
+			{
+				DebugOut(L"[ERROR] MARIO object was created before!\n");
+				return;
+			}
+
+			player = CMario::GetInstance();
+			player->SetPosition(x, y);
+			objects.push_back(player);
+
+			MarioTail* tail = MarioTail::GetInstance();
+			tail->SetPosition(x, y);
+			objects.push_back(tail);
+			
+			DebugOut(L"[INFO] Player object created!\n");
 		}
-		obj = CMario::GetInstance();
-
-		player = (CMario*)obj;
-
-		DebugOut(L"[INFO] Player object created!\n");
+		else
+		{
+			Intro::GetInstance()->SetScenario(objects);
+		}
 	}
 		break;
 	case OBJECT_TYPE_POOL_FIREBALL:
@@ -172,16 +183,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
 	}
-
-	if (obj != NULL) //check if not a pool
-	{
-		obj->SetPosition(x, y);
-
-		LPANIMATION_SET ani_set = animation_sets->Get(ani_set_id);
-
-		obj->SetAnimationSet(ani_set);
-		objects.push_back(obj);
-	}	
 }
 
 void CPlayScene::_ParseSection_FONT(string line)
@@ -196,6 +197,19 @@ void CPlayScene::_ParseSection_FONT(string line)
 	fontManager->GetInstance()->characters[name] = spriteId;
 }
 
+void CPlayScene::_ParseSection_BGColor(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 3) return;
+
+	int r = atoi(tokens[0].c_str());
+	int g = atoi(tokens[1].c_str());
+	int b = atoi(tokens[2].c_str());
+
+	CGame::GetInstance()->SetBackgroundColor(D3DCOLOR_XRGB(r, g, b));
+}
+
 void CPlayScene::_ParseSection_HUD(string line)
 {
 	vector<string> tokens = split(line);
@@ -204,7 +218,11 @@ void CPlayScene::_ParseSection_HUD(string line)
 
 	int spriteId = atoi(tokens[0].c_str());
 
-	HUD::GetInstance()->SetSpriteId(spriteId);
+	HUD* hud = HUD::GetInstance();
+
+	hud->SetSpriteId(spriteId);
+
+	objects.push_back(hud);
 }
 
 void CPlayScene::_ParseSection_MAPS(string line)
@@ -218,9 +236,10 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	int R = atoi(tokens[2].c_str());
 	int G = atoi(tokens[3].c_str());
 	int B = atoi(tokens[4].c_str());
+	string prefixPath = tokens[5].c_str();
 
 	tileMap = new TileMap();
-	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects, player);
+	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects, prefixPath);
 }
 
 void CPlayScene::Load()
@@ -261,6 +280,9 @@ void CPlayScene::Load()
 		if (line == "[HUD]") {
 			section = SCENE_SECTION_HUD; continue;
 		}
+		if (line == "[BGCOLOR]") {
+			section = SCENE_SECTION_BGCOLOR; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		switch (section)
@@ -273,6 +295,7 @@ void CPlayScene::Load()
 		case SCENE_SECTION_MAPS: _ParseSection_MAPS(line); break;
 		case SCENE_SECTION_FONT: _ParseSection_FONT(line); break;
 		case SCENE_SECTION_HUD: _ParseSection_HUD(line); break;
+		case SCENE_SECTION_BGCOLOR: _ParseSection_BGColor(line); break;
 		}
 	}
 
@@ -297,9 +320,16 @@ void CPlayScene::Update(DWORD dt)
 		if (objects[i]->die == false)
 			objects[i]->Update(dt, &coObject);
 	}
-	FireBallPool::GetInstance()->GetBackToPool();
-	EffectPool::GetInstance()->GetBackToPool();
-	HUD::GetInstance()->Update();
+
+	if (id == PLAY_SCENE)
+	{
+		FireBallPool::GetInstance()->GetBackToPool();
+		EffectPool::GetInstance()->GetBackToPool();
+	}
+	else if (id == INTRO_SCENE)
+	{
+		Intro::GetInstance()->Update();
+	}
 
 	//DebugOut(L"size coo: %d\n", coObject.size());
 	//DebugOut(L"size: %d\n", objects.size());
@@ -309,19 +339,13 @@ void CPlayScene::Render()
 {
 	tileMap->GetInstance()->RenderBackground();
 
-	int marioId = 0;
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (dynamic_cast<CMario*>(objects[i]))
-			marioId = i;
-		else if (objects[i]->die == false)
+		if (objects[i]->die == false)
 			objects[i]->Render();
-	}	
-	objects[marioId]->Render();
+	}
 
 	tileMap->GetInstance()->RenderForeground();
-
-	HUD::GetInstance()->Render();
 }
 
 void CPlayScene::Unload()
@@ -339,91 +363,101 @@ void CPlayScene::Unload()
 
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
-	Input input = NO_INPUT;
-	
-	switch (KeyCode)
+	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
-	case DIK_S:
-		input = PRESS_S;
-		break;
-	case DIK_F1:
-		mario->Reset();
-		break;
-	case DIK_F2:
-		mario->SetLevel(MARIO_LEVEL_BIG);
-		mario->y -= MARIO_BIG_BBOX_HEIGHT;
-		mario->isUntouchable = false;
-		break;
-	case DIK_F3:
-		mario->SetLevel(MARIO_LEVEL_RACCOON);
-		mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
-		mario->isUntouchable = false;
-		break;
-	case DIK_F4:
-		mario->SetLevel(MARIO_LEVEL_FIRE);
-		mario->y -= MARIO_BIG_BBOX_HEIGHT;
-		mario->isUntouchable = false;
-		break;
-	case DIK_F5:
-		mario->SetLevel(MARIO_LEVEL_RACCOON);
-		mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
-		mario->isUntouchable = true;
-		break;
-	case DIK_DOWN:
-		input = PRESS_DOWN;
-		break;
-	case DIK_A:
-		input = PRESS_A;
-		break;
-	case DIK_LEFT:
-		input = PRESS_LEFT;
-		break;
-	case DIK_RIGHT:
-		input = PRESS_RIGHT;
-		break;
-	}
+		CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+		Input input = NO_INPUT;
 
-	if (input != NO_INPUT)
-		mario->HandleInput(input);
+		switch (KeyCode)
+		{
+		case DIK_S:
+			input = PRESS_S;
+			break;
+		case DIK_F1:
+			mario->Reset();
+			break;
+		case DIK_F2:
+			mario->SetLevel(MARIO_LEVEL_BIG);
+			mario->y -= MARIO_BIG_BBOX_HEIGHT;
+			mario->isUntouchable = false;
+			break;
+		case DIK_F3:
+			mario->SetLevel(MARIO_LEVEL_RACCOON);
+			mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
+			mario->isUntouchable = false;
+			break;
+		case DIK_F4:
+			mario->SetLevel(MARIO_LEVEL_FIRE);
+			mario->y -= MARIO_BIG_BBOX_HEIGHT;
+			mario->isUntouchable = false;
+			break;
+		case DIK_F5:
+			mario->SetLevel(MARIO_LEVEL_RACCOON);
+			mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
+			mario->isUntouchable = true;
+			break;
+		case DIK_DOWN:
+			input = PRESS_DOWN;
+			break;
+		case DIK_A:
+			input = PRESS_A;
+			break;
+		case DIK_LEFT:
+			input = PRESS_LEFT;
+			break;
+		case DIK_RIGHT:
+			input = PRESS_RIGHT;
+			break;
+		}
+
+		if (input != NO_INPUT)
+			mario->HandleInput(input);
+	}
 }
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
-	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
-	Input input = NO_INPUT;
-	
-	switch (KeyCode)
+	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
-	case DIK_DOWN:
-		input = RELEASE_DOWN;
-		break;
-	case DIK_A:
-		input = RELEASE_A;
-		break;
-	case DIK_S:
-		input = RELEASE_S;
-		break;
-	case DIK_LEFT:
-		input = RELEASE_LEFT;
-		break;
-	case DIK_RIGHT:
-		input = RELEASE_RIGHT;
-		break;
-	}
+		CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+		Input input = NO_INPUT;
 
-	if (input != NO_INPUT)
-		mario->HandleInput(input);
+		switch (KeyCode)
+		{
+		case DIK_DOWN:
+			input = RELEASE_DOWN;
+			break;
+		case DIK_A:
+			input = RELEASE_A;
+			break;
+		case DIK_S:
+			input = RELEASE_S;
+			break;
+		case DIK_LEFT:
+			input = RELEASE_LEFT;
+			break;
+		case DIK_RIGHT:
+			input = RELEASE_RIGHT;
+			break;
+		}
+
+		if (input != NO_INPUT)
+			mario->HandleInput(input);
+	}
 }
 
 void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
-	CGame* game = CGame::GetInstance();
-	CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
+	{
+		CGame* game = CGame::GetInstance();
+		CMario* mario = ((CPlayScene*)scene)->GetPlayer();
 
-	if (mario->GetState() == MARIO_STATE_DIE) return;
+		if (mario->GetState() == MARIO_STATE_DIE) return;
 
-	Input input = KEY_STATE;
+		Input input = KEY_STATE;
 
-	mario->HandleInput(input);
+		mario->HandleInput(input);
+	}
 }
+	
