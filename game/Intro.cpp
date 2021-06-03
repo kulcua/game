@@ -59,7 +59,6 @@ void Intro::Step1() {
 			luigi->vx = MARIO_WALKING_SPEED;
 		}
 	}
-	else DebugOut(L"pos %f\n", luigi->vy);
 }
 
 void Intro::Update()

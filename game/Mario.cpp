@@ -29,6 +29,8 @@
 #include "PortalPipe.h"
 #include "Camera.h"
 #include "MarioFrontState.h"
+#include "MarioOverWorldState.h"
+#include "Portal.h"
 
 CMario* CMario::__instance = NULL;
 
@@ -153,14 +155,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				x += dx;
 				y += dy;
 			}
-			/*else if (dynamic_cast<CPlant*>(e->obj))
-			{
-				CPlant* plant = dynamic_cast<CPlant*>(e->obj);
-				if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
-				{
-					plant->SetState(PLANT_STATE_DIE);
-				}	
-			}*/
 			else if (dynamic_cast<PowerUpItem*>(e->obj))
 			{
 				e->obj->die = true;
@@ -212,6 +206,11 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						MarioFrontState::GetInstance()->onPortalPipe = false;
 				}
 			}
+			else if (dynamic_cast<CPortal*>(e->obj))
+			{
+				x = e->obj->x;
+				y = e->obj->y;
+			}
 
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
@@ -238,7 +237,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	state_->Update(*this, dt);
 
-	vy += MARIO_GRAVITY * dt;
+	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
+		vy += MARIO_GRAVITY * dt;
 
 	PowerControl();
 
@@ -328,7 +328,6 @@ CMario::CMario() : CGameObject()
 	level = MARIO_LEVEL_SMALL;
 	state_ = MarioState::standing.GetInstance();
 	nx = 1;
-	pool = FireBallPool::GetInstance();
 	CGameObject::SetAnimation(MARIO_ANI_SET_ID);
 }
 

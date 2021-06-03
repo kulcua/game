@@ -15,6 +15,8 @@
 #include "HUD.h"
 #include "EffectPool.h"
 #include "MarioTail.h"
+#include "PortalManager.h"
+#include "MarioOverWorldState.h"
 
 #define INTRO_SCENE 1
 #define PLAY_SCENE 3
@@ -36,7 +38,7 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define SCENE_SECTION_FONT	8
 #define SCENE_SECTION_HUD	9
 #define SCENE_SECTION_BGCOLOR	10
-
+#define SCENE_SECTION_PORTAL	11
 #define OBJECT_TYPE_MARIO	0
 #define OBJECT_TYPE_ITEM	11
 #define OBJECT_TYPE_GOOMBA	2
@@ -158,8 +160,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			objects.push_back(tail);
 			
 			DebugOut(L"[INFO] Player object created!\n");
+
+			if (id == 2)
+			{
+				player->state_ = MarioState::overworld.GetInstance();
+			}
 		}
-		else
+		else if (id == INTRO_SCENE)
 		{
 			Intro::GetInstance()->SetScenario(objects);
 		}
@@ -242,6 +249,20 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects, prefixPath);
 }
 
+void CPlayScene::_ParseSection_PORTAL(string line)
+{
+	vector<string> tokens = split(line);
+
+	if (tokens.size() < 3) return;
+
+	string type = tokens[0].c_str();
+	int spriteId = atoi(tokens[1].c_str());
+	int sceneId = atoi(tokens[2].c_str());
+
+	PortalManager::GetInstance()->portSprite[type] = spriteId;
+	PortalManager::GetInstance()->portScene[type] = sceneId;
+}
+
 void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
@@ -283,6 +304,9 @@ void CPlayScene::Load()
 		if (line == "[BGCOLOR]") {
 			section = SCENE_SECTION_BGCOLOR; continue;
 		}
+		if (line == "[PORTAL]") {
+			section = SCENE_SECTION_PORTAL; continue;
+		}
 		if (line[0] == '[') { section = SCENE_SECTION_UNKNOWN; continue; }
 
 		switch (section)
@@ -296,6 +320,7 @@ void CPlayScene::Load()
 		case SCENE_SECTION_FONT: _ParseSection_FONT(line); break;
 		case SCENE_SECTION_HUD: _ParseSection_HUD(line); break;
 		case SCENE_SECTION_BGCOLOR: _ParseSection_BGColor(line); break;
+		case SCENE_SECTION_PORTAL: _ParseSection_PORTAL(line); break;
 		}
 	}
 
@@ -330,6 +355,10 @@ void CPlayScene::Update(DWORD dt)
 	{
 		Intro::GetInstance()->Update();
 	}
+	else {
+		HUD::GetInstance()->SetPosition(30, 570);
+		HUD::GetInstance()->time->SetContent(0);
+	}
 
 	//DebugOut(L"size coo: %d\n", coObject.size());
 	//DebugOut(L"size: %d\n", objects.size());
@@ -339,7 +368,7 @@ void CPlayScene::Render()
 {
 	tileMap->GetInstance()->RenderBackground();
 
-	for (int i = 0; i < objects.size(); i++)
+	for (int i = objects.size() - 1; i > -1 ; i--)
 	{
 		if (objects[i]->die == false)
 			objects[i]->Render();
@@ -363,7 +392,8 @@ void CPlayScene::Unload()
 
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
+	int sceneId = ((CPlayScene*)scene)->GetSceneId();
+	if (sceneId != INTRO_SCENE)
 	{
 		CMario* mario = ((CPlayScene*)scene)->GetPlayer();
 		Input input = NO_INPUT;
@@ -374,22 +404,33 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 			input = PRESS_S;
 			break;
 		case DIK_F1:
-			mario->Reset();
+			if (sceneId == PLAY_SCENE)
+				mario->Reset();
+			else mario->SetLevel(MARIO_LEVEL_SMALL);
 			break;
 		case DIK_F2:
 			mario->SetLevel(MARIO_LEVEL_BIG);
-			mario->y -= MARIO_BIG_BBOX_HEIGHT;
-			mario->isUntouchable = false;
+			if (sceneId == PLAY_SCENE)
+			{
+				mario->y -= MARIO_BIG_BBOX_HEIGHT;
+				mario->isUntouchable = false;
+			}
 			break;
 		case DIK_F3:
 			mario->SetLevel(MARIO_LEVEL_RACCOON);
-			mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
-			mario->isUntouchable = false;
+			if (sceneId == PLAY_SCENE)
+			{
+				mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
+				mario->isUntouchable = false;
+			}
 			break;
 		case DIK_F4:
 			mario->SetLevel(MARIO_LEVEL_FIRE);
-			mario->y -= MARIO_BIG_BBOX_HEIGHT;
-			mario->isUntouchable = false;
+			if (sceneId == PLAY_SCENE)
+			{
+				mario->y -= MARIO_BIG_BBOX_HEIGHT;
+				mario->isUntouchable = false;
+			}
 			break;
 		case DIK_F5:
 			mario->SetLevel(MARIO_LEVEL_RACCOON);
@@ -407,6 +448,9 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 			break;
 		case DIK_RIGHT:
 			input = PRESS_RIGHT;
+			break;
+		case DIK_UP:
+			input = PRESS_UP;
 			break;
 		}
 

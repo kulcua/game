@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BigBox.cpp" />
+    <ClCompile Include="BoundOverWorld.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickBlock.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -171,6 +172,7 @@
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="MarioDropFlyState.cpp" />
     <ClCompile Include="MarioDroppingState.cpp" />
+    <ClCompile Include="MarioOverWorldState.cpp" />
     <ClCompile Include="MarioSittingState.cpp" />
     <ClCompile Include="MarioFlyingState.cpp" />
     <ClCompile Include="MarioFrontState.cpp" />
@@ -192,6 +194,7 @@
     <ClCompile Include="ParaKoopa.cpp" />
     <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Plant.cpp" />
+    <ClCompile Include="PortalManager.cpp" />
     <ClCompile Include="PortalPipe.cpp" />
     <ClCompile Include="PowerUpItem.cpp" />
     <ClCompile Include="SwitchItem.cpp" />
@@ -202,6 +205,7 @@
     <ClCompile Include="tinyxml.cpp" />
     <ClCompile Include="tinyxmlerror.cpp" />
     <ClCompile Include="tinyxmlparser.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -219,6 +223,7 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BigBox.h" />
+    <ClInclude Include="BoundOverWorld.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickBlock.h" />
     <ClInclude Include="Camera.h" />
@@ -241,6 +246,7 @@
     <ClInclude Include="Maps.h" />
     <ClInclude Include="MarioDropFlyState.h" />
     <ClInclude Include="MarioDroppingState.h" />
+    <ClInclude Include="MarioOverWorldState.h" />
     <ClInclude Include="MarioSittingState.h" />
     <ClInclude Include="MarioFlyingState.h" />
     <ClInclude Include="MarioFrontState.h" />
@@ -262,6 +268,7 @@
     <ClInclude Include="ParaKoopa.h" />
     <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="Plant.h" />
+    <ClInclude Include="PortalManager.h" />
     <ClInclude Include="PortalPipe.h" />
     <ClInclude Include="PowerUpItem.h" />
     <ClInclude Include="SwitchItem.h" />
@@ -270,6 +277,7 @@
     <ClInclude Include="Tileset.h" />
     <ClInclude Include="tinystr.h" />
     <ClInclude Include="tinyxml.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />

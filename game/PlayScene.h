@@ -32,6 +32,7 @@ protected:
 	void _ParseSection_FONT(string line);
 	void _ParseSection_HUD(string line);
 	void _ParseSection_BGColor(string line);
+	void _ParseSection_PORTAL (string line);
 public:
 	CPlayScene(int id, LPCWSTR filePath);
 	virtual void Load();

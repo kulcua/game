@@ -70,6 +70,9 @@
     <Filter Include="Intro">
       <UniqueIdentifier>{fecdbc29-bac6-48b8-99dd-a57b1d9a9926}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Overworld">
+      <UniqueIdentifier>{5f314931-7e6c-4560-8c7a-66e93e3ed62b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -103,9 +106,6 @@
       <Filter>Mics</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
-      <Filter>Mics</Filter>
-    </ClCompile>
-    <ClCompile Include="Portal.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
     <ClCompile Include="MarioState.cpp">
@@ -276,6 +276,21 @@
     <ClCompile Include="MarioTail.cpp">
       <Filter>Mario\MarioState\AttackState</Filter>
     </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="PortalManager.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioOverWorldState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundOverWorld.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -315,9 +330,6 @@
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
-      <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.h">
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="MarioKickState.h">
@@ -475,6 +487,21 @@
     </ClInclude>
     <ClInclude Include="MarioTail.h">
       <Filter>Mario\MarioState\AttackState</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalManager.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioOverWorldState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundOverWorld.h">
+      <Filter>Overworld</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -123,7 +123,6 @@ public:
 	DWORD powerEndTime;
 
 	MarioState* state_;
-	FireBallPool* pool;
 
 	int life = 3;
 	bool switchItem;

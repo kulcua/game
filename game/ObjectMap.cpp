@@ -19,6 +19,9 @@
 #include "SwitchItem.h"
 #include "Card.h"
 #include "PortalPipe.h"
+#include "Portal.h"
+#include "BoundOverWorld.h"
+#include "Tree.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
 {
@@ -26,8 +29,6 @@ ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &obj
 	objectGroupElement->QueryIntAttribute("objectGroupId", &objectGroupId);
 	name = objectGroupElement->Attribute("name");
 	ImportData(objects);
-	mario =mario->GetInstance();
-	pool = FireBallPool::GetInstance();
 }
 
 void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
@@ -50,6 +51,20 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}		
+	}
+	else if (name.compare("BoundOverWorld") == 0)
+	{
+		while (element)
+		{
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryFloatAttribute("width", &width);
+			element->QueryFloatAttribute("height", &height);
+			obj = new BoundOverWorld(width, height);
+			obj->SetPosition(x, y);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
 	}
 	else if (name.compare("Ghost") == 0)
 	{
@@ -88,17 +103,16 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	}
 	else if (name.compare("QuestionBlocks") == 0)
 	{
-		string typeName;
-		int type;
 		while (element)
 		{
+			string typeName;
+			int type;
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 			typeName = element->Attribute("name");
 			element->QueryIntAttribute("type", &type);
 			CBrick* br = new CBrick(type, x, y);
 			CItem* item = NULL;
-			//DebugOut(L"item %s\n", ToLPCWSTR(typeName));
 			if (typeName.compare("coin") == 0)
 			{
 				item = new CoinBrick();
@@ -140,9 +154,9 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	}
 	else if (name.compare("CameraBound") == 0)
 	{
-		int type;
 		while (element)
 		{
+			int type;
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 			element->QueryFloatAttribute("width", &width);
@@ -180,10 +194,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		}
 	}
 	else if (name.compare("Enemy") == 0)
-	{				
-		string enemyName;
+	{		
 		while (element)
 		{
+			string enemyName;
 			enemyName = element->Attribute("name");
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
@@ -251,7 +265,38 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
-			//DebugOut(L"port %d %f\n", type, camY);
+		}
+	}
+	else if (name.compare("WorldGraph") == 0)
+	{
+		while (element)
+		{
+			string type;
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			if (element->Attribute("type"))
+			{
+				type = element->Attribute("type");
+				//DebugOut(L"type %s\n", ToLPCWSTR(type));
+			}
+			else type = "node";
+			obj = new CPortal(type);
+			obj->SetPosition(x - PORTAL_WIDTH / 2, y - PORTAL_HEIGHT / 2);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("AnimatedBG") == 0)
+	{ //tree overworld
+		while (element)
+		{
+			string name;
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			obj = new Tree();
+			obj->SetPosition(x - TREE_WIDTH / 2, y - TREE_HEIGHT / 2);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
 		}
 	}
 }

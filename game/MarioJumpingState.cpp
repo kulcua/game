@@ -99,7 +99,7 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
         }
         else if (mario.GetLevel() == MARIO_LEVEL_FIRE)
         {
-            CFireBall* fireBall = mario.pool->Create();
+            CFireBall* fireBall = FireBallPool::GetInstance()->Create();
             if (fireBall != NULL)
             {
                 mario.state_ = MarioState::shootFireball.GetInstance();
