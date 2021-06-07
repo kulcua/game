@@ -1,6 +1,7 @@
 #include "Effect.h"
 #include "Utils.h"
 #include "Mario.h"
+#include "Game.h"
 
 Effect::Effect()
 {
@@ -27,7 +28,7 @@ void Effect::InitPoint(EffectPoint ePoint, float x, float y)
 		point = 200;
 	else if (ePoint == EffectPoint::p1000)
 		point = 1000;
-	CMario::GetInstance()->SetPoint(point);
+	CGame::GetInstance()->GetPlayer()->SetPoint(point);
 }
 
 void Effect::InitDebris(int pos, float x, float y)

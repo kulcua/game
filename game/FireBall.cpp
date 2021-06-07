@@ -6,6 +6,7 @@
 #include "Goomba.h"
 #include "Koopa.h"
 #include "EffectPool.h"
+#include "Game.h"
 
 CFireBall::CFireBall()
 {
@@ -14,7 +15,7 @@ CFireBall::CFireBall()
 }
 
 void CFireBall::InitForPlant(VenusFireTrap* venus) {
-  	this->state_.live.mario = CMario::GetInstance();
+  	this->state_.live.mario = CGame::GetInstance()->GetPlayer();
 	this->state_.live.venus = venus;
 	die = false;
 	inUse = true;
@@ -24,7 +25,7 @@ void CFireBall::InitForPlant(VenusFireTrap* venus) {
 
 void CFireBall::InitForMario()
 {
-	this->state_.live.mario = CMario::GetInstance();
+	this->state_.live.mario = CGame::GetInstance()->GetPlayer();;
 	die = false;
 	inUse = true;
 	SetPosition(state_.live.mario->x, state_.live.mario->y);

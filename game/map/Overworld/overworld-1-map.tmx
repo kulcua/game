@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="48" tileheight="48" infinite="0" nextlayerid="8" nextobjectid="81">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="16" height="14" tilewidth="48" tileheight="48" infinite="0" nextlayerid="9" nextobjectid="82">
  <tileset firstgid="1" name="tileset(x3)" tilewidth="48" tileheight="48" tilecount="32" columns="8">
   <image source="Assets/Maps/overworld-1.png" width="384" height="192"/>
  </tileset>
@@ -75,6 +75,16 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
+ <objectgroup id="7" name="BoundOverWorld">
+  <object id="72" x="67.7512" y="25.2632" width="628.134" height="20.6699"/>
+  <object id="73" x="666.029" y="27.5598" width="31.0048" height="478.852"/>
+  <object id="74" x="39.0431" y="484.593" width="654.545" height="24.1148"/>
+  <object id="75" x="68.8995" y="44.7847" width="24.1148" height="461.627"/>
+  <object id="76" x="195.215" y="192.215" width="45" height="45"/>
+  <object id="77" x="240.967" y="294.086" width="45" height="85.1914"/>
+  <object id="78" x="286.844" y="384.156" width="45" height="45"/>
+  <object id="79" x="143.711" y="240.467" width="45" height="241.364"/>
+ </objectgroup>
  <objectgroup id="6" name="WorldGraph">
   <object id="1" name="node-2" type="num-1" x="216" y="72">
    <properties>
@@ -266,15 +276,8 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="7" name="BoundOverWorld">
-  <object id="72" x="67.7512" y="25.2632" width="628.134" height="20.6699"/>
-  <object id="73" x="666.029" y="27.5598" width="31.0048" height="478.852"/>
-  <object id="74" x="39.0431" y="484.593" width="654.545" height="24.1148"/>
-  <object id="75" x="68.8995" y="44.7847" width="24.1148" height="461.627"/>
-  <object id="76" x="195.215" y="192.215" width="45" height="45"/>
-  <object id="77" x="240.967" y="294.086" width="45" height="85.1914"/>
-  <object id="78" x="286.844" y="384.156" width="45" height="45"/>
-  <object id="79" x="143.711" y="240.467" width="45" height="241.364"/>
+ <objectgroup id="8" name="Camera">
+  <object id="81" x="0" y="0" width="654.545" height="501.818"/>
  </objectgroup>
  <objectgroup id="5" name="AnimatedBG" visible="0">
   <object id="21" name="tree" x="65" y="72">

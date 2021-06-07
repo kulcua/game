@@ -3,15 +3,7 @@
 #include "FontManager.h"
 #include "Textures.h"
 #include "Game.h"
-
-HUD* HUD::__instance = NULL;
-
-HUD* HUD::GetInstance()
-{
-	if (__instance == NULL) __instance = new HUD();
-	return __instance;
-}
-
+#include "Camera.h"
 HUD::HUD()
 {
 	world = new Text(TEXT_NUM_WORLD);
@@ -21,7 +13,7 @@ HUD::HUD()
 	money = new Text(TEXT_NUM_MONEY);
 	time = new Text(TEXT_NUM_TIME);
 
-	mario = CMario::GetInstance();
+	mario = CGame::GetInstance()->GetPlayer();;
 }
 
 int HUD::CountDownTimer()
@@ -36,6 +28,10 @@ int HUD::CountDownTimer()
 
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	float cx, cy;
+	CGame::GetInstance()->GetCam()->GetPosition(cx, cy);
+	SetPosition(cx, cy + SCREEN_HEIGHT - HUD_HEIGHT);
+
 	world->SetContent(1);
 	life->SetContent(mario->GetLife());
 	power->SetPower(mario->GetPower());

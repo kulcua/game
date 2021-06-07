@@ -32,16 +32,16 @@
 #include "MarioOverWorldState.h"
 #include "Portal.h"
 
-CMario* CMario::__instance = NULL;
-
-CMario* CMario::GetInstance()
-{
-	if (__instance == NULL)
-	{
-		__instance = new CMario();
-	}
-	return __instance;
-}
+//CMario* CMario::__instance = NULL;
+//
+//CMario* CGame::GetInstance()->GetPlayer();
+//{
+//	if (__instance == NULL)
+//	{
+//		__instance = new CMario();
+//	}
+//	return __instance;
+//}
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -176,6 +176,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				e->obj->die = true;
 				SetLife(1);
+				Effect* effect = EffectPool::GetInstance()->Create();
+				if (effect != NULL)
+					effect->InitPoint(EffectPoint::p1000, x, y);
 			}
 			else if (dynamic_cast<Coin*>(e->obj))
 			{
@@ -208,8 +211,12 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CPortal*>(e->obj))
 			{
-				x = e->obj->x;
-				y = e->obj->y;
+				CPortal* port = dynamic_cast<CPortal*>(e->obj);
+				x = port->x;
+				y = port->y;
+				if (port->GetSceneId() != 0)
+					CGame::GetInstance()->SwitchScene(port->GetSceneId());
+				break;
 			}
 
 			if (dynamic_cast<CGround*>(e->obj)
@@ -333,12 +340,11 @@ CMario::CMario() : CGameObject()
 
 void CMario::Render()
 {
-	int animation = -1;
+	int animation = 0;
 	if (state == MARIO_STATE_DIE)
 		animation = MARIO_ANI_DIE;
 	else 
 		animation = GetAnimation();
-
 	animation_set->at(animation)->Render(x, y, nx, ny, 255);
 
 	//RenderBoundingBox();
@@ -374,7 +380,4 @@ void CMario::Reset()
 void CMario::SetLife(int life)
 {
 	this->life += life;
-	Effect* effect = EffectPool::GetInstance()->Create();
-	if (effect != NULL)
-		effect->InitPoint(EffectPoint::p1000, x, y);
 }

@@ -173,7 +173,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			element->QueryFloatAttribute("y", &y);
-			CCamera* cam = CCamera::GetInstance();
+			CCamera* cam = new CCamera();
+			CGame::GetInstance()->SetCam(cam);
 			cam->SetPosition(y);
 			objects.push_back(cam);
 			element = element->NextSiblingElement();
@@ -277,7 +278,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			if (element->Attribute("type"))
 			{
 				type = element->Attribute("type");
-				//DebugOut(L"type %s\n", ToLPCWSTR(type));
+				/*DebugOut(L"type %s\n", ToLPCWSTR(type));*/
 			}
 			else type = "node";
 			obj = new CPortal(type);

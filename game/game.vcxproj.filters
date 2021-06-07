@@ -291,6 +291,9 @@
     <ClCompile Include="BoundOverWorld.cpp">
       <Filter>Overworld</Filter>
     </ClCompile>
+    <ClCompile Include="DataManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -502,6 +505,9 @@
     </ClInclude>
     <ClInclude Include="BoundOverWorld.h">
       <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

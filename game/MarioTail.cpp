@@ -8,22 +8,12 @@
 #include "Goomba.h"
 #include "Koopa.h"
 #include "Plant.h"
+#include "Game.h"
 
 #define MARIO_TAIL_WDITH 100
 #define MARIO_TAIL_HEIGHT 40
 #define MARIO_TAIL_X 10
 #define MARIO_TAIL_Y 40
-
-MarioTail* MarioTail::__instance = NULL;
-
-MarioTail* MarioTail::GetInstance()
-{
-	if (__instance == NULL)
-	{
-		__instance = new MarioTail();
-	}
-	return __instance;
-}
 
 void MarioTail::Render()
 {
@@ -85,7 +75,7 @@ void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 
 void MarioTail::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	SetPosition(CMario::GetInstance()->x - MARIO_TAIL_X, CMario::GetInstance()->y + MARIO_TAIL_Y);
+	SetPosition(CGame::GetInstance()->GetPlayer()->x - MARIO_TAIL_X, CGame::GetInstance()->GetPlayer()->y + MARIO_TAIL_Y);
 
 	HandleCollision(coObjects);
 }

@@ -2,10 +2,11 @@
 #include "Animations.h"
 #include "Mario.h"
 #include "BigBox.h"
+#include "Game.h"
 
 PowerUpItem::PowerUpItem()
 {
-	mario = CMario::GetInstance();
+	mario = CGame::GetInstance()->GetPlayer();
 }
 
 void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

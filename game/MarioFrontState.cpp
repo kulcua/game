@@ -1,7 +1,7 @@
 #include "MarioFrontState.h"
 #include "Mario.h"
 #include "MarioStandingState.h"
-#include "Camera.h"
+#include "Game.h"
 
 MarioFrontState* MarioFrontState::__instance = NULL;
 
@@ -73,7 +73,7 @@ void MarioFrontState::Update(CMario& mario, DWORD dt)
     else if ((mario.y > portIn->y && mario.vy > 0) || (mario.y < portIn->y && mario.vy < 0))
     {
         mario.SetPosition(portOut->x, portOut->y);
-        CCamera::GetInstance()->SetPosition(portOut->GetCamY());
+        CGame::GetInstance()->GetCam()->SetPosition(portOut->GetCamY());
         getOut = true;
     }
     //DebugOut(L"MarioFrontState %f %f %d\n", mario.vy, mario.y, getOut);

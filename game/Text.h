@@ -11,7 +11,7 @@
 class Text
 {
 protected:
-	float x, y;
+	float x = 0, y = 0;
 	int content;
 	int characterRender;
 	int numberOfText;

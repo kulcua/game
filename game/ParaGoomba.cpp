@@ -1,5 +1,6 @@
 #include "ParaGoomba.h" 
 #include "EffectPool.h"
+#include "Game.h"
 
 ParaGoomba::ParaGoomba()
 {
@@ -7,7 +8,7 @@ ParaGoomba::ParaGoomba()
 	die = false;
 	level = PARAGOOMBA_LEVEL_JUMP;
 	jumpTimes = PARAGOOMBA_JUMP_TIMES;
-	mario = CMario::GetInstance();
+	mario = CGame::GetInstance()->GetPlayer();
 }
 
 void ParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)

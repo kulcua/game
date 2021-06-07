@@ -15,7 +15,7 @@ Intro* Intro::GetInstance()
 
 void Intro::SetScenario(vector<LPGAMEOBJECT> &objects)
 {
-	mario = CMario::GetInstance();
+	mario = CGame::GetInstance()->GetPlayer();;
 	mario->SetLevel(MARIO_LEVEL_BIG);
 	mario->SetPosition(700, 400);
 	mario->nx = -1;

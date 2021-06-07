@@ -4,7 +4,6 @@
 
 class CCamera : public CGameObject
 {
-	static CCamera* __instance;
 	CMario* mario;
 
 	float xCenter;
@@ -12,7 +11,6 @@ class CCamera : public CGameObject
 
 	bool onGroundMode;
 public:
-	static CCamera* GetInstance();
 	CCamera();
 	void FollowMario();
 	void SetPosition(float y);

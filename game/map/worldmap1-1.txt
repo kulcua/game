@@ -622,25 +622,21 @@
 #EFFECTPool - ball - mario_attack - debris
 65	621	202	410	901	902	910
 
+[PORTAL]
+#type - spriteId - sceneId
+#start		
+overworld	0	2
+
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
-# type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas, 11 = Item, 10 = BigBox, 20 = Ground, 50 = Portal, 6 = RedPlant
-
-#ITEM: 25 = coin, 26 = red_mushroom
+# MARIO
+0	6000	1000	1
 
 #POOL_FIREBALL
 68	0	0	0
 
 #POOL_EFFECT
 69	0	0	0
-
-# MARIO
-0	6000	1000	1
-
-# --- HIDEN OBJECT ----
-# type	l	t	ani_set_id	r	b	scene_id
-#SCENE PORTAL
-#50	115	98	0	148	150	1
 
 [MAP]
 #id	.tmx	r	g	b	prefix

@@ -17,6 +17,8 @@
 #include "MarioTail.h"
 #include "PortalManager.h"
 #include "MarioOverWorldState.h"
+#include "MarioStandingState.h"
+#include "DataManager.h"
 
 #define INTRO_SCENE 1
 #define PLAY_SCENE 3
@@ -151,20 +153,26 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 				return;
 			}
 
-			player = CMario::GetInstance();
+			player = new CMario();
+			CGame::GetInstance()->SetPlayer(player);
 			player->SetPosition(x, y);
+			DataManager::GetInstance()->ReadPlayerData();
+			if (id == 2)
+			{
+				player->CGameObject::SetAnimation(MARIO_ANI_SET_ID);
+				player->state_ = MarioState::overworld.GetInstance();
+			}
+			else {
+				player->CGameObject::SetAnimation(MARIO_ANI_SET_ID);
+				player->state_ = MarioState::standing.GetInstance();
+			}
 			objects.push_back(player);
-
-			MarioTail* tail = MarioTail::GetInstance();
+			
+			MarioTail* tail = new MarioTail();
 			tail->SetPosition(x, y);
 			objects.push_back(tail);
 			
 			DebugOut(L"[INFO] Player object created!\n");
-
-			if (id == 2)
-			{
-				player->state_ = MarioState::overworld.GetInstance();
-			}
 		}
 		else if (id == INTRO_SCENE)
 		{
@@ -178,14 +186,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_POOL_EFFECT:
 		EffectPool::GetInstance()->InitPool(objects);
 		break;
-	/*case OBJECT_TYPE_PORTAL:
-	{
-		float r = atof(tokens[4].c_str());
-		float b = atof(tokens[5].c_str());
-		int scene_id = atoi(tokens[6].c_str());
-		obj = new CPortal(x, y, r, b, scene_id);
-	}
-	break;*/
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -201,7 +201,7 @@ void CPlayScene::_ParseSection_FONT(string line)
 	string name = tokens[0].c_str();
 	int spriteId = atoi(tokens[1].c_str());
 
-	fontManager->GetInstance()->characters[name] = spriteId;
+	FontManager::GetInstance()->characters[name] = spriteId;
 }
 
 void CPlayScene::_ParseSection_BGColor(string line)
@@ -225,7 +225,7 @@ void CPlayScene::_ParseSection_HUD(string line)
 
 	int spriteId = atoi(tokens[0].c_str());
 
-	HUD* hud = HUD::GetInstance();
+	HUD* hud = new HUD();
 
 	hud->SetSpriteId(spriteId);
 
@@ -245,8 +245,7 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	int B = atoi(tokens[4].c_str());
 	string prefixPath = tokens[5].c_str();
 
-	tileMap = new TileMap();
-	tileMap->GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects, prefixPath);
+	TileMap::GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects, prefixPath);
 }
 
 void CPlayScene::_ParseSection_PORTAL(string line)
@@ -355,10 +354,6 @@ void CPlayScene::Update(DWORD dt)
 	{
 		Intro::GetInstance()->Update();
 	}
-	else {
-		HUD::GetInstance()->SetPosition(30, 570);
-		HUD::GetInstance()->time->SetContent(0);
-	}
 
 	//DebugOut(L"size coo: %d\n", coObject.size());
 	//DebugOut(L"size: %d\n", objects.size());
@@ -366,7 +361,8 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	tileMap->GetInstance()->RenderBackground();
+	//if (player == NULL) return;
+	TileMap::GetInstance()->RenderBackground();
 
 	for (int i = objects.size() - 1; i > -1 ; i--)
 	{
@@ -374,18 +370,21 @@ void CPlayScene::Render()
 			objects[i]->Render();
 	}
 
-	tileMap->GetInstance()->RenderForeground();
+	TileMap::GetInstance()->RenderForeground();
 }
 
 void CPlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
-		delete objects[i];
-	objects.clear();
-
+	if (player != NULL)
+		DataManager::GetInstance()->SavePlayerData();
 	player = NULL;
-	tileMap = NULL;
-	fontManager = NULL;
+
+	for (int i = 1; i < objects.size(); i++)
+	{
+		delete objects[i];
+	}
+	objects.clear();
+	TileMap::GetInstance()->Clear();
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

@@ -157,6 +157,7 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinBrick.cpp" />
+    <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectPool.cpp" />
     <ClCompile Include="FireBall.cpp" />
@@ -231,6 +232,7 @@
     <ClInclude Include="Card.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinBrick.h" />
+    <ClInclude Include="DataManager.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectPool.h" />
     <ClInclude Include="FireBall.h" />

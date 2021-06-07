@@ -115,9 +115,9 @@ class CMario : public CGameObject
 	int point = 0;
 	int money = 0;
 
-	static CMario* __instance;
+	//static CMario* __instance;
 public:
-	static CMario* GetInstance();
+	//static CMario* GetInstance();
 
 	DWORD powerStartTime;
 	DWORD powerEndTime;
@@ -163,6 +163,9 @@ public:
 
 	void SetLife(int life);
 	int GetLife() { return life; }
+
+	//void SetPoint(int p) { this->point = p; }
+	//void SetMoney(int m) { this->money = m; }
 
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

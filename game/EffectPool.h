@@ -5,7 +5,7 @@ class EffectPool
 {
 	static EffectPool* __instance;
 	static const int POOL_SIZE = 10;
-	Effect effect[POOL_SIZE];
+	Effect* effect[POOL_SIZE];
 	Effect* firstAvailable_;
 public:
 	static EffectPool* GetInstance();

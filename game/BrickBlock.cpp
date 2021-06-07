@@ -1,11 +1,12 @@
 #include "BrickBlock.h"
 #include "Utils.h"
 #include "Mario.h"
+#include "Game.h"
 
 BrickBlock::BrickBlock()
 {
 	SetAnimation(BRICK_ANI_ID);
-	mario = CMario::GetInstance();
+	mario = CGame::GetInstance()->GetPlayer();
 }
 
 void BrickBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

@@ -17,7 +17,6 @@
 
 class HUD : public CGameObject
 {
-	static HUD* __instance;
 	float x, y;
 	int spriteId = 0;
 	float xWorld, xM;
@@ -32,8 +31,6 @@ public:
 	TextPowerSign* power;
 	Text* money;
 	Text* time;
-
-	static HUD* GetInstance();
 	HUD();
 	int CountDownTimer();
 	void SetPosition(float x, float y);

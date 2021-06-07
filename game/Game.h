@@ -5,7 +5,9 @@
 #include <unordered_map>
 #include <dinput.h>
 #include "PlayScene.h"
+#include "Camera.h"
 #include "Scene.h"
+#include "Mario.h"
 
 using namespace std;
 
@@ -50,7 +52,12 @@ class CGame {
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
+
+	CCamera* cam;
+	CMario* mario;
 public:
+	void SetPlayer(CMario* mario) { this->mario = mario; }
+	CMario* GetPlayer() { return mario; }
 	void SetBackgroundColor(D3DCOLOR backgroundColor) { this->backgroundColor = backgroundColor; }
 	D3DCOLOR GetBackgroundColor() { return backgroundColor; }
 	void InitKeyBoard();
@@ -90,6 +97,9 @@ public:
 	void SetCamPos(float x, float y) { cam_x = floor(x); cam_y = floor(y); }
 
 	static CGame* GetInstance();
+
+	CCamera* GetCam() { return cam; }
+	void SetCam(CCamera* cam) { this->cam = cam; }
 
 	~CGame();
 };

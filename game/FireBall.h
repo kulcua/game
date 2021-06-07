@@ -20,11 +20,6 @@ class CFireBall : public CGameObject
 {
 	friend class FireBallPool;
 	bool isForPlant;
-
-	DWORD destroyTimeStart;
-
-	void StartDestroy();
-
 	union
 	{
 		struct
