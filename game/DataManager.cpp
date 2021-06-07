@@ -25,14 +25,10 @@ void DataManager::ReadPlayerData()
 		string line(str);
 
 		if (line[0] == '#') continue;
-		DebugOut(L"ReadPlayerData 2\n");
 
 		vector<string> tokens = split(line);
-		DebugOut(L"ReadPlayerData 3\n");
-
 		if (tokens.size() < 4) return;
 
-		DebugOut(L"ReadPlayerData\n");
 		int level = atoi(tokens[0].c_str());
 		int point = atoi(tokens[1].c_str());
 		int money = atoi(tokens[2].c_str());
@@ -43,7 +39,7 @@ void DataManager::ReadPlayerData()
 		CGame::GetInstance()->GetPlayer()->SetMoney(money);
 		CGame::GetInstance()->GetPlayer()->SetLife(life);
 
-		DebugOut(L"%d %d %d %d\n", level, point, money, life);
+		//DebugOut(L"%d %d %d %d\n", level, point, money, life);
 	}
 
 	f.close();
@@ -60,7 +56,7 @@ void DataManager::SavePlayerData() {
 	// Write to the file
 	MyFile << "#level - point - money - life" << endl;
 
-	MyFile << level << " " << point << " " << money << " " << life;
+	MyFile << level << "\t" << point << "\t" << money << "\t" << life;
 
 	// Close the file
 	MyFile.close();

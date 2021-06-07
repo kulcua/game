@@ -1,2 +1,2 @@
 #level - point - money - life
-2 0 0 3
+2	200	0	27

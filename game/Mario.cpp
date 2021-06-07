@@ -175,7 +175,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<GreenMushroom*>(e->obj))
 			{
 				e->obj->die = true;
-				SetLife(1);
+				SetLife(life++);
 				Effect* effect = EffectPool::GetInstance()->Create();
 				if (effect != NULL)
 					effect->InitPoint(EffectPoint::p1000, x, y);
@@ -379,5 +379,5 @@ void CMario::Reset()
 
 void CMario::SetLife(int life)
 {
-	this->life += life;
+	this->life = life;
 }
