@@ -3,8 +3,8 @@
 
 #define BRICK_BBOX_WIDTH  48
 #define BRICK_BBOX_HEIGHT 48
-#define BRICK_ANI_ID 23
-#define BRICK_ANI_BLOCK 0
+#define BRICKBLOCK_ANI_ID 23
+#define BRICK_ANI_BRICKBLOCK 0
 #define BRICK_ANI_COIN 1
 
 class BrickBlock : public CGameObject

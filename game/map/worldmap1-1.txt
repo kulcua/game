@@ -630,17 +630,13 @@ overworld	0	2
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
 # MARIO
-0	6000	1000	1
+0	2000	1000	1
 
 #POOL_FIREBALL
 68	0	0	0
 
 #POOL_EFFECT
 69	0	0	0
-
-[MAP]
-#id	.tmx	r	g	b	prefix
-80000	map/World-map-1-1/world-1-1-map_venus.tmx	255	255	255	map/World-map-1-1/
 
 [FONT]
 0	99990
@@ -660,3 +656,6 @@ powerBlack	99913
 
 [HUD]
 99900
+[MAP]
+#id	.tmx	r	g	b	prefix
+80000	map/World-map-1-1/world-1-1-map_venus.tmx	255	255	255	map/World-map-1-1/

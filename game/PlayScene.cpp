@@ -221,14 +221,13 @@ void CPlayScene::_ParseSection_HUD(string line)
 {
 	vector<string> tokens = split(line);
 
-	if (tokens.size() != 1) return;
+	if (tokens.size() < 1) return;
 
 	int spriteId = atoi(tokens[0].c_str());
 
 	HUD* hud = new HUD();
 
 	hud->SetSpriteId(spriteId);
-
 	objects.push_back(hud);
 }
 
@@ -361,7 +360,6 @@ void CPlayScene::Update(DWORD dt)
 
 void CPlayScene::Render()
 {
-	//if (player == NULL) return;
 	TileMap::GetInstance()->RenderBackground();
 
 	for (int i = objects.size() - 1; i > -1 ; i--)
@@ -394,7 +392,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 	int sceneId = ((CPlayScene*)scene)->GetSceneId();
 	if (sceneId != INTRO_SCENE)
 	{
-		CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+		CMario* mario = CGame::GetInstance()->GetPlayer();
 		Input input = NO_INPUT;
 
 		switch (KeyCode)
@@ -462,7 +460,7 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
-		CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+		CMario* mario = CGame::GetInstance()->GetPlayer();
 		Input input = NO_INPUT;
 
 		switch (KeyCode)
@@ -494,7 +492,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
 		CGame* game = CGame::GetInstance();
-		CMario* mario = ((CPlayScene*)scene)->GetPlayer();
+		CMario* mario = game->GetPlayer();
 
 		if (mario->GetState() == MARIO_STATE_DIE) return;
 

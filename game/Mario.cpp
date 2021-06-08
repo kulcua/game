@@ -6,7 +6,6 @@
 #include "Portal.h"
 #include "BigBox.h"
 #include "Ground.h"
-#include "Item.h"
 #include "Koopa.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
@@ -22,7 +21,6 @@
 #include "PowerUpItem.h"
 #include "BrickBlock.h"
 #include "Coin.h"
-#include "SwitchItem.h"
 #include "GreenMushroom.h"
 #include "Plant.h"
 #include "Card.h"
@@ -31,17 +29,7 @@
 #include "MarioFrontState.h"
 #include "MarioOverWorldState.h"
 #include "Portal.h"
-
-//CMario* CMario::__instance = NULL;
-//
-//CMario* CGame::GetInstance()->GetPlayer();
-//{
-//	if (__instance == NULL)
-//	{
-//		__instance = new CMario();
-//	}
-//	return __instance;
-//}
+#include "SwitchItem.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -214,8 +202,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				CPortal* port = dynamic_cast<CPortal*>(e->obj);
 				x = port->x;
 				y = port->y;
-				if (port->GetSceneId() != 0)
-					CGame::GetInstance()->SwitchScene(port->GetSceneId());
+				MarioState::overworld.GetInstance()->SetSceneId(port->GetSceneId());
 				break;
 			}
 

@@ -130,13 +130,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				item = new SwitchItem();
 				y -= ITEM_BBOX_HEIGHT;
 			}
-			if (item != NULL)
-			{
-				item->SetPosition(x, y);
-				objects.push_back(item);
-			}
+			item->SetPosition(x, y);
 			br->SetItem(item);
 			objects.push_back(br);
+			objects.push_back(item);
 			element = element->NextSiblingElement();
 		}
 	}
@@ -172,10 +169,13 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
+			int isMove;
 			element->QueryFloatAttribute("y", &y);
+			element->QueryIntAttribute("type", &isMove);
 			CCamera* cam = new CCamera();
 			CGame::GetInstance()->SetCam(cam);
 			cam->SetPosition(y);
+			cam->SetIsMove(isMove);
 			objects.push_back(cam);
 			element = element->NextSiblingElement();
 		}

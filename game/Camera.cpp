@@ -57,7 +57,8 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	xCenter = x + (width / 2) - MARIO_BIG_BBOX_WIDTH / 2;
 	yCenter = y + (height / 2) + MARIO_BIG_BBOX_HEIGHT / 2;
 
-	FollowMario();
+	if (isMove == true)
+		FollowMario();
 
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
@@ -114,7 +115,8 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}		
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	CGame::GetInstance()->SetCamPos(x, y);
+	x = floor(x);
+	y = floor(y);
 }
 
 void CCamera::Render()

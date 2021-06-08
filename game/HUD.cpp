@@ -13,7 +13,7 @@ HUD::HUD()
 	money = new Text(TEXT_NUM_MONEY);
 	time = new Text(TEXT_NUM_TIME);
 
-	mario = CGame::GetInstance()->GetPlayer();;
+	mario = CGame::GetInstance()->GetPlayer();
 }
 
 int HUD::CountDownTimer()
@@ -30,7 +30,7 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	float cx, cy;
 	CGame::GetInstance()->GetCam()->GetPosition(cx, cy);
-	SetPosition(cx, cy + SCREEN_HEIGHT - HUD_HEIGHT);
+	SetPosition(cx, cy);
 
 	world->SetContent(1);
 	life->SetContent(mario->GetLife());
@@ -40,12 +40,10 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	time->SetContent(CountDownTimer());
 }
 
-void HUD::SetPosition(float x, float y)
+void HUD::SetPosition(float cx, float cy)
 {
-	x = floor(x);
-	y = floor(y);
-	this->x = x;
-	this->y = y;
+	x = cx;
+	y = cy + SCREEN_HEIGHT - 155;
 
 	xWorld = xM = x + HUD_ALIGN_LEFT;
 	xPower = xPoint = x + HUD_ALIGN_CENTER;

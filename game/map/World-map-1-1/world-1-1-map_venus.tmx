@@ -429,7 +429,7 @@
   <object id="105" name="coin" type="1" x="2120.61" y="1058.91"/>
   <object id="106" name="powerup" type="1" x="4381.21" y="1109.55"/>
   <object id="213" name="1upMushroom" type="2" x="4282" y="385.333"/>
-  <object id="270" name="switch" type="2" x="6048.5" y="1104" width="27" height="24"/>
+  <object id="270" name="switch" type="2" x="6046.5" y="1104" width="27" height="24"/>
  </objectgroup>
  <objectgroup id="15" name="Coin">
   <object id="59" x="3227.17" y="970.833"/>
@@ -472,24 +472,24 @@
   <object id="246" x="6288" y="1200" width="27" height="24"/>
   <object id="248" x="6240.5" y="1200.33" width="27" height="24"/>
   <object id="249" x="6240.17" y="1152" width="27" height="24"/>
-  <object id="250" x="6096.5" y="1200" width="27" height="24"/>
-  <object id="251" x="6048.5" y="1200.33" width="27" height="24"/>
-  <object id="252" x="6000.17" y="1200.33" width="27" height="24"/>
-  <object id="253" x="5952.5" y="1200.33" width="27" height="24"/>
-  <object id="254" x="5904.5" y="1200" width="27" height="24"/>
-  <object id="255" x="5856.5" y="1200.33" width="27" height="24"/>
-  <object id="256" x="5808.5" y="1200.33" width="27" height="24"/>
-  <object id="257" x="6048.33" y="1152.67" width="27" height="24"/>
-  <object id="258" x="6000.25" y="1152.5" width="27" height="24"/>
-  <object id="259" x="5952.5" y="1152.5" width="27" height="24"/>
-  <object id="260" x="5904.25" y="1152.25" width="27" height="24"/>
-  <object id="261" x="5856.33" y="1152.42" width="27" height="24"/>
-  <object id="264" x="6000.25" y="1104.25" width="27" height="24"/>
-  <object id="265" x="5952" y="1104.25" width="27" height="24"/>
-  <object id="266" x="5904.25" y="1104.5" width="27" height="24"/>
+  <object id="250" x="6094.5" y="1200" width="27" height="24"/>
+  <object id="251" x="6046.5" y="1200.33" width="27" height="24"/>
+  <object id="252" x="5998.17" y="1200.33" width="27" height="24"/>
+  <object id="253" x="5950.5" y="1200.33" width="27" height="24"/>
+  <object id="254" x="5902.5" y="1200" width="27" height="24"/>
+  <object id="255" x="5854.5" y="1200.33" width="27" height="24"/>
+  <object id="256" x="5806.5" y="1200.33" width="27" height="24"/>
+  <object id="257" x="6046.33" y="1152.67" width="27" height="24"/>
+  <object id="258" x="5998.25" y="1152.5" width="27" height="24"/>
+  <object id="259" x="5950.5" y="1152.5" width="27" height="24"/>
+  <object id="260" x="5902.25" y="1152.25" width="27" height="24"/>
+  <object id="261" x="5854.33" y="1152.42" width="27" height="24"/>
+  <object id="264" x="5998.25" y="1104.25" width="27" height="24"/>
+  <object id="265" x="5950" y="1104.25" width="27" height="24"/>
+  <object id="266" x="5902.25" y="1104.5" width="27" height="24"/>
  </objectgroup>
- <objectgroup id="31" name="WorldGraph">
-  <object id="285" type="overworld" x="6039" y="1054" width="40" height="40"/>
+ <objectgroup id="31" name="WorldGraph1">
+  <object id="285" type="overworld" x="6038" y="1054" width="40" height="40"/>
  </objectgroup>
  <objectgroup id="15" name="Enemy">
   <object id="91" name="koopa" type="red" x="1641.33" y="1034.66" width="13" height="13">
@@ -536,7 +536,7 @@
   </object>
  </objectgroup>
  <objectgroup id="27" name="Camera">
-  <object id="239" x="26.6667" y="699.061" width="800" height="600.606"/>
+  <object id="239" type="1" x="26.6667" y="699.061" width="800" height="600.606"/>
  </objectgroup>
  <objectgroup id="28" name="KoopaBound">
   <object id="244" x="1823" y="1056" width="24" height="93"/>

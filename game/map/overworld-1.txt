@@ -112,10 +112,6 @@ bonus-slot	20017	0
 # MARIO
 0	98	143	1
 
-[MAP]
-#id	.tmx	r	g	b
-81000	map/Overworld/overworld-1-map.tmx	255	255	255	map/Overworld/
-
 [FONT]
 0	99990
 1	99991
@@ -134,3 +130,7 @@ powerBlack	99913
 
 [HUD]
 99900
+
+[MAP]
+#id	.tmx	r	g	b
+81000	map/Overworld/overworld-1-map.tmx	255	255	255	map/Overworld/

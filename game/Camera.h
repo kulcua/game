@@ -8,8 +8,10 @@ class CCamera : public CGameObject
 
 	float xCenter;
 	float yCenter;
-
+	
 	bool onGroundMode;
+
+	bool isMove;
 public:
 	CCamera();
 	void FollowMario();
@@ -17,5 +19,6 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object);
 	virtual void Render();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void SetIsMove(bool isMove) { this->isMove = isMove; }
 };
 

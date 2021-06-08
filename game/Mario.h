@@ -115,10 +115,7 @@ class CMario : public CGameObject
 	int point = 0;
 	int money = 0;
 
-	//static CMario* __instance;
 public:
-	//static CMario* GetInstance();
-
 	DWORD powerStartTime;
 	DWORD powerEndTime;
 

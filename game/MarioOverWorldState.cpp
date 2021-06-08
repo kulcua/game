@@ -1,5 +1,6 @@
 #include "MarioOverWorldState.h"
 #include "Mario.h"
+#include "Game.h"
 
 #define MARIO_OVERWORLD_SPEED 0.3f
 
@@ -31,6 +32,11 @@ void MarioOverWorldState::HandleInput(CMario& mario, Input input)
     else if (input == PRESS_UP)
     {
         mario.vy = -MARIO_OVERWORLD_SPEED;
+    }
+    else if (input == PRESS_S)
+    {
+        if (sceneId != 0 && mario.vx == 0 && mario.vy == 0)
+            CGame::GetInstance()->SwitchScene(sceneId);
     }
 }
 

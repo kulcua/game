@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "Mario.h"
 
-#define HUD_HEIGHT 155
+#define HUD_HEIGHT 500
 #define SCREEN_HEIGHT 750
 #define HUD_WIDTH 800
 #define HUD_ALIGN_LEFT 110
