@@ -157,13 +157,12 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			CGame::GetInstance()->SetPlayer(player);
 			player->SetPosition(x, y);
 			DataManager::GetInstance()->ReadPlayerData();
+			player->CGameObject::SetAnimation(MARIO_ANI_SET_ID);
 			if (id == 2)
 			{
-				player->CGameObject::SetAnimation(MARIO_ANI_SET_ID);
 				player->state_ = MarioState::overworld.GetInstance();
 			}
 			else {
-				player->CGameObject::SetAnimation(MARIO_ANI_SET_ID);
 				player->state_ = MarioState::standing.GetInstance();
 			}
 			objects.push_back(player);
@@ -229,6 +228,7 @@ void CPlayScene::_ParseSection_HUD(string line)
 
 	hud->SetSpriteId(spriteId);
 	objects.push_back(hud);
+	//CGame::GetInstance()->SetHUD(hud);
 }
 
 void CPlayScene::_ParseSection_MAPS(string line)
@@ -389,116 +389,121 @@ void CPlayScene::Unload()
 
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
+	CMario* mario = CGame::GetInstance()->GetPlayer();
 	int sceneId = ((CPlayScene*)scene)->GetSceneId();
 	if (sceneId != INTRO_SCENE)
 	{
-		CMario* mario = CGame::GetInstance()->GetPlayer();
-		Input input = NO_INPUT;
-
-		switch (KeyCode)
+		if (mario->IsAutoMoving() == false)
 		{
-		case DIK_S:
-			input = PRESS_S;
-			break;
-		case DIK_F1:
-			if (sceneId == PLAY_SCENE)
-				mario->Reset();
-			else mario->SetLevel(MARIO_LEVEL_SMALL);
-			break;
-		case DIK_F2:
-			mario->SetLevel(MARIO_LEVEL_BIG);
-			if (sceneId == PLAY_SCENE)
+			Input input = NO_INPUT;
+			switch (KeyCode)
 			{
-				mario->y -= MARIO_BIG_BBOX_HEIGHT;
-				mario->isUntouchable = false;
-			}
-			break;
-		case DIK_F3:
-			mario->SetLevel(MARIO_LEVEL_RACCOON);
-			if (sceneId == PLAY_SCENE)
-			{
+			case DIK_S:
+				input = PRESS_S;
+				break;
+			case DIK_F1:
+				if (sceneId == PLAY_SCENE)
+					mario->Reset();
+				else mario->SetLevel(MARIO_LEVEL_SMALL);
+				break;
+			case DIK_F2:
+				mario->SetLevel(MARIO_LEVEL_BIG);
+				if (sceneId == PLAY_SCENE)
+				{
+					mario->y -= MARIO_BIG_BBOX_HEIGHT;
+					mario->isUntouchable = false;
+				}
+				break;
+			case DIK_F3:
+				mario->SetLevel(MARIO_LEVEL_RACCOON);
+				if (sceneId == PLAY_SCENE)
+				{
+					mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
+					mario->isUntouchable = false;
+				}
+				break;
+			case DIK_F4:
+				mario->SetLevel(MARIO_LEVEL_FIRE);
+				if (sceneId == PLAY_SCENE)
+				{
+					mario->y -= MARIO_BIG_BBOX_HEIGHT;
+					mario->isUntouchable = false;
+				}
+				break;
+			case DIK_F5:
+				mario->SetLevel(MARIO_LEVEL_RACCOON);
 				mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
-				mario->isUntouchable = false;
+				mario->isUntouchable = true;
+				break;
+			case DIK_DOWN:
+				input = PRESS_DOWN;
+				break;
+			case DIK_A:
+				input = PRESS_A;
+				break;
+			case DIK_LEFT:
+				input = PRESS_LEFT;
+				break;
+			case DIK_RIGHT:
+				input = PRESS_RIGHT;
+				break;
+			case DIK_UP:
+				input = PRESS_UP;
+				break;
 			}
-			break;
-		case DIK_F4:
-			mario->SetLevel(MARIO_LEVEL_FIRE);
-			if (sceneId == PLAY_SCENE)
-			{
-				mario->y -= MARIO_BIG_BBOX_HEIGHT;
-				mario->isUntouchable = false;
-			}
-			break;
-		case DIK_F5:
-			mario->SetLevel(MARIO_LEVEL_RACCOON);
-			mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
-			mario->isUntouchable = true;
-			break;
-		case DIK_DOWN:
-			input = PRESS_DOWN;
-			break;
-		case DIK_A:
-			input = PRESS_A;
-			break;
-		case DIK_LEFT:
-			input = PRESS_LEFT;
-			break;
-		case DIK_RIGHT:
-			input = PRESS_RIGHT;
-			break;
-		case DIK_UP:
-			input = PRESS_UP;
-			break;
-		}
 
-		if (input != NO_INPUT)
-			mario->HandleInput(input);
+			if (input != NO_INPUT)
+				mario->HandleInput(input);
+		}
 	}
 }
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
+	CMario* mario = CGame::GetInstance()->GetPlayer();
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
-		CMario* mario = CGame::GetInstance()->GetPlayer();
-		Input input = NO_INPUT;
-
-		switch (KeyCode)
+		if (mario->IsAutoMoving() == false)
 		{
-		case DIK_DOWN:
-			input = RELEASE_DOWN;
-			break;
-		case DIK_A:
-			input = RELEASE_A;
-			break;
-		case DIK_S:
-			input = RELEASE_S;
-			break;
-		case DIK_LEFT:
-			input = RELEASE_LEFT;
-			break;
-		case DIK_RIGHT:
-			input = RELEASE_RIGHT;
-			break;
-		}
+			Input input = NO_INPUT;
+			switch (KeyCode)
+			{
+			case DIK_DOWN:
+				input = RELEASE_DOWN;
+				break;
+			case DIK_A:
+				input = RELEASE_A;
+				break;
+			case DIK_S:
+				input = RELEASE_S;
+				break;
+			case DIK_LEFT:
+				input = RELEASE_LEFT;
+				break;
+			case DIK_RIGHT:
+				input = RELEASE_RIGHT;
+				break;
+			}
 
-		if (input != NO_INPUT)
-			mario->HandleInput(input);
+			if (input != NO_INPUT)
+				mario->HandleInput(input);
+		}
 	}
 }
 
 void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
+	CMario* mario = CGame::GetInstance()->GetPlayer();
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
-		CGame* game = CGame::GetInstance();
-		CMario* mario = game->GetPlayer();
+		if (mario->IsAutoMoving() == false)
+		{
+			if (mario->GetState() == MARIO_STATE_DIE) return;
 
-		if (mario->GetState() == MARIO_STATE_DIE) return;
+			Input input = KEY_STATE;
 
-		Input input = KEY_STATE;
-
-		mario->HandleInput(input);
+			mario->HandleInput(input);
+		}
 	}
 }
 	

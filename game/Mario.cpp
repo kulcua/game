@@ -23,7 +23,6 @@
 #include "Coin.h"
 #include "GreenMushroom.h"
 #include "Plant.h"
-#include "Card.h"
 #include "PortalPipe.h"
 #include "Camera.h"
 #include "MarioFrontState.h"
@@ -89,7 +88,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				Card* card = dynamic_cast<Card*>(e->obj);
 				if (e->ny)
-					card->GetCard();
+				{
+					SetCardType(card->RandomCard());
+				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
@@ -122,6 +123,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopaShell = koopa;
 					}
 					else { // kick normally
+						koopa->nx = this->nx;
 						koopa->vx = this->nx * KOOPA_BALL_SPEED;
 						MarioState::kick.GetInstance()->StartKick();
 						state_ = MarioState::kick.GetInstance();
@@ -215,9 +217,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
 					onGround = true;
-					if (MarioSittingState::GetInstance()->isSit == false
-						&& state_ != MarioState::tailHit.GetInstance())
-						state_ = MarioState::standing.GetInstance();
+					/*if (MarioSittingState::GetInstance()->isSit == false
+						&& state_ != MarioState::tailHit.GetInstance()
+						&& IsAutoMoving() == false)
+						state_ = MarioState::standing.GetInstance();*/
 				}
 			}
 		}

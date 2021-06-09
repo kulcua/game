@@ -69,12 +69,16 @@ void MarioWalkingState::HandleInput(CMario& mario, Input input)
 void MarioWalkingState::Update(CMario& mario, DWORD dt)
 {
     MarioState::Update(mario, dt);
-    if (mario.vy > MARIO_VY_DROP)
+    if (mario.IsAutoMoving())
+    {
+        mario.vx = MARIO_WALKING_SPEED;
+    }
+    else if (mario.vy > MARIO_VY_DROP)
     {
         mario.onGround = false;
         mario.state_ = MarioState::dropping.GetInstance();
     }
-    //DebugOut(L"Walking\n");
+    DebugOut(L"Walking %d\n", mario.onGround);
 }
 
 void MarioWalkingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

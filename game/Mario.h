@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Utils.h"
-
+#include "Card.h"
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
 #define MARIO_JUMP_SPEED_Y		0.5f
@@ -110,6 +110,9 @@ class CMario : public CGameObject
 	int level;
 	int ani;
 
+	CardType cardType;
+	bool autoMoving;
+
 	int power;
 	int savePower;
 	int point = 0;
@@ -160,10 +163,10 @@ public:
 
 	void SetLife(int life);
 	int GetLife() { return life; }
-
-	//void SetPoint(int p) { this->point = p; }
-	//void SetMoney(int m) { this->money = m; }
-
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+
+	void SetCardType(CardType card) { cardType = card;  autoMoving = true; }
+	CardType GetCardType() { return cardType; }
+	bool IsAutoMoving() { return autoMoving; }
 };

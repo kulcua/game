@@ -63,6 +63,7 @@ void CGame::Draw(float x, float y, int nx, int ny, LPDIRECT3DTEXTURE9 texture, i
 {
 	float cam_x, cam_y;
 	GetCam()->GetPosition(cam_x, cam_y);
+
 	D3DXVECTOR3 p(floor(x - cam_x), floor(y - cam_y), 0);
 	
 	RECT r;

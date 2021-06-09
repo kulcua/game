@@ -42,6 +42,7 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void HUD::SetPosition(float cx, float cy)
 {
+	//DebugOut(L"pos hud\n");
 	x = cx;
 	y = cy + SCREEN_HEIGHT - 155;
 
