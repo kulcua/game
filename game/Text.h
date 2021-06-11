@@ -1,5 +1,6 @@
 #pragma once
 #include "Utils.h"
+#include "GameObject.h"
 #define TEXT_WIDTH 25
 #define TEXT_NUM_WORLD	1
 #define TEXT_NUM_LIFE	1
@@ -8,18 +9,17 @@
 #define TEXT_NUM_MONEY	2
 #define TEXT_NUM_TIME	3
 
-class Text
+class Text : public CGameObject
 {
 protected:
-	float x = 0, y = 0;
 	int content;
 	int characterRender;
 	int numberOfText;
 public:
 	Text(int numberOfText) { this->numberOfText = numberOfText; }
-	void SetPosition(float x, float y) { this->x = x; this->y = y; };
 	void SetContent(int content) { this->content = content; characterRender = content; }
 	virtual void Render();
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };
 
 class TextPowerSign : public Text

@@ -4,7 +4,7 @@
 #include "Card.h"
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
-#define MARIO_JUMP_SPEED_Y		0.5f
+#define MARIO_JUMP_SPEED_Y		0.6f
 #define MARIO_FLY_SPEED_Y		0.6f
 #define MARIO_JUMP_FLY_SPEED_Y	0.75f
 #define MARIO_DROP_FLY_SPEED_Y	0.02f
@@ -111,7 +111,7 @@ class CMario : public CGameObject
 	int ani;
 
 	CardType cardType;
-	bool autoMoving;
+	//bool autoMoving;
 
 	int power;
 	int savePower;
@@ -166,7 +166,9 @@ public:
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
-	void SetCardType(CardType card) { cardType = card;  autoMoving = true; }
+	void SetCardType(CardType card) { cardType = card;  
+	//autoMoving = true; 
+	nx = 1; }
 	CardType GetCardType() { return cardType; }
-	bool IsAutoMoving() { return autoMoving; }
+	//bool IsAutoMoving() { return autoMoving; }
 };

@@ -90,6 +90,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 				{
 					SetCardType(card->RandomCard());
+					CGame::GetInstance()->GetCurrentScene()->isFinished = true;
 				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
@@ -139,6 +140,13 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				}
 				else if (e->ny < 0)
 					onGround = true;
+			}
+			else if (dynamic_cast<CCamera*>(e->obj))
+			{
+				if (e->ny < 0)
+				{
+					y += dy;
+				}
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj))
 			{
@@ -217,10 +225,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
 					onGround = true;
-					/*if (MarioSittingState::GetInstance()->isSit == false
-						&& state_ != MarioState::tailHit.GetInstance()
-						&& IsAutoMoving() == false)
-						state_ = MarioState::standing.GetInstance();*/
 				}
 			}
 		}
@@ -232,14 +236,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
 
-	state_->Update(*this, dt);
-
 	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
 		vy += MARIO_GRAVITY * dt;
 
 	PowerControl();
 
 	HandleCollision(coObjects);
+
+	// put it finally because of switch scene delete all objects
+	state_->Update(*this, dt);
 }
 
 void CMario::PowerReset()
@@ -336,7 +341,7 @@ void CMario::Render()
 	else 
 		animation = GetAnimation();
 	animation_set->at(animation)->Render(x, y, nx, ny, 255);
-
+	//DebugOut(L"ani %d\n", animation);
 	//RenderBoundingBox();
 }
 

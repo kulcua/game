@@ -5,3 +5,4 @@ start	2
 1	map\intro.txt
 2	map\overworld-1.txt
 3	map\worldmap1-1.txt
+4	map\worldmap1-3.txt

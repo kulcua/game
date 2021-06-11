@@ -101,7 +101,7 @@ num-0	20009	0
 #123456		
 num-1	20011	3
 num-2	20012	0
-num-3	20013	0
+num-3	20013	4
 num-4	20014	0
 num-5	20015	0
 num-6	20016	0
@@ -130,7 +130,6 @@ powerBlack	99913
 
 [HUD]
 99900
-
 [MAP]
 #id	.tmx	r	g	b
 81000	map/Overworld/overworld-1-map.tmx	255	255	255	map/Overworld/

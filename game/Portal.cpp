@@ -25,7 +25,7 @@ void CPortal::Render()
 		spriteId = PortalManager::GetInstance()->portSprite[type];
 		CSprites::GetInstance()->Get(spriteId)->Draw(x, y, -1, -1);
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CPortal::GetBoundingBox(float& l, float &t, float& r, float& b)

@@ -38,6 +38,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	float x, y;
 	float width, height;
 	TiXmlElement* element = objectGroupElement->FirstChildElement();
+
 	if (name.compare("Solid") == 0)
 	{					
 		while (element)

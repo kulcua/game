@@ -75,7 +75,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="7" name="BoundOverWorld">
+ <objectgroup id="7" name="BoundOverWorld" visible="0">
   <object id="72" x="67.7512" y="25.2632" width="628.134" height="20.6699"/>
   <object id="73" x="666.029" y="27.5598" width="31.0048" height="478.852"/>
   <object id="74" x="39.0431" y="484.593" width="654.545" height="24.1148"/>
@@ -279,23 +279,23 @@
  <objectgroup id="8" name="Camera" visible="0">
   <object id="81" type="0" x="0" y="0" width="800" height="600"/>
  </objectgroup>
- <objectgroup id="5" name="AnimatedBG" visible="0">
-  <object id="21" name="tree" x="65" y="69">
+ <objectgroup id="5" name="AnimatedBG">
+  <object id="21" name="tree" x="68" y="69">
    <point/>
   </object>
-  <object id="22" name="tree" x="113" y="69">
+  <object id="22" name="tree" x="116" y="69">
    <point/>
   </object>
-  <object id="23" name="tree" x="161" y="69">
+  <object id="23" name="tree" x="164" y="69">
    <point/>
   </object>
-  <object id="24" name="tree" x="161" y="117">
+  <object id="24" name="tree" x="164" y="117">
    <point/>
   </object>
-  <object id="25" name="tree" x="113" y="117">
+  <object id="25" name="tree" x="116" y="117">
    <point/>
   </object>
-  <object id="26" name="tree" x="65" y="117">
+  <object id="26" name="tree" x="68" y="117">
    <point/>
   </object>
   <object id="28" name="tree" x="65" y="216">

@@ -1,6 +1,7 @@
 #include "MarioFlyingState.h"
 #include "Mario.h"
 #include "MarioDroppingState.h"
+#include "MarioStandingState.h"
 
 MarioFlyingState* MarioFlyingState::__instance = NULL;
 
@@ -74,7 +75,8 @@ void MarioFlyingState::GetBoundingBox(CMario& mario, float& left, float& top, fl
 
 void MarioFlyingState::Update(CMario& mario, DWORD dt)
 {
-    mario.onGround = false;
+    if (mario.onGround)
+        mario.state_ = MarioState::standing.GetInstance();
 
     if (mario.isPower == false)
     {

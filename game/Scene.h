@@ -9,10 +9,10 @@ protected:
 	CKeyEventHandler* keyHandler;
 	int id;
 	LPCWSTR sceneFilePath;
-
+	
 public:
 	CScene(int id, LPCWSTR filePath);
-
+	bool isFinished;
 	CKeyEventHandler* GetKeyEventHandler() { return keyHandler; }
 	virtual void Load() = 0;
 	virtual void Unload() = 0;

@@ -14,6 +14,14 @@ void Text::Render()
 	}
 }
 
+void Text::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x;
+	t = y;
+	r = x + TEXT_WIDTH;
+	b = y + TEXT_WIDTH;
+}
+
 void TextPowerSign::Render()
 {
 	float xPostition;

@@ -73,6 +73,9 @@
     <Filter Include="Overworld">
       <UniqueIdentifier>{5f314931-7e6c-4560-8c7a-66e93e3ed62b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TextManager">
+      <UniqueIdentifier>{b8ce1dbf-0099-4fb8-992d-637caf3d8c2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -195,12 +198,6 @@
     <ClCompile Include="HUD.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
-    <ClCompile Include="FontManager.cpp">
-      <Filter>HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>HUD</Filter>
-    </ClCompile>
     <ClCompile Include="Plant.cpp">
       <Filter>Enermies\Plant</Filter>
     </ClCompile>
@@ -293,6 +290,12 @@
     </ClCompile>
     <ClCompile Include="DataManager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>TextManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>TextManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -413,12 +416,6 @@
     <ClInclude Include="HUD.h">
       <Filter>HUD</Filter>
     </ClInclude>
-    <ClInclude Include="FontManager.h">
-      <Filter>HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>HUD</Filter>
-    </ClInclude>
     <ClInclude Include="Plant.h">
       <Filter>Enermies\Plant</Filter>
     </ClInclude>
@@ -508,6 +505,12 @@
     </ClInclude>
     <ClInclude Include="DataManager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>TextManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>TextManager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -224,7 +224,7 @@ void CPlayScene::_ParseSection_HUD(string line)
 
 	int spriteId = atoi(tokens[0].c_str());
 
-	HUD* hud = new HUD();
+	HUD* hud = new HUD(objects);
 
 	hud->SetSpriteId(spriteId);
 	objects.push_back(hud);
@@ -331,6 +331,8 @@ void CPlayScene::Load()
 
 void CPlayScene::Update(DWORD dt)
 {
+	if (player == NULL) return;
+		
 	vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
@@ -343,8 +345,7 @@ void CPlayScene::Update(DWORD dt)
 		if (objects[i]->die == false)
 			objects[i]->Update(dt, &coObject);
 	}
-
-	if (id == PLAY_SCENE)
+	if (id >= PLAY_SCENE)
 	{
 		FireBallPool::GetInstance()->GetBackToPool();
 		EffectPool::GetInstance()->GetBackToPool();
@@ -353,13 +354,14 @@ void CPlayScene::Update(DWORD dt)
 	{
 		Intro::GetInstance()->Update();
 	}
-
 	//DebugOut(L"size coo: %d\n", coObject.size());
 	//DebugOut(L"size: %d\n", objects.size());
 }
 
 void CPlayScene::Render()
 {
+	if (player == NULL) return;
+
 	TileMap::GetInstance()->RenderBackground();
 
 	for (int i = objects.size() - 1; i > -1 ; i--)
@@ -377,38 +379,40 @@ void CPlayScene::Unload()
 		DataManager::GetInstance()->SavePlayerData();
 	player = NULL;
 
-	for (int i = 1; i < objects.size(); i++)
+	for (int i = 0; i < objects.size(); i++)
 	{
 		delete objects[i];
 	}
+
 	objects.clear();
 	TileMap::GetInstance()->Clear();
 
+	CGame::GetInstance()->GetCurrentScene()->isFinished = false;
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
+	Input input = NO_INPUT;
 	CMario* mario = CGame::GetInstance()->GetPlayer();
 	int sceneId = ((CPlayScene*)scene)->GetSceneId();
 	if (sceneId != INTRO_SCENE)
 	{
-		if (mario->IsAutoMoving() == false)
+		if (CGame::GetInstance()->GetCurrentScene()->isFinished == false)
 		{
-			Input input = NO_INPUT;
 			switch (KeyCode)
 			{
 			case DIK_S:
 				input = PRESS_S;
 				break;
 			case DIK_F1:
-				if (sceneId == PLAY_SCENE)
+				if (sceneId >= PLAY_SCENE)
 					mario->Reset();
 				else mario->SetLevel(MARIO_LEVEL_SMALL);
 				break;
 			case DIK_F2:
 				mario->SetLevel(MARIO_LEVEL_BIG);
-				if (sceneId == PLAY_SCENE)
+				if (sceneId >= PLAY_SCENE)
 				{
 					mario->y -= MARIO_BIG_BBOX_HEIGHT;
 					mario->isUntouchable = false;
@@ -416,7 +420,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 				break;
 			case DIK_F3:
 				mario->SetLevel(MARIO_LEVEL_RACCOON);
-				if (sceneId == PLAY_SCENE)
+				if (sceneId >= PLAY_SCENE)
 				{
 					mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
 					mario->isUntouchable = false;
@@ -424,7 +428,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 				break;
 			case DIK_F4:
 				mario->SetLevel(MARIO_LEVEL_FIRE);
-				if (sceneId == PLAY_SCENE)
+				if (sceneId >= PLAY_SCENE)
 				{
 					mario->y -= MARIO_BIG_BBOX_HEIGHT;
 					mario->isUntouchable = false;
@@ -451,21 +455,19 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 				input = PRESS_UP;
 				break;
 			}
-
-			if (input != NO_INPUT)
-				mario->HandleInput(input);
 		}
 	}
+	mario->HandleInput(input);
 }
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
+	Input input = NO_INPUT;
 	CMario* mario = CGame::GetInstance()->GetPlayer();
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
-		if (mario->IsAutoMoving() == false)
+		if (CGame::GetInstance()->GetCurrentScene()->isFinished == false)
 		{
-			Input input = NO_INPUT;
 			switch (KeyCode)
 			{
 			case DIK_DOWN:
@@ -483,27 +485,26 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 			case DIK_RIGHT:
 				input = RELEASE_RIGHT;
 				break;
-			}
-
-			if (input != NO_INPUT)
-				mario->HandleInput(input);
+			}	
 		}
 	}
+	mario->HandleInput(input);
 }
 
 void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
+	Input input = NO_INPUT;
 	CMario* mario = CGame::GetInstance()->GetPlayer();
+
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
-		if (mario->IsAutoMoving() == false)
+		if (CGame::GetInstance()->GetCurrentScene()->isFinished == false)
 		{
 			if (mario->GetState() == MARIO_STATE_DIE) return;
 
-			Input input = KEY_STATE;
-
-			mario->HandleInput(input);
+			input = KEY_STATE;
 		}
 	}
+	mario->HandleInput(input);
 }
 	

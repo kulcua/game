@@ -36,7 +36,9 @@ void MarioOverWorldState::HandleInput(CMario& mario, Input input)
     else if (input == PRESS_S)
     {
         if (sceneId != 0 && mario.vx == 0 && mario.vy == 0)
-            CGame::GetInstance()->SwitchScene(sceneId);
+        {
+            isSwitchScene = true;
+        }
     }
 }
 
@@ -59,5 +61,10 @@ void MarioOverWorldState::GetBoundingBox(CMario& mario, float& left, float& top,
 
 void MarioOverWorldState::Update(CMario& mario, DWORD dt)
 {
+    if (isSwitchScene)
+    {
+        isSwitchScene = false;
+        CGame::GetInstance()->SwitchScene(sceneId);
+    }
     //DebugOut(L"MarioOverWorldState %f %f\n", mario.vx, mario.vy);
 }

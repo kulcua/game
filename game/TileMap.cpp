@@ -64,6 +64,8 @@ void TileMap::RenderForeground()
 void TileMap::Clear()
 {
 	foregroundLayer = NULL;
+	objectMap = NULL;
+	tileSet = NULL;
 
 	for (int i = 0; i < layers.size(); i++)
 	{
