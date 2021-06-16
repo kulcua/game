@@ -25,11 +25,6 @@
 
 using namespace std;
 
-CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
-{
-	keyHandler = new CPlaySceneKeyHandler(this);
-}
-
 #define SCENE_SECTION_UNKNOWN -1
 #define SCENE_SECTION_TEXTURES 2
 #define SCENE_SECTION_SPRITES 3
@@ -42,15 +37,14 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 #define SCENE_SECTION_BGCOLOR	10
 #define SCENE_SECTION_PORTAL	11
 #define OBJECT_TYPE_MARIO	0
-#define OBJECT_TYPE_ITEM	11
-#define OBJECT_TYPE_GOOMBA	2
-#define OBJECT_TYPE_KOOPAS	3
-#define OBJECT_TYPE_PLANT	6
 #define OBJECT_TYPE_POOL_FIREBALL	68
 #define OBJECT_TYPE_POOL_EFFECT	69
-#define OBJECT_TYPE_PORTAL	50
-
 #define MAX_SCENE_LINE 1024
+
+CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
+{
+	keyHandler = new CPlaySceneKeyHandler(this);
+}
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
 {
@@ -244,6 +238,10 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	int B = atoi(tokens[4].c_str());
 	string prefixPath = tokens[5].c_str();
 
+	grid = new Grid();
+	
+	TileMap::GetInstance()->SetGrid(grid);
+
 	TileMap::GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects, prefixPath);
 }
 
@@ -332,6 +330,8 @@ void CPlayScene::Load()
 void CPlayScene::Update(DWORD dt)
 {
 	if (player == NULL) return;
+
+	//grid->Update(dt);
 		
 	vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
@@ -364,11 +364,13 @@ void CPlayScene::Render()
 
 	TileMap::GetInstance()->RenderBackground();
 
-	for (int i = objects.size() - 1; i > -1 ; i--)
-	{
-		if (objects[i]->die == false)
-			objects[i]->Render();
-	}
+	//for (int i = objects.size() - 1; i > -1 ; i--)
+	//{
+	//	if (objects[i]->die == false)
+	//		objects[i]->Render();
+	//}
+	player->Render();
+	grid->Render();
 
 	TileMap::GetInstance()->RenderForeground();
 }

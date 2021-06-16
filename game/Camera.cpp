@@ -4,9 +4,6 @@
 #include "MarioFlyingState.h"
 #include "HUD.h"
 
-#define CAM_WIDTH 800
-#define CAM_HEIGHT 600
-
 CCamera::CCamera()
 {
 	mario = CGame::GetInstance()->GetPlayer();;

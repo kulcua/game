@@ -11,11 +11,13 @@
 #include "TileMap.h"
 #include "FontManager.h"
 #include "Intro.h"
+#include "Grid.h"
 
 class CPlayScene : public CScene
 {
 protected:
 	CMario* player;
+	Grid* grid;
 
 	vector<LPGAMEOBJECT> objects;
 

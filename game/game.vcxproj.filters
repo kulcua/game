@@ -76,6 +76,9 @@
     <Filter Include="TextManager">
       <UniqueIdentifier>{b8ce1dbf-0099-4fb8-992d-637caf3d8c2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Grid">
+      <UniqueIdentifier>{80a17f6b-6ef4-4833-94ad-43d6518ae366}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -297,6 +300,9 @@
     <ClCompile Include="Text.cpp">
       <Filter>TextManager</Filter>
     </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -511,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="Text.h">
       <Filter>TextManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Grid</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

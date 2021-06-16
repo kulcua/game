@@ -1,7 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
-
+#define CAM_WIDTH 800
+#define CAM_HEIGHT 600
 class CCamera : public CGameObject
 {
 	CMario* mario;

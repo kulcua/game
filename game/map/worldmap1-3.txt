@@ -622,15 +622,10 @@
 #EFFECTPool - ball - mario_attack - debris
 65	621	202	410	901	902	910
 
-#[PORTAL]
-#type - spriteId - sceneId
-#start		
-#overworld	0	2
-
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
 # MARIO
-0	6000	700	1
+0	100	700	1
 
 #POOL_FIREBALL
 68	0	0	0

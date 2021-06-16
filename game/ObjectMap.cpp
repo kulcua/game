@@ -23,8 +23,9 @@
 #include "BoundOverWorld.h"
 #include "Tree.h"
 
-ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects)
+ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, Grid* grid)
 {
+	this->grid = grid;
 	this->objectGroupElement = objectGroupElement;
 	objectGroupElement->QueryIntAttribute("objectGroupId", &objectGroupId);
 	name = objectGroupElement->Attribute("name");
@@ -49,6 +50,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("height", &height);
 			obj = new CGround(width, height);
 			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}		
@@ -63,6 +65,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("height", &height);
 			obj = new BoundOverWorld(width, height);
 			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -77,6 +80,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("height", &height);
 			obj = new CBigBox(width, height);
 			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -89,6 +93,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("y", &y);
 			obj = new BrickBlock();
 			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -99,6 +104,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		element->QueryFloatAttribute("y", &y);
 		obj = new Card();
 		obj->SetPosition(x, y);
+		obj->SetGrid(grid);
 		objects.push_back(obj);
 		element = element->NextSiblingElement();
 	}
@@ -133,6 +139,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			}
 			item->SetPosition(x, y);
 			br->SetItem(item);
+			br->SetGrid(grid);
+			item->SetGrid(grid);
 			objects.push_back(br);
 			objects.push_back(item);
 			element = element->NextSiblingElement();
@@ -146,6 +154,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("y", &y);
 			obj = new Coin();
 			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -161,6 +170,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("height", &height);
 			element->QueryIntAttribute("type", &type);
 			obj = new CCameraBound(width, height, type);
+			obj->SetGrid(grid);
 			obj->SetPosition(x, y);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
@@ -177,6 +187,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			CGame::GetInstance()->SetCam(cam);
 			cam->SetPosition(y);
 			cam->SetIsMove(isMove);
+			//obj->SetGrid(grid);
 			objects.push_back(cam);
 			element = element->NextSiblingElement();
 		}
@@ -191,6 +202,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("height", &height);
 			obj = new KoopaBound(width, height);
 			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -243,6 +255,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
 			obj->SetAnimationSet(ani_set);
 			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -265,6 +278,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			}
 			obj = new PortalPipe(name, type, camY);
 			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -284,6 +298,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			else type = "node";
 			obj = new CPortal(type);
 			obj->SetPosition(x - PORTAL_WIDTH / 2, y - PORTAL_HEIGHT / 2);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -297,6 +312,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("y", &y);
 			obj = new Tree();
 			obj->SetPosition(x - TREE_WIDTH / 2, y - TREE_HEIGHT / 2);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

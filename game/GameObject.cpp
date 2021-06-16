@@ -12,6 +12,14 @@ CGameObject::CGameObject()
 	vx = vy = 0;
 }
 
+void CGameObject::SetGrid(Grid* grid)
+{
+	grid_ = grid;
+	prev_ = NULL;
+	next_ = NULL;
+	grid_->Add(this);
+}
+
 void CGameObject::SetAnimation(int ani)
 {
 	CAnimationSets* animation_sets = CAnimationSets::GetInstance();

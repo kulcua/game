@@ -528,9 +528,6 @@
   <object id="361" x="1728.33" y="768.25" width="48" height="48"/>
   <object id="363" x="1872" y="768.25" width="48" height="48"/>
  </objectgroup>
- <objectgroup id="31" name="WorldGraph1" visible="0">
-  <object id="285" type="overworld" x="6038" y="814" width="40" height="40"/>
- </objectgroup>
  <objectgroup id="15" name="Enemy1" visible="0">
   <object id="91" name="koopa" type="red" x="1641.33" y="794.66" width="13" height="13">
    <properties>
