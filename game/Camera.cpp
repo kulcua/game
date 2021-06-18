@@ -6,7 +6,7 @@
 
 CCamera::CCamera()
 {
-	mario = CGame::GetInstance()->GetPlayer();;
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();;
 	this->width = CAM_WIDTH;
 	this->height = CAM_HEIGHT;
 }
@@ -84,11 +84,10 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (nx != 0) vx = 0;
 			if (ny != 0) vy = 0;
-
+			
 			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
 				LPCOLLISIONEVENT e = coEventsResult[i];
-
 				if (dynamic_cast<CCameraBound*>(e->obj))
 				{
 					CCameraBound* camBound = dynamic_cast<CCameraBound*>(e->obj);

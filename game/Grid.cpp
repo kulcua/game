@@ -1,6 +1,7 @@
 #include "Grid.h"
 #include "GameObject.h"
 #include "Game.h"
+#include "HUD.h"
 
 Grid::Grid() {
     // Clear the grid.
@@ -24,8 +25,6 @@ void Grid::Add(CGameObject* obj)
     obj->next_ = cells_[cellX][cellY];
     cells_[cellX][cellY] = obj;
 
-    //DebugOut(L"grid x %d y %d\n", cellX, cellY);
-
     if (obj->next_ != NULL)
     {
         obj->next_->prev_ = obj;
@@ -44,6 +43,7 @@ void Grid::Update(DWORD dt)
         for (int j = cellStartY; j < cellEndY + 1; j++)
         {
             CGameObject* obj = cells_[i][j];
+       
             while (obj != NULL)
             {
                 if (obj->die == false)
@@ -54,6 +54,13 @@ void Grid::Update(DWORD dt)
             }
         }
     }
+
+    CGame::GetInstance()->GetCurrentScene()->GetPlayer()->Update(dt, &coObject);
+    CGame::GetInstance()->GetCam()->Update(dt, &coObject);
+
+    HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
+    if (hud != NULL)
+        hud->Update(dt, &coObject);
 
     for (int i = cellStartX; i < cellEndX + 1; i++)
     {
@@ -70,8 +77,6 @@ void Grid::Update(DWORD dt)
             }
         }
     }
-    /*CGame::GetInstance()->GetPlayer()->Update(dt, &coObject);
-    CGame::GetInstance()->GetCam()->Update(dt, &coObject);*/
 }
 
 void Grid::Render()
@@ -84,7 +89,7 @@ void Grid::Render()
         for (int j = cellStartY; j < cellEndY + 1; j++)
         {
             CGameObject* obj = cells_[i][j];
-            while (obj != NULL)
+           while (obj != NULL)
             {
                 if (obj->die == false)
                     obj->Render();
@@ -92,6 +97,10 @@ void Grid::Render()
             }
         }
     }
+
+    HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
+    if (hud != NULL)
+        hud->Render();
 }
 
 void Grid::GetCell(int& startX, int& startY, int& endX, int& endY)
@@ -104,50 +113,12 @@ void Grid::GetCell(int& startX, int& startY, int& endX, int& endY)
     startY = (int)(cy / CELL_SIZE_Y);
     endX = (int)((cx + CAM_WIDTH) / CELL_SIZE_X);
     endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE_Y);
-
-    //DebugOut(L"GetPosition x %f y %f\n", cx, cy);
-    //DebugOut(L"cellStart x %d y %d\n", cellStartX, cellStartY);
-    //DebugOut(L"cellEnd x %d y %d\n", cellEndX, cellEndY);
 }
 
-//void Grid::HandleMelee()
-//{
-//    for (int x = 0; x < NUM_CELLS; x++)
-//    {
-//        for (int y = 0; y < NUM_CELLS; y++)
-//        {
-//            HandleCell(x, y);
-//        }
-//    }
-//}
-
-//void Grid::HandleCell(int x, int y)
-//{
-//    CGameObject* obj = cells_[x][y];
-//    while (obj != NULL)
-//    {
-//        // Handle other objs in this cell.
-//        HandleObject(obj, obj->next_);
-//
-//        // Also try the neighboring cells.
-//        if (x > 0 && y > 0) HandleObject(obj, cells_[x - 1][y - 1]);
-//        if (x > 0) HandleObject(obj, cells_[x - 1][y]);
-//        if (y > 0) HandleObject(obj, cells_[x][y - 1]);
-//        if (x > 0 && y < NUM_CELLS - 1)
-//        {
-//            HandleObject(obj, cells_[x - 1][y + 1]);
-//        }
-//
-//        obj = obj->next_;
-//    }
-//}
-
-void Grid::Move(CGameObject* obj, double x, double y)
+void Grid::Move(CGameObject* obj, int x, int y)
 {
-    // NOTE: Move() will set x, y though it has been set on Update()
-    // See which cell it was in.
-    int oldCellX = (int)(obj->x / CELL_SIZE_X);
-    int oldCellY = (int)(obj->y / CELL_SIZE_Y);
+    int oldCellX = (int)(obj->oldX / CELL_SIZE_X);
+    int oldCellY = (int)(obj->oldY / CELL_SIZE_Y);
 
     // See which cell it's moving to.
     int cellX = (int)(x / CELL_SIZE_X);
@@ -179,16 +150,3 @@ void Grid::Move(CGameObject* obj, double x, double y)
     // Add it back to the grid at its new cell.
     Add(obj);
 }
-//
-//void Grid::HandleObject(CGameObject* obj, CGameObject* other)
-//{
-//    while (other != NULL)
-//    {
-//       /* if (distance(obj, other) < ATTACK_DISTANCE)
-//        {
-//            handleAttack(obj, other);
-//        }*/
-//
-//        other = other->next_;
-//    }
-//}

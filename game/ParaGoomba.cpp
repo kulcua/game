@@ -8,7 +8,7 @@ ParaGoomba::ParaGoomba()
 	die = false;
 	level = PARAGOOMBA_LEVEL_JUMP;
 	jumpTimes = PARAGOOMBA_JUMP_TIMES;
-	mario = CGame::GetInstance()->GetPlayer();
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
 void ParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)

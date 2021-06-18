@@ -6,7 +6,7 @@
 BrickBlock::BrickBlock()
 {
 	SetAnimation(BRICKBLOCK_ANI_ID);
-	mario = CGame::GetInstance()->GetPlayer();
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
 void BrickBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

@@ -8,7 +8,6 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Mario.h"
-//#include "HUD.h"
 
 using namespace std;
 
@@ -52,13 +51,7 @@ class CGame {
 	void _ParseSection_SCENES(string line);
 
 	CCamera* cam;
-	CMario* mario;
-	//HUD* hud;
 public:
-	//void SetHUD(HUD* hud) { this->hud = hud; }
-	//HUD* GetHUD() { return hud; }
-	void SetPlayer(CMario* mario) { this->mario = mario; }
-	CMario* GetPlayer() { return mario; }
 	void SetBackgroundColor(D3DCOLOR backgroundColor) { this->backgroundColor = backgroundColor; }
 	D3DCOLOR GetBackgroundColor() { return backgroundColor; }
 	void InitKeyBoard();

@@ -44,6 +44,7 @@ using namespace std;
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 {
 	keyHandler = new CPlaySceneKeyHandler(this);
+	grid = new Grid();
 }
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
@@ -148,7 +149,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			}
 
 			player = new CMario();
-			CGame::GetInstance()->SetPlayer(player);
+			CGame::GetInstance()->GetCurrentScene()->SetPlayer(player);
 			player->SetPosition(x, y);
 			DataManager::GetInstance()->ReadPlayerData();
 			player->CGameObject::SetAnimation(MARIO_ANI_SET_ID);
@@ -174,9 +175,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	}
 		break;
 	case OBJECT_TYPE_POOL_FIREBALL:
+		FireBallPool::GetInstance()->SetGrid(grid);
 		FireBallPool::GetInstance()->InitPool(objects);
 		break;
 	case OBJECT_TYPE_POOL_EFFECT:
+		EffectPool::GetInstance()->SetGrid(grid);
 		EffectPool::GetInstance()->InitPool(objects);
 		break;
 	default:
@@ -219,10 +222,9 @@ void CPlayScene::_ParseSection_HUD(string line)
 	int spriteId = atoi(tokens[0].c_str());
 
 	HUD* hud = new HUD(objects);
-
 	hud->SetSpriteId(spriteId);
 	objects.push_back(hud);
-	//CGame::GetInstance()->SetHUD(hud);
+	CGame::GetInstance()->GetCurrentScene()->SetHUD(hud);
 }
 
 void CPlayScene::_ParseSection_MAPS(string line)
@@ -237,8 +239,6 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	int G = atoi(tokens[3].c_str());
 	int B = atoi(tokens[4].c_str());
 	string prefixPath = tokens[5].c_str();
-
-	grid = new Grid();
 	
 	TileMap::GetInstance()->SetGrid(grid);
 
@@ -331,9 +331,9 @@ void CPlayScene::Update(DWORD dt)
 {
 	if (player == NULL) return;
 
-	//grid->Update(dt);
+	grid->Update(dt);
 		
-	vector<LPGAMEOBJECT> coObject;
+	/*vector<LPGAMEOBJECT> coObject;
 	for (size_t i = 1; i < objects.size(); i++)
 	{
 		if (objects[i]->die == false)
@@ -344,7 +344,7 @@ void CPlayScene::Update(DWORD dt)
 	{
 		if (objects[i]->die == false)
 			objects[i]->Update(dt, &coObject);
-	}
+	}*/
 	if (id >= PLAY_SCENE)
 	{
 		FireBallPool::GetInstance()->GetBackToPool();
@@ -364,11 +364,11 @@ void CPlayScene::Render()
 
 	TileMap::GetInstance()->RenderBackground();
 
-	//for (int i = objects.size() - 1; i > -1 ; i--)
-	//{
-	//	if (objects[i]->die == false)
-	//		objects[i]->Render();
-	//}
+	/*for (int i = objects.size() - 1; i > -1 ; i--)
+	{
+		if (objects[i]->die == false)
+			objects[i]->Render();
+	}*/
 	player->Render();
 	grid->Render();
 
@@ -396,7 +396,7 @@ void CPlayScene::Unload()
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
 	Input input = NO_INPUT;
-	CMario* mario = CGame::GetInstance()->GetPlayer();
+	CMario* mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	int sceneId = ((CPlayScene*)scene)->GetSceneId();
 	if (sceneId != INTRO_SCENE)
 	{
@@ -465,7 +465,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
 	Input input = NO_INPUT;
-	CMario* mario = CGame::GetInstance()->GetPlayer();
+	CMario* mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
 		if (CGame::GetInstance()->GetCurrentScene()->isFinished == false)
@@ -496,7 +496,7 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
 	Input input = NO_INPUT;
-	CMario* mario = CGame::GetInstance()->GetPlayer();
+	CMario* mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{

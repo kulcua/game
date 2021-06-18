@@ -6,7 +6,7 @@
 
 PowerUpItem::PowerUpItem()
 {
-	mario = CGame::GetInstance()->GetPlayer();
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
 void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

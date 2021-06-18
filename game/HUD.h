@@ -17,7 +17,6 @@
 
 class HUD : public CGameObject
 {
-	float x, y;
 	int spriteId = 0;
 	float xWorld, xM;
 	float xPower, xPoint;

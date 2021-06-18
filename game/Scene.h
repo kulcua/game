@@ -2,6 +2,8 @@
 
 #include <d3dx9.h>
 #include "KeyEventHandler.h"
+#include "Mario.h"
+#include "HUD.h"
 
 class CScene
 {
@@ -9,7 +11,9 @@ protected:
 	CKeyEventHandler* keyHandler;
 	int id;
 	LPCWSTR sceneFilePath;
-	
+	CMario* mario;
+	HUD* hud;
+	Grid* grid;
 public:
 	CScene(int id, LPCWSTR filePath);
 	bool isFinished;
@@ -19,6 +23,12 @@ public:
 	virtual void Update(DWORD dt) = 0;
 	virtual void Render() = 0;
 	int GetSceneId() { return this->id; }
+
+	void SetPlayer(CMario* mario) { this->mario = mario; }
+	CMario* GetPlayer() { return mario; }
+
+	void SetHUD(HUD* hud) { this->hud = hud; }
+	HUD* GetHUD() { return hud; }
 };
 
 typedef CScene* LPSCENE;

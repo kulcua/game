@@ -21,7 +21,7 @@ void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		jumpTimeStart = 0;
 		die = true;
-		CGame::GetInstance()->GetPlayer()->SetMoney(1);
+		CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetMoney(1);
 		Effect* effect = EffectPool::GetInstance()->Create();
 		if (effect != NULL)
 			effect->InitPoint(EffectPoint::p100, x, y);

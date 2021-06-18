@@ -21,9 +21,11 @@ void EffectPool::InitPool(vector<LPGAMEOBJECT>& objects)
         effect[i + 1] = new Effect();
 
         effect[i]->SetNext(effect[i + 1]);
+        grid->Add(effect[i]);
         objects.push_back(effect[i]);
     }
     effect[POOL_SIZE - 1]->SetNext(NULL);
+    grid->Add(effect[POOL_SIZE - 1]);
     objects.push_back(effect[POOL_SIZE - 1]);
 }
 

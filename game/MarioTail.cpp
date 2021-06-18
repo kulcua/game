@@ -75,8 +75,8 @@ void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 
 void MarioTail::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	SetPosition(CGame::GetInstance()->GetPlayer()->x - MARIO_TAIL_X, CGame::GetInstance()->GetPlayer()->y + MARIO_TAIL_Y);
-
+	CMario* mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+	SetPosition(mario->x - MARIO_TAIL_X, mario->y + MARIO_TAIL_Y);
 	HandleCollision(coObjects);
 }
 

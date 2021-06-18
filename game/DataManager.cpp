@@ -34,10 +34,10 @@ void DataManager::ReadPlayerData()
 		int money = atoi(tokens[2].c_str());
 		int life = atoi(tokens[3].c_str());
 
-		CGame::GetInstance()->GetPlayer()->SetLevel(level);
-		CGame::GetInstance()->GetPlayer()->SetPoint(point);
-		CGame::GetInstance()->GetPlayer()->SetMoney(money);
-		CGame::GetInstance()->GetPlayer()->SetLife(life);
+		CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetLevel(level);
+		CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetPoint(point);
+		CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetMoney(money);
+		CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetLife(life);
 
 		//DebugOut(L"%d %d %d %d\n", level, point, money, life);
 	}
@@ -48,10 +48,10 @@ void DataManager::ReadPlayerData()
 void DataManager::SavePlayerData() {
 	ofstream MyFile("map/state.txt");
 
-	int level = CGame::GetInstance()->GetPlayer()->GetLevel();
-	int point = CGame::GetInstance()->GetPlayer()->GetPoint();
-	int money = CGame::GetInstance()->GetPlayer()->GetMoney();
-	int life = CGame::GetInstance()->GetPlayer()->GetLife();
+	int level = CGame::GetInstance()->GetCurrentScene()->GetPlayer()->GetLevel();
+	int point = CGame::GetInstance()->GetCurrentScene()->GetPlayer()->GetPoint();
+	int money = CGame::GetInstance()->GetCurrentScene()->GetPlayer()->GetMoney();
+	int life = CGame::GetInstance()->GetCurrentScene()->GetPlayer()->GetLife();
 
 	// Write to the file
 	MyFile << "#level - point - money - life" << endl;

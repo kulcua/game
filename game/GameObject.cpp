@@ -32,6 +32,8 @@ void CGameObject::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	this->dt = dt;
 	dx = vx * dt;
 	dy = vy * dt;
+	oldX = x;
+	oldY = y;
 }
 
 bool CGameObject::AABB(CGameObject *obj)

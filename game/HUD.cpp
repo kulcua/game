@@ -21,7 +21,7 @@ HUD::HUD(vector<LPGAMEOBJECT> &objects)
 	objects.push_back(power);
 	objects.push_back(money);
 	objects.push_back(time);
-	mario = CGame::GetInstance()->GetPlayer();
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
 int HUD::CountDownTimer()
@@ -46,6 +46,7 @@ int HUD::CountDownTimer()
 
 void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	CGameObject::Update(dt);
 	float cx, cy;
 	CGame::GetInstance()->GetCam()->GetPosition(cx, cy);
 	SetPosition(cx, cy);
@@ -71,6 +72,9 @@ void HUD::SetPosition(float cx, float cy)
 {
 	x = cx;
 	y = cy + SCREEN_HEIGHT - 155;
+
+	x = floor(x);
+	y = floor(y);
 
 	xWorld = xM = x + HUD_ALIGN_LEFT;
 	xPower = xPoint = x + HUD_ALIGN_CENTER;
@@ -121,4 +125,11 @@ void HUD::Render()
 
 		CSprites::GetInstance()->Get(spriteId)->Draw(x, y, -1, -1);
 	}	
+
+	world->Render();
+	life->Render();
+	power->Render();
+	point->Render();
+	money->Render();
+	time->Render();
 }

@@ -48,10 +48,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("y", &y);
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
-			obj = new CGround(width, height);
-			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
-			objects.push_back(obj);
+			splitToTile<CGround>(x, y, width, height, grid, objects);
+			
 			element = element->NextSiblingElement();
 		}		
 	}
@@ -169,10 +167,25 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
 			element->QueryIntAttribute("type", &type);
-			obj = new CCameraBound(width, height, type);
-			obj->SetGrid(grid);
-			obj->SetPosition(x, y);
-			objects.push_back(obj);
+			//splitToTile<CCameraBound>(x, y, width, height, grid, objects);
+			float x_, y_;
+			int cell_x = round(width / TILE_SIZE);
+			int cell_y = round(height / TILE_SIZE);
+			if (cell_x > 0 && cell_y > 0)
+			{
+				for (int i = 0; i < cell_x; i++)
+				{
+					for (int j = 0; j < cell_y; j++)
+					{
+						obj = new CCameraBound(type);
+						x_ = i * TILE_SIZE + x;
+						y_ = j * TILE_SIZE + y;
+						obj->SetPosition(x_, y_);
+						obj->SetGrid(grid);
+						objects.push_back(obj);
+					}
+				}
+			}
 			element = element->NextSiblingElement();
 		}
 	}
@@ -187,7 +200,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			CGame::GetInstance()->SetCam(cam);
 			cam->SetPosition(y);
 			cam->SetIsMove(isMove);
-			//obj->SetGrid(grid);
+			//cam->SetGrid(grid);
 			objects.push_back(cam);
 			element = element->NextSiblingElement();
 		}

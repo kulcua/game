@@ -38,13 +38,15 @@ struct CCollisonEvent
 
 class CGameObject
 {
+protected:
 	Grid* grid_;
 public:
 	CGameObject* prev_;
 	CGameObject* next_;
+	float oldX, oldY;
 
-	float x;
-	float y;
+	float x = 0;
+	float y = 0;
 
 	float dx;
 	float dy;
@@ -61,6 +63,7 @@ public:
 
 	int width;
 	int height;
+
 	LPANIMATION_SET animation_set;
 	void SetAnimation(int ani);
 public:

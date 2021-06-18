@@ -72,8 +72,10 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	vy += GOOMBA_GRAVITY * dt;
-
+	
 	HandleCollision(coObjects);
+
+	grid_->Move(this, x, y);
 }
 
 void CGoomba::Render()

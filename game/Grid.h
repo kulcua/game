@@ -13,9 +13,6 @@ public:
 	void Update(DWORD dt);
 	void Render();
 	void GetCell(int& startX, int& startY, int& endX, int& endY);
-	//void HandleMelee();
-	//void HandleCell(int x, int y);
-	void Move(CGameObject* obj, double x, double y);
-	//void HandleObject(CGameObject* obj, CGameObject* other);
+	void Move(CGameObject* obj, int x, int y);
 };
 

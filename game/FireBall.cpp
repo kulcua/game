@@ -15,7 +15,7 @@ CFireBall::CFireBall()
 }
 
 void CFireBall::InitForPlant(VenusFireTrap* venus) {
-  	this->state_.live.mario = CGame::GetInstance()->GetPlayer();
+  	this->state_.live.mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	this->state_.live.venus = venus;
 	die = false;
 	inUse = true;
@@ -25,7 +25,7 @@ void CFireBall::InitForPlant(VenusFireTrap* venus) {
 
 void CFireBall::InitForMario()
 {
-	this->state_.live.mario = CGame::GetInstance()->GetPlayer();;
+	this->state_.live.mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();;
 	die = false;
 	inUse = true;
 	SetPosition(state_.live.mario->x, state_.live.mario->y);
@@ -168,6 +168,8 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
+
+	grid_->Move(this, x, y);
 }
 
 void CFireBall::Render()
