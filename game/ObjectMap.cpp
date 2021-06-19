@@ -61,10 +61,11 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("y", &y);
 			element->QueryFloatAttribute("width", &width);
 			element->QueryFloatAttribute("height", &height);
-			obj = new BoundOverWorld(width, height);
-			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
-			objects.push_back(obj);
+			obj = new BoundOverWorld();
+			splitToTile<BoundOverWorld>(x, y, width, height, grid, objects);
+			//obj->SetPosition(x, y);
+			//obj->SetGrid(grid);
+			//objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
 	}

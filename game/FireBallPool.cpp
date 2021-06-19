@@ -21,16 +21,15 @@ void FireBallPool::InitPool(vector<LPGAMEOBJECT>& objects)
         fireBall_[i + 1] = new CFireBall();
 
         fireBall_[i]->SetNext(fireBall_[i + 1]);
-        //grid->Add(fireBall_[i]);
+        fireBall_[i]->SetGrid(grid);
         objects.push_back(fireBall_[i]);
     }
     fireBall_[POOL_SIZE - 1]->SetNext(NULL);
-    //grid->Add(fireBall_[POOL_SIZE - 1]);
+    fireBall_[POOL_SIZE - 1]->SetGrid(grid);
     objects.push_back(fireBall_[POOL_SIZE - 1]);
 }
 
 CFireBall* FireBallPool::Create() {
-    DebugOut(L"create\n");
     if (firstAvailable_ != NULL)
     {
         // get fireball
@@ -46,8 +45,7 @@ void FireBallPool::GetBackToPool()
     for (int i = 0; i < POOL_SIZE; i++)
     {  
         if (fireBall_[i]->GetBackToPool())
-        {         
-            DebugOut(L"i %d\n", i);
+        {        
             fireBall_[i]->SetNext(firstAvailable_);
             firstAvailable_ = fireBall_[i];
         }

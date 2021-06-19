@@ -75,11 +75,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="7" name="BoundOverWorld" visible="0">
-  <object id="72" x="67.7512" y="25.2632" width="628.134" height="20.6699"/>
-  <object id="73" x="666.029" y="27.5598" width="31.0048" height="478.852"/>
-  <object id="74" x="39.0431" y="484.593" width="654.545" height="24.1148"/>
-  <object id="75" x="68.8995" y="44.7847" width="24.1148" height="461.627"/>
+ <objectgroup id="7" name="BoundOverWorld">
+  <object id="72" x="68.8995" y="-1.14828" width="628.134" height="48"/>
+  <object id="73" x="669.474" y="27.5598" width="48" height="478.852"/>
+  <object id="74" x="40.1914" y="483.445" width="654.545" height="48"/>
+  <object id="75" x="44.7847" y="45.933" width="48" height="461.627"/>
   <object id="76" x="195.215" y="194.215" width="45" height="45"/>
   <object id="77" x="240.967" y="294.086" width="45" height="85.1914"/>
   <object id="78" x="286.844" y="384.156" width="45" height="45"/>
@@ -279,7 +279,7 @@
  <objectgroup id="8" name="Camera" visible="0">
   <object id="81" type="0" x="0" y="0" width="800" height="600"/>
  </objectgroup>
- <objectgroup id="5" name="AnimatedBG">
+ <objectgroup id="5" name="AnimatedBG" visible="0">
   <object id="21" name="tree" x="68" y="69">
    <point/>
   </object>

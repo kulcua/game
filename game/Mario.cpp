@@ -19,6 +19,7 @@
 #include "EffectPool.h"
 #include "MarioSittingState.h"
 #include "PowerUpItem.h"
+#include "MarioTail.h"
 #include "BrickBlock.h"
 #include "Coin.h"
 #include "GreenMushroom.h"
@@ -243,6 +244,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	HandleCollision(coObjects);
 
+	tail->Update(dt, coObjects);
+
 	// put it finally because of switch scene delete all objects
 	state_->Update(*this, dt);
 }
@@ -372,7 +375,4 @@ void CMario::Reset()
 	SetSpeed(0, 0);
 }
 
-void CMario::SetLife(int life)
-{
-	this->life = life;
-}
+void CMario::SetTail(MarioTail* tail) { this->tail = tail; }

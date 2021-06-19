@@ -55,13 +55,6 @@ void Grid::Update(DWORD dt)
         }
     }
 
-    CGame::GetInstance()->GetCurrentScene()->GetPlayer()->Update(dt, &coObject);
-    CGame::GetInstance()->GetCam()->Update(dt, &coObject);
-
-    HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
-    if (hud != NULL)
-        hud->Update(dt, &coObject);
-
     for (int i = cellStartX; i < cellEndX + 1; i++)
     {
         for (int j = cellStartY; j < cellEndY + 1; j++)
@@ -77,6 +70,13 @@ void Grid::Update(DWORD dt)
             }
         }
     }
+
+    CGame::GetInstance()->GetCam()->Update(dt, &coObject);
+    // check null to avoid error when Unload() delete all list objects
+    CGame::GetInstance()->GetCurrentScene()->GetPlayer()->Update(dt, &coObject);
+    HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
+    if (hud != NULL)
+        hud->Update(dt, &coObject);
 }
 
 void Grid::Render()
@@ -140,7 +140,7 @@ void Grid::Move(CGameObject* obj, int x, int y)
     {
         obj->next_->prev_ = obj->prev_;
     }
-
+    
     // If it's the head of a list, remove it.
     if (cells_[oldCellX][oldCellY] == obj)
     {

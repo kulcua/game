@@ -44,7 +44,6 @@ using namespace std;
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 {
 	keyHandler = new CPlaySceneKeyHandler(this);
-	grid = new Grid();
 }
 
 void CPlayScene::_ParseSection_TEXTURES(string line)
@@ -163,6 +162,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			objects.push_back(player);
 			
 			MarioTail* tail = new MarioTail();
+			mario->SetTail(tail);
 			tail->SetPosition(x, y);
 			objects.push_back(tail);
 			
@@ -262,7 +262,7 @@ void CPlayScene::_ParseSection_PORTAL(string line)
 void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
-
+	grid = new Grid();
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -364,13 +364,8 @@ void CPlayScene::Render()
 
 	TileMap::GetInstance()->RenderBackground();
 
-	/*for (int i = objects.size() - 1; i > -1 ; i--)
-	{
-		if (objects[i]->die == false)
-			objects[i]->Render();
-	}*/
-	player->Render();
 	grid->Render();
+	player->Render();
 
 	TileMap::GetInstance()->RenderForeground();
 }
@@ -385,11 +380,14 @@ void CPlayScene::Unload()
 	{
 		delete objects[i];
 	}
-
 	objects.clear();
+
 	TileMap::GetInstance()->Clear();
 
 	CGame::GetInstance()->GetCurrentScene()->isFinished = false;
+
+	delete grid;
+
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 

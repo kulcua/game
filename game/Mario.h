@@ -105,13 +105,15 @@ class CMario : public CGameObject
 	friend class MarioState;
 	friend class CKoopa;
 	friend class FireBallPool;
+	friend class MarioTail;
+
+	MarioTail* tail;
 
 	CKoopa* koopaShell;
 	int level;
 	int ani;
 
 	CardType cardType;
-	//bool autoMoving;
 
 	int power;
 	int savePower;
@@ -161,14 +163,14 @@ public:
 	void LevelUp();
 	void KickShell();
 
-	void SetLife(int life);
+	void SetLife(int life) { this->life = life; }
 	int GetLife() { return life; }
+
+	void SetTail(MarioTail* tail);
+
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
-	void SetCardType(CardType card) { cardType = card;  
-	//autoMoving = true; 
-	nx = 1; }
+	void SetCardType(CardType card) { cardType = card; nx = 1; }
 	CardType GetCardType() { return cardType; }
-	//bool IsAutoMoving() { return autoMoving; }
 };

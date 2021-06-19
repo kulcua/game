@@ -488,7 +488,7 @@
   <object id="265" x="5950" y="1104.25" width="27" height="24"/>
   <object id="266" x="5902.25" y="1104.5" width="27" height="24"/>
  </objectgroup>
- <objectgroup id="15" name="Enemy1">
+ <objectgroup id="15" name="Enemy">
   <object id="91" name="koopa" type="red" x="1641.33" y="1034.66" width="13" height="13">
    <properties>
     <property name="ani_id" value="70"/>
