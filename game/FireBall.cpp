@@ -159,16 +159,12 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		UpdateForMario(dt, coObjects);
 	}
 
-	for (int i = 0; i < coObjects->size(); i++)
+	CCamera* cam = CGame::GetInstance()->GetCam();
+	if (AABB(cam) == false)
 	{
-		if (dynamic_cast<CCamera*>(coObjects->at(i)))
-		{
-			if (AABB(coObjects->at(i)) == false)
-			{
-				die = true;
-			}
-		}
+		die = true;
 	}
+	
 	grid_->Move(this, x, y);
 }
 

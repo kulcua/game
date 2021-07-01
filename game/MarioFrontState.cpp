@@ -1,6 +1,7 @@
 #include "MarioFrontState.h"
 #include "Mario.h"
 #include "MarioStandingState.h"
+#include "MarioJumpingState.h"
 #include "Game.h"
 
 MarioFrontState* MarioFrontState::__instance = NULL;
@@ -56,6 +57,9 @@ void MarioFrontState::Update(CMario& mario, DWORD dt)
 
     if (getOut)
     {
+       /* getOut = false;
+        mario.state_ = MarioState::jumping.GetInstance();
+        mario.vy = -MARIO_DEFLECT_MUSICAL_NOTE;*/
         if (mario.GetLevel() == MARIO_LEVEL_SMALL)
         {
             if ((mario.y > portOut->y + MARIO_SMALL_BBOX_HEIGHT) || (mario.y < portOut->y - MARIO_SMALL_BBOX_HEIGHT))

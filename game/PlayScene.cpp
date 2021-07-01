@@ -333,18 +333,6 @@ void CPlayScene::Update(DWORD dt)
 
 	grid->Update(dt);
 		
-	/*vector<LPGAMEOBJECT> coObject;
-	for (size_t i = 1; i < objects.size(); i++)
-	{
-		if (objects[i]->die == false)
-			coObject.push_back(objects[i]);
-	}
-
-	for (size_t i = 0; i < objects.size(); i++)
-	{
-		if (objects[i]->die == false)
-			objects[i]->Update(dt, &coObject);
-	}*/
 	if (id >= PLAY_SCENE)
 	{
 		FireBallPool::GetInstance()->GetBackToPool();
@@ -354,8 +342,6 @@ void CPlayScene::Update(DWORD dt)
 	{
 		Intro::GetInstance()->Update();
 	}
-	//DebugOut(L"size coo: %d\n", coObject.size());
-	//DebugOut(L"size: %d\n", objects.size());
 }
 
 void CPlayScene::Render()

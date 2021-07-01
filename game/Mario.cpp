@@ -30,6 +30,7 @@
 #include "MarioOverWorldState.h"
 #include "Portal.h"
 #include "SwitchItem.h"
+#include "MusicalNote.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -104,6 +105,31 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						brick->SetState(BRICK_STATE_DISABLE);
 						MarioJumpingState::GetInstance()->isHighJump = false;
 					}
+				}
+			}
+			else if (dynamic_cast<MusicalNote*>(e->obj))
+			{
+				MusicalNote* note = dynamic_cast<MusicalNote*>(e->obj);
+				note->Deflect(e->ny);
+				
+				if (e->ny < 0)
+				{
+					if (note->isHidden == false)
+					{
+						state_ = MarioState::jumping.GetInstance();
+						onGround = false;
+						if (note->GetType() == MUSICAL_NOTE_TYPE_RED)
+						{
+							vy = -MARIO_DEFLECT_MUSICAL_NOTE * 3;
+							vx = 0;
+						}
+						else vy = -MARIO_DEFLECT_MUSICAL_NOTE;
+					}
+				}
+				else if (e->ny > 0) {
+					MarioState::jumping.GetInstance()->isHighJump = false;
+					if (note->GetType() == MUSICAL_NOTE_TYPE_RED && note->isHidden)
+						note->isHidden = false;
 				}
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))

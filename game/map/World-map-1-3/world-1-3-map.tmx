@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="158" height="50" tilewidth="48" tileheight="48" infinite="0" nextlayerid="32" nextobjectid="466">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="158" height="50" tilewidth="48" tileheight="48" infinite="0" nextlayerid="33" nextobjectid="476">
  <editorsettings>
   <export target="world-1-1-map.xml" format="tmx"/>
  </editorsettings>
@@ -384,7 +384,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="13" name="Solid" visible="0">
+ <objectgroup id="13" name="Solid">
   <object id="1" x="2" y="1010" width="3784" height="44"/>
   <object id="5" x="3839.33" y="1008" width="528" height="52"/>
   <object id="13" x="4418.67" y="1011.33" width="3162" height="44.6667"/>
@@ -394,8 +394,10 @@
   <object id="298" x="3215" y="816.5" width="46" height="191"/>
   <object id="299" x="2831" y="866.5" width="46" height="145"/>
   <object id="300" x="2113" y="815.833" width="190" height="49.6667"/>
+  <object id="473" x="4426.67" y="2304" width="2584" height="49.3333"/>
+  <object id="474" x="7105.33" y="2302.67" width="338.667" height="49.3333"/>
  </objectgroup>
- <objectgroup id="14" name="Ghost">
+ <objectgroup id="14" name="Ghost" visible="0">
   <object id="287" x="480" y="912" width="190" height="93"/>
   <object id="288" x="625" y="768.5" width="190" height="241"/>
   <object id="289" x="4657" y="577.5" width="190" height="432"/>
@@ -412,17 +414,17 @@
   <object id="236" type="2" x="51.03" y="290.061" width="7568.48" height="42.4242"/>
   <object id="366" type="0" x="7550" y="4.90833" width="63.6364" height="1080.85"/>
  </objectgroup>
- <objectgroup id="18" name="QuestionBlocks1" visible="0">
-  <object id="47" name="coin" type="1" x="538.667" y="825.33"/>
-  <object id="49" name="coin" type="1" x="586.667" y="825.33"/>
-  <object id="50" name="coin" type="1" x="683.333" y="680.667"/>
-  <object id="51" name="powerup" type="1" x="730.667" y="680.667"/>
-  <object id="53" name="coin" type="1" x="1257.34" y="724"/>
-  <object id="104" name="powerup" type="1" x="1976.55" y="914.01"/>
-  <object id="105" name="coin" type="1" x="2120.61" y="818.91"/>
-  <object id="106" name="powerup" type="1" x="4381.21" y="869.55"/>
-  <object id="213" name="1upMushroom" type="2" x="4282" y="145.333"/>
-  <object id="270" name="switch" type="2" x="6046.5" y="864" width="27" height="24"/>
+ <objectgroup id="18" name="QuestionBlocks">
+  <object id="336" name="coin" type="1" x="1873.33" y="864" width="48" height="48"/>
+  <object id="466" name="coin" type="1" x="1536.58" y="912.083" width="48" height="48"/>
+  <object id="359" name="coin10" type="2" x="1776" y="768.25" width="48" height="48"/>
+  <object id="325" name="powerup" type="2" x="1728" y="912.667" width="48" height="48"/>
+  <object id="475" name="1upMushroom" type="2" x="6334.67" y="1582.67" width="48" height="48"/>
+ </objectgroup>
+ <objectgroup id="32" name="MusicalNote">
+  <object id="468" type="1" x="1488" y="768" width="48" height="48"/>
+  <object id="469" type="1" x="1391" y="863" width="48" height="48"/>
+  <object id="470" type="2" x="1584.25" y="864.25" width="48" height="48"/>
  </objectgroup>
  <objectgroup id="15" name="Coin">
   <object id="367" x="2976" y="720" width="48" height="48"/>
@@ -497,10 +499,8 @@
   <object id="453" x="6815.66" y="2064" width="48" height="48"/>
   <object id="454" x="6622.34" y="2063.66" width="48" height="48"/>
   <object id="455" x="6575.66" y="2112.34" width="48" height="48"/>
-  <object id="460" x="1776.34" y="864.665" width="48" height="48"/>
-  <object id="461" x="1535.99" y="864.335" width="48" height="48"/>
  </objectgroup>
- <objectgroup id="19" name="Brick" visible="0">
+ <objectgroup id="19" name="Brick">
   <object id="311" x="1584" y="960.667" width="48" height="48"/>
   <object id="312" x="1536" y="960.667" width="48" height="48"/>
   <object id="313" x="1488" y="960.667" width="48" height="48"/>
@@ -510,63 +510,24 @@
   <object id="322" x="1488" y="912.667" width="48" height="48"/>
   <object id="323" x="1776" y="912.667" width="48" height="48"/>
   <object id="324" x="1824" y="912.667" width="48" height="48"/>
-  <object id="325" x="1728" y="912.667" width="48" height="48"/>
   <object id="326" x="1680" y="912.667" width="48" height="48"/>
   <object id="327" x="1872" y="912.667" width="48" height="48"/>
   <object id="328" x="1632" y="864" width="48" height="48"/>
   <object id="331" x="1488" y="864" width="48" height="48"/>
   <object id="334" x="1872" y="816" width="48" height="48"/>
   <object id="335" x="1680" y="864" width="48" height="48"/>
-  <object id="336" x="1872" y="864" width="48" height="48"/>
   <object id="338" x="1584" y="816.083" width="48" height="48"/>
   <object id="339" x="1536" y="816.083" width="48" height="48"/>
   <object id="340" x="1488" y="816.083" width="48" height="48"/>
   <object id="341" x="1775.67" y="816" width="48" height="48"/>
   <object id="343" x="1728" y="816.417" width="48" height="48"/>
-  <object id="359" x="1776" y="768.25" width="48" height="48"/>
   <object id="360" x="1824" y="768.25" width="48" height="48"/>
   <object id="361" x="1728.33" y="768.25" width="48" height="48"/>
   <object id="363" x="1872" y="768.25" width="48" height="48"/>
+  <object id="467" x="1535.75" y="863.916" width="48" height="48"/>
  </objectgroup>
- <objectgroup id="15" name="Enemy1" visible="0">
-  <object id="91" name="koopa" type="red" x="1641.33" y="794.66" width="13" height="13">
-   <properties>
-    <property name="ani_id" value="70"/>
-   </properties>
-  </object>
-  <object id="187" name="goomba" type="tan" x="2251.33" y="868.67">
-   <properties>
-    <property name="ani_id" value="3"/>
-   </properties>
-  </object>
-  <object id="98" name="venus" type="red" x="1079.82" y="867.64" width="45" height="35">
-   <properties>
-    <property name="ani_id" value="60"/>
-   </properties>
-  </object>
-  <object id="240" name="venus" type="green" x="5545.5" y="869.5" width="45" height="35">
-   <properties>
-    <property name="ani_id" value="63"/>
-   </properties>
-  </object>
-  <object id="241" name="piranha" x="5353.5" y="916.5" width="45" height="35">
-   <properties>
-    <property name="ani_id" value="64"/>
-   </properties>
-  </object>
-  <object id="242" name="goomba" type="para" x="2451" y="861" width="34" height="24">
-   <properties>
-    <property name="ani_id" value="31"/>
-   </properties>
-  </object>
-  <object id="243" name="koopa" type="para" x="4128.5" y="578.5" width="13" height="13">
-   <properties>
-    <property name="ani_id" value="71"/>
-    <property name="end_x" value="3350"/>
-    <property name="start_x" value="4120"/>
-   </properties>
-  </object>
-  <object id="269" name="koopa" type="red" x="6249" y="815.5" width="13" height="13">
+ <objectgroup id="15" name="Enemy" visible="0">
+  <object id="471" name="koopa" type="red" x="1806.83" y="661.5" width="13" height="13">
    <properties>
     <property name="ani_id" value="70"/>
    </properties>
@@ -575,25 +536,23 @@
  <objectgroup id="27" name="Camera" visible="0">
   <object id="239" type="1" x="26.6667" y="459.061" width="800" height="600.606"/>
  </objectgroup>
- <objectgroup id="28" name="KoopaBound1" visible="0">
-  <object id="244" x="1823" y="816" width="24" height="93"/>
-  <object id="245" x="1512" y="819.5" width="24" height="93"/>
-  <object id="267" x="6305" y="865.5" width="8.5" height="47"/>
-  <object id="268" x="6214.75" y="865.5" width="8.5" height="47"/>
+ <objectgroup id="28" name="KoopaBound" visible="0">
+  <object id="244" x="1904" y="673.667" width="14.6667" height="93"/>
+  <object id="245" x="1729" y="673.167" width="14.6667" height="93"/>
  </objectgroup>
- <objectgroup id="21" name="Portal1" visible="0">
-  <object id="274" name="out" type="2" x="6917.17" y="914" width="86" height="93.3333">
+ <objectgroup id="21" name="Portal">
+  <object id="274" name="out" type="2" x="6243.84" y="143.333" width="86" height="93.3333">
    <properties>
-    <property name="camY" value="700"/>
+    <property name="camY" value="450"/>
    </properties>
   </object>
-  <object id="276" name="in" type="2" x="6911.5" y="1151" width="96.6667" height="100"/>
-  <object id="275" name="out" type="1" x="6241.83" y="1153" width="92.6667" height="92">
+  <object id="276" name="in" type="2" x="7006.17" y="2159" width="96.6667" height="100"/>
+  <object id="275" name="out" type="1" x="4551.16" y="2301" width="92.6667" height="92">
    <properties>
-    <property name="camY" value="1365"/>
+    <property name="camY" value="1750"/>
    </properties>
   </object>
-  <object id="273" name="in" type="1" x="6817.67" y="862.33" width="91.3333" height="142.667"/>
+  <object id="472" name="in" type="1" x="1559.67" y="368.666" width="90" height="90"/>
  </objectgroup>
  <objectgroup id="24" name="Card" visible="0">
   <object id="286" x="7175.52" y="743.273" width="50" height="50"/>

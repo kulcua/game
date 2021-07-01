@@ -79,6 +79,9 @@
     <Filter Include="Grid">
       <UniqueIdentifier>{80a17f6b-6ef4-4833-94ad-43d6518ae366}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Brick\MusicalNote">
+      <UniqueIdentifier>{c997595d-d284-4217-a918-26a0b86edf40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -303,6 +306,9 @@
     <ClCompile Include="Grid.cpp">
       <Filter>Grid</Filter>
     </ClCompile>
+    <ClCompile Include="MusicalNote.cpp">
+      <Filter>Brick\MusicalNote</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -520,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="Grid.h">
       <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicalNote.h">
+      <Filter>Brick\MusicalNote</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

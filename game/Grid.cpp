@@ -89,7 +89,7 @@ void Grid::Render()
         for (int j = cellStartY; j < cellEndY + 1; j++)
         {
             CGameObject* obj = cells_[i][j];
-           while (obj != NULL)
+            while (obj != NULL)
             {
                 if (obj->die == false)
                     obj->Render();
@@ -109,10 +109,12 @@ void Grid::GetCell(int& startX, int& startY, int& endX, int& endY)
     float cx, cy;
     cam->GetPosition(cx, cy);
 
-    startX = (int)(cx / CELL_SIZE_X);
-    startY = (int)(cy / CELL_SIZE_Y);
-    endX = (int)((cx + CAM_WIDTH) / CELL_SIZE_X);
-    endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE_Y);
+    startX = (int)(cx / CELL_SIZE_X) - 1;
+    startY = (int)(cy / CELL_SIZE_Y) - 1;
+    endX = (int)((cx + CAM_WIDTH) / CELL_SIZE_X) + 1;
+    endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE_Y) + 1;
+
+    //DebugOut(L"%d %d %d %d\n", startX, startY, endX, endY);
 }
 
 void Grid::Move(CGameObject* obj, int x, int y)

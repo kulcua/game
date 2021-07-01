@@ -7,6 +7,9 @@
 #include "KoopaBound.h"
 #include "BrickBlock.h"
 #include "EffectPool.h"
+#include "MusicalNote.h"
+#include "Item.h"
+#include "Camera.h"
 
 CKoopa::CKoopa()
 {
@@ -65,6 +68,7 @@ void CKoopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
+	
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -93,12 +97,19 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-
+			//if (nx != 0)
+			//	DebugOut(L"nx %f %d\n", vx, coEventsResult.size());
+			//if (ny != 0)
+			//	DebugOut(L"ny %f %d\n", vx, coEventsResult.size());
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				if (brick->GetState() != BRICK_STATE_DISABLE)
-					brick->SetState(BRICK_STATE_DISABLE);
+				if (e->nx != 0 && state == KOOPA_STATE_BALL)
+				{
+					if (brick->GetState() != BRICK_STATE_DISABLE)
+						brick->SetState(BRICK_STATE_DISABLE);
+					KoopaBallDeflectVx();
+				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{
@@ -106,6 +117,17 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					isOnGround = true;
 				}
+				//if (e->nx != 0)
+				//{
+				//	if (state == KOOPA_STATE_BALL) 
+				//		vx = this->nx * KOOPA_BALL_SPEED;
+				//	else
+				//		vx = this->nx * KOOPA_WALKING_SPEED;
+				//	x += dx;
+				//}
+			}
+			else if (dynamic_cast<CCamera*>(e->obj))
+			{
 				if (e->nx != 0)
 				{
 					if (state == KOOPA_STATE_BALL) 
@@ -125,10 +147,12 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->ny < 0)
 					isOnGround = true;
-				else if (e->nx)
+				if (state == KOOPA_STATE_BALL)
 				{
-					this->nx = -this->nx;
-					vx = this->nx * KOOPA_BALL_SPEED;
+					if (e->nx != 0)
+						KoopaBallDeflectVx();
+					if (e->ny)
+						vx = this->nx * KOOPA_BALL_SPEED;
 				}
 			}
 			else if (dynamic_cast<BrickBlock*>(e->obj))
@@ -141,19 +165,29 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 							vx = this->nx * KOOPA_WALKING_SPEED;
 						else if (state == KOOPA_STATE_BALL)
 							vx = this->nx * KOOPA_BALL_SPEED;
-						x += dx;
 					}
-					if (e->ny != 0) y += dy;
+					//if (e->ny != 0) y += dy;
 				}
 				else {
 					if (e->nx != 0 && state == KOOPA_STATE_BALL)
 					{
 						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
 						block->die = true;
-						this->nx = -this->nx;
-						vx = this->nx * KOOPA_BALL_SPEED;
-						//x += dx;
+						KoopaBallDeflectVx();
 					}
+				}
+			}
+			else if (dynamic_cast<MusicalNote*>(e->obj))
+			{
+				MusicalNote* note = dynamic_cast<MusicalNote*>(e->obj);
+				if (e->nx != 0 && state == KOOPA_STATE_BALL)
+				{
+					if (note->GetType() == MUSICAL_NOTE_TYPE_WHITE)
+					{
+						note->Deflect(1);
+						KoopaBallDeflectVx();
+					}
+					else vx = this->nx * KOOPA_BALL_SPEED;
 				}
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj))
@@ -170,9 +204,22 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					}
 				}
 			}
+			else if (dynamic_cast<CItem*>(e->obj))
+			{
+				if (state == KOOPA_STATE_BALL)
+					vx = this->nx * KOOPA_BALL_SPEED;
+				else
+					vx = this->nx * KOOPA_WALKING_SPEED;
+			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+}
+
+void CKoopa::KoopaBallDeflectVx()
+{
+	this->nx = -this->nx;
+	vx = this->nx * KOOPA_BALL_SPEED;
 }
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -187,6 +234,8 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	HandleCollision(coObjects);
+
+	grid_->Move(this, x, y);
 }
 
 void CKoopa::DowngradeLevel()
@@ -216,6 +265,8 @@ void CKoopa::Render()
 		ani = KOOPA_ANI_WALKING;
 
 	animation_set->at(ani)->Render(x, y, nx, ny);
+
+	//RenderBoundingBox();
 }
 
 void CKoopa::SetState(int state)

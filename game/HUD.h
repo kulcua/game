@@ -13,7 +13,7 @@
 #define HUD_ALIGN_TIME 376
 #define HUD_ALIGN_TOP 21
 #define HUD_ALIGN_BOTTOM 46
-#define HUD_TIMER 100
+#define HUD_TIMER 500
 
 class HUD : public CGameObject
 {

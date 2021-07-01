@@ -22,6 +22,7 @@
 #include "Portal.h"
 #include "BoundOverWorld.h"
 #include "Tree.h"
+#include "MusicalNote.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, Grid* grid)
 {
@@ -63,9 +64,6 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("height", &height);
 			obj = new BoundOverWorld();
 			splitToTile<BoundOverWorld>(x, y, width, height, grid, objects);
-			//obj->SetPosition(x, y);
-			//obj->SetGrid(grid);
-			//objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
 	}
@@ -136,6 +134,12 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				item = new SwitchItem();
 				y -= ITEM_BBOX_HEIGHT;
 			}
+			else if (typeName.compare("coin10") == 0)
+			{
+				item = new CoinBrick();
+				y -= ITEM_BBOX_HEIGHT;
+			}
+
 			item->SetPosition(x, y);
 			br->SetItem(item);
 			br->SetGrid(grid);
@@ -152,6 +156,21 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
 			obj = new Coin();
+			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
+	else if (name.compare("MusicalNote") == 0)
+	{
+		while (element)
+		{
+			int type;
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryIntAttribute("type", &type);
+			obj = new MusicalNote(type, y);
 			obj->SetPosition(x, y);
 			obj->SetGrid(grid);
 			objects.push_back(obj);

@@ -191,6 +191,7 @@
     <ClCompile Include="MarioTail.cpp" />
     <ClCompile Include="MarioTailHitState.cpp" />
     <ClCompile Include="MarioWalkingState.cpp" />
+    <ClCompile Include="MusicalNote.cpp" />
     <ClCompile Include="ObjectMap.cpp" />
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="ParaKoopa.cpp" />
@@ -267,6 +268,7 @@
     <ClInclude Include="MarioTail.h" />
     <ClInclude Include="MarioTailHitState.h" />
     <ClInclude Include="MarioWalkingState.h" />
+    <ClInclude Include="MusicalNote.h" />
     <ClInclude Include="ObjectMap.h" />
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="ParaKoopa.h" />
