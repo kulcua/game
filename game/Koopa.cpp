@@ -68,7 +68,6 @@ void CKoopa::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
-	
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -91,16 +90,13 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		if (nx != 0) vx = 0;
+		/*if (state != KOOPA_STATE_WALKING)
+			if (nx != 0) vx = 0;*/
 		if (ny != 0) vy = 0;
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			//if (nx != 0)
-			//	DebugOut(L"nx %f %d\n", vx, coEventsResult.size());
-			//if (ny != 0)
-			//	DebugOut(L"ny %f %d\n", vx, coEventsResult.size());
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
@@ -117,14 +113,14 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					isOnGround = true;
 				}
-				//if (e->nx != 0)
-				//{
-				//	if (state == KOOPA_STATE_BALL) 
-				//		vx = this->nx * KOOPA_BALL_SPEED;
-				//	else
-				//		vx = this->nx * KOOPA_WALKING_SPEED;
-				//	x += dx;
-				//}
+				if (e->nx != 0)
+				{
+					if (state == KOOPA_STATE_BALL) 
+						vx = this->nx * KOOPA_BALL_SPEED;
+					else
+						vx = this->nx * KOOPA_WALKING_SPEED;
+					x += dx;
+				}
 			}
 			else if (dynamic_cast<CCamera*>(e->obj))
 			{
@@ -147,13 +143,11 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->ny < 0)
 					isOnGround = true;
-				if (state == KOOPA_STATE_BALL)
-				{
-					if (e->nx != 0)
-						KoopaBallDeflectVx();
-					if (e->ny)
-						vx = this->nx * KOOPA_BALL_SPEED;
-				}
+				//if (state == KOOPA_STATE_BALL)
+				//{
+				//	if (e->nx != 0)
+				//		KoopaBallDeflectVx();
+				//}
 			}
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
@@ -224,7 +218,7 @@ void CKoopa::KoopaBallDeflectVx()
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt, coObjects);
+	CGameObject::Update(dt);
 
 	if (isHandled)
 		SetPositionHandled();
@@ -235,7 +229,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	HandleCollision(coObjects);
 
-	grid_->Move(this, x, y);
+	//grid_->Move(this, x, y);
 }
 
 void CKoopa::DowngradeLevel()

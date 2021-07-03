@@ -82,6 +82,9 @@
     <Filter Include="Brick\MusicalNote">
       <UniqueIdentifier>{c997595d-d284-4217-a918-26a0b86edf40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enermies\BoomerangBrother">
+      <UniqueIdentifier>{9ef059d4-1a43-4f8f-a074-394d59667291}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -309,6 +312,18 @@
     <ClCompile Include="MusicalNote.cpp">
       <Filter>Brick\MusicalNote</Filter>
     </ClCompile>
+    <ClCompile Include="BoomerangBrother.cpp">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClCompile>
+    <ClCompile Include="Boomerang.cpp">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClCompile>
+    <ClCompile Include="BrotherBound.cpp">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangPool.cpp">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -530,5 +545,25 @@
     <ClInclude Include="MusicalNote.h">
       <Filter>Brick\MusicalNote</Filter>
     </ClInclude>
+    <ClInclude Include="BoomerangBrother.h">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+    <ClInclude Include="Boomerang.h">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+    <ClInclude Include="BrotherBound.h">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangPool.h">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

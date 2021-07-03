@@ -19,6 +19,7 @@
 #include "MarioOverWorldState.h"
 #include "MarioStandingState.h"
 #include "DataManager.h"
+#include "BoomerangPool.h"
 
 #define INTRO_SCENE 1
 #define PLAY_SCENE 3
@@ -39,6 +40,7 @@ using namespace std;
 #define OBJECT_TYPE_MARIO	0
 #define OBJECT_TYPE_POOL_FIREBALL	68
 #define OBJECT_TYPE_POOL_EFFECT	69
+#define OBJECT_TYPE_POOL_BOOMERANG	47
 #define MAX_SCENE_LINE 1024
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
@@ -181,6 +183,10 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_POOL_EFFECT:
 		EffectPool::GetInstance()->SetGrid(grid);
 		EffectPool::GetInstance()->InitPool(objects);
+		break;
+	case OBJECT_TYPE_POOL_BOOMERANG:
+		BoomerangPool::GetInstance()->SetGrid(grid);
+		BoomerangPool::GetInstance()->InitPool(objects);
 		break;
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
@@ -331,12 +337,22 @@ void CPlayScene::Update(DWORD dt)
 {
 	if (player == NULL) return;
 
+	//vector<LPGAMEOBJECT> cooobj;
+	//for (int i = 1; i < objects.size(); i++)
+	//	if (objects[i]->die == false)
+	//		cooobj.push_back(objects[i]);
+
+	//for (int i = 0; i < objects.size(); i++)
+	//	if (objects[i]->die == false)
+	//		objects[i]->Update(dt,&cooobj);
+
 	grid->Update(dt);
 		
 	if (id >= PLAY_SCENE)
 	{
 		FireBallPool::GetInstance()->GetBackToPool();
 		EffectPool::GetInstance()->GetBackToPool();
+		BoomerangPool::GetInstance()->GetBackToPool();
 	}
 	else if (id == INTRO_SCENE)
 	{
@@ -351,9 +367,14 @@ void CPlayScene::Render()
 	TileMap::GetInstance()->RenderBackground();
 
 	grid->Render();
+
 	player->Render();
 
 	TileMap::GetInstance()->RenderForeground();
+
+	HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
+	if (hud != NULL)
+		hud->Render();
 }
 
 void CPlayScene::Unload()

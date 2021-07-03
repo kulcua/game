@@ -13,6 +13,7 @@
 #include "KoopaBound.h"
 #include "CoinBrick.h"
 #include "PowerUpItem.h"
+#include "BrotherBound.h"
 #include "BrickBlock.h"
 #include "Coin.h"
 #include "GreenMushroom.h"
@@ -21,6 +22,7 @@
 #include "PortalPipe.h"
 #include "Portal.h"
 #include "BoundOverWorld.h"
+#include "BoomerangBrother.h"
 #include "Tree.h"
 #include "MusicalNote.h"
 
@@ -240,6 +242,21 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			element = element->NextSiblingElement();
 		}
 	}
+	else if (name.compare("BrotherBound") == 0)
+	{
+		while (element)
+		{
+			element->QueryFloatAttribute("x", &x);
+			element->QueryFloatAttribute("y", &y);
+			element->QueryFloatAttribute("width", &width);
+			element->QueryFloatAttribute("height", &height);
+			obj = new BrotherBound(width, height);
+			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
+			objects.push_back(obj);
+			element = element->NextSiblingElement();
+		}
+	}
 	else if (name.compare("Enemy") == 0)
 	{		
 		while (element)
@@ -281,6 +298,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			else if (enemyName.compare("piranha") == 0)
 			{
 				obj = new PiranhaPlant(y);
+			}
+			else if (enemyName.compare("boomerangbrother") == 0)
+			{
+				obj = new BoomerangBrother();
 			}
 
 			//DebugOut(L"name %s\n", ToLPCWSTR(enemyName));

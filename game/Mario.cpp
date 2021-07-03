@@ -16,6 +16,7 @@
 #include "FireBallPool.h"
 #include "CameraBound.h"
 #include "KoopaBound.h"
+#include "BrotherBound.h"
 #include "EffectPool.h"
 #include "MarioSittingState.h"
 #include "PowerUpItem.h"
@@ -56,8 +57,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		if (rdx != 0 && rdx != dx)
-			x += nx * abs(rdx);
+		//if (rdx != 0 && rdx != dx)
+		//	x += nx * abs(rdx);
 
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
@@ -175,10 +176,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					y += dy;
 				}
 			}
-			else if (dynamic_cast<KoopaBound*>(e->obj))
+			else if (dynamic_cast<KoopaBound*>(e->obj) || dynamic_cast<BrotherBound*>(e->obj))
 			{
-				x += dx;
-				y += dy;
+				if (e->nx) x += dx;
+				if (e->ny) y += dy;
 			}
 			else if (dynamic_cast<PowerUpItem*>(e->obj))
 			{

@@ -149,9 +149,13 @@
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BigBox.cpp" />
+    <ClCompile Include="Boomerang.cpp" />
+    <ClCompile Include="BoomerangBrother.cpp" />
+    <ClCompile Include="BoomerangPool.cpp" />
     <ClCompile Include="BoundOverWorld.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickBlock.cpp" />
+    <ClCompile Include="BrotherBound.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBound.cpp" />
     <ClCompile Include="Card.cpp" />
@@ -226,9 +230,13 @@
   <ItemGroup>
     <ClInclude Include="Animations.h" />
     <ClInclude Include="BigBox.h" />
+    <ClInclude Include="Boomerang.h" />
+    <ClInclude Include="BoomerangBrother.h" />
+    <ClInclude Include="BoomerangPool.h" />
     <ClInclude Include="BoundOverWorld.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickBlock.h" />
+    <ClInclude Include="BrotherBound.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBound.h" />
     <ClInclude Include="Card.h" />
@@ -277,6 +285,7 @@
     <ClInclude Include="PortalManager.h" />
     <ClInclude Include="PortalPipe.h" />
     <ClInclude Include="PowerUpItem.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="SwitchItem.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TileMap.h" />
@@ -297,6 +306,9 @@
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="VenusFireTrap.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

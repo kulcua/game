@@ -97,10 +97,6 @@ void Grid::Render()
             }
         }
     }
-
-    HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
-    if (hud != NULL)
-        hud->Render();
 }
 
 void Grid::GetCell(int& startX, int& startY, int& endX, int& endY)
@@ -109,10 +105,10 @@ void Grid::GetCell(int& startX, int& startY, int& endX, int& endY)
     float cx, cy;
     cam->GetPosition(cx, cy);
 
-    startX = (int)(cx / CELL_SIZE_X) - 1;
-    startY = (int)(cy / CELL_SIZE_Y) - 1;
-    endX = (int)((cx + CAM_WIDTH) / CELL_SIZE_X) + 1;
-    endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE_Y) + 1;
+    startX = (int)(cx / CELL_SIZE_X);
+    startY = (int)(cy / CELL_SIZE_Y);
+    endX = (int)((cx + CAM_WIDTH) / CELL_SIZE_X);
+    endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE_Y);
 
     //DebugOut(L"%d %d %d %d\n", startX, startY, endX, endY);
 }
