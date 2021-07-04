@@ -4,7 +4,7 @@
 #include "GameObject.h"
 #include "Mario.h"
 
-#define HUD_HEIGHT 155
+#define HUD_HEIGHT 500
 #define SCREEN_HEIGHT 750
 #define HUD_WIDTH 800
 #define HUD_ALIGN_LEFT 110
@@ -13,18 +13,17 @@
 #define HUD_ALIGN_TIME 376
 #define HUD_ALIGN_TOP 21
 #define HUD_ALIGN_BOTTOM 46
-#define HUD_TIMER 300
+#define HUD_TIMER 500
 
 class HUD : public CGameObject
 {
-	static HUD* __instance;
-	float x, y;
 	int spriteId = 0;
 	float xWorld, xM;
 	float xPower, xPoint;
 	float xMoney, xTime;
 	CMario* mario;
 	int timeStart = GetTickCount64();
+	int timeLeft = HUD_TIMER;
 public:
 	Text* world;
 	Text* life;
@@ -32,9 +31,7 @@ public:
 	TextPowerSign* power;
 	Text* money;
 	Text* time;
-
-	static HUD* GetInstance();
-	HUD();
+	HUD(vector<LPGAMEOBJECT> &objects);
 	int CountDownTimer();
 	void SetPosition(float x, float y);
 	void SetSpriteId(int spriteId) { this->spriteId = spriteId; }

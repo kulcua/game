@@ -7,12 +7,13 @@ Card::Card()
 	SetAnimation(CARD_ANI_ID);
 }
 
-void Card::GetCard() {
+CardType Card::RandomCard() {
 	active = true;
 	// random 0-2 CardType
 	int divisor = static_cast<int>(CardType::num_card);
 	srand(time(NULL));
 	card = static_cast<CardType>(rand() % divisor);
+	return card;
 }
 
 void Card::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

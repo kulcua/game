@@ -6,6 +6,7 @@
 #include "Goomba.h"
 #include "Koopa.h"
 #include "EffectPool.h"
+#include "Game.h"
 
 CFireBall::CFireBall()
 {
@@ -14,17 +15,18 @@ CFireBall::CFireBall()
 }
 
 void CFireBall::InitForPlant(VenusFireTrap* venus) {
-  	this->state_.live.mario = CMario::GetInstance();
+  	this->state_.live.mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	this->state_.live.venus = venus;
 	die = false;
 	inUse = true;
 	SetPosition(venus->x, venus->y);
 	isForPlant = true;
+	grid_->Move(this, x, y);
 }
 
 void CFireBall::InitForMario()
 {
-	this->state_.live.mario = CMario::GetInstance();
+	this->state_.live.mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	die = false;
 	inUse = true;
 	SetPosition(state_.live.mario->x, state_.live.mario->y);
@@ -34,6 +36,7 @@ void CFireBall::InitForMario()
 		vx = FIREBALL_VELOCITY_X;
 	else
 		vx = -FIREBALL_VELOCITY_X;
+	grid_->Move(this, x, y);
 }
 
 void CFireBall::SetAnimationFireBall()
@@ -147,7 +150,6 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt, coObjects);
-
 	if (isForPlant)
 	{
 		UpdateForPlant(dt, coObjects);
@@ -157,16 +159,13 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		UpdateForMario(dt, coObjects);
 	}
 
-	for (int i = 0; i < coObjects->size(); i++)
+	CCamera* cam = CGame::GetInstance()->GetCam();
+	if (AABB(cam) == false)
 	{
-		if (dynamic_cast<CCamera*>(coObjects->at(i)))
-		{
-			if (AABB(coObjects->at(i)) == false)
-			{
-				die = true;
-			}
-		}
+		die = true;
 	}
+	
+	grid_->Move(this, x, y);
 }
 
 void CFireBall::Render()

@@ -15,7 +15,7 @@ Intro* Intro::GetInstance()
 
 void Intro::SetScenario(vector<LPGAMEOBJECT> &objects)
 {
-	mario = CMario::GetInstance();
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();;
 	mario->SetLevel(MARIO_LEVEL_BIG);
 	mario->SetPosition(700, 400);
 	mario->nx = -1;
@@ -59,7 +59,6 @@ void Intro::Step1() {
 			luigi->vx = MARIO_WALKING_SPEED;
 		}
 	}
-	else DebugOut(L"pos %f\n", luigi->vy);
 }
 
 void Intro::Update()

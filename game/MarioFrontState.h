@@ -2,8 +2,8 @@
 #include "MarioState.h"
 #include "PortalPipe.h"
 
-#define MARIO_FRONT_SPEED_DOWN 0.001f
-#define MARIO_FRONT_SPEED_UP -0.05f
+#define MARIO_FRONT_SPEED_DOWN 0.02f
+#define MARIO_FRONT_SPEED_UP -0.02f
 
 class MarioFrontState : public MarioState
 {

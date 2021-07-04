@@ -5,7 +5,9 @@
 #include <unordered_map>
 #include <dinput.h>
 #include "PlayScene.h"
+#include "Camera.h"
 #include "Scene.h"
+#include "Mario.h"
 
 using namespace std;
 
@@ -37,9 +39,6 @@ class CGame {
 
 	LPKEYEVENTHANDLER keyHandler;
 
-	float cam_x = 0.0f;
-	float cam_y = 0.0f;
-
 	int screen_width;
 	int screen_height;
 
@@ -50,6 +49,8 @@ class CGame {
 
 	void _ParseSection_SETTINGS(string line);
 	void _ParseSection_SCENES(string line);
+
+	CCamera* cam;
 public:
 	void SetBackgroundColor(D3DCOLOR backgroundColor) { this->backgroundColor = backgroundColor; }
 	D3DCOLOR GetBackgroundColor() { return backgroundColor; }
@@ -87,9 +88,10 @@ public:
 	LPDIRECT3DSURFACE9 GetBackBuffer() { return this->backBuffer; }
 	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
 
-	void SetCamPos(float x, float y) { cam_x = floor(x); cam_y = floor(y); }
-
 	static CGame* GetInstance();
+
+	CCamera* GetCam() { return cam; }
+	void SetCam(CCamera* cam) { this->cam = cam; }
 
 	~CGame();
 };

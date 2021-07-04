@@ -17,16 +17,17 @@
 #define PARAGOOMBA_HIGH_JUMP_SPEED 0.4f
 #define PARAGOOMBA_WALK_TIME 2000
 
-#define	PARAGOOMBA_LEVEL_JUMP 2
+#define	PARAGOOMBA_LEVEL_WING 2
 
 class ParaGoomba : public CGoomba
 {
 	int jumpTimes;
 	DWORD walkingTimeStart;
+protected:
 	CMario* mario;
 public:
 	ParaGoomba();
-	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void SetState(int state);

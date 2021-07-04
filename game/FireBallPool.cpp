@@ -13,15 +13,20 @@ FireBallPool* FireBallPool::GetInstance()
 
 void FireBallPool::InitPool(vector<LPGAMEOBJECT>& objects)
 {
-    firstAvailable_ = &fireBall_[0];
+    fireBall_[0] = new CFireBall();
+    firstAvailable_ = fireBall_[0];
 
     for (int i = 0; i < POOL_SIZE - 1; i++)
     {
-        fireBall_[i].SetNext(&fireBall_[i + 1]);
-        objects.push_back(&fireBall_[i]);
+        fireBall_[i + 1] = new CFireBall();
+
+        fireBall_[i]->SetNext(fireBall_[i + 1]);
+        fireBall_[i]->SetGrid(grid);
+        objects.push_back(fireBall_[i]);
     }
-    fireBall_[POOL_SIZE - 1].SetNext(NULL);
-    objects.push_back(&fireBall_[POOL_SIZE - 1]);
+    fireBall_[POOL_SIZE - 1]->SetNext(NULL);
+    fireBall_[POOL_SIZE - 1]->SetGrid(grid);
+    objects.push_back(fireBall_[POOL_SIZE - 1]);
 }
 
 CFireBall* FireBallPool::Create() {
@@ -39,10 +44,10 @@ void FireBallPool::GetBackToPool()
 {
     for (int i = 0; i < POOL_SIZE; i++)
     {  
-        if (fireBall_[i].GetBackToPool())
-        {         
-            fireBall_[i].SetNext(firstAvailable_);
-            firstAvailable_ = &fireBall_[i];
+        if (fireBall_[i]->GetBackToPool())
+        {        
+            fireBall_[i]->SetNext(firstAvailable_);
+            firstAvailable_ = fireBall_[i];
         }
     }
 }

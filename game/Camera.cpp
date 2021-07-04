@@ -4,20 +4,9 @@
 #include "MarioFlyingState.h"
 #include "HUD.h"
 
-#define CAM_WIDTH 800
-#define CAM_HEIGHT 600
-
-CCamera* CCamera::__instance = NULL;
-
-CCamera* CCamera::GetInstance()
-{
-	if (__instance == NULL) __instance = new CCamera();
-	return __instance;
-}
-
 CCamera::CCamera()
 {
-	mario = CMario::GetInstance();
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();;
 	this->width = CAM_WIDTH;
 	this->height = CAM_HEIGHT;
 }
@@ -60,70 +49,73 @@ void CCamera::FollowMario()
 
 void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CGameObject::Update(dt);
-
-	xCenter = x + (width / 2) - MARIO_BIG_BBOX_WIDTH / 2;
-	yCenter = y + (height / 2) + MARIO_BIG_BBOX_HEIGHT / 2;
-
-	FollowMario();
-
-	vector<LPCOLLISIONEVENT> coEvents;
-	vector<LPCOLLISIONEVENT> coEventsResult;
-
-	coEvents.clear();
-
-	if (mario->state != MARIO_STATE_DIE)
-		CalcPotentialCollisions(coObjects, coEvents);
-	
-	if (coEvents.size() == 0)
+	if (isMove == true)
 	{
-		x += dx;
-		y += dy;
-	}
-	else
-	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
+		CGameObject::Update(dt);
 
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+		xCenter = x + (width / 2) - MARIO_BIG_BBOX_WIDTH / 2;
+		yCenter = y + (height / 2) + MARIO_BIG_BBOX_HEIGHT / 2;
 
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+		FollowMario();
 
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		vector<LPCOLLISIONEVENT> coEvents;
+		vector<LPCOLLISIONEVENT> coEventsResult;
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		coEvents.clear();
+
+		if (mario->state != MARIO_STATE_DIE)
+			CalcPotentialCollisions(coObjects, coEvents);
+
+		if (coEvents.size() == 0)
 		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
+			x += dx;
+			y += dy;
+		}
+		else
+		{
+			float min_tx, min_ty, nx = 0, ny;
+			float rdx = 0;
+			float rdy = 0;
 
-			if (dynamic_cast<CCameraBound*>(e->obj))
+			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+			x += min_tx * dx + nx * 0.4f;
+			y += min_ty * dy + ny * 0.4f;
+
+			if (nx != 0) vx = 0;
+			if (ny != 0) vy = 0;
+			
+			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
-				CCameraBound* camBound = dynamic_cast<CCameraBound*>(e->obj);
-				
-				if (camBound->GetType() == 0)
+				LPCOLLISIONEVENT e = coEventsResult[i];
+				if (dynamic_cast<CCameraBound*>(e->obj))
 				{
-					if (e->ny < 0)
-						onGroundMode = true;
-				}		
-			}
-			else {
-				if (nx != 0)
-				{
-					vx = mario->vx;
-					x += dx;
+					CCameraBound* camBound = dynamic_cast<CCameraBound*>(e->obj);
+
+					if (camBound->GetType() == 0)
+					{
+						if (e->ny < 0)
+							onGroundMode = true;
+					}
 				}
-				if (ny != 0) {
-					y += dy;
+				else {
+					if (nx != 0)
+					{
+						vx = mario->vx;
+						x += dx;
+					}
+					if (ny != 0) {
+						y += dy;
+					}
 				}
 			}
 		}
-	}		
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 
-	CGame::GetInstance()->SetCamPos(x, y);
-	HUD::GetInstance()->SetPosition(x, y + SCREEN_HEIGHT - HUD_HEIGHT);
+		//x = floor(x);
+		//y = floor(y);
+		//CGame::GetInstance()->GetHUD()->SetPosition(x,y);
+	}
 }
 
 void CCamera::Render()

@@ -83,5 +83,5 @@ void MarioStandingState::Update(CMario& mario, DWORD dt)
         mario.PowerReset();
         mario.isPower = true; // cuz standing but player still keep PRESS_A
     }       
-    //DebugOut(L"MarioStandingState %f\n", mario.vy);
+    //DebugOut(L"MarioStandingState %f %f\n", mario.x, mario.y);
 }

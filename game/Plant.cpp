@@ -6,7 +6,7 @@
 CPlant::CPlant(float y) {
 	startY = y;
 	vy = -PLANT_SPEED;
-	mario = CMario::GetInstance();
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();;
 }
 
 void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

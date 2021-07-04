@@ -15,6 +15,7 @@ class MarioLevelUpState;
 class MarioTailHitState;
 class MarioShootFireBallState;
 class MarioFrontState;
+class MarioOverWorldState;
 
 class MarioState
 {
@@ -35,6 +36,7 @@ public:
 	static MarioTailHitState tailHit;
 	static MarioShootFireBallState shootFireball;
 	static MarioFrontState front;
+	static MarioOverWorldState overworld;
 
 	virtual void HandleInput(CMario& mario, Input input) = 0;
 	virtual void Update(CMario& mario, DWORD dt);

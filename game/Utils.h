@@ -22,7 +22,8 @@ enum Input {
 	PRESS_LEFT,
 	PRESS_RIGHT,
 	RELEASE_LEFT,
-	RELEASE_RIGHT
+	RELEASE_RIGHT,
+	PRESS_UP
 };
 
 using namespace std;

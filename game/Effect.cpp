@@ -1,6 +1,7 @@
 #include "Effect.h"
 #include "Utils.h"
 #include "Mario.h"
+#include "Game.h"
 
 Effect::Effect()
 {
@@ -27,7 +28,8 @@ void Effect::InitPoint(EffectPoint ePoint, float x, float y)
 		point = 200;
 	else if (ePoint == EffectPoint::p1000)
 		point = 1000;
-	CMario::GetInstance()->SetPoint(point);
+	CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetPoint(point);
+	grid_->Move(this, x, y);
 }
 
 void Effect::InitDebris(int pos, float x, float y)
@@ -40,6 +42,7 @@ void Effect::InitDebris(int pos, float x, float y)
 	if (pos == 1 || pos == 3)
 		vx = -EFFECT_DEBRIS_VX;
 	else vx = EFFECT_DEBRIS_VX;
+	grid_->Move(this, x, y);
 }
 
 void Effect::SetAnimation()
@@ -92,6 +95,8 @@ void Effect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = -EFFECT_POIINT_DELFECT_VY;
 		y += dy;
 	}
+
+	grid_->Move(this, x, y);
 }
 
 void Effect::Render()

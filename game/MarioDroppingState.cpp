@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "MarioStandingState.h"
 #include "MarioDropFlyState.h"
+#include "MarioWalkingState.h"
 
 MarioDroppingState* MarioDroppingState::__instance = NULL;
 
@@ -70,8 +71,16 @@ void MarioDroppingState::HandleInput(CMario& mario, Input input)
 void MarioDroppingState::Update(CMario& mario, DWORD dt)
 {
     if (mario.onGround)
-        mario.state_ = MarioState::standing.GetInstance();
-    //DebugOut(L"Dropping %f\n", mario.vx);
+    {
+        if (CGame::GetInstance()->GetCurrentScene()->isFinished)
+        {
+            mario.state_ = MarioState::walking.GetInstance();
+        }
+        else {
+            mario.state_ = MarioState::standing.GetInstance();
+        }
+    }
+    //DebugOut(L"Dropping %d %d\n", mario.IsAutoMoving(), mario.onGround);
 }
 
 void MarioDroppingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

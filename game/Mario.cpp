@@ -6,7 +6,6 @@
 #include "Portal.h"
 #include "BigBox.h"
 #include "Ground.h"
-#include "Item.h"
 #include "Koopa.h"
 #include "MarioState.h"
 #include "MarioStandingState.h"
@@ -17,29 +16,23 @@
 #include "FireBallPool.h"
 #include "CameraBound.h"
 #include "KoopaBound.h"
+#include "BrotherBound.h"
 #include "EffectPool.h"
 #include "MarioSittingState.h"
 #include "PowerUpItem.h"
+#include "MarioTail.h"
 #include "BrickBlock.h"
 #include "Coin.h"
-#include "SwitchItem.h"
 #include "GreenMushroom.h"
 #include "Plant.h"
-#include "Card.h"
 #include "PortalPipe.h"
 #include "Camera.h"
 #include "MarioFrontState.h"
-
-CMario* CMario::__instance = NULL;
-
-CMario* CMario::GetInstance()
-{
-	if (__instance == NULL)
-	{
-		__instance = new CMario();
-	}
-	return __instance;
-}
+#include "MarioOverWorldState.h"
+#include "Portal.h"
+#include "SwitchItem.h"
+#include "MusicalNote.h"
+#include "BrickCoins.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -65,8 +58,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		if (rdx != 0 && rdx != dx)
-			x += nx * abs(rdx);
+		//if (rdx != 0 && rdx != dx)
+		//	x += nx * abs(rdx);
 
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
@@ -99,18 +92,52 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				Card* card = dynamic_cast<Card*>(e->obj);
 				if (e->ny)
-					card->GetCard();
+				{
+					SetCardType(card->RandomCard());
+					CGame::GetInstance()->GetCurrentScene()->isFinished = true;
+				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				if (brick->GetState() != BRICK_STATE_DISABLE)
+				
+				if (e->ny > 0)
 				{
-					if (e->ny > 0)
+					MarioJumpingState::GetInstance()->isHighJump = false;
+					if (brick->GetState() != BRICK_STATE_DISABLE)
 					{
-						brick->SetState(BRICK_STATE_DISABLE);
-						MarioJumpingState::GetInstance()->isHighJump = false;
+						if (brick->GetLevel() == BRICK_LEVEL_1_ITEM)
+							brick->SetState(BRICK_STATE_DISABLE);
+						else {
+							BrickCoins* brick = dynamic_cast<BrickCoins*>(e->obj);
+							brick->SetState(BRICK_STATE_THROW_ITEM);
+						}
 					}
+				}
+			}
+			else if (dynamic_cast<MusicalNote*>(e->obj))
+			{
+				MusicalNote* note = dynamic_cast<MusicalNote*>(e->obj);
+				note->Deflect(e->ny);
+				
+				if (e->ny < 0)
+				{
+					if (note->isHidden == false)
+					{
+						state_ = MarioState::jumping.GetInstance();
+						onGround = false;
+						if (note->GetType() == MUSICAL_NOTE_TYPE_RED)
+						{
+							vy = -MARIO_DEFLECT_MUSICAL_NOTE * 3;
+							vx = 0;
+						}
+						else vy = -MARIO_DEFLECT_MUSICAL_NOTE;
+					}
+				}
+				else if (e->ny > 0) {
+					MarioState::jumping.GetInstance()->isHighJump = false;
+					if (note->GetType() == MUSICAL_NOTE_TYPE_RED && note->isHidden)
+						note->isHidden = false;
 				}
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
@@ -132,6 +159,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopaShell = koopa;
 					}
 					else { // kick normally
+						koopa->nx = this->nx;
 						koopa->vx = this->nx * KOOPA_BALL_SPEED;
 						MarioState::kick.GetInstance()->StartKick();
 						state_ = MarioState::kick.GetInstance();
@@ -148,19 +176,18 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				else if (e->ny < 0)
 					onGround = true;
 			}
-			else if (dynamic_cast<KoopaBound*>(e->obj))
+			else if (dynamic_cast<CCamera*>(e->obj))
 			{
-				x += dx;
-				y += dy;
-			}
-			/*else if (dynamic_cast<CPlant*>(e->obj))
-			{
-				CPlant* plant = dynamic_cast<CPlant*>(e->obj);
-				if (e->nx != 0 && MarioTailHitState::GetInstance()->tailHitting)
+				if (e->ny < 0)
 				{
-					plant->SetState(PLANT_STATE_DIE);
-				}	
-			}*/
+					y += dy;
+				}
+			}
+			else if (dynamic_cast<KoopaBound*>(e->obj) || dynamic_cast<BrotherBound*>(e->obj))
+			{
+				if (e->nx) x += dx;
+				if (e->ny) y += dy;
+			}
 			else if (dynamic_cast<PowerUpItem*>(e->obj))
 			{
 				e->obj->die = true;
@@ -181,7 +208,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<GreenMushroom*>(e->obj))
 			{
 				e->obj->die = true;
-				SetLife(1);
+				SetLife(life++);
+				Effect* effect = EffectPool::GetInstance()->Create();
+				if (effect != NULL)
+					effect->InitPoint(EffectPoint::p1000, x, y);
 			}
 			else if (dynamic_cast<Coin*>(e->obj))
 			{
@@ -212,6 +242,14 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						MarioFrontState::GetInstance()->onPortalPipe = false;
 				}
 			}
+			else if (dynamic_cast<CPortal*>(e->obj))
+			{
+				CPortal* port = dynamic_cast<CPortal*>(e->obj);
+				x = port->x;
+				y = port->y;
+				MarioState::overworld.GetInstance()->SetSceneId(port->GetSceneId());
+				break;
+			}
 
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
@@ -222,9 +260,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
 					onGround = true;
-					if (MarioSittingState::GetInstance()->isSit == false
-						&& state_ != MarioState::tailHit.GetInstance())
-						state_ = MarioState::standing.GetInstance();
 				}
 			}
 		}
@@ -236,13 +271,19 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
 
-	state_->Update(*this, dt);
-
-	vy += MARIO_GRAVITY * dt;
+	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
+		vy += MARIO_GRAVITY * dt;
 
 	PowerControl();
 
 	HandleCollision(coObjects);
+
+	tail->Update(dt, coObjects);
+
+	//DebugOut(L"y %f\n", y);
+
+	// put it finally because of switch scene delete all objects
+	state_->Update(*this, dt);
 }
 
 void CMario::PowerReset()
@@ -328,20 +369,18 @@ CMario::CMario() : CGameObject()
 	level = MARIO_LEVEL_SMALL;
 	state_ = MarioState::standing.GetInstance();
 	nx = 1;
-	pool = FireBallPool::GetInstance();
 	CGameObject::SetAnimation(MARIO_ANI_SET_ID);
 }
 
 void CMario::Render()
 {
-	int animation = -1;
+	int animation = 0;
 	if (state == MARIO_STATE_DIE)
 		animation = MARIO_ANI_DIE;
 	else 
 		animation = GetAnimation();
-
 	animation_set->at(animation)->Render(x, y, nx, ny, 255);
-
+	//DebugOut(L"ani %d\n", animation);
 	//RenderBoundingBox();
 }
 
@@ -372,10 +411,4 @@ void CMario::Reset()
 	SetSpeed(0, 0);
 }
 
-void CMario::SetLife(int life)
-{
-	this->life += life;
-	Effect* effect = EffectPool::GetInstance()->Create();
-	if (effect != NULL)
-		effect->InitPoint(EffectPoint::p1000, x, y);
-}
+void CMario::SetTail(MarioTail* tail) { this->tail = tail; }

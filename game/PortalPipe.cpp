@@ -1,7 +1,9 @@
 #include "PortalPipe.h"
 
-PortalPipe::PortalPipe(string name, int type, float camY)
+PortalPipe::PortalPipe(string name, int type, float camY, float w, float h)
 {
+	this->width = w;
+	this->height = h;
 	if (name.compare("in") == 0)
 		this->name = PortalName::in;
 	else {
@@ -20,15 +22,15 @@ void PortalPipe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void PortalPipe::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void PortalPipe::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + PORT_WIDTH;
-	b = y + PORT_HEIGHT;
+	r = x + width;
+	b = y + height;
 }
 
 PortalPipeOutManager* PortalPipeOutManager::__instance = NULL;

@@ -70,6 +70,24 @@
     <Filter Include="Intro">
       <UniqueIdentifier>{fecdbc29-bac6-48b8-99dd-a57b1d9a9926}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Overworld">
+      <UniqueIdentifier>{5f314931-7e6c-4560-8c7a-66e93e3ed62b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TextManager">
+      <UniqueIdentifier>{b8ce1dbf-0099-4fb8-992d-637caf3d8c2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Grid">
+      <UniqueIdentifier>{80a17f6b-6ef4-4833-94ad-43d6518ae366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Brick\MusicalNote">
+      <UniqueIdentifier>{c997595d-d284-4217-a918-26a0b86edf40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enermies\BoomerangBrother">
+      <UniqueIdentifier>{9ef059d4-1a43-4f8f-a074-394d59667291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enermies\Goomba\ParaMiniGoomba">
+      <UniqueIdentifier>{3329824f-e965-4eec-99ff-6b6b348dbf2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -103,9 +121,6 @@
       <Filter>Mics</Filter>
     </ClCompile>
     <ClCompile Include="Ground.cpp">
-      <Filter>Mics</Filter>
-    </ClCompile>
-    <ClCompile Include="Portal.cpp">
       <Filter>Mics</Filter>
     </ClCompile>
     <ClCompile Include="MarioState.cpp">
@@ -195,12 +210,6 @@
     <ClCompile Include="HUD.cpp">
       <Filter>HUD</Filter>
     </ClCompile>
-    <ClCompile Include="FontManager.cpp">
-      <Filter>HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="Text.cpp">
-      <Filter>HUD</Filter>
-    </ClCompile>
     <ClCompile Include="Plant.cpp">
       <Filter>Enermies\Plant</Filter>
     </ClCompile>
@@ -276,6 +285,60 @@
     <ClCompile Include="MarioTail.cpp">
       <Filter>Mario\MarioState\AttackState</Filter>
     </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="PortalManager.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioOverWorldState.cpp">
+      <Filter>Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundOverWorld.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="DataManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>TextManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>TextManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicalNote.cpp">
+      <Filter>Brick\MusicalNote</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangBrother.cpp">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClCompile>
+    <ClCompile Include="Boomerang.cpp">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClCompile>
+    <ClCompile Include="BrotherBound.cpp">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangPool.cpp">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniGoomba.cpp">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniGoombaPool.cpp">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaMiniGoomba.cpp">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickCoins.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -315,9 +378,6 @@
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="Ground.h">
-      <Filter>Mics</Filter>
-    </ClInclude>
-    <ClInclude Include="Portal.h">
       <Filter>Mics</Filter>
     </ClInclude>
     <ClInclude Include="MarioKickState.h">
@@ -398,12 +458,6 @@
     <ClInclude Include="HUD.h">
       <Filter>HUD</Filter>
     </ClInclude>
-    <ClInclude Include="FontManager.h">
-      <Filter>HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="Text.h">
-      <Filter>HUD</Filter>
-    </ClInclude>
     <ClInclude Include="Plant.h">
       <Filter>Enermies\Plant</Filter>
     </ClInclude>
@@ -476,5 +530,67 @@
     <ClInclude Include="MarioTail.h">
       <Filter>Mario\MarioState\AttackState</Filter>
     </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="PortalManager.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioOverWorldState.h">
+      <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundOverWorld.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="DataManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>TextManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>TextManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicalNote.h">
+      <Filter>Brick\MusicalNote</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangBrother.h">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+    <ClInclude Include="Boomerang.h">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+    <ClInclude Include="BrotherBound.h">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangPool.h">
+      <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniGoomba.h">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniGoombaPool.h">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaMiniGoomba.h">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickCoins.h">
+      <Filter>Brick</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="game.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

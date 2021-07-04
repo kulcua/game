@@ -11,15 +11,13 @@
 #include "TileMap.h"
 #include "FontManager.h"
 #include "Intro.h"
+#include "Grid.h"
 
 class CPlayScene : public CScene
 {
 protected:
 	CMario* player;
-
-	TileMap* tileMap;
-
-	FontManager* fontManager;
+	Grid* grid;
 
 	vector<LPGAMEOBJECT> objects;
 
@@ -32,14 +30,14 @@ protected:
 	void _ParseSection_FONT(string line);
 	void _ParseSection_HUD(string line);
 	void _ParseSection_BGColor(string line);
+	void _ParseSection_PORTAL (string line);
 public:
 	CPlayScene(int id, LPCWSTR filePath);
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();
 	virtual void Unload();
-
-	CMario* GetPlayer() { return player; }
+	void CreatePool();
 };
 
 

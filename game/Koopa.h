@@ -10,7 +10,7 @@ class CMario;
 
 #define KOOPA_BBOX_WIDTH 50
 #define KOOPA_BBOX_HEIGHT 82
-#define KOOPA_BBOX_HEIGHT_DIE 50
+#define KOOPA_BBOX_HEIGHT_DIE 45
 
 #define KOOPA_STATE_WALKING 100
 #define KOOPA_STATE_BALL 200
@@ -42,6 +42,7 @@ public:
 	void KickByMario(CMario* mario);
 	virtual void SetState(int state);
 	void DowngradeLevel();
+	void KoopaBallDeflectVx();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();

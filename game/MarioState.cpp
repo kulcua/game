@@ -1,6 +1,7 @@
 #include "MarioState.h"
 #include "Mario.h"
 #include "MarioStandingState.h"
+#include "Game.h"
 
 void MarioState::Update(CMario& mario, DWORD dt)
 {
@@ -8,7 +9,7 @@ void MarioState::Update(CMario& mario, DWORD dt)
 	{
 		mario.state_ = MarioState::standing.GetInstance();
 	}
-	else {
+	else if (CGame::GetInstance()->GetCurrentScene()->isFinished == false) {
 		if (mario.vx > 0)
 		{
 			mario.vx += -MARIO_ACCELERATION * dt;

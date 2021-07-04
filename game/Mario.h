@@ -1,10 +1,10 @@
 #pragma once
 #include "GameObject.h"
 #include "Utils.h"
-
+#include "Card.h"
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
-#define MARIO_JUMP_SPEED_Y		0.5f
+#define MARIO_JUMP_SPEED_Y		0.6f
 #define MARIO_FLY_SPEED_Y		0.6f
 #define MARIO_JUMP_FLY_SPEED_Y	0.75f
 #define MARIO_DROP_FLY_SPEED_Y	0.02f
@@ -95,6 +95,7 @@
 #define MARIO_LEVEL_UP_TIME	1100
 #define MARIO_KICK_TIME	500
 #define MARIO_HIGH_JUMP_TIME 200
+#define MARIO_DEFLECT_MUSICAL_NOTE 0.6f
 #define MARIO_SPIN_TIME	200
 #define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
@@ -105,25 +106,26 @@ class CMario : public CGameObject
 	friend class MarioState;
 	friend class CKoopa;
 	friend class FireBallPool;
+	friend class MarioTail;
+
+	MarioTail* tail;
 
 	CKoopa* koopaShell;
 	int level;
 	int ani;
+
+	CardType cardType;
 
 	int power;
 	int savePower;
 	int point = 0;
 	int money = 0;
 
-	static CMario* __instance;
 public:
-	static CMario* GetInstance();
-
 	DWORD powerStartTime;
 	DWORD powerEndTime;
 
 	MarioState* state_;
-	FireBallPool* pool;
 
 	int life = 3;
 	bool switchItem;
@@ -162,9 +164,14 @@ public:
 	void LevelUp();
 	void KickShell();
 
-	void SetLife(int life);
+	void SetLife(int life) { this->life = life; }
 	int GetLife() { return life; }
+
+	void SetTail(MarioTail* tail);
 
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+
+	void SetCardType(CardType card) { cardType = card; nx = 1; }
+	CardType GetCardType() { return cardType; }
 };
