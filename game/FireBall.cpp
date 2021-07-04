@@ -165,7 +165,7 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		die = true;
 	}
 	
-	//grid_->Move(this, x, y);
+	grid_->Move(this, x, y);
 }
 
 void CFireBall::Render()

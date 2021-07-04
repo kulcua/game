@@ -195,10 +195,13 @@
     <ClCompile Include="MarioTail.cpp" />
     <ClCompile Include="MarioTailHitState.cpp" />
     <ClCompile Include="MarioWalkingState.cpp" />
+    <ClCompile Include="MiniGoomba.cpp" />
+    <ClCompile Include="MiniGoombaPool.cpp" />
     <ClCompile Include="MusicalNote.cpp" />
     <ClCompile Include="ObjectMap.cpp" />
     <ClCompile Include="ParaGoomba.cpp" />
     <ClCompile Include="ParaKoopa.cpp" />
+    <ClCompile Include="ParaMiniGoomba.cpp" />
     <ClCompile Include="PiranhaPlant.cpp" />
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="PortalManager.cpp" />
@@ -276,10 +279,13 @@
     <ClInclude Include="MarioTail.h" />
     <ClInclude Include="MarioTailHitState.h" />
     <ClInclude Include="MarioWalkingState.h" />
+    <ClInclude Include="MiniGoomba.h" />
+    <ClInclude Include="MiniGoombaPool.h" />
     <ClInclude Include="MusicalNote.h" />
     <ClInclude Include="ObjectMap.h" />
     <ClInclude Include="ParaGoomba.h" />
     <ClInclude Include="ParaKoopa.h" />
+    <ClInclude Include="ParaMiniGoomba.h" />
     <ClInclude Include="PiranhaPlant.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="PortalManager.h" />

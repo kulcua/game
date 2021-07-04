@@ -97,7 +97,7 @@ void BoomerangBrother::ChangeState()
 	int timePassed = GetTickCount64() - timeStart;
 	if (timePassed < 3000)
 		SetState(BOOMERANG_BROTHER_STATE_WALK);
-	else if (timePassed < 3500)
+	else if (timePassed < 4000)
 	{
 		SetState(BOOMERANG_BROTHER_STATE_THROW);
 		if (BoomerangPool::GetInstance()->CheckBoomerangInPool(0) == false && BoomerangPool::GetInstance()->CheckBoomerangInPool(1) == false)

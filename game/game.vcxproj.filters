@@ -85,6 +85,9 @@
     <Filter Include="Enermies\BoomerangBrother">
       <UniqueIdentifier>{9ef059d4-1a43-4f8f-a074-394d59667291}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enermies\Goomba\ParaMiniGoomba">
+      <UniqueIdentifier>{3329824f-e965-4eec-99ff-6b6b348dbf2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -324,6 +327,15 @@
     <ClCompile Include="BoomerangPool.cpp">
       <Filter>Enermies\BoomerangBrother</Filter>
     </ClCompile>
+    <ClCompile Include="MiniGoomba.cpp">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClCompile>
+    <ClCompile Include="MiniGoombaPool.cpp">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClCompile>
+    <ClCompile Include="ParaMiniGoomba.cpp">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -559,6 +571,15 @@
     </ClInclude>
     <ClInclude Include="BoomerangPool.h">
       <Filter>Enermies\BoomerangBrother</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniGoomba.h">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClInclude>
+    <ClInclude Include="MiniGoombaPool.h">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClInclude>
+    <ClInclude Include="ParaMiniGoomba.h">
+      <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

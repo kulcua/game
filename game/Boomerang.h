@@ -1,12 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#define BOOMERANG_SIZE 40
+#define BOOMERANG_BBOX_SIZE 40
 #define BOOMERANG_SPEED_VX 0.3f
 #define BOOMERANG_SPEED_VY 0.05f
-#define BOOMERANG_BBOX_SIZE 25
 #define BOOMERANG_ANI_ID 47
 #define BOOMERANG_TIME_RETURN 1000
-#define BOOMERANG_TIME_DIE 1800
+#define BOOMERANG_TIME_DIE 2000
 
 class Boomerang : public CGameObject
 {

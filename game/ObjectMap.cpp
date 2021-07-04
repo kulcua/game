@@ -25,6 +25,7 @@
 #include "BoomerangBrother.h"
 #include "Tree.h"
 #include "MusicalNote.h"
+#include "ParaMiniGoomba.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, Grid* grid)
 {
@@ -278,6 +279,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 					obj = new CGoomba();
 				else if (type.compare("para") == 0)
 					obj = new ParaGoomba();
+				else if (type.compare("paramini") == 0)
+					obj = new ParaMiniGoomba();
 			}
 			else if (enemyName.compare("koopa") == 0)
 			{

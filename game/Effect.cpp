@@ -96,7 +96,7 @@ void Effect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		y += dy;
 	}
 
-	//grid_->Move(this, x, y);
+	grid_->Move(this, x, y);
 }
 
 void Effect::Render()

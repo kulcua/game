@@ -20,6 +20,7 @@
 #include "MarioStandingState.h"
 #include "DataManager.h"
 #include "BoomerangPool.h"
+#include "MiniGoombaPool.h"
 
 #define INTRO_SCENE 1
 #define PLAY_SCENE 3
@@ -176,7 +177,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 	}
 		break;
-	case OBJECT_TYPE_POOL_FIREBALL:
+	/*case OBJECT_TYPE_POOL_FIREBALL:
 		FireBallPool::GetInstance()->SetGrid(grid);
 		FireBallPool::GetInstance()->InitPool(objects);
 		break;
@@ -187,7 +188,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_POOL_BOOMERANG:
 		BoomerangPool::GetInstance()->SetGrid(grid);
 		BoomerangPool::GetInstance()->InitPool(objects);
-		break;
+		break;*/
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;
@@ -265,6 +266,21 @@ void CPlayScene::_ParseSection_PORTAL(string line)
 	PortalManager::GetInstance()->portScene[type] = sceneId;
 }
 
+void CPlayScene::CreatePool()
+{
+	FireBallPool::GetInstance()->SetGrid(grid);
+	FireBallPool::GetInstance()->InitPool(objects);
+	
+	EffectPool::GetInstance()->SetGrid(grid);
+	EffectPool::GetInstance()->InitPool(objects);
+
+	BoomerangPool::GetInstance()->SetGrid(grid);
+	BoomerangPool::GetInstance()->InitPool(objects);
+
+	MiniGoombaPool::GetInstance()->SetGrid(grid);
+	MiniGoombaPool::GetInstance()->InitPool(objects);
+}
+
 void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
@@ -331,6 +347,7 @@ void CPlayScene::Load()
 	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
+	CreatePool();
 }
 
 void CPlayScene::Update(DWORD dt)
@@ -353,6 +370,7 @@ void CPlayScene::Update(DWORD dt)
 		FireBallPool::GetInstance()->GetBackToPool();
 		EffectPool::GetInstance()->GetBackToPool();
 		BoomerangPool::GetInstance()->GetBackToPool();
+		MiniGoombaPool::GetInstance()->GetBackToPool();
 	}
 	else if (id == INTRO_SCENE)
 	{

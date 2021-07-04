@@ -56,19 +56,19 @@ void Boomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = -nx * BOOMERANG_SPEED_VX;
 		vy = BOOMERANG_SPEED_VY;
 	}
+
+	grid_->Move(this, x, y);
 }
 
 void Boomerang::Render()
 {
-	int ani = 0;
-	
-	animation_set->at(ani)->Render(x, y, nx, ny);
+	animation_set->at(0)->Render(x, y, -nx, ny);
 }
 
 void Boomerang::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + BOOMERANG_SIZE;
-	b = y + BOOMERANG_SIZE;
+	r = x + BOOMERANG_BBOX_SIZE;
+	b = y + BOOMERANG_BBOX_SIZE;
 }

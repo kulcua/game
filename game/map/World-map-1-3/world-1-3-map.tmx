@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="158" height="50" tilewidth="48" tileheight="48" infinite="0" nextlayerid="36" nextobjectid="479">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="158" height="50" tilewidth="48" tileheight="48" infinite="0" nextlayerid="36" nextobjectid="480">
  <editorsettings>
   <export target="world-1-1-map.xml" format="tmx"/>
  </editorsettings>
@@ -536,6 +536,11 @@
   <object id="476" name="boomerangbrother" x="1045.33" y="894.667">
    <properties>
     <property name="ani_id" value="46"/>
+   </properties>
+  </object>
+  <object id="479" name="goomba" type="paramini" x="6176" y="776">
+   <properties>
+    <property name="ani_id" value="32"/>
    </properties>
   </object>
  </objectgroup>
