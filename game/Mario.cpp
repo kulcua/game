@@ -32,6 +32,7 @@
 #include "Portal.h"
 #include "SwitchItem.h"
 #include "MusicalNote.h"
+#include "BrickCoins.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -99,12 +100,18 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				if (brick->GetState() != BRICK_STATE_DISABLE)
+				
+				if (e->ny > 0)
 				{
-					if (e->ny > 0)
+					MarioJumpingState::GetInstance()->isHighJump = false;
+					if (brick->GetState() != BRICK_STATE_DISABLE)
 					{
-						brick->SetState(BRICK_STATE_DISABLE);
-						MarioJumpingState::GetInstance()->isHighJump = false;
+						if (brick->GetLevel() == BRICK_LEVEL_1_ITEM)
+							brick->SetState(BRICK_STATE_DISABLE);
+						else {
+							BrickCoins* brick = dynamic_cast<BrickCoins*>(e->obj);
+							brick->SetState(BRICK_STATE_THROW_ITEM);
+						}
 					}
 				}
 			}
@@ -272,6 +279,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	HandleCollision(coObjects);
 
 	tail->Update(dt, coObjects);
+
+	//DebugOut(L"y %f\n", y);
 
 	// put it finally because of switch scene delete all objects
 	state_->Update(*this, dt);

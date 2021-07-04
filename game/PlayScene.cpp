@@ -39,9 +39,6 @@ using namespace std;
 #define SCENE_SECTION_BGCOLOR	10
 #define SCENE_SECTION_PORTAL	11
 #define OBJECT_TYPE_MARIO	0
-#define OBJECT_TYPE_POOL_FIREBALL	68
-#define OBJECT_TYPE_POOL_EFFECT	69
-#define OBJECT_TYPE_POOL_BOOMERANG	47
 #define MAX_SCENE_LINE 1024
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
@@ -177,18 +174,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 	}
 		break;
-	/*case OBJECT_TYPE_POOL_FIREBALL:
-		FireBallPool::GetInstance()->SetGrid(grid);
-		FireBallPool::GetInstance()->InitPool(objects);
-		break;
-	case OBJECT_TYPE_POOL_EFFECT:
-		EffectPool::GetInstance()->SetGrid(grid);
-		EffectPool::GetInstance()->InitPool(objects);
-		break;
-	case OBJECT_TYPE_POOL_BOOMERANG:
-		BoomerangPool::GetInstance()->SetGrid(grid);
-		BoomerangPool::GetInstance()->InitPool(objects);
-		break;*/
 	default:
 		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
 		return;

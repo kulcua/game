@@ -25,6 +25,7 @@
 #include "BoomerangBrother.h"
 #include "Tree.h"
 #include "MusicalNote.h"
+#include "BrickCoins.h"
 #include "ParaMiniGoomba.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, Grid* grid)
@@ -112,6 +113,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
+			bool coins = false;
 			string typeName;
 			int type;
 			element->QueryFloatAttribute("x", &x);
@@ -139,16 +141,32 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			}
 			else if (typeName.compare("coin10") == 0)
 			{
-				item = new CoinBrick();
-				y -= ITEM_BBOX_HEIGHT;
+				vector<CItem*> listItems;
+				BrickCoins* brCoins = new BrickCoins(type, x, y);
+				brCoins->SetGrid(grid);
+				objects.push_back(brCoins);
+				for (int i = 0; i < 10; i++)
+				{
+					CItem* item = new CoinBrick();
+					item->SetPosition(x, y);
+					item->SetGrid(grid);
+					objects.push_back(item);
+					listItems.push_back(item);
+				}
+				DebugOut(L"listItems.size %d\n", listItems.size());
+				brCoins->SetListItems(listItems);
+				coins = true;
+				//break;
 			}
-
-			item->SetPosition(x, y);
-			br->SetItem(item);
-			br->SetGrid(grid);
-			item->SetGrid(grid);
-			objects.push_back(br);
-			objects.push_back(item);
+			if (coins == false)
+			{
+				item->SetPosition(x, y);
+				br->SetItem(item);
+				br->SetGrid(grid);
+				item->SetGrid(grid);
+				objects.push_back(br);
+				objects.push_back(item);
+			}
 			element = element->NextSiblingElement();
 		}
 	}
@@ -326,6 +344,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			float camY = 0;
 			element->QueryFloatAttribute("x", &x);
 			element->QueryFloatAttribute("y", &y);
+			element->QueryFloatAttribute("width", &width);
+			element->QueryFloatAttribute("height", &height);
 			name = element->Attribute("name");
 			element->QueryIntAttribute("type", &type);
 			if (name.compare("out") == 0)
@@ -333,7 +353,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				TiXmlElement* propCam = element->FirstChildElement()->FirstChildElement();
 				propCam->QueryFloatAttribute("value", &camY);
 			}
-			obj = new PortalPipe(name, type, camY);
+			obj = new PortalPipe(name, type, camY, width, height);
 			obj->SetPosition(x, y);
 			obj->SetGrid(grid);
 			objects.push_back(obj);

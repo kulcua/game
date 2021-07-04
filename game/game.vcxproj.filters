@@ -336,6 +336,9 @@
     <ClCompile Include="ParaMiniGoomba.cpp">
       <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
     </ClCompile>
+    <ClCompile Include="BrickCoins.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -580,6 +583,9 @@
     </ClInclude>
     <ClInclude Include="ParaMiniGoomba.h">
       <Filter>Enermies\Goomba\ParaMiniGoomba</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickCoins.h">
+      <Filter>Brick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

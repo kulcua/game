@@ -14,7 +14,7 @@ class PortalPipe : public CGameObject
 	int type;
 	float camY;
 public:
-	PortalPipe(string name, int type, float camY);
+	PortalPipe(string name, int type, float camY, float w, float h);
 
 	PortalName GetName() { return name; }
 	int GetType() { return type; }
