@@ -1,5 +1,6 @@
 #include "Layer.h"
 #include "Sprites.h"
+#include "Game.h"
 
 Layer::Layer(TiXmlElement* layerElement)
 {
@@ -35,11 +36,18 @@ void Layer::ImportData()
 
 void Layer::Render()
 {	
+	float cx, cy;
+	CGame::GetInstance()->GetCam()->GetPosition(cx, cy);
+	int tileStartX = cx / TILE_SIZE;
+	int tileStartY = cy / TILE_SIZE;
+	int tileEndX = (cx + CAM_WIDTH) / TILE_SIZE + 1;
+	int tileEndY = (cy + CAM_HEIGHT) / TILE_SIZE + 1;
+
 	if (isVisible)
 	{
-		for (int i = 0; i < height; i++)
+		for (int i = tileStartY; i < tileEndY; i++)
 		{
-			for (int j = 0; j < width; j++)
+			for (int j = tileStartX; j < tileEndX; j++)
 			{
 				if (tile[i][j] != 0)
 				{
