@@ -8,16 +8,12 @@
 #define GOOMBA_BBOX_WIDTH 50
 #define GOOMBA_BBOX_HEIGHT 50
 #define GOOMBA_BBOX_HEIGHT_DIE 28
-
 #define GOOMBA_STATE_WALKING 100
 #define GOOMBA_STATE_DIE 200
-
 #define GOOMBA_ANI_WALKING 0
 #define GOOMBA_ANI_DIE 1
-
 #define GOOMBA_DIE_TIME 200
 #define GOOMBA_GRAVITY		0.0014f
-
 #define GOOMBA_LEVEL_WALK 1
 
 class CGoomba: public CGameObject

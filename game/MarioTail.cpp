@@ -9,15 +9,17 @@
 #include "Koopa.h"
 #include "Plant.h"
 #include "Game.h"
+#include "BoomerangBrother.h"
+#include "Mario.h"
 
 #define MARIO_TAIL_WDITH 100
 #define MARIO_TAIL_HEIGHT 40
 #define MARIO_TAIL_X 10
 #define MARIO_TAIL_Y 40
 
-void MarioTail::Render()
+MarioTail::MarioTail()
 {
-	//RenderBoundingBox();
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
 void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
@@ -67,6 +69,12 @@ void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					coObjects->at(i)->SetState(PLANT_STATE_DIE);
 				}
+				else if (dynamic_cast<BoomerangBrother*>(coObjects->at(i)))
+				{
+					BoomerangBrother* bmrBrother = dynamic_cast<BoomerangBrother*>(coObjects->at(i));
+					if (bmrBrother->GetState() != BOOMERANG_BROTHER_STATE_DIE)
+						bmrBrother->SetState(BOOMERANG_BROTHER_STATE_DIE);
+				}
 			}
 		}
 		MarioTailHitState::GetInstance()->tailHitting = false;
@@ -75,7 +83,6 @@ void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 
 void MarioTail::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	CMario* mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	SetPosition(mario->x - MARIO_TAIL_X, mario->y + MARIO_TAIL_Y);
 	HandleCollision(coObjects);
 }
@@ -86,4 +93,9 @@ void MarioTail::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = y;
 	r = x + MARIO_TAIL_WDITH;
 	b = y + MARIO_TAIL_HEIGHT;
+}
+
+void MarioTail::Render()
+{
+	//RenderBoundingBox();
 }

@@ -100,6 +100,7 @@
 #define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
 #define MARIO_ANI_SET_ID	1
+#define MARIO_UNTOUCHABLE_TIME	5000
 
 class CMario : public CGameObject
 {
@@ -120,7 +121,8 @@ class CMario : public CGameObject
 	int savePower;
 	int point = 0;
 	int money = 0;
-
+	int alpha = 255;
+	int untouchableStartTime;
 public:
 	DWORD powerStartTime;
 	DWORD powerEndTime;
@@ -161,7 +163,11 @@ public:
 	void PowerControl();
 	
 	void Reset();
+
 	void LevelUp();
+	void LevelDown();
+	void StartUntouchable() { untouchableStartTime = GetTickCount64(); }
+	void ManageAlphaUntouchable();
 	void KickShell();
 
 	void SetLife(int life) { this->life = life; }

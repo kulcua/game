@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "BrotherBound.h"
 #include "BoomerangPool.h"
+#include "EffectPool.h"
 #include "Ground.h"
 
 BoomerangBrother::BoomerangBrother()
@@ -82,22 +83,29 @@ void BoomerangBrother::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	HandleCollision(coObjects);
 
 	ChangeState();
+
+	if (GetTickCount64() - dieTimeStart > BOOMERANG_BROTHER_DIE_TIME && dieTimeStart > 0)
+	{
+		dieTimeStart = 0;
+		die = true;
+	}
 }
 
 void BoomerangBrother::Render()
 {
-	int ani = 0;
+	int ani;
 	if (state == BOOMERANG_BROTHER_STATE_THROW)
 		ani = BOOMERANG_BROTHER_ANI_THROW;
+	else ani = 0;
 	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
 void BoomerangBrother::ChangeState()
 {
 	int timePassed = GetTickCount64() - timeStart;
-	if (timePassed < 3000)
+	if (timePassed < BOOMERANG_BROTHER_TIME_WALK_START)
 		SetState(BOOMERANG_BROTHER_STATE_WALK);
-	else if (timePassed < 4000)
+	else if (timePassed < BOOMERANG_BROTHER_TIME_THROW_1_START)
 	{
 		SetState(BOOMERANG_BROTHER_STATE_THROW);
 		if (BoomerangPool::GetInstance()->CheckBoomerangInPool(0) == false && BoomerangPool::GetInstance()->CheckBoomerangInPool(1) == false)
@@ -109,7 +117,7 @@ void BoomerangBrother::ChangeState()
 			}
 		}
 	}
-	else if (timePassed < 4500)
+	else if (timePassed < BOOMERANG_BROTHER_TIME_THROW_2_START)
 	{
 		Boomerang* boom = BoomerangPool::GetInstance()->Create();
 		if (boom != NULL)
@@ -117,7 +125,7 @@ void BoomerangBrother::ChangeState()
 			boom->Init(x, y, nx);
 		}
 	}
-	else if (timePassed < 7000)
+	else if (timePassed < BOOMERANG_BROTHER_TIME_WALK_START*2)
 		SetState(BOOMERANG_BROTHER_STATE_WALK);
 	else {
 		timeStart = GetTickCount64();
@@ -140,5 +148,16 @@ void BoomerangBrother::SetState(int state)
 		vy = -BOOMERANG_BROTHER_JUMP_SPEED;
 	}
 	break;
+	case BOOMERANG_BROTHER_STATE_DIE:
+	{
+		ny = 1;
+		Effect* effect = EffectPool::GetInstance()->Create();
+		if (effect != NULL)
+			effect->InitPoint(EffectPoint::p100, x, y);
+		StartDieTime();
+		vx = BOOMERANG_BROTHER_WALK_SPEED;
+		vy = -BOOMERANG_BROTHER_DIE_DEFLECT_SPEED;
+		break;
+	}
 	}
 }

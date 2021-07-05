@@ -339,6 +339,9 @@
     <ClCompile Include="BrickCoins.cpp">
       <Filter>Brick</Filter>
     </ClCompile>
+    <ClCompile Include="MarioLevelDownState.cpp">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -586,6 +589,9 @@
     </ClInclude>
     <ClInclude Include="BrickCoins.h">
       <Filter>Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioLevelDownState.h">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
