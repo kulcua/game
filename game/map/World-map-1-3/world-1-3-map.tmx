@@ -547,7 +547,7 @@
     <property name="ani_id" value="46"/>
    </properties>
   </object>
-  <object id="479" name="goomba" type="paramini" x="6393.33" y="401.333">
+  <object id="479" name="goomba" type="paramini" x="6350.67" y="612">
    <properties>
     <property name="ani_id" value="32"/>
    </properties>
