@@ -1,12 +1,13 @@
 #include "Plant.h"
 #include "Ground.h"
-#include "PlayScene.h"
+#include "Game.h"
 #include "EffectPool.h"
+#include "Mario.h"
 
 CPlant::CPlant(float y) {
 	startY = y;
 	vy = -PLANT_SPEED;
-	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();;
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
 void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

@@ -1,6 +1,5 @@
 #pragma once
-class CMario;
-#include "GameObject.h"
+#include "Enermy.h"
 #include "Utils.h"
 
 #define KOOPA_WALKING_SPEED 0.04f
@@ -28,18 +27,16 @@ class CMario;
 #define KOOPA_LEVEL_BALL 0
 #define KOOPA_LEVEL_WALK 1
 
-class CKoopa: public CGameObject
+class CKoopa: public Enermy
 {
 protected:
 	bool isHandled;
-	bool isOnGround;
-	CMario* mario_;
 	int level;
 public:
 	CKoopa();
-	void HandleByMario(CMario* mario);
+	void HandleByMario();
 	void SetPositionHandled();
-	void KickByMario(CMario* mario);
+	void KickByMario();
 	virtual void SetState(int state);
 	void DowngradeLevel();
 	void KoopaBallDeflectVx();

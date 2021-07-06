@@ -165,6 +165,7 @@
     <ClCompile Include="DataManager.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectPool.cpp" />
+    <ClCompile Include="Enermy.cpp" />
     <ClCompile Include="FireBall.cpp" />
     <ClCompile Include="FireBallPool.cpp" />
     <ClCompile Include="FontManager.cpp" />
@@ -251,6 +252,7 @@
     <ClInclude Include="DataManager.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectPool.h" />
+    <ClInclude Include="Enermy.h" />
     <ClInclude Include="FireBall.h" />
     <ClInclude Include="FireBallPool.h" />
     <ClInclude Include="FontManager.h" />

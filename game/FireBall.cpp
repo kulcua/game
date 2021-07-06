@@ -15,7 +15,8 @@ CFireBall::CFireBall()
 }
 
 void CFireBall::InitForPlant(VenusFireTrap* venus) {
-  	this->state_.live.mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+  	this->state_.live.mario =
+		CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	this->state_.live.venus = venus;
 	die = false;
 	inUse = true;
@@ -127,6 +128,7 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float x_mario, y_mario, x_plant, y_plant;
 
 	state_.live.mario->GetPosition(x_mario, y_mario);
+
 	state_.live.venus->GetPosition(x_plant, y_plant);
 
 	if (state_.live.venus->createFireball)

@@ -12,10 +12,14 @@ BrickBlock::BrickBlock()
 void BrickBlock::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-	
-	if (mario->switchItem)
+
+	if (GetTickCount64() - coinTimeStart > BRICK_BLOCK_TIME_COIN_DISAPPEAR && coinTimeStart > 0)
 	{
-		isCoin = true;
+		isCoin = false;
+	}
+	else if (mario->switchItem && coinTimeStart == 0)
+	{
+		StartToCoin();
 	}
 }
 

@@ -564,7 +564,7 @@
   <object id="244" x="1904" y="673.667" width="14.6667" height="93"/>
   <object id="245" x="1729" y="673.167" width="14.6667" height="93"/>
  </objectgroup>
- <objectgroup id="21" name="Portal">
+ <objectgroup id="21" name="Portal1" visible="0">
   <object id="274" name="out" type="2" x="6243.84" y="143.333" width="86" height="93.3333">
    <properties>
     <property name="camY" value="450"/>

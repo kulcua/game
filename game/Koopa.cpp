@@ -4,6 +4,7 @@
 #include "BigBox.h"
 #include "Goomba.h"
 #include "Mario.h"
+#include "Game.h"
 #include "KoopaBound.h"
 #include "BrickBlock.h"
 #include "EffectPool.h"
@@ -15,15 +16,15 @@ CKoopa::CKoopa()
 {
 	SetState(KOOPA_STATE_WALKING);
 	level = KOOPA_LEVEL_WALK;
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
-void CKoopa::HandleByMario(CMario* mario)
+void CKoopa::HandleByMario()
 {
 	isHandled = true;
-	mario_ = mario;
 }
 
-void CKoopa::KickByMario(CMario* mario)
+void CKoopa::KickByMario()
 {
 	isHandled = false;	 
 	nx = mario->nx;
@@ -32,26 +33,26 @@ void CKoopa::KickByMario(CMario* mario)
 
 void CKoopa::SetPositionHandled()
 {
-	if (mario_->GetLevel() == MARIO_LEVEL_SMALL)
+	if (mario->GetLevel() == MARIO_LEVEL_SMALL)
 	{
-		if (mario_->nx < 0)
-			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
+		if (mario->nx < 0)
+			SetPosition(mario->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
 		else
-			SetPosition(mario_->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario_->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
+			SetPosition(mario->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
 	}
-	else if (mario_->GetLevel() == MARIO_LEVEL_BIG || mario_->GetLevel() == MARIO_LEVEL_FIRE)
+	else if (mario->GetLevel() == MARIO_LEVEL_BIG || mario->GetLevel() == MARIO_LEVEL_FIRE)
 	{
-		if (mario_->nx < 0)
-			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+		if (mario->nx < 0)
+			SetPosition(mario->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
 		else
-			SetPosition(mario_->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+			SetPosition(mario->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
 	}
-	else if (mario_->GetLevel() == MARIO_LEVEL_RACCOON)
+	else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
 	{
-		if (mario_->nx < 0)
-			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+		if (mario->nx < 0)
+			SetPosition(mario->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
 		else
-			SetPosition(mario_->x + MARIO_RACCOON_HANDLE_SHELL_WIDTH_RIGHT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+			SetPosition(mario->x + MARIO_RACCOON_HANDLE_SHELL_WIDTH_RIGHT, mario->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
 	}
 }
 

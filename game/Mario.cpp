@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "Game.h"
 #include "Goomba.h"
+#include "Enermy.h"
 #include "Portal.h"
 #include "BigBox.h"
 #include "MarioLevelDownState.h"
@@ -107,7 +108,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						if (isPower && e->nx != 0) //handleShell
 						{
 							isHandleShell = true;
-							koopa->HandleByMario(this);
+							koopa->HandleByMario();
 							koopaShell = koopa;
 						}
 						else { // kick normally
@@ -141,8 +142,13 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						else LevelDown();
 					}
 				}
-
 			}
+			else if (dynamic_cast<Enermy*>(e->obj))
+			{
+				if (e->nx) x += dx;
+				if (e->ny) y += dy;
+			}
+
 			if (dynamic_cast<CBigBox*>(e->obj))
 			{
 				if (e->nx)
@@ -350,7 +356,7 @@ void CMario::PowerReset()
 void CMario::KickShell()
 {
 	isHandleShell = false;
-	koopaShell->KickByMario(this);
+	koopaShell->KickByMario();
 	state_ = MarioState::kick.GetInstance();
 	MarioState::kick.GetInstance()->StartKick();
 }

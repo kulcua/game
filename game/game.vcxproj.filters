@@ -342,6 +342,9 @@
     <ClCompile Include="MarioLevelDownState.cpp">
       <Filter>Mario\MarioState\OnGroundState</Filter>
     </ClCompile>
+    <ClCompile Include="Enermy.cpp">
+      <Filter>Enermies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -592,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="MarioLevelDownState.h">
       <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enermy.h">
+      <Filter>Enermies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

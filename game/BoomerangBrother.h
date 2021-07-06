@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "Enermy.h"
 #include "Utils.h"
 #include "Boomerang.h"
 
@@ -20,16 +20,12 @@
 #define BOOMERANG_BROTHER_TIME_THROW_2_START 4500
 #define BOOMERANG_BROTHER_DIE_TIME 500
 
-class BoomerangBrother : public CGameObject
+class BoomerangBrother : public Enermy
 {
-	friend class CMario;
-	CMario* mario;
 	int moveDirect;
 	int timeStart;
-	DWORD dieTimeStart;
 public:
 	BoomerangBrother();
-	void StartDieTime() { dieTimeStart = GetTickCount64(); }
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
