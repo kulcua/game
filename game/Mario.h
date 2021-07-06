@@ -168,7 +168,7 @@ public:
 	void LevelDown();
 	void StartUntouchable() { untouchableStartTime = GetTickCount64(); }
 	void ManageAlphaUntouchable();
-	void KickShell();
+	void KickShellAfterHandle();
 
 	void SetLife(int life) { this->life = life; }
 	int GetLife() { return life; }

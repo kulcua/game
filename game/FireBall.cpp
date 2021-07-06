@@ -21,7 +21,7 @@ void CFireBall::InitForPlant(VenusFireTrap* venus) {
 	die = false;
 	inUse = true;
 	SetPosition(venus->x, venus->y);
-	isForPlant = true;
+	this->state_.live.type = FIREBALL_FOR_VENUS;
 	grid_->Move(this, x, y);
 }
 
@@ -31,7 +31,7 @@ void CFireBall::InitForMario()
 	die = false;
 	inUse = true;
 	SetPosition(state_.live.mario->x, state_.live.mario->y);
-	isForPlant = false;
+	this->state_.live.type = FIREBALL_FOR_MARIO;
 
 	if (state_.live.mario->nx > 0)
 		vx = FIREBALL_VELOCITY_X;
@@ -152,14 +152,9 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt, coObjects);
-	if (isForPlant)
-	{
+	if (this->state_.live.type == FIREBALL_FOR_VENUS)
 		UpdateForPlant(dt, coObjects);
-	}
-	else
-	{
-		UpdateForMario(dt, coObjects);
-	}
+	else UpdateForMario(dt, coObjects);
 
 	CCamera* cam = CGame::GetInstance()->GetCam();
 	if (AABB(cam) == false)

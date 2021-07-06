@@ -1,12 +1,13 @@
 #include "Goomba.h"
 #include "Ground.h"
 #include "EffectPool.h"
+#include "BigBox.h"
 
 CGoomba::CGoomba()
 {
 	SetState(GOOMBA_STATE_WALKING);
 	die = false;
-	level = GOOMBA_LEVEL_WALK;
+	level = GOOMBA_LEVEL_NO_WING;
 }
 
 void CGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -56,6 +57,14 @@ void CGoomba::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->ny < 0) isOnGround = true;
 			}
+			else if (dynamic_cast<CBigBox*>(e->obj))
+			{
+				if (e->nx)
+				{
+					vx = this->nx * GOOMBA_WALKING_SPEED;
+					x += dx;
+				}
+			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -67,7 +76,6 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (GetTickCount64() - dieTimeStart > GOOMBA_DIE_TIME && dieTimeStart > 0)
 	{
-		dieTimeStart = 0;
 		die = true;
 	}
 
@@ -101,11 +109,9 @@ void CGoomba::SetState(int state)
 		Effect* effect = EffectPool::GetInstance()->Create();
 		if (effect != NULL)
 			effect->InitPoint(EffectPoint::p100, x, y);
-		y += GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE + 1;
-		level = 0;
+
 		StartDieTime();
 		vx = 0;
-		vy = 0;
 		break;
 	}
 	case GOOMBA_STATE_WALKING:

@@ -150,13 +150,11 @@ void BoomerangBrother::SetState(int state)
 	break;
 	case BOOMERANG_BROTHER_STATE_DIE:
 	{
-		ny = 1;
 		Effect* effect = EffectPool::GetInstance()->Create();
 		if (effect != NULL)
 			effect->InitPoint(EffectPoint::p100, x, y);
 		StartDieTime();
 		vx = BOOMERANG_BROTHER_WALK_SPEED;
-		vy = -BOOMERANG_BROTHER_DIE_DEFLECT_SPEED;
 		break;
 	}
 	}

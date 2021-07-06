@@ -76,80 +76,76 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			//DebugOut(L"coll Mario x %f\n", e->obj->x);
-			if (untouchableStartTime == 0)
+			
+			if (dynamic_cast<CGoomba*>(e->obj))
 			{
-				if (dynamic_cast<CGoomba*>(e->obj))
+				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+				if (goomba->GetState() != GOOMBA_STATE_DIE)
 				{
-					CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-					if (goomba->GetState() != GOOMBA_STATE_DIE)
+					if (e->ny < 0)
 					{
-						if (e->ny < 0)
-						{
-							goomba->DowngradeLevel();
-							vy = -MARIO_JUMP_DEFLECT_SPEED;
-						}
-						else LevelDown();
+						goomba->DowngradeLevel();
+						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
+					else LevelDown();
 				}
-				else if (dynamic_cast<CKoopa*>(e->obj))
-				{
-					CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-					if (koopa->GetState() != KOOPA_STATE_BALL) {
-						if (e->ny < 0)
-						{
-							koopa->DowngradeLevel();
-							vy = -MARIO_JUMP_DEFLECT_SPEED;
-						}
-						else LevelDown();
-					}
-					else
+			}
+			else if (dynamic_cast<CKoopa*>(e->obj))
+			{
+				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+				if (koopa->GetLevel() > KOOPA_LEVEL_BALL) {
+					if (e->ny < 0)
 					{
-						if (isPower && e->nx != 0) //handleShell
+						koopa->DowngradeLevel();
+						vy = -MARIO_JUMP_DEFLECT_SPEED;
+					}
+					else LevelDown();
+				}
+				else
+				{
+					if (isPower && e->nx != 0) //handleShell
+					{
+						isHandleShell = true;
+						koopa->HandleByMario();
+						koopaShell = koopa;
+					}
+					else { // kick normally
+						if (koopa->isKicked == false)
 						{
-							isHandleShell = true;
-							koopa->HandleByMario();
-							koopaShell = koopa;
-						}
-						else { // kick normally
-							koopa->nx = this->nx;
-							koopa->vx = this->nx * KOOPA_BALL_SPEED;
+							koopa->KickByMario();
 							MarioState::kick.GetInstance()->StartKick();
 							state_ = MarioState::kick.GetInstance();
 						}
-					}
-				}
-				else if (dynamic_cast<CFireBall*>(e->obj)
-					|| dynamic_cast<Boomerang*>(e->obj))
-				{
-					LevelDown();
-					e->obj->die = true;
-				}
-				else if (dynamic_cast<CPlant*>(e->obj))
-				{
-					LevelDown();
-				}
-				else if (dynamic_cast<BoomerangBrother*>(e->obj))
-				{
-					BoomerangBrother* bmrBrother = dynamic_cast<BoomerangBrother*>(e->obj);
-					if (bmrBrother->GetState() != BOOMERANG_BROTHER_STATE_DIE)
-					{
-						if (e->ny < 0)
-						{
-							bmrBrother->SetState(BOOMERANG_BROTHER_STATE_DIE);
-							vy = -MARIO_JUMP_DEFLECT_SPEED;
-						}
+						// mario is pushed
 						else LevelDown();
 					}
 				}
 			}
-			else if (dynamic_cast<Enermy*>(e->obj))
+			else if (dynamic_cast<CFireBall*>(e->obj)
+				|| dynamic_cast<Boomerang*>(e->obj))
 			{
-				if (e->nx) x += dx;
-				if (e->ny) y += dy;
+				LevelDown();
+				e->obj->die = true;
 			}
-
-			if (dynamic_cast<CBigBox*>(e->obj))
+			else if (dynamic_cast<CPlant*>(e->obj))
+			{
+				LevelDown();
+			}
+			else if (dynamic_cast<BoomerangBrother*>(e->obj))
+			{
+				BoomerangBrother* bmrBrother = dynamic_cast<BoomerangBrother*>(e->obj);
+				if (bmrBrother->GetState() != BOOMERANG_BROTHER_STATE_DIE)
+				{
+					if (e->ny < 0)
+					{
+						bmrBrother->BeingKicked();
+						bmrBrother->SetState(BOOMERANG_BROTHER_STATE_DIE);
+						vy = -MARIO_JUMP_DEFLECT_SPEED;
+					}
+					else LevelDown();
+				}
+			}
+			else if (dynamic_cast<CBigBox*>(e->obj))
 			{
 				if (e->nx)
 					x += dx;
@@ -336,9 +332,9 @@ void CMario::ManageAlphaUntouchable()
 		}
 		else
 		{
-			//if (calculateTime %2 == 0) alpha = 255
-			//per 150ms
-			int calculateTime = timePassed / 150 % 2;
+			//if (calculateTime % 2 == 0) alpha = 255
+			//per 50ms
+			int calculateTime = timePassed / 50 % 2;
 			if (calculateTime == 0)
 				alpha = 100;
 			else alpha = 255;
@@ -353,10 +349,11 @@ void CMario::PowerReset()
 	PowerDown();
 }
 
-void CMario::KickShell()
+void CMario::KickShellAfterHandle()
 {
 	isHandleShell = false;
 	koopaShell->KickByMario();
+	koopaShell = NULL;
 	state_ = MarioState::kick.GetInstance();
 	MarioState::kick.GetInstance()->StartKick();
 }
@@ -419,14 +416,17 @@ void CMario::LevelUp()
 
 void CMario::LevelDown()
 {
-	if (level > MARIO_LEVEL_SMALL)
+	if (untouchableStartTime == 0)
 	{
-		StartUntouchable();
-		y -= MARIO_SMALL_BBOX_HEIGHT;
-		state_ = MarioState::levelDown.GetInstance();
-		MarioState::levelDown.GetInstance()->StartLevelDown();
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			StartUntouchable();
+			y -= MARIO_SMALL_BBOX_HEIGHT;
+			state_ = MarioState::levelDown.GetInstance();
+			MarioState::levelDown.GetInstance()->StartLevelDown();
+		}
+		else SetState(MARIO_STATE_DIE);
 	}
-	else SetState(MARIO_STATE_DIE);
 }
 
 void CMario::HandleInput(Input input)

@@ -3,8 +3,6 @@
 #include "Utils.h"
 
 #define GOOMBA_WALKING_SPEED 0.05f;
-#define GOOMBA_DEFLECT_SPEED 0.5f;
-
 #define GOOMBA_BBOX_WIDTH 50
 #define GOOMBA_BBOX_HEIGHT 50
 #define GOOMBA_BBOX_HEIGHT_DIE 28
@@ -14,7 +12,8 @@
 #define GOOMBA_ANI_DIE 1
 #define GOOMBA_DIE_TIME 200
 #define GOOMBA_GRAVITY		0.0014f
-#define GOOMBA_LEVEL_WALK 1
+#define GOOMBA_LEVEL_NO_WING 1
+#define	GOOMBA_LEVEL_WING 2
 
 class CGoomba: public Enermy
 {

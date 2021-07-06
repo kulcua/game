@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Game.h"
 #include "HUD.h"
+#include "Enermy.h"
 
 Grid::Grid() {
     // Clear the grid.
@@ -121,9 +122,6 @@ void Grid::Move(CGameObject* obj, int x, int y)
     // See which cell it's moving to.
     int cellX = (int)(x / CELL_SIZE_X);
     int cellY = (int)(y / CELL_SIZE_Y);
-
-    obj->x = x;
-    obj->y = y;
 
     // If it didn't change cells, we're done.
     if (oldCellX == cellX && oldCellY == cellY) return;

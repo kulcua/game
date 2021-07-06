@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="158" height="50" tilewidth="48" tileheight="48" infinite="0" nextlayerid="36" nextobjectid="482">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="158" height="50" tilewidth="48" tileheight="48" infinite="0" nextlayerid="36" nextobjectid="496">
  <editorsettings>
   <export target="world-1-1-map.xml" format="tmx"/>
  </editorsettings>
@@ -384,7 +384,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="13" name="Solid">
+ <objectgroup id="13" name="Solid" visible="0">
   <object id="1" x="2" y="1010" width="3784" height="44"/>
   <object id="5" x="3839.33" y="1008" width="528" height="52"/>
   <object id="13" x="4418.67" y="1011.33" width="3162" height="44.6667"/>
@@ -431,12 +431,79 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="32" name="MusicalNote">
+ <objectgroup id="32" name="MusicalNote" visible="0">
   <object id="468" type="1" x="1488" y="768" width="48" height="48"/>
   <object id="469" type="1" x="1391" y="863" width="48" height="48"/>
   <object id="470" type="2" x="1584.25" y="864.25" width="48" height="48"/>
  </objectgroup>
- <objectgroup id="15" name="Coin">
+ <objectgroup id="15" name="Enemy">
+  <object id="471" name="koopa" type="red" x="1806.83" y="661.5" width="13" height="13">
+   <properties>
+    <property name="ani_id" value="70"/>
+   </properties>
+  </object>
+  <object id="476" name="boomerangbrother" x="1045.33" y="894.667">
+   <properties>
+    <property name="ani_id" value="46"/>
+   </properties>
+  </object>
+  <object id="479" name="goomba" type="paramini" x="6062.67" y="782">
+   <properties>
+    <property name="ani_id" value="32"/>
+   </properties>
+  </object>
+  <object id="482" name="koopa" type="red" x="581.5" y="915.5" width="13" height="13">
+   <properties>
+    <property name="ani_id" value="71"/>
+   </properties>
+  </object>
+  <object id="483" name="koopa" type="red" x="2369.5" y="897.5" width="13" height="13">
+   <properties>
+    <property name="ani_id" value="71"/>
+   </properties>
+  </object>
+  <object id="484" name="goomba" type="tan" x="2748" y="924">
+   <properties>
+    <property name="ani_id" value="3"/>
+   </properties>
+  </object>
+  <object id="485" name="goomba" type="para" x="3115" y="914" width="34" height="24">
+   <properties>
+    <property name="ani_id" value="31"/>
+   </properties>
+  </object>
+  <object id="486" name="goomba" type="para" x="3511" y="910" width="34" height="24">
+   <properties>
+    <property name="ani_id" value="31"/>
+   </properties>
+  </object>
+  <object id="487" name="boomerangbrother" x="4172" y="928">
+   <properties>
+    <property name="ani_id" value="46"/>
+   </properties>
+  </object>
+  <object id="490" name="goomba" type="tan" x="4812" y="938">
+   <properties>
+    <property name="ani_id" value="3"/>
+   </properties>
+  </object>
+  <object id="491" name="goomba" type="tan" x="4960" y="942">
+   <properties>
+    <property name="ani_id" value="3"/>
+   </properties>
+  </object>
+  <object id="492" name="koopa" type="red" x="4999.5" y="683.5" width="13" height="13">
+   <properties>
+    <property name="ani_id" value="70"/>
+   </properties>
+  </object>
+  <object id="493" name="koopa" type="red" x="5743.5" y="915.5" width="13" height="13">
+   <properties>
+    <property name="ani_id" value="71"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="15" name="Coin" visible="0">
   <object id="367" x="2976" y="720" width="48" height="48"/>
   <object id="368" x="3024" y="720" width="48" height="48"/>
   <object id="369" x="3072" y="720" width="48" height="48"/>
@@ -510,6 +577,12 @@
   <object id="454" x="6622.34" y="2063.66" width="48" height="48"/>
   <object id="455" x="6575.66" y="2112.34" width="48" height="48"/>
  </objectgroup>
+ <objectgroup id="34" name="BrotherBound" visible="0">
+  <object id="477" x="1112.67" y="886.667" width="33.3333" height="120"/>
+  <object id="478" x="922" y="887.333" width="33.3333" height="118.667"/>
+  <object id="488" x="4228.67" y="888" width="33.3333" height="120"/>
+  <object id="489" x="4038" y="888.666" width="33.3333" height="118.667"/>
+ </objectgroup>
  <objectgroup id="19" name="Brick">
   <object id="311" x="1584" y="960.667" width="48" height="48"/>
   <object id="312" x="1536" y="960.667" width="48" height="48"/>
@@ -536,47 +609,14 @@
   <object id="341" x="1775.67" y="816" width="48" height="48"/>
   <object id="343" x="1728" y="816.417" width="48" height="48"/>
  </objectgroup>
- <objectgroup id="15" name="Enemy">
-  <object id="471" name="koopa" type="red" x="1806.83" y="661.5" width="13" height="13">
-   <properties>
-    <property name="ani_id" value="70"/>
-   </properties>
-  </object>
-  <object id="476" name="boomerangbrother" x="1045.33" y="894.667">
-   <properties>
-    <property name="ani_id" value="46"/>
-   </properties>
-  </object>
-  <object id="479" name="goomba" type="paramini" x="6350.67" y="612">
-   <properties>
-    <property name="ani_id" value="32"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup id="34" name="BrotherBound">
-  <object id="477" x="1112.67" y="886.667" width="33.3333" height="120"/>
-  <object id="478" x="922" y="887.333" width="33.3333" height="118.667"/>
- </objectgroup>
  <objectgroup id="27" name="Camera" visible="0">
   <object id="239" type="1" x="26.6667" y="459.061" width="800" height="600.606"/>
  </objectgroup>
  <objectgroup id="28" name="KoopaBound" visible="0">
   <object id="244" x="1904" y="673.667" width="14.6667" height="93"/>
   <object id="245" x="1729" y="673.167" width="14.6667" height="93"/>
- </objectgroup>
- <objectgroup id="21" name="Portal1" visible="0">
-  <object id="274" name="out" type="2" x="6243.84" y="143.333" width="86" height="93.3333">
-   <properties>
-    <property name="camY" value="450"/>
-   </properties>
-  </object>
-  <object id="276" name="in" type="2" x="7006.17" y="2159" width="96.6667" height="100"/>
-  <object id="275" name="out" type="1" x="4551.16" y="2301" width="92.6667" height="92">
-   <properties>
-    <property name="camY" value="1750"/>
-   </properties>
-  </object>
-  <object id="472" name="in" type="1" x="1562.33" y="434" width="90" height="90"/>
+  <object id="494" x="5068.17" y="679.75" width="14.6667" height="93"/>
+  <object id="495" x="4893.17" y="679.25" width="14.6667" height="93"/>
  </objectgroup>
  <objectgroup id="24" name="Card" visible="0">
   <object id="286" x="7175.52" y="743.273" width="50" height="50"/>

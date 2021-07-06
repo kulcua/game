@@ -26,18 +26,18 @@ void CPlant::SetState(int state)
 	{
 	case PLANT_STATE_DIE:
 	{
-		die = true;
 		Effect* effect1 = EffectPool::GetInstance()->Create();
 		if (effect1 != NULL)
 			effect1->Init(EffectName::marioTailAttack, x, y);
-		Effect* effect2 = EffectPool::GetInstance()->Create();
-		if (effect2 != NULL)
-			effect2->Init(EffectName::fireballDestroy, x, y);
+		//Effect* effect2 = EffectPool::GetInstance()->Create();
+		//if (effect2 != NULL)
+		//	effect2->Init(EffectName::fireballDestroy, x, y);
 		Effect* effect3 = EffectPool::GetInstance()->Create();
 		if (effect3 != NULL)
 			effect3->InitPoint(EffectPoint::p100, x, y);
-	}
+		die = true;
 		break;
+	}
 	}
 }
 

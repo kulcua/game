@@ -2,7 +2,7 @@
 
 ParaKoopa::ParaKoopa() 
 {
-	level = PARAKOOPA_LEVEL_JUMP;
+	level = KOOPA_LEVEL_WING;
 	SetState(PARAKOOPA_STATE_JUMP);
 }
 
@@ -23,7 +23,7 @@ void ParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CKoopa::Update(dt, coObjects);
 	
-	if (level == PARAKOOPA_LEVEL_JUMP && isOnGround)
+	if (level == KOOPA_LEVEL_WING && isOnGround)
 	{
 		vy = -PARAKOOPA_JUMP_SPEED;
 		isOnGround = false;

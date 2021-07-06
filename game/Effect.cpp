@@ -95,7 +95,6 @@ void Effect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy = -EFFECT_POIINT_DELFECT_VY;
 		y += dy;
 	}
-
 	grid_->Move(this, x, y);
 }
 

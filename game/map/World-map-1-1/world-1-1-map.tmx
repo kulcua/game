@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="33" nextobjectid="314">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" nextlayerid="33" nextobjectid="320">
  <editorsettings>
   <export target="world-1-1-map.xml" format="tmx"/>
  </editorsettings>
@@ -494,7 +494,7 @@
     <property name="ani_id" value="70"/>
    </properties>
   </object>
-  <object id="187" name="goomba" type="tan" x="2251.33" y="1108.67">
+  <object id="187" name="goomba" type="tan" x="2681.33" y="1124.67">
    <properties>
     <property name="ani_id" value="3"/>
    </properties>
@@ -514,12 +514,12 @@
     <property name="ani_id" value="64"/>
    </properties>
   </object>
-  <object id="242" name="goomba" type="para" x="2451" y="1101" width="34" height="24">
+  <object id="242" name="goomba" type="para" x="2851" y="1073" width="34" height="24">
    <properties>
     <property name="ani_id" value="31"/>
    </properties>
   </object>
-  <object id="243" name="koopa" type="para" x="4128.5" y="818.5" width="13" height="13">
+  <object id="243" name="koopa" type="para" x="4216.5" y="868.5" width="13" height="13">
    <properties>
     <property name="ani_id" value="71"/>
     <property name="end_x" value="3350"/>
@@ -531,8 +531,37 @@
     <property name="ani_id" value="70"/>
    </properties>
   </object>
+  <object id="314" name="koopa" type="para" x="4083.5" y="865.5" width="13" height="13">
+   <properties>
+    <property name="ani_id" value="71"/>
+    <property name="end_x" value="3350"/>
+    <property name="start_x" value="4120"/>
+   </properties>
+  </object>
+  <object id="315" name="koopa" type="para" x="3951.5" y="867.5" width="13" height="13">
+   <properties>
+    <property name="ani_id" value="71"/>
+    <property name="end_x" value="3350"/>
+    <property name="start_x" value="4120"/>
+   </properties>
+  </object>
+  <object id="316" name="goomba" type="tan" x="684.667" y="1162">
+   <properties>
+    <property name="ani_id" value="3"/>
+   </properties>
+  </object>
+  <object id="318" name="goomba" type="tan" x="2488" y="1126">
+   <properties>
+    <property name="ani_id" value="3"/>
+   </properties>
+  </object>
+  <object id="319" name="koopa" type="red" x="4327.5" y="1161.5" width="13" height="13">
+   <properties>
+    <property name="ani_id" value="71"/>
+   </properties>
+  </object>
  </objectgroup>
- <objectgroup id="27" name="Camera">
+ <objectgroup id="27" name="Camera" visible="0">
   <object id="239" type="1" x="26.6667" y="699.061" width="800" height="600.606"/>
  </objectgroup>
  <objectgroup id="28" name="KoopaBound">

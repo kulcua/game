@@ -6,7 +6,7 @@
 #define BRICKBLOCK_ANI_ID 23
 #define BRICK_ANI_BRICKBLOCK 0
 #define BRICK_ANI_COIN 1
-#define BRICK_BLOCK_TIME_COIN_DISAPPEAR 4000
+#define BRICK_BLOCK_TIME_COIN_DISAPPEAR 5000
 
 class BrickBlock : public CGameObject
 {
