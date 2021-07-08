@@ -84,7 +84,7 @@ void BoomerangBrother::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	ChangeState();
 
-	if (GetTickCount64() - dieTimeStart > BOOMERANG_BROTHER_DIE_TIME && dieTimeStart > 0)
+	if (GetTickCount64() - dieTimeStart > ENERMY_DIE_TIME && dieTimeStart > 0)
 	{
 		dieTimeStart = 0;
 		die = true;

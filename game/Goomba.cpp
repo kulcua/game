@@ -74,7 +74,7 @@ void CGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
-	if (GetTickCount64() - dieTimeStart > GOOMBA_DIE_TIME && dieTimeStart > 0)
+	if (GetTickCount64() - dieTimeStart > ENERMY_DIE_TIME && dieTimeStart > 0)
 	{
 		die = true;
 	}

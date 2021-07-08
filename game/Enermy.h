@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #define ENERMY_DEFECT_VY_KICKED 0.5f
+#define ENERMY_DIE_TIME 1000
 class Enermy : public CGameObject
 {
 protected:

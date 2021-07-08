@@ -138,12 +138,8 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{
 				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-				Effect* effect = EffectPool::GetInstance()->Create();
-				if (effect != NULL)
-					effect->Init(EffectName::marioTailAttack, koopa->x, koopa->y);
-
-				koopa->BeingKicked();
-				koopa->SetState(KOOPA_STATE_BALL);
+				koopa->SetState(KOOPA_STATE_DIE);
+				this->SetState(KOOPA_STATE_DIE);
 			}
 			else if (dynamic_cast<BoomerangBrother*>(e->obj))
 			{
@@ -238,7 +234,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (state == KOOPA_STATE_DIE)
 	{
-		if (GetTickCount64() - dieTimeStart > 1000)
+		if (GetTickCount64() - dieTimeStart > ENERMY_DIE_TIME)
 			die = true;
 		else {
 			x += dx;
@@ -309,7 +305,12 @@ void CKoopa::SetState(int state)
 		break; 
 		case KOOPA_STATE_DIE:
 		{
+			Effect* effect = EffectPool::GetInstance()->Create();
+			if (effect != NULL)
+				effect->InitPoint(EffectPoint::p200, x, y);
+			vx = 0;
 			StartDieTime();
+			BeingKicked();
 		}
 		break;
 	}
