@@ -1,11 +1,11 @@
 #pragma once
 #include "GameObject.h"
+#include "Mario.h"
 #define ENERMY_DEFECT_VY_KICKED 0.5f
 #define ENERMY_DIE_TIME 1000
 class Enermy : public CGameObject
 {
 protected:
-	friend class CMario;
 	CMario* mario;
 	DWORD dieTimeStart;
 	bool isOnGround;

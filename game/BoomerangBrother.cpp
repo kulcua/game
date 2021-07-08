@@ -154,7 +154,7 @@ void BoomerangBrother::SetState(int state)
 		if (effect != NULL)
 			effect->InitPoint(EffectPoint::p100, x, y);
 		StartDieTime();
-		vx = BOOMERANG_BROTHER_WALK_SPEED;
+		BeingKicked();
 		break;
 	}
 	}

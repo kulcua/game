@@ -28,7 +28,6 @@ protected:
 	bool isHandled;
 	int level;
 public:
-	bool isKicked = false;
 	CKoopa();
 	void HandleByMario();
 	void SetPositionHandled();

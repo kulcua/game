@@ -50,8 +50,8 @@ void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					Effect* effect = EffectPool::GetInstance()->Create();
 					if (effect != NULL)
 						effect->Init(EffectName::marioTailAttack, goomba->x, goomba->y);
-					goomba->BeingKicked();
 					goomba->SetState(GOOMBA_STATE_DIE);
+					goomba->BeingKicked();
 				}
 				else if (dynamic_cast<CKoopa*>(coObjects->at(i)))
 				{
@@ -72,7 +72,6 @@ void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (bmrBrother->GetState() != BOOMERANG_BROTHER_STATE_DIE)
 					{
 						bmrBrother->SetState(BOOMERANG_BROTHER_STATE_DIE);
-						bmrBrother->BeingKicked();
 					}
 				}
 			}

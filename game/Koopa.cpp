@@ -32,7 +32,6 @@ void CKoopa::KickByMario()
 	isHandled = false;	 
 	nx = mario->nx;
 	vx = nx * KOOPA_BALL_SPEED;
-	isKicked = true;
 }
 
 void CKoopa::SetPositionHandled()
@@ -132,8 +131,11 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-				goomba->SetState(GOOMBA_STATE_DIE);
-				goomba->BeingKicked();
+				if (state == KOOPA_STATE_BALL)
+				{
+					goomba->SetState(GOOMBA_STATE_DIE);
+					goomba->BeingKicked();
+				}
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{

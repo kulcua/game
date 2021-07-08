@@ -39,6 +39,7 @@
 #include "Plant.h"
 #include "Boomerang.h"
 #include "BoomerangBrother.h"
+#include "MiniGoomba.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -90,6 +91,11 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					else LevelDown();
 				}
 			}
+			else if (dynamic_cast<MiniGoomba*>(e->obj))
+			{
+				MiniGoomba* mGoomba = dynamic_cast<MiniGoomba*>(e->obj);
+				mGoomba->folowMario = true;
+			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{
 				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
@@ -99,7 +105,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopa->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
-					else LevelDown();
+					else if (koopa->GetState() != KOOPA_STATE_DIE)
+						LevelDown();
 				}
 				else
 				{
@@ -110,7 +117,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopaShell = koopa;
 					}
 					else { // kick normally
-						if (koopa->isKicked == false)
+						if (koopa->vx == 0)
 						{
 							koopa->KickByMario();
 							MarioState::kick.GetInstance()->StartKick();
@@ -138,7 +145,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (e->ny < 0)
 					{
-						bmrBrother->BeingKicked();
 						bmrBrother->SetState(BOOMERANG_BROTHER_STATE_DIE);
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
