@@ -9,10 +9,12 @@
 #define KOOPA_BBOX_HEIGHT_DIE 45
 #define KOOPA_STATE_WALKING 100
 #define KOOPA_STATE_BALL 200
-#define KOOPA_STATE_DIE 300
+#define KOOPA_STATE_BALL_RELIVE 300
+#define KOOPA_STATE_DIE 400
 #define KOOPA_ANI_WALKING 0
 #define KOOPA_ANI_BALL 1
 #define KOOPA_ANI_BALL_ROLL 2
+#define KOOPA_ANI_BALL_RELIVE 3
 #define MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT 16
 #define MARIO_SMALL_HANDLED_SHELL_HEIGHT 4
 #define MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT 24
@@ -21,12 +23,15 @@
 #define KOOPA_LEVEL_BALL 1
 #define KOOPA_LEVEL_NO_WING 2
 #define KOOPA_LEVEL_WING 3
+#define KOOPA_BALL_RELIVE_TIME 4000
 
 class CKoopa: public Enermy
 {
 protected:
 	bool isHandled;
 	int level;
+	int ballStartTime;
+	int reliveStartTime;
 public:
 	CKoopa();
 	void HandleByMario();
@@ -42,5 +47,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void HandleCollision(vector<LPGAMEOBJECT>* coObjects);
+	void StartBallTime() { ballStartTime = GetTickCount64(); }
+	void StartReliveTime() { reliveStartTime = GetTickCount64(); }
 };
 

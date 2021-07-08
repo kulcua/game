@@ -14,6 +14,7 @@
 #include "BoomerangBrother.h"
 #include "BrotherBound.h"
 #include "Coin.h"
+#include "CameraBound.h"
 
 CKoopa::CKoopa()
 {
@@ -131,7 +132,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-				if (state == KOOPA_STATE_BALL)
+				if (state == KOOPA_STATE_BALL && goomba->GetState() != GOOMBA_STATE_DIE)
 				{
 					goomba->SetState(GOOMBA_STATE_DIE);
 					goomba->BeingKicked();
@@ -210,6 +211,12 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				WalkThrough();
 			}
+			else if (dynamic_cast<CCameraBound*>(e->obj))
+			{
+				x += dx;
+				y += dy;
+				die = true;
+			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -243,7 +250,25 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			y += dy;
 		}
 	}
-	else HandleCollision(coObjects);
+	else if (GetTickCount64() - ballStartTime > KOOPA_BALL_RELIVE_TIME && ballStartTime > 0)
+	{
+		SetState(KOOPA_STATE_BALL_RELIVE);
+	}
+	else if (state == KOOPA_STATE_BALL_RELIVE)
+	{
+		if (GetTickCount64() - reliveStartTime > KOOPA_BALL_RELIVE_TIME)
+		{
+			SetState(KOOPA_STATE_WALKING);
+			reliveStartTime = 0;
+			y -= KOOPA_BBOX_HEIGHT_DIE;
+		}
+		else
+		{
+			vx = -vx;
+		}
+	}
+	
+	HandleCollision(coObjects);
 
 	if (isHandled)
 		SetPositionHandled();
@@ -280,6 +305,8 @@ void CKoopa::Render()
 	}
 	else if (state == KOOPA_STATE_DIE)
 		ani = KOOPA_ANI_BALL;
+	else if (state == KOOPA_STATE_BALL_RELIVE)
+		ani = KOOPA_ANI_BALL_RELIVE;
 	else ani = KOOPA_ANI_WALKING;
 
 	animation_set->at(ani)->Render(x, y, nx, ny);
@@ -287,7 +314,7 @@ void CKoopa::Render()
 	//RenderBoundingBox();
 }
 
-void CKoopa::SetState(int state)
+void CKoopa::SetState(int state) 
 {
 	CGameObject::SetState(state);
 	switch (state)
@@ -298,10 +325,12 @@ void CKoopa::SetState(int state)
 			if (effect != NULL)
 				effect->InitPoint(EffectPoint::p200, x, y);
 			vx = 0;
+			StartBallTime();
 		}
 		break;
 		case KOOPA_STATE_WALKING:
 		{
+			ny = -1;
 			vx = nx * KOOPA_WALKING_SPEED;
 		}
 		break; 
@@ -313,6 +342,13 @@ void CKoopa::SetState(int state)
 			vx = 0;
 			StartDieTime();
 			BeingKicked();
+		}
+		break;
+		case KOOPA_STATE_BALL_RELIVE:
+		{
+			StartReliveTime();
+			ballStartTime = 0;
+			vx = 0.2f;
 		}
 		break;
 	}

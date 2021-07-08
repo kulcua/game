@@ -2,6 +2,7 @@
 #include "Ground.h"
 #include "EffectPool.h"
 #include "BigBox.h"
+#include "CameraBound.h"
 
 CGoomba::CGoomba()
 {
@@ -64,6 +65,12 @@ void CGoomba::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					vx = this->nx * GOOMBA_WALKING_SPEED;
 					x += dx;
 				}
+			}
+			else if (dynamic_cast<CCameraBound*>(e->obj))
+			{
+				x += dx;
+				y += dy;
+				die = true;
 			}
 		}
 	}
