@@ -16,7 +16,7 @@
 class ParaMiniGoomba : public ParaGoomba
 {
 	int timeStart = GetTickCount64();
-	int throwGoombaTimes = 4;
+	int throwGoombaTimes = PARAMINIGOOMBA_MAX_THROW_TIME;
 	int timeThrowStart;
 	bool maxY;
 public:
@@ -25,4 +25,5 @@ public:
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void SetState(int state);
 	void Render();
+	void StartTimeThrow() { timeThrowStart = GetTickCount64(); }
 };

@@ -118,7 +118,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopaShell = koopa;
 					}
 					else { // kick normally
-						if (koopa->vx == 0)
+						if (koopa->isKicked == false)
 						{
 							koopa->KickByMario();
 							MarioState::kick.GetInstance()->StartKick();

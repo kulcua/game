@@ -32,6 +32,7 @@ protected:
 	int ballStartTime;
 	int reliveStartTime;
 public:
+	bool isKicked;
 	bool isHandled;
 	CKoopa();
 	void HandleByMario();

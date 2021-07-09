@@ -76,6 +76,11 @@ void Grid::Update(DWORD dt)
         }
     }
 
+    EffectPool::GetInstance()->Update(dt, &coObject);
+    BoomerangPool::GetInstance()->Update(dt, &coObject);
+    FireBallPool::GetInstance()->Update(dt, &coObject);
+    MiniGoombaPool::GetInstance()->Update(dt, &coObject);
+
     for (int i = cellStartX; i < cellEndX + 1; i++)
     {
         for (int j = cellStartY; j < cellEndY + 1; j++)
@@ -91,11 +96,6 @@ void Grid::Update(DWORD dt)
             }
         }
     }
-
-    EffectPool::GetInstance()->Update(dt, &coObject);
-    BoomerangPool::GetInstance()->Update(dt, &coObject);
-    FireBallPool::GetInstance()->Update(dt, &coObject);
-    MiniGoombaPool::GetInstance()->Update(dt, &coObject);
 
     CGame::GetInstance()->GetCam()->Update(dt, &coObject);
     // check null to avoid error when Unload() delete all list objects
@@ -138,8 +138,8 @@ void Grid::GetCell(int& startX, int& startY, int& endX, int& endY)
 
     startX = (int)(cx / CELL_SIZE);
     startY = (int)(cy / CELL_SIZE);
-    endX = (int)((cx + CAM_WIDTH) / CELL_SIZE);
-    endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE);
+    endX = (int)((cx + CAM_WIDTH) / CELL_SIZE) + 1;
+    endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE) + 1;
 
     //DebugOut(L"%d %d %d %d\n", startX, startY, endX, endY);
 }

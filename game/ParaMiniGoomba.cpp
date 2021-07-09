@@ -48,30 +48,26 @@ void ParaMiniGoomba::ChangeState()
 		if (dy >= PARAMINIGOOMBA_MAX_Y_TO_MARIO)
 		{
 			maxY = true;
-
-			if (timeThrowStart == 0)
-				timeThrowStart = GetTickCount64();
-
-			int timeThrowRemain = GetTickCount64() - timeThrowStart;
-
-			int timeNeed = (PARAMINIGOOMBA_MAX_THROW_TIME - throwGoombaTimes) * PARAMINIGOOMBA_TIME_SPACE_THROW;
-
-			if (timeThrowRemain > timeNeed && MiniGoombaPool::GetInstance()->CheckNumberInPool() == throwGoombaTimes)
+			if (timeThrowStart == 0 && throwGoombaTimes > 0)
 			{
+				StartTimeThrow();
 				MiniGoomba* miniGoomba = MiniGoombaPool::GetInstance()->Create();
 				if (miniGoomba != NULL)
 				{
 					miniGoomba->Init(x, y);
 				}
-
 				throwGoombaTimes--;
+			}
+			else if (GetTickCount64() - timeThrowStart > PARAMINIGOOMBA_TIME_SPACE_THROW)
+			{
+				timeThrowStart = 0;
+			}
 
-				if (throwGoombaTimes == 0)
-				{
-					throwGoombaTimes = PARAMINIGOOMBA_MAX_THROW_TIME;
-					timeStart = GetTickCount64();
-					timeThrowStart = 0;
-				}
+			if (throwGoombaTimes == 0)
+			{
+				throwGoombaTimes = PARAMINIGOOMBA_MAX_THROW_TIME;
+				timeStart = GetTickCount64();
+				timeThrowStart = 0;
 			}
 		}
 		else if (dy <= PARAMINIGOOMBA_MIN_Y_TO_MARIO)

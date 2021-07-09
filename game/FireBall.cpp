@@ -149,6 +149,7 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
+	coObjects->push_back(this);
 	CGameObject::Update(dt, coObjects);
 	if (this->state_.live.type == FIREBALL_FOR_VENUS)
 		UpdateForPlant(dt, coObjects);

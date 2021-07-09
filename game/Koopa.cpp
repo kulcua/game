@@ -31,6 +31,7 @@ void CKoopa::HandleByMario()
 void CKoopa::KickByMario()
 {
 	isHandled = false;	 
+	isKicked = true;
 	nx = mario->nx;
 	vx = nx * KOOPA_BALL_SPEED;
 	x += dx;
@@ -267,6 +268,8 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			SetState(KOOPA_STATE_WALKING);
 			reliveStartTime = 0;
 			y -= KOOPA_BBOX_HEIGHT_DIE;
+			isKicked = false;
+			level = KOOPA_LEVEL_NO_WING;
 		}
 		else
 		{

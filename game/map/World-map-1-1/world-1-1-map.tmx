@@ -567,8 +567,8 @@
  <objectgroup id="28" name="KoopaBound">
   <object id="244" x="1823" y="1056" width="24" height="93"/>
   <object id="245" x="1512" y="1059.5" width="24" height="93"/>
-  <object id="267" x="6305" y="1105.5" width="8.5" height="47"/>
-  <object id="268" x="6214.75" y="1105.5" width="8.5" height="47"/>
+  <object id="267" x="6305" y="1078.83" width="8.5" height="73.6667"/>
+  <object id="268" x="6214.75" y="1080.83" width="8.5" height="71.6667"/>
  </objectgroup>
  <objectgroup id="21" name="Portal">
   <object id="274" name="out" type="2" x="6917.17" y="1154" width="86" height="93.3333">
