@@ -4,7 +4,6 @@
 #include "Utils.h"
 #include "Sprites.h"
 #include "Portal.h"
-#include "Maps.h"
 #include "BigBox.h"
 #include "Ground.h"
 #include "Item.h"
@@ -33,11 +32,12 @@ using namespace std;
 #define SCENE_SECTION_ANIMATIONS 4
 #define SCENE_SECTION_ANIMATION_SETS	5
 #define SCENE_SECTION_OBJECTS	6
-#define SCENE_SECTION_MAPS	7
+#define SCENE_SECTION_MAP	7
 #define SCENE_SECTION_FONT	8
 #define SCENE_SECTION_HUD	9
 #define SCENE_SECTION_BGCOLOR	10
 #define SCENE_SECTION_PORTAL	11
+#define SCENE_SECTION_GRID	12
 #define OBJECT_TYPE_MARIO	0
 #define MAX_SCENE_LINE 1024
 
@@ -237,6 +237,15 @@ void CPlayScene::_ParseSection_MAPS(string line)
 	TileMap::GetInstance()->ReadFileTmx(pathTmx, id, D3DCOLOR_XRGB(R, G, B), objects, prefixPath);
 }
 
+void CPlayScene::_ParseSection_GRID(string line)
+{
+	vector<string> tokens = split(line);
+
+	const char* filePath = tokens[0].c_str();
+	
+	grid->ReadGridData(filePath);
+}
+
 void CPlayScene::_ParseSection_PORTAL(string line)
 {
 	vector<string> tokens = split(line);
@@ -253,16 +262,12 @@ void CPlayScene::_ParseSection_PORTAL(string line)
 
 void CPlayScene::CreatePool()
 {
-	FireBallPool::GetInstance()->SetGrid(grid);
 	FireBallPool::GetInstance()->InitPool(objects);
 	
-	EffectPool::GetInstance()->SetGrid(grid);
 	EffectPool::GetInstance()->InitPool(objects);
 
-	BoomerangPool::GetInstance()->SetGrid(grid);
 	BoomerangPool::GetInstance()->InitPool(objects);
 
-	MiniGoombaPool::GetInstance()->SetGrid(grid);
 	MiniGoombaPool::GetInstance()->InitPool(objects);
 }
 
@@ -296,7 +301,10 @@ void CPlayScene::Load()
 			section = SCENE_SECTION_OBJECTS; continue;
 		}
 		if (line == "[MAP]") {
-			section = SCENE_SECTION_MAPS; continue;
+			section = SCENE_SECTION_MAP; continue;
+		}
+		if (line == "[GRID]") {
+			section = SCENE_SECTION_GRID; continue;
 		}
 		if (line == "[FONT]") {
 			section = SCENE_SECTION_FONT; continue;
@@ -319,11 +327,12 @@ void CPlayScene::Load()
 		case SCENE_SECTION_ANIMATIONS: _ParseSection_ANIMATIONS(line); break;
 		case SCENE_SECTION_ANIMATION_SETS: _ParseSection_ANIMATION_SETS(line); break;
 		case SCENE_SECTION_OBJECTS: _ParseSection_OBJECTS(line); break;
-		case SCENE_SECTION_MAPS: _ParseSection_MAPS(line); break;
+		case SCENE_SECTION_MAP: _ParseSection_MAPS(line); break;
 		case SCENE_SECTION_FONT: _ParseSection_FONT(line); break;
 		case SCENE_SECTION_HUD: _ParseSection_HUD(line); break;
 		case SCENE_SECTION_BGCOLOR: _ParseSection_BGColor(line); break;
 		case SCENE_SECTION_PORTAL: _ParseSection_PORTAL(line); break;
+		case SCENE_SECTION_GRID: _ParseSection_GRID(line); break;
 		}
 	}
 
@@ -340,15 +349,6 @@ void CPlayScene::Load()
 void CPlayScene::Update(DWORD dt)
 {
 	if (player == NULL) return;
-
-	//vector<LPGAMEOBJECT> cooobj;
-	//for (int i = 1; i < objects.size(); i++)
-	//	if (objects[i]->die == false)
-	//		cooobj.push_back(objects[i]);
-
-	//for (int i = 0; i < objects.size(); i++)
-	//	if (objects[i]->die == false)
-	//		objects[i]->Update(dt,&cooobj);
 
 	grid->Update(dt);
 		

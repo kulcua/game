@@ -16,4 +16,6 @@ public:
 	void GetBackToPool();
 	void SetGrid(Grid* grid) { this->grid = grid; }
 	int CheckNumberInPool();
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Render();
 };

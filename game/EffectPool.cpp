@@ -21,11 +21,9 @@ void EffectPool::InitPool(vector<LPGAMEOBJECT>& objects)
         effect[i + 1] = new Effect();
 
         effect[i]->SetNext(effect[i + 1]);
-        effect[i]->SetGrid(grid);
         objects.push_back(effect[i]);
     }
     effect[POOL_SIZE - 1]->SetNext(NULL);
-    effect[POOL_SIZE - 1]->SetGrid(grid);
     objects.push_back(effect[POOL_SIZE - 1]);
 }
 
@@ -63,6 +61,28 @@ void EffectPool::GetBackToPool()
         {
             effect[i]->SetNext(firstAvailable_);
             firstAvailable_ = effect[i];
+        }
+    }
+}
+
+void EffectPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        if (effect[i]->inUse)
+        {
+            effect[i]->Update(dt, coObjects);
+        }
+    }
+}
+
+void EffectPool::Render()
+{
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        if (effect[i]->inUse)
+        {
+            effect[i]->Render();
         }
     }
 }

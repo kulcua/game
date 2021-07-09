@@ -195,9 +195,6 @@
     <ClCompile Include="Layer.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Maps.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -441,9 +438,6 @@
       <Filter>XmlLib</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps.h">
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">

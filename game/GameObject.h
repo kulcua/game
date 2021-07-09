@@ -68,6 +68,7 @@ public:
 	void SetAnimation(int ani);
 public:
 	CGameObject();
+	void SetGrid(Grid* grid, int id);
 	void SetGrid(Grid* grid);
 	bool die = false;
 

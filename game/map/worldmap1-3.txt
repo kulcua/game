@@ -717,6 +717,9 @@ powerBlack	99913
 
 [HUD]
 99900
+[GRID]
+#path
+map/World-map-1-3/world-1-3-grid.xml
 [MAP]
 #id	.tmx	r	g	b	prefix
 80200	map/World-map-1-3/world-1-3-map.tmx	255	255	255	map/World-map-1-3/

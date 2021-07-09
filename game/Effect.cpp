@@ -29,7 +29,6 @@ void Effect::InitPoint(EffectPoint ePoint, float x, float y)
 	else if (ePoint == EffectPoint::p1000)
 		point = 1000;
 	CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetPoint(point);
-	grid_->Move(this, x, y);
 }
 
 void Effect::InitDebris(int pos, float x, float y)
@@ -42,7 +41,6 @@ void Effect::InitDebris(int pos, float x, float y)
 	if (pos == 1 || pos == 3)
 		vx = -EFFECT_DEBRIS_VX;
 	else vx = EFFECT_DEBRIS_VX;
-	grid_->Move(this, x, y);
 }
 
 void Effect::SetAnimation()
@@ -89,13 +87,11 @@ void Effect::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x += dx;
 		y += dy;
 	}
-
-	if (name == EffectName::point)
+	else if (name == EffectName::point)
 	{
 		vy = -EFFECT_POIINT_DELFECT_VY;
 		y += dy;
 	}
-	grid_->Move(this, x, y);
 }
 
 void Effect::Render()

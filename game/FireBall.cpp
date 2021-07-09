@@ -22,7 +22,6 @@ void CFireBall::InitForPlant(VenusFireTrap* venus) {
 	inUse = true;
 	SetPosition(venus->x, venus->y);
 	this->state_.live.type = FIREBALL_FOR_VENUS;
-	grid_->Move(this, x, y);
 }
 
 void CFireBall::InitForMario()
@@ -37,7 +36,6 @@ void CFireBall::InitForMario()
 		vx = FIREBALL_VELOCITY_X;
 	else
 		vx = -FIREBALL_VELOCITY_X;
-	grid_->Move(this, x, y);
 }
 
 void CFireBall::SetAnimationFireBall()
@@ -161,8 +159,6 @@ void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	{
 		die = true;
 	}
-	
-	grid_->Move(this, x, y);
 }
 
 void CFireBall::Render()

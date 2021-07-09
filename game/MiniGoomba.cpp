@@ -16,7 +16,6 @@ void MiniGoomba::Init(float x, float y)
 	die = false;
 	inUse = true;
 	SetPosition(x, y);
-	grid_->Move(this, x, y);
 	timeToDie = GetTickCount64();
 }
 
@@ -66,7 +65,6 @@ void MiniGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			nx = -nx;
 		}
 	}
-	grid_->Move(this, x, y);
 }
 
 void MiniGoomba::Render()

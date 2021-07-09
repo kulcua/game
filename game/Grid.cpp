@@ -3,6 +3,10 @@
 #include "Game.h"
 #include "HUD.h"
 #include "Enermy.h"
+#include "EffectPool.h"
+#include "BoomerangPool.h"
+#include "FireBallPool.h"
+#include "MiniGoombaPool.h"
 
 Grid::Grid() {
     // Clear the grid.
@@ -18,9 +22,25 @@ Grid::Grid() {
 void Grid::Add(CGameObject* obj)
 {
     // Determine which grid cell it's in.
-    int cellX = (int)(obj->x / CELL_SIZE_X);
-    int cellY = (int)(obj->y / CELL_SIZE_Y);
+    int cellX = (int)(obj->x / CELL_SIZE);
+    int cellY = (int)(obj->y / CELL_SIZE);
 
+    // Add to the front of list for the cell it's in.
+    obj->prev_ = NULL;
+    obj->next_ = cells_[cellX][cellY];
+    cells_[cellX][cellY] = obj;
+
+    if (obj->next_ != NULL)
+    {
+        obj->next_->prev_ = obj;
+    }
+}
+
+void Grid::Add(CGameObject* obj, int id)
+{
+    D3DXVECTOR2 cellNumber = objectCells[id];
+    int cellX = (int)cellNumber.x;
+    int cellY = (int)cellNumber.y;
     // Add to the front of list for the cell it's in.
     obj->prev_ = NULL;
     obj->next_ = cells_[cellX][cellY];
@@ -35,6 +55,7 @@ void Grid::Add(CGameObject* obj)
 void Grid::Update(DWORD dt)
 {
     vector<LPGAMEOBJECT> coObject;
+    vector<LPGAMEOBJECT> cc;
 
     int cellStartX, cellStartY, cellEndX, cellEndY;
     GetCell(cellStartX, cellStartY, cellEndX, cellEndY);
@@ -51,6 +72,7 @@ void Grid::Update(DWORD dt)
                 {
                     coObject.push_back(obj);
                 }
+                cc.push_back(obj);
                 obj = obj->next_;
             }
         }
@@ -71,6 +93,11 @@ void Grid::Update(DWORD dt)
             }
         }
     }
+
+    EffectPool::GetInstance()->Update(dt, &coObject);
+    BoomerangPool::GetInstance()->Update(dt, &coObject);
+    FireBallPool::GetInstance()->Update(dt, &coObject);
+    MiniGoombaPool::GetInstance()->Update(dt, &coObject);
 
     CGame::GetInstance()->GetCam()->Update(dt, &coObject);
     // check null to avoid error when Unload() delete all list objects
@@ -98,6 +125,11 @@ void Grid::Render()
             }
         }
     }
+
+    EffectPool::GetInstance()->Render();
+    BoomerangPool::GetInstance()->Render();
+    FireBallPool::GetInstance()->Render();
+    MiniGoombaPool::GetInstance()->Render();
 }
 
 void Grid::GetCell(int& startX, int& startY, int& endX, int& endY)
@@ -106,22 +138,22 @@ void Grid::GetCell(int& startX, int& startY, int& endX, int& endY)
     float cx, cy;
     cam->GetPosition(cx, cy);
 
-    startX = (int)(cx / CELL_SIZE_X);
-    startY = (int)(cy / CELL_SIZE_Y);
-    endX = (int)((cx + CAM_WIDTH) / CELL_SIZE_X);
-    endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE_Y);
+    startX = (int)(cx / CELL_SIZE);
+    startY = (int)(cy / CELL_SIZE);
+    endX = (int)((cx + CAM_WIDTH) / CELL_SIZE);
+    endY = (int)((cy + CAM_HEIGHT) / CELL_SIZE);
 
     //DebugOut(L"%d %d %d %d\n", startX, startY, endX, endY);
 }
 
-void Grid::Move(CGameObject* obj, int x, int y)
+void Grid::Move(CGameObject* obj, float x, float y)
 {
-    int oldCellX = (int)(obj->oldX / CELL_SIZE_X);
-    int oldCellY = (int)(obj->oldY / CELL_SIZE_Y);
+    int oldCellX = (int)(obj->oldX / CELL_SIZE);
+    int oldCellY = (int)(obj->oldY / CELL_SIZE);
 
     // See which cell it's moving to.
-    int cellX = (int)(x / CELL_SIZE_X);
-    int cellY = (int)(y / CELL_SIZE_Y);
+    int cellX = (int)(x / CELL_SIZE);
+    int cellY = (int)(y / CELL_SIZE);
 
     // If it didn't change cells, we're done.
     if (oldCellX == cellX && oldCellY == cellY) return;
@@ -142,7 +174,35 @@ void Grid::Move(CGameObject* obj, int x, int y)
     {
         cells_[oldCellX][oldCellY] = obj->next_;
     }
-
     // Add it back to the grid at its new cell.
     Add(obj);
+}
+
+void Grid::ReadGridData(const char* filePath)
+{
+    TiXmlDocument doc(filePath);
+    if (!doc.LoadFile())
+    {
+        return;
+    }
+    TiXmlElement* root = doc.RootElement();
+    TiXmlElement* element = root->FirstChildElement(); // config
+    element = element->NextSiblingElement(); // data
+    TiXmlElement* objectGroup = element->FirstChildElement(); //group obj
+
+    while (objectGroup)
+    {
+        element = objectGroup->FirstChildElement(); //id - cell number xy
+        while (element)
+        {
+            int objectId, cellX, cellY;
+            element->QueryIntAttribute("id", &objectId);
+            element->QueryIntAttribute("cellx", &cellX);
+            element->QueryIntAttribute("celly", &cellY);
+            objectCells[objectId] = D3DXVECTOR2(cellX, cellY);
+
+            element = element->NextSiblingElement();
+        }
+        objectGroup = objectGroup->NextSiblingElement();
+    }
 }

@@ -16,7 +16,6 @@ void Boomerang::Init(float x, float y, int nx)
 	this->nx = nx;
 	vx = nx * BOOMERANG_SPEED_VX;
 	vy = -BOOMERANG_SPEED_VY;
-	grid_->Move(this, x, y);
 }
 
 
@@ -56,8 +55,6 @@ void Boomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vx = -nx * BOOMERANG_SPEED_VX;
 		vy = BOOMERANG_SPEED_VY;
 	}
-
-	grid_->Move(this, x, y);
 }
 
 void Boomerang::Render()

@@ -45,7 +45,8 @@ void CGoomba::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+		if (isOnGround == false)
+			y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -57,6 +58,9 @@ void CGoomba::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CGround*>(e->obj))
 			{
 				if (e->ny < 0) isOnGround = true;
+				if (e->nx) {
+					vx = e->nx * GOOMBA_WALKING_SPEED;
+				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{

@@ -33,6 +33,7 @@ void CKoopa::KickByMario()
 	isHandled = false;	 
 	nx = mario->nx;
 	vx = nx * KOOPA_BALL_SPEED;
+	x += dx;
 }
 
 void CKoopa::SetPositionHandled()
@@ -93,7 +94,8 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+		if (isOnGround == false)
+			y += min_ty * dy + ny * 0.4f;
 
 		//if (state != KOOPA_STATE_WALKING)
 		//if (nx != 0) vx = 0;
@@ -173,7 +175,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny != 0) y += dy;
 				}
 				else {
-					if (e->nx != 0 && state == KOOPA_STATE_BALL)
+					if (e->nx != 0 && state == KOOPA_STATE_BALL && block->die == false)
 					{
 						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
 						block->die = true;
@@ -249,6 +251,11 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			x += dx;
 			y += dy;
 		}
+	}
+	else if (state == KOOPA_STATE_BALL && vx != 0)
+	{
+		// ball is rolling
+		ballStartTime = 0;
 	}
 	else if (GetTickCount64() - ballStartTime > KOOPA_BALL_RELIVE_TIME && ballStartTime > 0)
 	{
