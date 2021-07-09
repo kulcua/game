@@ -40,6 +40,8 @@ bool Boomerang::GetBackToPool()
 
 void Boomerang::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	coObjects->push_back(this);
+
 	CGameObject::Update(dt);
 
 	StartAnimate();

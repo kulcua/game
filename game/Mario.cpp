@@ -317,6 +317,16 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
 		vy += MARIO_GRAVITY * dt;
 
+	if (isHandleShell)
+	{
+		if (koopaShell->GetState() != KOOPA_STATE_BALL)
+		{
+			isHandleShell = false;
+			koopaShell->isHandled = false;
+			koopaShell = NULL;
+		}
+	}
+
 	PowerControl();
 
 	HandleCollision(coObjects);

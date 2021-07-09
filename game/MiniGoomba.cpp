@@ -41,6 +41,8 @@ bool MiniGoomba::GetBackToPool()
 
 void MiniGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	coObjects->push_back(this);
+
 	CGameObject::Update(dt);
 
 	StartAnimate();

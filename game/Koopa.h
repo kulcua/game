@@ -28,11 +28,11 @@
 class CKoopa: public Enermy
 {
 protected:
-	bool isHandled;
 	int level;
 	int ballStartTime;
 	int reliveStartTime;
 public:
+	bool isHandled;
 	CKoopa();
 	void HandleByMario();
 	void SetPositionHandled();

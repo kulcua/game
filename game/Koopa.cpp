@@ -94,8 +94,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
 
 		x += min_tx * dx + nx * 0.4f;
-		if (isOnGround == false)
-			y += min_ty * dy + ny * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
 
 		//if (state != KOOPA_STATE_WALKING)
 		//if (nx != 0) vx = 0;

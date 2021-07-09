@@ -55,7 +55,6 @@ void Grid::Add(CGameObject* obj, int id)
 void Grid::Update(DWORD dt)
 {
     vector<LPGAMEOBJECT> coObject;
-    vector<LPGAMEOBJECT> cc;
 
     int cellStartX, cellStartY, cellEndX, cellEndY;
     GetCell(cellStartX, cellStartY, cellEndX, cellEndY);
@@ -72,7 +71,6 @@ void Grid::Update(DWORD dt)
                 {
                     coObject.push_back(obj);
                 }
-                cc.push_back(obj);
                 obj = obj->next_;
             }
         }
