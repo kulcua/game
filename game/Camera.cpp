@@ -101,7 +101,6 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				else {
 					if (nx != 0)
 					{
-						vx = mario->vx;
 						x += dx;
 					}
 					if (ny != 0) {

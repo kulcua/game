@@ -5,16 +5,16 @@
 class EffectPool
 {
 	static EffectPool* __instance;
-	static const int POOL_SIZE = 50;
+	static const int POOL_SIZE = 20;
 	Effect* effect[POOL_SIZE];
 	Effect* firstAvailable_;
-	Grid* grid;
 public:
 	static EffectPool* GetInstance();
 	void InitPool(vector<LPGAMEOBJECT>& objects);
 	Effect* Create();
 	void CreateDebris(float x, float y);
 	void GetBackToPool();
-	void SetGrid(Grid* grid) { this->grid = grid; }
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Render();
 };
 

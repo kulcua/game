@@ -12,6 +12,14 @@ CGameObject::CGameObject()
 	vx = vy = 0;
 }
 
+void CGameObject::SetGrid(Grid* grid, int id)
+{
+	grid_ = grid;
+	prev_ = NULL;
+	next_ = NULL;
+	grid_->Add(this, id);
+}
+
 void CGameObject::SetGrid(Grid* grid)
 {
 	grid_ = grid;

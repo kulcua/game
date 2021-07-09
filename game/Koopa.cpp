@@ -4,54 +4,61 @@
 #include "BigBox.h"
 #include "Goomba.h"
 #include "Mario.h"
+#include "Game.h"
 #include "KoopaBound.h"
 #include "BrickBlock.h"
 #include "EffectPool.h"
 #include "MusicalNote.h"
 #include "Item.h"
 #include "Camera.h"
+#include "BoomerangBrother.h"
+#include "BrotherBound.h"
+#include "Coin.h"
+#include "CameraBound.h"
 
 CKoopa::CKoopa()
 {
 	SetState(KOOPA_STATE_WALKING);
-	level = KOOPA_LEVEL_WALK;
+	level = KOOPA_LEVEL_NO_WING;
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
-void CKoopa::HandleByMario(CMario* mario)
+void CKoopa::HandleByMario()
 {
 	isHandled = true;
-	mario_ = mario;
 }
 
-void CKoopa::KickByMario(CMario* mario)
+void CKoopa::KickByMario()
 {
 	isHandled = false;	 
+	isKicked = true;
 	nx = mario->nx;
 	vx = nx * KOOPA_BALL_SPEED;
+	x += dx;
 }
 
 void CKoopa::SetPositionHandled()
 {
-	if (mario_->GetLevel() == MARIO_LEVEL_SMALL)
+	if (mario->GetLevel() == MARIO_LEVEL_SMALL)
 	{
-		if (mario_->nx < 0)
-			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
+		if (mario->nx < 0)
+			SetPosition(mario->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
 		else
-			SetPosition(mario_->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario_->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
+			SetPosition(mario->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario->y - MARIO_SMALL_HANDLED_SHELL_HEIGHT);
 	}
-	else if (mario_->GetLevel() == MARIO_LEVEL_BIG || mario_->GetLevel() == MARIO_LEVEL_FIRE)
+	else if (mario->GetLevel() == MARIO_LEVEL_BIG || mario->GetLevel() == MARIO_LEVEL_FIRE)
 	{
-		if (mario_->nx < 0)
-			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+		if (mario->nx < 0)
+			SetPosition(mario->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
 		else
-			SetPosition(mario_->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+			SetPosition(mario->x + MARIO_SMALL_BIG_HANDLE_SHELL_WIDTH_RIGHT, mario->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
 	}
-	else if (mario_->GetLevel() == MARIO_LEVEL_RACCOON)
+	else if (mario->GetLevel() == MARIO_LEVEL_RACCOON)
 	{
-		if (mario_->nx < 0)
-			SetPosition(mario_->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+		if (mario->nx < 0)
+			SetPosition(mario->x - MARIO_SMALL_BIG_RACCOON_HANDLE_SHELL_WIDTH_LEFT, mario->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
 		else
-			SetPosition(mario_->x + MARIO_RACCOON_HANDLE_SHELL_WIDTH_RIGHT, mario_->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
+			SetPosition(mario->x + MARIO_RACCOON_HANDLE_SHELL_WIDTH_RIGHT, mario->y + MARIO_BIG_RACCOON_HANDLED_SHELL_HEIGHT);
 	}
 }
 
@@ -90,8 +97,8 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
-		/*if (state != KOOPA_STATE_WALKING)
-			if (nx != 0) vx = 0;*/
+		//if (state != KOOPA_STATE_WALKING)
+		//if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
@@ -104,7 +111,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (brick->GetState() != BRICK_STATE_DISABLE)
 						brick->SetState(BRICK_STATE_DISABLE);
-					KoopaBallDeflectVx();
+					TurnBack(KOOPA_BALL_SPEED);
 				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
@@ -113,61 +120,66 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					isOnGround = true;
 				}
-				if (e->nx != 0)
-				{
-					if (state == KOOPA_STATE_BALL) 
-						vx = this->nx * KOOPA_BALL_SPEED;
-					else
-						vx = this->nx * KOOPA_WALKING_SPEED;
-					x += dx;
-				}
+				if (e->nx != 0) WalkThrough();
 			}
 			else if (dynamic_cast<CCamera*>(e->obj))
 			{
-				if (e->nx != 0)
-				{
-					if (state == KOOPA_STATE_BALL) 
-						vx = this->nx * KOOPA_BALL_SPEED;
-					else
-						vx = this->nx * KOOPA_WALKING_SPEED;
-					x += dx;
-				}
+				if (e->nx != 0) WalkThrough();
+			}
+			else if (dynamic_cast<Coin*>(e->obj))
+			{
+				if (e->nx != 0) WalkThrough();
+				if (e->ny != 0)	y += dx;
 			}
 			else if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-				goomba->SetState(GOOMBA_STATE_DIE);
-				goomba->ny = -goomba->ny;
+				if (state == KOOPA_STATE_BALL && goomba->GetState() != GOOMBA_STATE_DIE)
+				{
+					goomba->SetState(GOOMBA_STATE_DIE);
+					goomba->BeingKicked();
+				}
+			}
+			else if (dynamic_cast<CKoopa*>(e->obj))
+			{
+				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+				koopa->SetState(KOOPA_STATE_DIE);
+				this->SetState(KOOPA_STATE_DIE);
+			}
+			else if (dynamic_cast<BoomerangBrother*>(e->obj))
+			{
+				BoomerangBrother* bmrBrother = dynamic_cast<BoomerangBrother*>(e->obj);
+				if (bmrBrother->GetState() != BOOMERANG_BROTHER_STATE_DIE && state == KOOPA_STATE_BALL)
+				{
+					bmrBrother->SetState(BOOMERANG_BROTHER_STATE_DIE);
+					bmrBrother->BeingKicked();
+					WalkThrough();
+				}
 			}
 			else if (dynamic_cast<CGround*>(e->obj))
 			{
 				if (e->ny < 0)
 					isOnGround = true;
-				//if (state == KOOPA_STATE_BALL)
-				//{
-				//	if (e->nx != 0)
-				//		KoopaBallDeflectVx();
-				//}
+				/*if (e->nx != 0) {
+					if (state == KOOPA_STATE_BALL)
+						TurnBack(KOOPA_BALL_SPEED);
+					else TurnBack(KOOPA_WALKING_SPEED);
+				}*/
 			}
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
 				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
 				if (block->isCoin)
 				{
-					if (e->nx != 0) {
-						if (state == KOOPA_STATE_WALKING)
-							vx = this->nx * KOOPA_WALKING_SPEED;
-						else if (state == KOOPA_STATE_BALL)
-							vx = this->nx * KOOPA_BALL_SPEED;
-					}
-					//if (e->ny != 0) y += dy;
+					if (e->nx != 0) WalkThrough();
+					if (e->ny != 0) y += dy;
 				}
 				else {
-					if (e->nx != 0 && state == KOOPA_STATE_BALL)
+					if (e->nx != 0 && state == KOOPA_STATE_BALL && block->die == false)
 					{
 						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
 						block->die = true;
-						KoopaBallDeflectVx();
+						TurnBack(KOOPA_BALL_SPEED);
 					}
 				}
 			}
@@ -179,46 +191,93 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (note->GetType() == MUSICAL_NOTE_TYPE_WHITE)
 					{
 						note->Deflect(1);
-						KoopaBallDeflectVx();
+						TurnBack(KOOPA_BALL_SPEED);
 					}
-					else vx = this->nx * KOOPA_BALL_SPEED;
+					else WalkThrough();
 				}
 			}
-			else if (dynamic_cast<KoopaBound*>(e->obj))
+			else if (dynamic_cast<KoopaBound*>(e->obj)
+				|| dynamic_cast<BrotherBound*>(e->obj))
 			{
 				if (e->nx != 0)
 				{
 					if (state == KOOPA_STATE_BALL) {
-						vx = this->nx * KOOPA_BALL_SPEED;
-						x += dx;
+						WalkThrough();
 					}	
 					else {
-						this->nx = -this->nx;
-						vx = this->nx * KOOPA_WALKING_SPEED;
+						TurnBack(KOOPA_WALKING_SPEED);
 					}
 				}
 			}
 			else if (dynamic_cast<CItem*>(e->obj))
 			{
-				if (state == KOOPA_STATE_BALL)
-					vx = this->nx * KOOPA_BALL_SPEED;
-				else
-					vx = this->nx * KOOPA_WALKING_SPEED;
+				WalkThrough();
+			}
+			else if (dynamic_cast<CCameraBound*>(e->obj))
+			{
+				x += dx;
+				y += dy;
+				die = true;
 			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void CKoopa::KoopaBallDeflectVx()
+void CKoopa::TurnBack(float vx)
 {
 	this->nx = -this->nx;
-	vx = this->nx * KOOPA_BALL_SPEED;
+	this->vx = this->nx * vx;
+}
+
+void CKoopa::WalkThrough()
+{
+	if (state == KOOPA_STATE_BALL)
+		vx = this->nx * KOOPA_BALL_SPEED;
+	else
+		vx = this->nx * KOOPA_WALKING_SPEED;
+	x += dx;
 }
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
+
+	if (state == KOOPA_STATE_DIE)
+	{
+		if (GetTickCount64() - dieTimeStart > ENERMY_DIE_TIME)
+			die = true;
+		else {
+			x += dx;
+			y += dy;
+		}
+	}
+	else if (state == KOOPA_STATE_BALL && vx != 0)
+	{
+		// ball is rolling
+		ballStartTime = 0;
+	}
+	else if (GetTickCount64() - ballStartTime > KOOPA_BALL_RELIVE_TIME && ballStartTime > 0)
+	{
+		SetState(KOOPA_STATE_BALL_RELIVE);
+	}
+	else if (state == KOOPA_STATE_BALL_RELIVE)
+	{
+		if (GetTickCount64() - reliveStartTime > KOOPA_BALL_RELIVE_TIME)
+		{
+			SetState(KOOPA_STATE_WALKING);
+			reliveStartTime = 0;
+			y -= KOOPA_BBOX_HEIGHT_DIE;
+			isKicked = false;
+			level = KOOPA_LEVEL_NO_WING;
+		}
+		else
+		{
+			vx = -vx;
+		}
+	}
+	
+	HandleCollision(coObjects);
 
 	if (isHandled)
 		SetPositionHandled();
@@ -227,9 +286,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy += KOOPA_GRAVITY * dt;
 	}
 
-	HandleCollision(coObjects);
-
-	//grid_->Move(this, x, y);
+	grid_->Move(this, x, y);
 }
 
 void CKoopa::DowngradeLevel()
@@ -237,7 +294,7 @@ void CKoopa::DowngradeLevel()
 	level--;
 	if (level == KOOPA_LEVEL_BALL)
 		SetState(KOOPA_STATE_BALL);
-	else if (level == KOOPA_LEVEL_WALK)
+	else if (level == KOOPA_LEVEL_NO_WING)
 	{
 		Effect* effect = EffectPool::GetInstance()->Create();
 		if (effect != NULL)
@@ -255,15 +312,18 @@ void CKoopa::Render()
 			ani = KOOPA_ANI_BALL;
 		else ani = KOOPA_ANI_BALL_ROLL;
 	}
-	else
-		ani = KOOPA_ANI_WALKING;
+	else if (state == KOOPA_STATE_DIE)
+		ani = KOOPA_ANI_BALL;
+	else if (state == KOOPA_STATE_BALL_RELIVE)
+		ani = KOOPA_ANI_BALL_RELIVE;
+	else ani = KOOPA_ANI_WALKING;
 
 	animation_set->at(ani)->Render(x, y, nx, ny);
 
 	//RenderBoundingBox();
 }
 
-void CKoopa::SetState(int state)
+void CKoopa::SetState(int state) 
 {
 	CGameObject::SetState(state);
 	switch (state)
@@ -273,14 +333,31 @@ void CKoopa::SetState(int state)
 			Effect* effect = EffectPool::GetInstance()->Create();
 			if (effect != NULL)
 				effect->InitPoint(EffectPoint::p200, x, y);
-			level = KOOPA_LEVEL_BALL;
-			y += KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE;
 			vx = 0;
+			StartBallTime();
 		}
 		break;
 		case KOOPA_STATE_WALKING:
 		{
+			ny = -1;
 			vx = nx * KOOPA_WALKING_SPEED;
+		}
+		break; 
+		case KOOPA_STATE_DIE:
+		{
+			Effect* effect = EffectPool::GetInstance()->Create();
+			if (effect != NULL)
+				effect->InitPoint(EffectPoint::p200, x, y);
+			vx = 0;
+			StartDieTime();
+			BeingKicked();
+		}
+		break;
+		case KOOPA_STATE_BALL_RELIVE:
+		{
+			StartReliveTime();
+			ballStartTime = 0;
+			vx = 0.2f;
 		}
 		break;
 	}

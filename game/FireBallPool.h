@@ -7,11 +7,11 @@ class FireBallPool
 	static const int POOL_SIZE = 2;
 	CFireBall* fireBall_[POOL_SIZE];
 	CFireBall* firstAvailable_;
-	Grid* grid;
 public:
 	static FireBallPool* GetInstance();
 	void InitPool(vector<LPGAMEOBJECT>& objects);
 	CFireBall* Create();
 	void GetBackToPool();
-	void SetGrid(Grid* grid) { this->grid = grid; }
+	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	void Render();
 };

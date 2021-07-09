@@ -21,11 +21,9 @@ void MiniGoombaPool::InitPool(vector<LPGAMEOBJECT>& objects)
         miniGoomba[i + 1] = new MiniGoomba();
 
         miniGoomba[i]->SetNext(miniGoomba[i + 1]);
-        miniGoomba[i]->SetGrid(grid);
         objects.push_back(miniGoomba[i]);
     }
     miniGoomba[POOL_SIZE - 1]->SetNext(NULL);
-    miniGoomba[POOL_SIZE - 1]->SetGrid(grid);
     objects.push_back(miniGoomba[POOL_SIZE - 1]);
 }
 
@@ -64,4 +62,27 @@ int MiniGoombaPool::CheckNumberInPool()
         }
     }
     return n;
+}
+
+
+void MiniGoombaPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        if (miniGoomba[i]->inUse)
+        {
+            miniGoomba[i]->Update(dt, coObjects);
+        }
+    }
+}
+
+void MiniGoombaPool::Render()
+{
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        if (miniGoomba[i]->inUse)
+        {
+            miniGoomba[i]->Render();
+        }
+    }
 }

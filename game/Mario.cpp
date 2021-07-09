@@ -3,8 +3,10 @@
 #include "Mario.h"
 #include "Game.h"
 #include "Goomba.h"
+#include "Enermy.h"
 #include "Portal.h"
 #include "BigBox.h"
+#include "MarioLevelDownState.h"
 #include "Ground.h"
 #include "Koopa.h"
 #include "MarioState.h"
@@ -33,6 +35,11 @@
 #include "SwitchItem.h"
 #include "MusicalNote.h"
 #include "BrickCoins.h"
+#include "FireBall.h"
+#include "Plant.h"
+#include "Boomerang.h"
+#include "BoomerangBrother.h"
+#include "MiniGoomba.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -62,7 +69,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		//	x += nx * abs(rdx);
 
 		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
+		if (onGround == false)
+			y += min_ty * dy + ny * 0.4f;
 
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -70,7 +78,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			//DebugOut(L"coll Mario x %f\n", e->obj->x);
+			
 			if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
@@ -81,6 +89,67 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						goomba->DowngradeLevel();
 						vy = -MARIO_JUMP_DEFLECT_SPEED;
 					}
+					else LevelDown();
+				}
+			}
+			else if (dynamic_cast<MiniGoomba*>(e->obj))
+			{
+				MiniGoomba* mGoomba = dynamic_cast<MiniGoomba*>(e->obj);
+				mGoomba->folowMario = true;
+			}
+			else if (dynamic_cast<CKoopa*>(e->obj))
+			{
+				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
+				if (koopa->GetLevel() > KOOPA_LEVEL_BALL) {
+					if (e->ny < 0)
+					{
+						koopa->DowngradeLevel();
+						vy = -MARIO_JUMP_DEFLECT_SPEED;
+					}
+					else if (koopa->GetState() != KOOPA_STATE_DIE)
+						LevelDown();
+				}
+				else
+				{
+					if (isPower && e->nx != 0) //handleShell
+					{
+						isHandleShell = true;
+						koopa->HandleByMario();
+						koopaShell = koopa;
+					}
+					else { // kick normally
+						if (koopa->isKicked == false)
+						{
+							koopa->KickByMario();
+							MarioState::kick.GetInstance()->StartKick();
+							state_ = MarioState::kick.GetInstance();
+						}
+						// mario is pushed
+						else LevelDown();
+					}
+				}
+			}
+			else if (dynamic_cast<CFireBall*>(e->obj)
+				|| dynamic_cast<Boomerang*>(e->obj))
+			{
+				LevelDown();
+				e->obj->die = true;
+			}
+			else if (dynamic_cast<CPlant*>(e->obj))
+			{
+				LevelDown();
+			}
+			else if (dynamic_cast<BoomerangBrother*>(e->obj))
+			{
+				BoomerangBrother* bmrBrother = dynamic_cast<BoomerangBrother*>(e->obj);
+				if (bmrBrother->GetState() != BOOMERANG_BROTHER_STATE_DIE)
+				{
+					if (e->ny < 0)
+					{
+						bmrBrother->SetState(BOOMERANG_BROTHER_STATE_DIE);
+						vy = -MARIO_JUMP_DEFLECT_SPEED;
+					}
+					else LevelDown();
 				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
@@ -138,32 +207,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					MarioState::jumping.GetInstance()->isHighJump = false;
 					if (note->GetType() == MUSICAL_NOTE_TYPE_RED && note->isHidden)
 						note->isHidden = false;
-				}
-			}
-			else if (dynamic_cast<CKoopa*>(e->obj))
-			{
-				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-				if (koopa->GetState() != KOOPA_STATE_BALL) {
-					if (e->ny < 0)
-					{
-						koopa->DowngradeLevel();
-						vy = -MARIO_JUMP_DEFLECT_SPEED; 
-					}
-				}
-				else
-				{
-					if (isPower && e->nx != 0) //handleShell
-					{
-						isHandleShell = true;
-						koopa->HandleByMario(this);
-						koopaShell = koopa;
-					}
-					else { // kick normally
-						koopa->nx = this->nx;
-						koopa->vx = this->nx * KOOPA_BALL_SPEED;
-						MarioState::kick.GetInstance()->StartKick();
-						state_ = MarioState::kick.GetInstance();
-					}
 				}
 			}
 			else if (dynamic_cast<CCameraBound*>(e->obj))
@@ -274,16 +317,46 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
 		vy += MARIO_GRAVITY * dt;
 
+	if (isHandleShell)
+	{
+		if (koopaShell->GetState() != KOOPA_STATE_BALL)
+		{
+			isHandleShell = false;
+			koopaShell->isHandled = false;
+			koopaShell = NULL;
+		}
+	}
+
 	PowerControl();
 
 	HandleCollision(coObjects);
 
 	tail->Update(dt, coObjects);
 
-	//DebugOut(L"y %f\n", y);
+	ManageAlphaUntouchable();
 
 	// put it finally because of switch scene delete all objects
 	state_->Update(*this, dt);
+}
+
+void CMario::ManageAlphaUntouchable()
+{
+	if (untouchableStartTime > 0) {
+		int timePassed = GetTickCount64() - untouchableStartTime;
+		if (timePassed > MARIO_UNTOUCHABLE_TIME) {
+			untouchableStartTime = 0;
+			alpha = 255;
+		}
+		else
+		{
+			//if (calculateTime % 2 == 0) alpha = 255
+			//per 50ms
+			int calculateTime = timePassed / 50 % 2;
+			if (calculateTime == 0)
+				alpha = 100;
+			else alpha = 255;
+		}
+	}
 }
 
 void CMario::PowerReset()
@@ -293,10 +366,11 @@ void CMario::PowerReset()
 	PowerDown();
 }
 
-void CMario::KickShell()
+void CMario::KickShellAfterHandle()
 {
 	isHandleShell = false;
-	koopaShell->KickByMario(this);
+	koopaShell->KickByMario();
+	koopaShell = NULL;
 	state_ = MarioState::kick.GetInstance();
 	MarioState::kick.GetInstance()->StartKick();
 }
@@ -357,6 +431,21 @@ void CMario::LevelUp()
 		effect->InitPoint(EffectPoint::p1000, x, y);
 }
 
+void CMario::LevelDown()
+{
+	if (untouchableStartTime == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			StartUntouchable();
+			y -= MARIO_SMALL_BBOX_HEIGHT;
+			state_ = MarioState::levelDown.GetInstance();
+			MarioState::levelDown.GetInstance()->StartLevelDown();
+		}
+		else SetState(MARIO_STATE_DIE);
+	}
+}
+
 void CMario::HandleInput(Input input)
 {
 	state_->HandleInput(*this, input);
@@ -375,12 +464,17 @@ CMario::CMario() : CGameObject()
 void CMario::Render()
 {
 	int animation = 0;
+	int alpha = 255;
+
+	if (GetLevel() == MARIO_LEVEL_RACCOON)
+		alpha = 255;
+	else alpha = this->alpha;
+
 	if (state == MARIO_STATE_DIE)
 		animation = MARIO_ANI_DIE;
 	else 
 		animation = GetAnimation();
-	animation_set->at(animation)->Render(x, y, nx, ny, 255);
-	//DebugOut(L"ani %d\n", animation);
+	animation_set->at(animation)->Render(x, y, nx, ny, alpha);
 	//RenderBoundingBox();
 }
 

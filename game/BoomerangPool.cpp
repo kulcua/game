@@ -21,11 +21,9 @@ void BoomerangPool::InitPool(vector<LPGAMEOBJECT>& objects)
         boomerang[i + 1] = new Boomerang();
 
         boomerang[i]->SetNext(boomerang[i + 1]);
-        boomerang[i]->SetGrid(grid);
         objects.push_back(boomerang[i]);
     }
     boomerang[POOL_SIZE - 1]->SetNext(NULL);
-    boomerang[POOL_SIZE - 1]->SetGrid(grid);
     objects.push_back(boomerang[POOL_SIZE - 1]);
 }
 
@@ -56,4 +54,26 @@ void BoomerangPool::GetBackToPool()
 bool BoomerangPool::CheckBoomerangInPool(int index)
 {
     return boomerang[index]->inUse;
+}
+
+void BoomerangPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        if (boomerang[i]->inUse)
+        {
+            boomerang[i]->Update(dt, coObjects);
+        }
+    }
+}
+
+void BoomerangPool::Render()
+{
+    for (int i = 0; i < POOL_SIZE; i++)
+    {
+        if (boomerang[i]->inUse)
+        {
+            boomerang[i]->Render();
+        }
+    }
 }

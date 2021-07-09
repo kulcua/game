@@ -1,12 +1,13 @@
 #include "Plant.h"
 #include "Ground.h"
-#include "PlayScene.h"
+#include "Game.h"
 #include "EffectPool.h"
+#include "Mario.h"
 
 CPlant::CPlant(float y) {
 	startY = y;
 	vy = -PLANT_SPEED;
-	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();;
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
 void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -25,18 +26,18 @@ void CPlant::SetState(int state)
 	{
 	case PLANT_STATE_DIE:
 	{
-		die = true;
 		Effect* effect1 = EffectPool::GetInstance()->Create();
 		if (effect1 != NULL)
 			effect1->Init(EffectName::marioTailAttack, x, y);
-		Effect* effect2 = EffectPool::GetInstance()->Create();
-		if (effect2 != NULL)
-			effect2->Init(EffectName::fireballDestroy, x, y);
+		//Effect* effect2 = EffectPool::GetInstance()->Create();
+		//if (effect2 != NULL)
+		//	effect2->Init(EffectName::fireballDestroy, x, y);
 		Effect* effect3 = EffectPool::GetInstance()->Create();
 		if (effect3 != NULL)
 			effect3->InitPoint(EffectPoint::p100, x, y);
-	}
+		die = true;
 		break;
+	}
 	}
 }
 

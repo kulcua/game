@@ -195,9 +195,6 @@
     <ClCompile Include="Layer.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Maps.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="ObjectMap.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -339,6 +336,12 @@
     <ClCompile Include="BrickCoins.cpp">
       <Filter>Brick</Filter>
     </ClCompile>
+    <ClCompile Include="MarioLevelDownState.cpp">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClCompile>
+    <ClCompile Include="Enermy.cpp">
+      <Filter>Enermies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -435,9 +438,6 @@
       <Filter>XmlLib</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Maps.h">
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="TileMap.h">
@@ -586,6 +586,12 @@
     </ClInclude>
     <ClInclude Include="BrickCoins.h">
       <Filter>Brick</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioLevelDownState.h">
+      <Filter>Mario\MarioState\OnGroundState</Filter>
+    </ClInclude>
+    <ClInclude Include="Enermy.h">
+      <Filter>Enermies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

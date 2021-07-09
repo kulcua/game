@@ -37,6 +37,15 @@ ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &obj
 	ImportData(objects);
 }
 
+void GetInfoElement(TiXmlElement* element, int &objectId, float &x, float &y, float &width, float &height)
+{
+	element->QueryIntAttribute("id", &objectId);
+	element->QueryFloatAttribute("x", &x);
+	element->QueryFloatAttribute("y", &y);
+	element->QueryFloatAttribute("width", &width);
+	element->QueryFloatAttribute("height", &height);
+}
+
 void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 {
 	CGameObject* obj = NULL;
@@ -49,12 +58,12 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{					
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
+			GetInfoElement(element, objectId, x, y, width, height);
 			splitToTile<CGround>(x, y, width, height, grid, objects);
-			
+			//obj = new CGround(width, height);
+			//obj->SetPosition(x, y);
+			//obj->SetGrid(grid, objectId);
+			//objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}		
 	}
@@ -62,12 +71,12 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
-			obj = new BoundOverWorld();
-			splitToTile<BoundOverWorld>(x, y, width, height, grid, objects);
+			GetInfoElement(element, objectId, x, y, width, height);
+			obj = new BoundOverWorld(width, height);
+			obj->SetPosition(x, y);
+			obj->SetGrid(grid);
+			objects.push_back(obj);
+			//splitToTile<BoundOverWorld>(x, y, width, height, grid, objects);
 			element = element->NextSiblingElement();
 		}
 	}
@@ -75,13 +84,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
+			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new CBigBox(width, height);
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -90,22 +96,20 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
+			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new BrickBlock();
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
 	}
 	else if (name.compare("Card") == 0)
 	{
-		element->QueryFloatAttribute("x", &x);
-		element->QueryFloatAttribute("y", &y);
+		GetInfoElement(element, objectId, x, y, width, height);
 		obj = new Card();
 		obj->SetPosition(x, y);
-		obj->SetGrid(grid);
+		obj->SetGrid(grid, objectId);
 		objects.push_back(obj);
 		element = element->NextSiblingElement();
 	}
@@ -116,8 +120,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			bool coins = false;
 			string typeName;
 			int type;
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
+			GetInfoElement(element, objectId, x, y, width, height);
 			typeName = element->Attribute("name");
 			element->QueryIntAttribute("type", &type);
 			CBrick* br = new CBrick(type, x, y);
@@ -143,27 +146,25 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			{
 				vector<CItem*> listItems;
 				BrickCoins* brCoins = new BrickCoins(type, x, y);
-				brCoins->SetGrid(grid);
+				brCoins->SetGrid(grid, objectId);
 				objects.push_back(brCoins);
 				for (int i = 0; i < 10; i++)
 				{
 					CItem* item = new CoinBrick();
 					item->SetPosition(x, y);
-					item->SetGrid(grid);
+					item->SetGrid(grid, objectId);
 					objects.push_back(item);
 					listItems.push_back(item);
 				}
-				DebugOut(L"listItems.size %d\n", listItems.size());
 				brCoins->SetListItems(listItems);
 				coins = true;
-				//break;
 			}
 			if (coins == false)
 			{
 				item->SetPosition(x, y);
 				br->SetItem(item);
-				br->SetGrid(grid);
-				item->SetGrid(grid);
+				br->SetGrid(grid, objectId);
+				item->SetGrid(grid, objectId);
 				objects.push_back(br);
 				objects.push_back(item);
 			}
@@ -174,11 +175,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
+			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new Coin();
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -188,12 +188,11 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			int type;
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
+			GetInfoElement(element, objectId, x, y, width, height);
 			element->QueryIntAttribute("type", &type);
 			obj = new MusicalNote(type, y);
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -203,12 +202,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			int type;
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
+			GetInfoElement(element, objectId, x, y, width, height);
 			element->QueryIntAttribute("type", &type);
-			//splitToTile<CCameraBound>(x, y, width, height, grid, objects);
 			float x_, y_;
 			int cell_x = round(width / TILE_SIZE);
 			int cell_y = round(height / TILE_SIZE);
@@ -250,13 +245,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
+			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new KoopaBound(width, height);
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -265,13 +257,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
+			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new BrotherBound(width, height);
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -282,8 +271,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		{
 			string enemyName;
 			enemyName = element->Attribute("name");
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
+			GetInfoElement(element, objectId, x, y, width, height);
 
 			TiXmlElement* properties = element->FirstChildElement();
 			TiXmlElement* property = properties->FirstChildElement();
@@ -325,12 +313,11 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				obj = new BoomerangBrother();
 			}
 
-			//DebugOut(L"name %s\n", ToLPCWSTR(enemyName));
 			CAnimationSets* animation_sets = CAnimationSets::GetInstance();
 			LPANIMATION_SET ani_set = animation_sets->Get(ani_id);
 			obj->SetAnimationSet(ani_set);
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -342,10 +329,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			string name;
 			int type;
 			float camY = 0;
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
-			element->QueryFloatAttribute("width", &width);
-			element->QueryFloatAttribute("height", &height);
+			GetInfoElement(element, objectId, x, y, width, height);
 			name = element->Attribute("name");
 			element->QueryIntAttribute("type", &type);
 			if (name.compare("out") == 0)
@@ -355,7 +339,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			}
 			obj = new PortalPipe(name, type, camY, width, height);
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -365,12 +349,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			string type;
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
+			GetInfoElement(element, objectId, x, y, width, height);
 			if (element->Attribute("type"))
 			{
 				type = element->Attribute("type");
-				/*DebugOut(L"type %s\n", ToLPCWSTR(type));*/
 			}
 			else type = "node";
 			obj = new CPortal(type);
@@ -385,8 +367,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			string name;
-			element->QueryFloatAttribute("x", &x);
-			element->QueryFloatAttribute("y", &y);
+			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new Tree();
 			obj->SetPosition(x - TREE_WIDTH / 2, y - TREE_HEIGHT / 2);
 			obj->SetGrid(grid);

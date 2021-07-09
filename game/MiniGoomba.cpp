@@ -2,11 +2,13 @@
 #include "Utils.h"
 #include "Game.h"
 #include "MiniGoombaPool.h"
+#include "MarioJumpingState.h"
 
 MiniGoomba::MiniGoomba()
 {
 	SetAnimation(MINI_GOOMBA_ANI_ID);
 	die = true;
+	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
 void MiniGoomba::Init(float x, float y)
@@ -14,7 +16,6 @@ void MiniGoomba::Init(float x, float y)
 	die = false;
 	inUse = true;
 	SetPosition(x, y);
-	grid_->Move(this, x, y);
 	timeToDie = GetTickCount64();
 }
 
@@ -40,27 +41,32 @@ bool MiniGoomba::GetBackToPool()
 
 void MiniGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	coObjects->push_back(this);
+
 	CGameObject::Update(dt);
 
 	StartAnimate();
 
-	vy = 0.1f;
-
-	vx = nx * 0.2f;
-
-	x += dx;
-	y += dy;
-
-	if (GetTickCount64() - timeToDie > MINI_GOOMBA_TIME_DIE)
-		die = true;
-
-	if (GetTickCount64() - timeFlip > MINI_GOOMBA_TIME_FLIP)
+	if (folowMario)
 	{
-		timeFlip = GetTickCount64();
-		nx = -nx;
+		FollowMario();
 	}
+	else {
+		vy = MINI_GOOMBA_SPEED_VY;
+		vx = nx * MINI_GOOMBA_SPEED_VX;
 
-	grid_->Move(this, x, y);
+		x += dx;
+		y += dy;
+
+		if (GetTickCount64() - timeToDie > MINI_GOOMBA_TIME_DIE)
+			die = true;
+
+		if (GetTickCount64() - timeFlip > MINI_GOOMBA_TIME_FLIP)
+		{
+			timeFlip = GetTickCount64();
+			nx = -nx;
+		}
+	}
 }
 
 void MiniGoomba::Render()
@@ -74,4 +80,37 @@ void MiniGoomba::GetBoundingBox(float& l, float& t, float& r, float& b)
 	t = y;
 	r = x + MINI_GOOMBA_BBOX_SIZE;
 	b = y + MINI_GOOMBA_BBOX_SIZE;
+}
+
+void MiniGoomba::FollowMario()
+{
+	float l, t, r, b;
+	mario->GetBoundingBox(l, t, r, b);
+	b -= MINI_GOOMBA_BBOX_SIZE;
+
+	if (x > r)
+	{
+		vx = -MINI_GOOMBA_SPEED_VX_FL_MARIO;
+		x = r;
+	}
+	else if (x < l)
+	{
+		vx = MINI_GOOMBA_SPEED_VX_FL_MARIO;
+		x = l;
+	}
+
+	if (y > b)
+	{
+		vy = -MINI_GOOMBA_SPEED_VY_FL_MARIO;
+		y = b;
+	}
+	else if (y < t)
+	{
+		vy = MINI_GOOMBA_SPEED_VY_FL_MARIO;
+		y = t;
+	}
+
+	MarioJumpingState::GetInstance()->isHighJump = false;
+	x += dx;
+	y += dy;
 }

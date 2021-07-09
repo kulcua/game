@@ -16,6 +16,7 @@ class MarioTailHitState;
 class MarioShootFireBallState;
 class MarioFrontState;
 class MarioOverWorldState;
+class MarioLevelDownState;
 
 class MarioState
 {
@@ -33,6 +34,7 @@ public:
 	static MarioDropFlyState dropFly;
 	static MarioKickState kick;
 	static MarioLevelUpState levelUp;
+	static MarioLevelDownState levelDown;
 	static MarioTailHitState tailHit;
 	static MarioShootFireBallState shootFireball;
 	static MarioFrontState front;

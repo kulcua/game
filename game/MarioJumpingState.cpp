@@ -83,7 +83,7 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     {
         mario.PowerReset();
         if (mario.isHandleShell)
-            mario.KickShell();
+            mario.KickShellAfterHandle();
     }
     else if (input == RELEASE_S)
     {

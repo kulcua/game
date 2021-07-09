@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "Enermy.h"
 #include "Utils.h"
 #include "Boomerang.h"
 
@@ -11,15 +11,15 @@
 #define BOOMERANG_BROTHER_STATE_WALK 100
 #define BOOMERANG_BROTHER_STATE_JUMP 200
 #define BOOMERANG_BROTHER_STATE_THROW 300
+#define BOOMERANG_BROTHER_STATE_DIE 400
 #define BOOMERANG_BROTHER_ANI_WALK 0
 #define BOOMERANG_BROTHER_ANI_THROW 1
-#define BOOMERANG_BROTHER_TIME_MOVE 500
-#define BOOMERANG_BROTHER_TIME_THROW 500
+#define BOOMERANG_BROTHER_TIME_WALK_START 3000
+#define BOOMERANG_BROTHER_TIME_THROW_1_START 4000
+#define BOOMERANG_BROTHER_TIME_THROW_2_START 4500
 
-class BoomerangBrother : public CGameObject
+class BoomerangBrother : public Enermy
 {
-	friend class CMario;
-	CMario* mario;
 	int moveDirect;
 	int timeStart;
 public:

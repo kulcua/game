@@ -6,8 +6,8 @@
 
 ParaMiniGoomba::ParaMiniGoomba()
 {
-	SetState(PARAMINIGOOMBA_STATE_WALK);
-	level = PARAGOOMBA_LEVEL_WING;
+	SetState(GOOMBA_STATE_WALKING);
+	level = GOOMBA_LEVEL_WING;
 	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
@@ -23,7 +23,7 @@ void ParaMiniGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		else nx = 1;
 	}
 
-	if (level == PARAGOOMBA_LEVEL_WING)
+	if (level == GOOMBA_LEVEL_WING)
 		ChangeState();
 }
 
@@ -32,7 +32,7 @@ void ParaMiniGoomba::ChangeState()
 	int timePassed = GetTickCount64() - timeStart;
 	if (timePassed < PARAMINIGOOMBA_TIME_WALK)
 	{
-		SetState(PARAMINIGOOMBA_STATE_WALK);
+		SetState(GOOMBA_STATE_WALKING);
 	}
 	else 
 	{	
@@ -48,30 +48,26 @@ void ParaMiniGoomba::ChangeState()
 		if (dy >= PARAMINIGOOMBA_MAX_Y_TO_MARIO)
 		{
 			maxY = true;
-
-			if (timeThrowStart == 0)
-				timeThrowStart = GetTickCount64();
-
-			int timeThrowRemain = GetTickCount64() - timeThrowStart;
-
-			int timeNeed = (PARAMINIGOOMBA_MAX_THROW_TIME - throwGoombaTimes) * PARAMINIGOOMBA_TIME_SPACE_THROW;
-
-			if (timeThrowRemain > timeNeed && MiniGoombaPool::GetInstance()->CheckNumberInPool() == throwGoombaTimes)
+			if (timeThrowStart == 0 && throwGoombaTimes > 0)
 			{
+				StartTimeThrow();
 				MiniGoomba* miniGoomba = MiniGoombaPool::GetInstance()->Create();
 				if (miniGoomba != NULL)
 				{
 					miniGoomba->Init(x, y);
 				}
-
 				throwGoombaTimes--;
+			}
+			else if (GetTickCount64() - timeThrowStart > PARAMINIGOOMBA_TIME_SPACE_THROW)
+			{
+				timeThrowStart = 0;
+			}
 
-				if (throwGoombaTimes == 0)
-				{
-					throwGoombaTimes = PARAMINIGOOMBA_MAX_THROW_TIME;
-					timeStart = GetTickCount64();
-					timeThrowStart = 0;
-				}
+			if (throwGoombaTimes == 0)
+			{
+				throwGoombaTimes = PARAMINIGOOMBA_MAX_THROW_TIME;
+				timeStart = GetTickCount64();
+				timeThrowStart = 0;
 			}
 		}
 		else if (dy <= PARAMINIGOOMBA_MIN_Y_TO_MARIO)
@@ -88,9 +84,9 @@ void ParaMiniGoomba::Render()
 	{
 		ani = PARAGOOMBA_ANI_DIE;
 	}
-	else if (level == PARAGOOMBA_LEVEL_WING)
+	else if (level == GOOMBA_LEVEL_WING)
 	{
-		if (state == PARAMINIGOOMBA_STATE_WALK)
+		if (state == GOOMBA_STATE_WALKING)
 			ani = PARAGOOMBA_ANI_WALKING;
 		else
 			ani = PARAGOOMBA_ANI_FLYING;
@@ -101,19 +97,5 @@ void ParaMiniGoomba::Render()
 
 void ParaMiniGoomba::SetState(int state)
 {
-	CGameObject::SetState(state);
-	switch (state)
-	{
-	case GOOMBA_STATE_DIE:
-	{
-		y += GOOMBA_BBOX_HEIGHT - GOOMBA_BBOX_HEIGHT_DIE + 1;
-		StartDieTime();
-		vx = 0;
-		vy = 0;
-		Effect* effect = EffectPool::GetInstance()->Create();
-		if (effect != NULL)
-			effect->InitPoint(EffectPoint::p100, x, y);
-	}
-	break;
-	}
+	CGoomba::SetState(state);
 }

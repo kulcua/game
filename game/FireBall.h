@@ -6,7 +6,6 @@
 #define FIREBALL_WIDTH 25
 #define FIREBALL_HEIGHT 25
 #define FIREBALL_SPEED 0.1f
-
 #define FIREBALL_ANI_ID 62
 #define FIREBALL_CHECK_POS_SHOOT_X 72
 #define FIREBALL_CHECK_X 150
@@ -15,15 +14,17 @@
 #define FIREBALL_GRAVITY 0.0015f
 #define FIREBALL_DEFLECT_Y 0.3f
 #define FIREBALL_DESTROYED_TIME 200
+#define FIREBALL_FOR_MARIO 100
+#define FIREBALL_FOR_VENUS 200
 
 class CFireBall : public CGameObject
 {
 	friend class FireBallPool;
-	bool isForPlant;
 	union
 	{
 		struct
 		{
+			int type;
 			CMario* mario;
 			VenusFireTrap* venus;
 		} live;

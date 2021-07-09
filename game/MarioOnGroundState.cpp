@@ -132,7 +132,7 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     {
         mario.PowerReset();
         if (mario.isHandleShell)
-            mario.KickShell();
+            mario.KickShellAfterHandle();
     }
     else if (input == RELEASE_LEFT || input == RELEASE_RIGHT)
     {
