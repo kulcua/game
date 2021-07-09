@@ -2,7 +2,7 @@
 #include "Utils.h"
 #include <unordered_map>
 #define NUM_CELLS 40
-#define CELL_SIZE 300
+#define CELL_SIZE 400
 
 class Grid
 {

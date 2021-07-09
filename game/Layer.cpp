@@ -43,6 +43,9 @@ void Layer::Render()
 	int tileEndX = (cx + CAM_WIDTH) / TILE_SIZE + 1;
 	int tileEndY = (cy + CAM_HEIGHT) / TILE_SIZE + 1;
 
+	if (tileStartX < 0) tileStartX = 0;
+	if (tileStartY < 0) tileStartY = 0;
+
 	if (isVisible)
 	{
 		for (int i = tileStartY; i < tileEndY; i++)

@@ -59,9 +59,9 @@ void Grid::Update(DWORD dt)
     int cellStartX, cellStartY, cellEndX, cellEndY;
     GetCell(cellStartX, cellStartY, cellEndX, cellEndY);
 
-    for (int i = cellStartX; i < cellEndX + 1; i++)
+    for (int i = cellStartX; i < cellEndX; i++)
     {
-        for (int j = cellStartY; j < cellEndY + 1; j++)
+        for (int j = cellStartY; j < cellEndY; j++)
         {
             CGameObject* obj = cells_[i][j];
        
@@ -81,9 +81,9 @@ void Grid::Update(DWORD dt)
     FireBallPool::GetInstance()->Update(dt, &coObject);
     MiniGoombaPool::GetInstance()->Update(dt, &coObject);
 
-    for (int i = cellStartX; i < cellEndX + 1; i++)
+    for (int i = cellStartX; i < cellEndX; i++)
     {
-        for (int j = cellStartY; j < cellEndY + 1; j++)
+        for (int j = cellStartY; j < cellEndY; j++)
         {
             CGameObject* obj = cells_[i][j];
             while (obj != NULL)
@@ -110,9 +110,9 @@ void Grid::Render()
     int cellStartX, cellStartY, cellEndX, cellEndY;
     GetCell(cellStartX, cellStartY, cellEndX, cellEndY);
 
-    for (int i = cellStartX; i < cellEndX + 1; i++)
+    for (int i = cellStartX; i < cellEndX; i++)
     {
-        for (int j = cellStartY; j < cellEndY + 1; j++)
+        for (int j = cellStartY; j < cellEndY; j++)
         {
             CGameObject* obj = cells_[i][j];
             while (obj != NULL)

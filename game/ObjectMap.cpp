@@ -72,12 +72,12 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			GetInfoElement(element, objectId, x, y, width, height);
-			obj = new BoundOverWorld();
+			obj = new BoundOverWorld(width, height);
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid, objectId);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
-			element = element->NextSiblingElement();
 			//splitToTile<BoundOverWorld>(x, y, width, height, grid, objects);
+			element = element->NextSiblingElement();
 		}
 	}
 	else if (name.compare("Ghost") == 0)
@@ -357,7 +357,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			else type = "node";
 			obj = new CPortal(type);
 			obj->SetPosition(x - PORTAL_WIDTH / 2, y - PORTAL_HEIGHT / 2);
-			obj->SetGrid(grid, objectId);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -370,7 +370,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new Tree();
 			obj->SetPosition(x - TREE_WIDTH / 2, y - TREE_HEIGHT / 2);
-			obj->SetGrid(grid, objectId);
+			obj->SetGrid(grid);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

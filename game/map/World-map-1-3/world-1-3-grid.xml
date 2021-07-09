@@ -1,182 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
 <grid>
-  <config cellwidth="300" cellheight="300" width="26" height="8"/>
+  <config cellwidth="400" cellheight="400" width="19" height="6"/>
   <data>
     <group id="13" name="Solid">
-        <object id="1" cellx="0" celly="3"/>
-        <object id="5" cellx="12" celly="3"/>
-        <object id="13" cellx="14" celly="3"/>
-        <object id="295" cellx="23" celly="7"/>
-        <object id="296" cellx="8" celly="2"/>
-        <object id="297" cellx="12" celly="2"/>
-        <object id="298" cellx="10" celly="2"/>
-        <object id="299" cellx="9" celly="3"/>
-        <object id="300" cellx="7" celly="2"/>
-        <object id="473" cellx="14" celly="7"/>
-        <object id="474" cellx="23" celly="7"/>
+        <object id="1" cellx="0" celly="2"/>
+        <object id="5" cellx="9" celly="2"/>
+        <object id="13" cellx="11" celly="2"/>
+        <object id="295" cellx="17" celly="5"/>
+        <object id="296" cellx="6" celly="2"/>
+        <object id="297" cellx="9" celly="2"/>
+        <object id="298" cellx="8" celly="2"/>
+        <object id="299" cellx="7" celly="2"/>
+        <object id="300" cellx="5" celly="2"/>
+        <object id="473" cellx="11" celly="5"/>
+        <object id="474" cellx="17" celly="5"/>
     </group>
     <group id="14" name="Ghost">
-        <object id="287" cellx="1" celly="3"/>
-        <object id="288" cellx="2" celly="2"/>
-        <object id="289" cellx="15" celly="1"/>
-        <object id="290" cellx="16" celly="2"/>
-        <object id="291" cellx="17" celly="2"/>
-        <object id="292" cellx="18" celly="2"/>
-        <object id="293" cellx="17" celly="2"/>
-        <object id="294" cellx="15" celly="2"/>
-        <object id="464" cellx="19" celly="2"/>
+        <object id="287" cellx="1" celly="2"/>
+        <object id="288" cellx="1" celly="1"/>
+        <object id="289" cellx="11" celly="1"/>
+        <object id="290" cellx="12" celly="1"/>
+        <object id="291" cellx="12" celly="1"/>
+        <object id="292" cellx="13" celly="1"/>
+        <object id="293" cellx="13" celly="2"/>
+        <object id="294" cellx="11" celly="2"/>
+        <object id="464" cellx="14" celly="1"/>
     </group>
     <group id="25" name="CameraBound">
         <object id="229" cellx="0" celly="0"/>
-        <object id="231" cellx="0" celly="3"/>
+        <object id="231" cellx="0" celly="2"/>
         <object id="236" cellx="0" celly="0"/>
-        <object id="366" cellx="25" celly="0"/>
+        <object id="366" cellx="18" celly="0"/>
     </group>
     <group id="18" name="QuestionBlocks">
-        <object id="336" cellx="6" celly="2"/>
-        <object id="466" cellx="5" celly="3"/>
-        <object id="359" cellx="5" celly="2"/>
-        <object id="325" cellx="5" celly="3"/>
-        <object id="475" cellx="21" celly="5"/>
-        <object id="480" cellx="9" celly="2"/>
+        <object id="336" cellx="4" celly="2"/>
+        <object id="466" cellx="3" celly="2"/>
+        <object id="359" cellx="4" celly="1"/>
+        <object id="325" cellx="4" celly="2"/>
+        <object id="475" cellx="15" celly="3"/>
+        <object id="480" cellx="7" celly="2"/>
     </group>
     <group id="32" name="MusicalNote">
-        <object id="468" cellx="4" celly="2"/>
-        <object id="469" cellx="4" celly="2"/>
-        <object id="470" cellx="5" celly="2"/>
+        <object id="468" cellx="3" celly="1"/>
+        <object id="469" cellx="3" celly="2"/>
+        <object id="470" cellx="3" celly="2"/>
     </group>
     <group id="15" name="Enemy">
-        <object id="471" cellx="6" celly="2"/>
-        <object id="476" cellx="3" celly="2"/>
-        <object id="479" cellx="20" celly="2"/>
-        <object id="482" cellx="1" celly="3"/>
-        <object id="483" cellx="7" celly="2"/>
-        <object id="484" cellx="9" celly="3"/>
-        <object id="485" cellx="10" celly="3"/>
-        <object id="486" cellx="11" celly="3"/>
-        <object id="487" cellx="13" celly="3"/>
-        <object id="490" cellx="16" celly="3"/>
-        <object id="491" cellx="16" celly="3"/>
-        <object id="492" cellx="16" celly="2"/>
-        <object id="493" cellx="19" celly="3"/>
+        <object id="471" cellx="4" celly="1"/>
+        <object id="476" cellx="2" celly="2"/>
+        <object id="479" cellx="15" celly="1"/>
+        <object id="482" cellx="1" celly="2"/>
+        <object id="483" cellx="5" celly="2"/>
+        <object id="484" cellx="6" celly="2"/>
+        <object id="485" cellx="7" celly="2"/>
+        <object id="486" cellx="8" celly="2"/>
+        <object id="487" cellx="10" celly="2"/>
+        <object id="490" cellx="12" celly="2"/>
+        <object id="491" cellx="12" celly="2"/>
+        <object id="492" cellx="12" celly="1"/>
+        <object id="493" cellx="14" celly="2"/>
     </group>
     <group id="15" name="Coin">
-        <object id="367" cellx="9" celly="2"/>
-        <object id="368" cellx="10" celly="2"/>
-        <object id="369" cellx="10" celly="2"/>
-        <object id="370" cellx="11" celly="2"/>
-        <object id="371" cellx="11" celly="2"/>
-        <object id="372" cellx="11" celly="2"/>
-        <object id="373" cellx="17" celly="1"/>
-        <object id="374" cellx="17" celly="1"/>
-        <object id="375" cellx="17" celly="1"/>
-        <object id="376" cellx="20" celly="4"/>
-        <object id="377" cellx="21" celly="4"/>
-        <object id="378" cellx="21" celly="4"/>
-        <object id="379" cellx="20" celly="5"/>
-        <object id="380" cellx="21" celly="5"/>
-        <object id="381" cellx="21" celly="5"/>
-        <object id="382" cellx="20" celly="4"/>
-        <object id="383" cellx="20" celly="4"/>
-        <object id="385" cellx="21" celly="4"/>
-        <object id="386" cellx="21" celly="4"/>
-        <object id="388" cellx="20" celly="5"/>
-        <object id="389" cellx="20" celly="5"/>
-        <object id="392" cellx="21" celly="5"/>
-        <object id="393" cellx="21" celly="5"/>
-        <object id="395" cellx="21" celly="5"/>
-        <object id="396" cellx="21" celly="5"/>
-        <object id="398" cellx="20" celly="5"/>
-        <object id="399" cellx="20" celly="5"/>
-        <object id="400" cellx="20" celly="5"/>
-        <object id="401" cellx="20" celly="5"/>
-        <object id="403" cellx="20" celly="5"/>
-        <object id="408" cellx="21" celly="5"/>
-        <object id="410" cellx="21" celly="5"/>
-        <object id="411" cellx="21" celly="5"/>
-        <object id="412" cellx="16" celly="7"/>
-        <object id="414" cellx="16" celly="7"/>
-        <object id="415" cellx="16" celly="7"/>
-        <object id="417" cellx="17" celly="7"/>
-        <object id="418" cellx="16" celly="6"/>
-        <object id="420" cellx="17" celly="6"/>
-        <object id="422" cellx="16" celly="6"/>
-        <object id="424" cellx="16" celly="2"/>
-        <object id="425" cellx="15" celly="2"/>
-        <object id="426" cellx="18" celly="6"/>
-        <object id="427" cellx="18" celly="7"/>
-        <object id="428" cellx="18" celly="7"/>
-        <object id="429" cellx="18" celly="7"/>
-        <object id="430" cellx="18" celly="6"/>
-        <object id="431" cellx="18" celly="6"/>
-        <object id="432" cellx="17" celly="6"/>
-        <object id="433" cellx="19" celly="7"/>
-        <object id="434" cellx="19" celly="7"/>
-        <object id="435" cellx="19" celly="7"/>
-        <object id="436" cellx="20" celly="7"/>
-        <object id="437" cellx="19" celly="6"/>
-        <object id="438" cellx="20" celly="6"/>
-        <object id="439" cellx="19" celly="6"/>
-        <object id="440" cellx="21" celly="6"/>
-        <object id="441" cellx="20" celly="7"/>
-        <object id="442" cellx="21" celly="7"/>
-        <object id="443" cellx="21" celly="7"/>
-        <object id="444" cellx="21" celly="6"/>
-        <object id="445" cellx="21" celly="6"/>
-        <object id="446" cellx="20" celly="6"/>
-        <object id="447" cellx="22" celly="7"/>
-        <object id="448" cellx="22" celly="7"/>
-        <object id="449" cellx="23" celly="7"/>
-        <object id="450" cellx="23" celly="7"/>
-        <object id="451" cellx="23" celly="6"/>
-        <object id="452" cellx="23" celly="6"/>
-        <object id="453" cellx="22" celly="6"/>
-        <object id="454" cellx="22" celly="6"/>
-        <object id="455" cellx="21" celly="7"/>
+        <object id="367" cellx="7" celly="1"/>
+        <object id="368" cellx="7" celly="1"/>
+        <object id="369" cellx="7" celly="1"/>
+        <object id="370" cellx="8" celly="1"/>
+        <object id="371" cellx="8" celly="1"/>
+        <object id="372" cellx="8" celly="1"/>
+        <object id="373" cellx="12" celly="1"/>
+        <object id="374" cellx="12" celly="1"/>
+        <object id="375" cellx="13" celly="1"/>
+        <object id="376" cellx="15" celly="3"/>
+        <object id="377" cellx="15" celly="3"/>
+        <object id="378" cellx="15" celly="3"/>
+        <object id="379" cellx="15" celly="4"/>
+        <object id="380" cellx="15" celly="4"/>
+        <object id="381" cellx="15" celly="4"/>
+        <object id="382" cellx="15" celly="3"/>
+        <object id="383" cellx="15" celly="3"/>
+        <object id="385" cellx="15" celly="3"/>
+        <object id="386" cellx="16" celly="3"/>
+        <object id="388" cellx="15" celly="3"/>
+        <object id="389" cellx="15" celly="3"/>
+        <object id="392" cellx="16" celly="3"/>
+        <object id="393" cellx="16" celly="3"/>
+        <object id="395" cellx="15" celly="4"/>
+        <object id="396" cellx="16" celly="4"/>
+        <object id="398" cellx="15" celly="4"/>
+        <object id="399" cellx="15" celly="4"/>
+        <object id="400" cellx="15" celly="4"/>
+        <object id="401" cellx="15" celly="4"/>
+        <object id="403" cellx="15" celly="3"/>
+        <object id="408" cellx="16" celly="3"/>
+        <object id="410" cellx="16" celly="4"/>
+        <object id="411" cellx="16" celly="4"/>
+        <object id="412" cellx="12" celly="5"/>
+        <object id="414" cellx="12" celly="5"/>
+        <object id="415" cellx="12" celly="5"/>
+        <object id="417" cellx="12" celly="5"/>
+        <object id="418" cellx="12" celly="5"/>
+        <object id="420" cellx="12" celly="5"/>
+        <object id="422" cellx="12" celly="5"/>
+        <object id="424" cellx="12" celly="1"/>
+        <object id="425" cellx="11" celly="1"/>
+        <object id="426" cellx="14" celly="5"/>
+        <object id="427" cellx="13" celly="5"/>
+        <object id="428" cellx="13" celly="5"/>
+        <object id="429" cellx="14" celly="5"/>
+        <object id="430" cellx="13" celly="5"/>
+        <object id="431" cellx="13" celly="5"/>
+        <object id="432" cellx="13" celly="5"/>
+        <object id="433" cellx="14" celly="5"/>
+        <object id="434" cellx="14" celly="5"/>
+        <object id="435" cellx="14" celly="5"/>
+        <object id="436" cellx="15" celly="5"/>
+        <object id="437" cellx="14" celly="5"/>
+        <object id="438" cellx="15" celly="5"/>
+        <object id="439" cellx="14" celly="5"/>
+        <object id="440" cellx="16" celly="5"/>
+        <object id="441" cellx="15" celly="5"/>
+        <object id="442" cellx="15" celly="5"/>
+        <object id="443" cellx="16" celly="5"/>
+        <object id="444" cellx="15" celly="5"/>
+        <object id="445" cellx="16" celly="5"/>
+        <object id="446" cellx="15" celly="5"/>
+        <object id="447" cellx="16" celly="5"/>
+        <object id="448" cellx="17" celly="5"/>
+        <object id="449" cellx="17" celly="5"/>
+        <object id="450" cellx="17" celly="5"/>
+        <object id="451" cellx="17" celly="5"/>
+        <object id="452" cellx="17" celly="5"/>
+        <object id="453" cellx="17" celly="5"/>
+        <object id="454" cellx="16" celly="5"/>
+        <object id="455" cellx="16" celly="5"/>
     </group>
     <group id="34" name="BrotherBound">
-        <object id="477" cellx="3" celly="2"/>
-        <object id="478" cellx="3" celly="2"/>
-        <object id="488" cellx="14" celly="2"/>
-        <object id="489" cellx="13" celly="2"/>
+        <object id="477" cellx="2" celly="2"/>
+        <object id="478" cellx="2" celly="2"/>
+        <object id="488" cellx="10" celly="2"/>
+        <object id="489" cellx="10" celly="2"/>
     </group>
     <group id="19" name="Brick">
-        <object id="311" cellx="5" celly="3"/>
-        <object id="312" cellx="5" celly="3"/>
-        <object id="313" cellx="4" celly="3"/>
-        <object id="314" cellx="5" celly="3"/>
-        <object id="315" cellx="6" celly="3"/>
-        <object id="318" cellx="6" celly="3"/>
-        <object id="322" cellx="4" celly="3"/>
-        <object id="323" cellx="5" celly="3"/>
-        <object id="324" cellx="6" celly="3"/>
-        <object id="326" cellx="5" celly="3"/>
-        <object id="327" cellx="6" celly="3"/>
-        <object id="331" cellx="4" celly="2"/>
-        <object id="334" cellx="6" celly="2"/>
-        <object id="338" cellx="5" celly="2"/>
-        <object id="339" cellx="5" celly="2"/>
-        <object id="340" cellx="4" celly="2"/>
-        <object id="467" cellx="5" celly="2"/>
-        <object id="361" cellx="5" celly="2"/>
-        <object id="360" cellx="6" celly="2"/>
-        <object id="363" cellx="6" celly="2"/>
-        <object id="328" cellx="5" celly="2"/>
-        <object id="335" cellx="5" celly="2"/>
-        <object id="341" cellx="5" celly="2"/>
-        <object id="343" cellx="5" celly="2"/>
+        <object id="311" cellx="3" celly="2"/>
+        <object id="312" cellx="3" celly="2"/>
+        <object id="313" cellx="3" celly="2"/>
+        <object id="314" cellx="4" celly="2"/>
+        <object id="315" cellx="4" celly="2"/>
+        <object id="318" cellx="4" celly="2"/>
+        <object id="322" cellx="3" celly="2"/>
+        <object id="323" cellx="4" celly="2"/>
+        <object id="324" cellx="4" celly="2"/>
+        <object id="326" cellx="4" celly="2"/>
+        <object id="327" cellx="4" celly="2"/>
+        <object id="331" cellx="3" celly="2"/>
+        <object id="334" cellx="4" celly="2"/>
+        <object id="338" cellx="3" celly="2"/>
+        <object id="339" cellx="3" celly="2"/>
+        <object id="340" cellx="3" celly="2"/>
+        <object id="467" cellx="3" celly="2"/>
+        <object id="361" cellx="4" celly="1"/>
+        <object id="360" cellx="4" celly="1"/>
+        <object id="363" cellx="4" celly="1"/>
+        <object id="328" cellx="4" celly="2"/>
+        <object id="335" cellx="4" celly="2"/>
+        <object id="341" cellx="4" celly="2"/>
+        <object id="343" cellx="4" celly="2"/>
     </group>
     <group id="27" name="Camera">
         <object id="239" cellx="0" celly="1"/>
     </group>
     <group id="28" name="KoopaBound">
-        <object id="244" cellx="6" celly="2"/>
-        <object id="245" cellx="5" celly="2"/>
-        <object id="494" cellx="16" celly="2"/>
-        <object id="495" cellx="16" celly="2"/>
+        <object id="244" cellx="4" celly="1"/>
+        <object id="245" cellx="4" celly="1"/>
+        <object id="494" cellx="12" celly="1"/>
+        <object id="495" cellx="12" celly="1"/>
     </group>
     <group id="24" name="Card">
-        <object id="286" cellx="23" celly="2"/>
+        <object id="286" cellx="17" celly="1"/>
     </group>
   </data>
 </grid>
