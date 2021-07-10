@@ -43,8 +43,9 @@ void ParaKoopa::Render()
 		ani = PARAKOOPA_ANI_WALK;
 	else if (state == KOOPA_STATE_BALL_RELIVE)
 		ani = PARAKOOPA_ANI_BALL_RELIVE;
-	else
+	else if (state == PARAKOOPA_STATE_JUMP)
 		ani = PARAKOOPA_ANI_JUMP;
+	else ani = PARAKOOPA_ANI_BALL;
 	animation_set->at(ani)->Render(x, y, nx, ny);
 }
 
