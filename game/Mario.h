@@ -100,7 +100,10 @@
 #define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
 #define MARIO_ANI_SET_ID	1
+#define MARIO_Y_DROP_BEHIND_SCENE	0.1f
 #define MARIO_UNTOUCHABLE_TIME	5000
+#define MARIO_HOLD_DOWN_TIME	3000
+#define MARIO_BEHIND_SCENE_TIME	5000
 
 class CMario : public CGameObject
 {
@@ -123,7 +126,11 @@ class CMario : public CGameObject
 	int money = 0;
 	int alpha = 255;
 	int untouchableStartTime;
+	int holdDownStartTime;
 public:
+	bool holdDownKey;
+	int behindSceneStartTime;
+
 	DWORD powerStartTime;
 	DWORD powerEndTime;
 
@@ -180,4 +187,7 @@ public:
 
 	void SetCardType(CardType card) { cardType = card; nx = 1; }
 	CardType GetCardType() { return cardType; }
+
+	void StartHoldDown() { holdDownStartTime = GetTickCount64(); }
+	void StartBehindScene() { behindSceneStartTime = GetTickCount64(); }
 };

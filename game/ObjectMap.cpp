@@ -84,8 +84,11 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
+			int type;
 			GetInfoElement(element, objectId, x, y, width, height);
-			obj = new CBigBox(width, height);
+			CBigBox* obj = new CBigBox(width, height);
+			element->QueryIntAttribute("type", &type);
+			obj->SetType(type);
 			obj->SetPosition(x, y);
 			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);

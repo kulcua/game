@@ -154,8 +154,14 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))
 			{
+				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
 				if (e->nx)
 					x += dx;
+				if (e->ny < 0 && holdDownKey && box->GetType() == 2)
+				{
+					holdDownKey = false;
+					StartHoldDown();
+				}
 			}
 			else if (dynamic_cast<Card*>(e->obj))
 			{
@@ -330,6 +336,18 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	PowerControl();
 
 	HandleCollision(coObjects);
+
+	if (holdDownStartTime > 0 && GetTickCount64() - holdDownStartTime > MARIO_HOLD_DOWN_TIME)
+	{
+		behindSceneStartTime = GetTickCount64();
+		holdDownStartTime = 0;
+		y += MARIO_Y_DROP_BEHIND_SCENE;
+	}
+
+	if (behindSceneStartTime > 0 && GetTickCount64() - behindSceneStartTime > MARIO_BEHIND_SCENE_TIME)
+	{
+		behindSceneStartTime = 0;
+	}
 
 	tail->Update(dt, coObjects);
 

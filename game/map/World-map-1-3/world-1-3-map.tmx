@@ -398,15 +398,15 @@
   <object id="474" x="7105.33" y="2302.67" width="338.667" height="49.3333"/>
  </objectgroup>
  <objectgroup id="14" name="Ghost" visible="0">
-  <object id="287" x="480" y="912" width="190" height="93"/>
-  <object id="288" x="625" y="768.5" width="190" height="241"/>
-  <object id="289" x="4657" y="577.5" width="190" height="432"/>
-  <object id="290" x="4896" y="770.5" width="190" height="237"/>
-  <object id="291" x="5136" y="674.5" width="190" height="333"/>
-  <object id="292" x="5521" y="722.5" width="190" height="285"/>
-  <object id="293" x="5234" y="818.5" width="237" height="189"/>
-  <object id="294" x="4610" y="866.5" width="237" height="142"/>
-  <object id="464" x="5762" y="626" width="190" height="378"/>
+  <object id="287" type="1" x="480" y="912" width="190" height="93"/>
+  <object id="288" type="1" x="625" y="768.5" width="190" height="241"/>
+  <object id="289" type="1" x="4657" y="577.5" width="190" height="432"/>
+  <object id="290" type="2" x="4896" y="770.5" width="190" height="237"/>
+  <object id="291" type="1" x="5136" y="674.5" width="190" height="333"/>
+  <object id="292" type="1" x="5521" y="722.5" width="190" height="285"/>
+  <object id="293" type="1" x="5234" y="818.5" width="237" height="189"/>
+  <object id="294" type="1" x="4610" y="866.5" width="237" height="142"/>
+  <object id="464" type="1" x="5762" y="626" width="190" height="378"/>
  </objectgroup>
  <objectgroup id="25" name="CameraBound" visible="0">
   <object id="229" type="0" x="-56.7273" y="4" width="63.6364" height="1132.85"/>
