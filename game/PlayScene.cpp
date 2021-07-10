@@ -369,11 +369,15 @@ void CPlayScene::Render()
 {
 	if (player == NULL) return;
 
+	if (player->behindSceneStartTime > 0)
+		player->Render();
+
 	TileMap::GetInstance()->RenderBackground();
 
 	grid->Render();
 
-	player->Render();
+	if (player->behindSceneStartTime == 0)
+		player->Render();
 
 	TileMap::GetInstance()->RenderForeground();
 

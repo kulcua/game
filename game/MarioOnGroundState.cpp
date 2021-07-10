@@ -104,9 +104,15 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     }
     // Mario is walking can't duck
     // mario.vx == 0: prevent multiple key when walk and sit
-    else if (input == PRESS_DOWN && mario.vx == 0)
+    else if (input == PRESS_DOWN)
     {
-        SetPositionGetInSitState(mario);
+        if (mario.vx == 0)
+            SetPositionGetInSitState(mario);
+        mario.holdDownKey = true;
+    }
+    else if (input == RELEASE_DOWN)
+    { 
+        mario.holdDownKey = false;
     }
     else if (input == PRESS_A)
     {
