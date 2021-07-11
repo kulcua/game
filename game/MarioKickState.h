@@ -4,7 +4,7 @@
 class MarioKickState : public MarioOnGroundState
 {
 	static MarioKickState* __instance;
-	DWORD kickStartTime;
+	ULONGLONG kickStartTime;
 public:
 	static MarioKickState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);

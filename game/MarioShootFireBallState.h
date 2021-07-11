@@ -4,7 +4,7 @@
 class MarioShootFireBallState : public MarioState
 {
 	static MarioShootFireBallState* __instance;
-	DWORD hitStartTime;
+	ULONGLONG hitStartTime;
 public:
 	static MarioShootFireBallState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);

@@ -90,12 +90,8 @@ public:
 	void FilterCollision(
 		vector<LPCOLLISIONEVENT>& coEvent,
 		vector<LPCOLLISIONEVENT>& coEventResult,
-		float &min_tx,
-		float &min_ty,
 		float &nx,
-		float &ny,
-		float &rdx,
-		float &rdy);
+		float &ny);
 
 	//CGameObject();
 

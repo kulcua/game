@@ -11,7 +11,7 @@ class Boomerang : public CGameObject
 {
 	friend class BoomerangPool;
 	Boomerang* next;
-	int animateTimeStart;
+	ULONGLONG animateTimeStart;
 public:
 	Boomerang();
 	bool inUse;

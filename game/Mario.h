@@ -9,7 +9,7 @@
 #define MARIO_JUMP_FLY_SPEED_Y	0.75f
 #define MARIO_DROP_FLY_SPEED_Y	0.02f
 #define MARIO_JUMP_DEFLECT_SPEED 0.4f
-#define MARIO_GRAVITY			0.0014f
+#define MARIO_GRAVITY			0.002f
 #define MARIO_VY_DROP			0.07f
 #define MARIO_DIE_DEFLECT_SPEED	 1.0f
 #define MARIO_ACCELERATION		0.001f
@@ -45,7 +45,6 @@
 #define MARIO_ANI_RACCOON_STOP		28
 #define MARIO_ANI_RACCOON_SPIN		29
 #define MARIO_ANI_RACCOON_KICK		30
-#define MARIO_ANI_RACCOON_DROP		31
 #define MARIO_ANI_RACCOON_DROP_FLY	32
 #define MARIO_ANI_ITEM_SMALL_TO_BIG			33
 #define MARIO_ANI_ITEM_BIG_TO_RACOON		34
@@ -91,16 +90,15 @@
 #define MARIO_SMALL_BBOX_HEIGHT 48
 #define MARIO_BBOX_TAIL_HIT_RIGHT 30
 #define MARIO_BBOX_TAIL_HIT_LEFT 5
-#define MARIO_UNTOUCHABLE_TIME 1500
 #define MARIO_LEVEL_UP_TIME	1100
 #define MARIO_KICK_TIME	500
 #define MARIO_HIGH_JUMP_TIME 200
-#define MARIO_DEFLECT_MUSICAL_NOTE 0.6f
+#define MARIO_DEFLECT_MUSICAL_NOTE 0.8f
 #define MARIO_SPIN_TIME	200
 #define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
 #define MARIO_ANI_SET_ID	1
-#define MARIO_Y_DROP_BEHIND_SCENE	0.1f
+#define MARIO_Y_DROP_BEHIND_SCENE	0.2f
 #define MARIO_UNTOUCHABLE_TIME	5000
 #define MARIO_HOLD_DOWN_TIME	3000
 #define MARIO_BEHIND_SCENE_TIME	5000
@@ -125,14 +123,14 @@ class CMario : public CGameObject
 	int point = 0;
 	int money = 0;
 	int alpha = 255;
-	int untouchableStartTime;
-	int holdDownStartTime;
+	ULONGLONG untouchableStartTime;
+	ULONGLONG holdDownStartTime;
 public:
 	bool holdDownKey;
-	int behindSceneStartTime;
+	ULONGLONG behindSceneStartTime;
 
-	DWORD powerStartTime;
-	DWORD powerEndTime;
+	ULONGLONG powerStartTime;
+	ULONGLONG powerEndTime;
 
 	MarioState* state_;
 
@@ -190,4 +188,5 @@ public:
 
 	void StartHoldDown() { holdDownStartTime = GetTickCount64(); }
 	void StartBehindScene() { behindSceneStartTime = GetTickCount64(); }
+	void HandleBehindScene();
 };

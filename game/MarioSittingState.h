@@ -4,7 +4,7 @@
 class MarioSittingState : public MarioOnGroundState
 {
 	static MarioSittingState* __instance;
-	DWORD jumpStartTime;
+	ULONGLONG jumpStartTime;
 public:
 	bool isSit;
 	static MarioSittingState* GetInstance();

@@ -29,7 +29,7 @@ void ParaMiniGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void ParaMiniGoomba::ChangeState()
 {
-	int timePassed = GetTickCount64() - timeStart;
+	ULONGLONG timePassed = GetTickCount64() - timeStart;
 	if (timePassed < PARAMINIGOOMBA_TIME_WALK)
 	{
 		SetState(GOOMBA_STATE_WALKING);

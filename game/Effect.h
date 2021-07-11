@@ -35,7 +35,7 @@ class Effect : public CGameObject
 	EffectName name;
 	EffectPoint ePoint;
 	Effect* next;
-	int animateTimeStart;
+	ULONGLONG animateTimeStart;
 public:
 	Effect();
 	bool inUse;

@@ -7,7 +7,7 @@
 
 class CoinBrick : public CItem
 {
-	int jumpTimeStart;
+	ULONGLONG jumpTimeStart;
 public:
 	CoinBrick();
 	void StartJump() { jumpTimeStart = GetTickCount64(); }

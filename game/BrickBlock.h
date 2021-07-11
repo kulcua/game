@@ -12,7 +12,7 @@ class BrickBlock : public CGameObject
 {
 	friend class CMario;
 	CMario* mario;
-	int coinTimeStart = 0;
+	ULONGLONG coinTimeStart = 0;
 public:
 	BrickBlock();
 	bool isCoin;

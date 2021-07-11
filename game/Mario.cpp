@@ -57,28 +57,12 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		// TODO: This is a very ugly designed function!!!!
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		//if (rdx != 0 && rdx != dx)
-		//	x += nx * abs(rdx);
-
-		x += min_tx * dx + nx * 0.4f;
-		if (onGround == false)
-			y += min_ty * dy + ny * 0.4f;
-
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		float nx = 0, ny;
+		FilterCollision(coEvents, coEventsResult, nx, ny);
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			
 			if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
@@ -118,7 +102,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopaShell = koopa;
 					}
 					else { // kick normally
-						if (koopa->isKicked == false)
+						if (koopa->vx == 0)
 						{
 							koopa->KickByMario();
 							MarioState::kick.GetInstance()->StartKick();
@@ -300,6 +284,12 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				break;
 			}
 
+			if (untouchableStartTime)
+			{
+				if (dynamic_cast<Enermy*>(e->obj))
+					if (nx != 0) x += dx;
+			}
+
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
 				|| dynamic_cast<CBrick*>(e->obj)
@@ -320,6 +310,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
 
+	HandleCollision(coObjects);
+
 	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
 		vy += MARIO_GRAVITY * dt;
 
@@ -335,19 +327,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	PowerControl();
 
-	HandleCollision(coObjects);
-
-	if (holdDownStartTime > 0 && GetTickCount64() - holdDownStartTime > MARIO_HOLD_DOWN_TIME)
-	{
-		behindSceneStartTime = GetTickCount64();
-		holdDownStartTime = 0;
-		y += MARIO_Y_DROP_BEHIND_SCENE;
-	}
-
-	if (behindSceneStartTime > 0 && GetTickCount64() - behindSceneStartTime > MARIO_BEHIND_SCENE_TIME)
-	{
-		behindSceneStartTime = 0;
-	}
+	HandleBehindScene();
 
 	tail->Update(dt, coObjects);
 
@@ -357,10 +337,25 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	state_->Update(*this, dt);
 }
 
+void CMario::HandleBehindScene()
+{
+	if (holdDownStartTime > 0 && GetTickCount64() - holdDownStartTime > MARIO_HOLD_DOWN_TIME)
+	{
+		behindSceneStartTime = GetTickCount64();
+		holdDownStartTime = 0;
+		y += 0.5f;
+	}
+
+	if (behindSceneStartTime > 0 && GetTickCount64() - behindSceneStartTime > MARIO_BEHIND_SCENE_TIME)
+	{
+		behindSceneStartTime = 0;
+	}
+}
+
 void CMario::ManageAlphaUntouchable()
 {
 	if (untouchableStartTime > 0) {
-		int timePassed = GetTickCount64() - untouchableStartTime;
+		ULONGLONG timePassed = GetTickCount64() - untouchableStartTime;
 		if (timePassed > MARIO_UNTOUCHABLE_TIME) {
 			untouchableStartTime = 0;
 			alpha = 255;
@@ -393,14 +388,14 @@ void CMario::KickShellAfterHandle()
 	MarioState::kick.GetInstance()->StartKick();
 }
 
-int CalculatePowerTimePassed(int time)
+ULONGLONG CalculatePowerTimePassed(int time)
 {
 	return (GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
 }
 
 void CMario::PowerControl()
 {
-	int timePassed;
+	ULONGLONG timePassed;
 	if (isPower && powerStartTime > 0)
 	{
 		timePassed = CalculatePowerTimePassed(powerStartTime);

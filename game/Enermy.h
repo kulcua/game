@@ -7,7 +7,7 @@ class Enermy : public CGameObject
 {
 protected:
 	CMario* mario;
-	DWORD dieTimeStart;
+	ULONGLONG dieTimeStart;
 	bool isOnGround;
 public:
 	void BeingKicked();

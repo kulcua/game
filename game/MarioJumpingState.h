@@ -4,7 +4,7 @@
 class MarioJumpingState : public MarioState
 {
 	static MarioJumpingState* __instance;
-	DWORD jumpStartTime;
+	ULONGLONG jumpStartTime;
 public:
 	bool isHighJump;
 	static MarioJumpingState* GetInstance();

@@ -13,15 +13,15 @@ class VenusFireTrap : public CPlant
 {
 	friend class FireBallPool;
 
-	DWORD shootTimeStart;
+	ULONGLONG shootTimeStart = 0;
 	FireBallPool* pool;
-	bool shootingTime;
+	bool shootingTime = false;
 
 	void FindPositionForShooting();
 	void SetDirectionShootingFollowMario();
 public:
-	bool isUp;
-	bool createFireball;
+	bool isUp = false;
+	bool createFireball = false;
 	int type;
 
 	VenusFireTrap(float y, int type);

@@ -15,7 +15,7 @@
 
 class ParaMiniGoomba : public ParaGoomba
 {
-	int timeStart = GetTickCount64();
+	ULONGLONG timeStart = GetTickCount64();
 	int throwGoombaTimes = PARAMINIGOOMBA_MAX_THROW_TIME;
 	int timeThrowStart;
 	bool maxY;
