@@ -14,8 +14,9 @@ CCamera::CCamera()
 void CCamera::SetPosition(float y) {
 	x = mario->x - width / 2;
 	if (x < 0) x = 0;
-
 	this->y = y;
+	startX = x;
+	startY = y;
 }
 
 void CCamera::FollowMario()
@@ -63,8 +64,7 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		coEvents.clear();
 
-		if (mario->state != MARIO_STATE_DIE)
-			CalcPotentialCollisions(coObjects, coEvents);
+		CalcPotentialCollisions(coObjects, coEvents);
 
 		if (coEvents.size() == 0)
 		{

@@ -178,6 +178,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KoopaBound.cpp" />
     <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="MarioDieState.cpp" />
     <ClCompile Include="MarioDropFlyState.cpp" />
     <ClCompile Include="MarioDroppingState.cpp" />
     <ClCompile Include="MarioLevelDownState.cpp" />
@@ -265,6 +266,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="KoopaBound.h" />
     <ClInclude Include="Layer.h" />
+    <ClInclude Include="MarioDieState.h" />
     <ClInclude Include="MarioDropFlyState.h" />
     <ClInclude Include="MarioDroppingState.h" />
     <ClInclude Include="MarioLevelDownState.h" />

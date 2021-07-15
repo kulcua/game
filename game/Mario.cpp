@@ -39,6 +39,7 @@
 #include "Plant.h"
 #include "Boomerang.h"
 #include "BoomerangBrother.h"
+#include "MarioDieState.h"
 #include "MiniGoomba.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
@@ -310,28 +311,31 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
 
-	HandleCollision(coObjects);
-
 	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
 		vy += MARIO_GRAVITY * dt;
 
-	if (isHandleShell)
+	if (dynamic_cast<MarioDieState*>(state_) == false)
 	{
-		if (koopaShell->GetState() != KOOPA_STATE_BALL)
+		HandleCollision(coObjects);
+
+		if (isHandleShell)
 		{
-			isHandleShell = false;
-			koopaShell->isHandled = false;
-			koopaShell = NULL;
+			if (koopaShell->GetState() != KOOPA_STATE_BALL)
+			{
+				isHandleShell = false;
+				koopaShell->isHandled = false;
+				koopaShell = NULL;
+			}
 		}
-	}
 
-	PowerControl();
+		PowerControl();
 
-	HandleBehindScene();
+		HandleBehindScene();
 
-	tail->Update(dt, coObjects);
+		tail->Update(dt, coObjects);
 
-	ManageAlphaUntouchable();
+		ManageAlphaUntouchable();
+	}	
 
 	// put it finally because of switch scene delete all objects
 	state_->Update(*this, dt);
@@ -455,7 +459,13 @@ void CMario::LevelDown()
 			state_ = MarioState::levelDown.GetInstance();
 			MarioState::levelDown.GetInstance()->StartLevelDown();
 		}
-		else SetState(MARIO_STATE_DIE);
+		else
+		{
+			vy = -MARIO_DIE_DEFLECT_SPEED;
+			state_ = MarioState::die.GetInstance();
+			MarioState::die.GetInstance()->StartDieTime();
+			//SetState(MARIO_STATE_DIE);
+		}
 	}
 }
 
@@ -483,10 +493,10 @@ void CMario::Render()
 		alpha = 255;
 	else alpha = this->alpha;
 
-	if (state == MARIO_STATE_DIE)
+	/*if (state == MARIO_STATE_DIE)
 		animation = MARIO_ANI_DIE;
-	else 
-		animation = GetAnimation();
+	else */
+	animation = GetAnimation();
 	animation_set->at(animation)->Render(x, y, nx, ny, alpha);
 	//RenderBoundingBox();
 }
@@ -494,12 +504,6 @@ void CMario::Render()
 void CMario::SetState(int state)
 {
 	CGameObject::SetState(state);
-	switch (state)
-	{
-		case MARIO_STATE_DIE:
-		vy = -MARIO_DIE_DEFLECT_SPEED;
-		break;
-	}
 }
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -516,6 +520,8 @@ void CMario::Reset()
 	isUntouchable = false;
 	SetLevel(MARIO_LEVEL_SMALL);
 	SetSpeed(0, 0);
+	SetPosition(100, 0);
+	CGame::GetInstance()->GetCam()->ResetPosition();
 }
 
 void CMario::SetTail(MarioTail* tail) { this->tail = tail; }

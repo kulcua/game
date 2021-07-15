@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "Utils.h"
 #include "Card.h"
+
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
 #define MARIO_JUMP_SPEED_Y		0.7f
@@ -13,7 +14,6 @@
 #define MARIO_VY_DROP			0.07f
 #define MARIO_DIE_DEFLECT_SPEED	 1.0f
 #define MARIO_ACCELERATION		0.001f
-#define MARIO_STATE_DIE				999
 #define MARIO_ANI_SMALL_IDLE		0 
 #define MARIO_ANI_SMALL_WALK		1
 #define MARIO_ANI_SMALL_JUMP		2
@@ -102,6 +102,7 @@
 #define MARIO_UNTOUCHABLE_TIME	5000
 #define MARIO_HOLD_DOWN_TIME	3000
 #define MARIO_BEHIND_SCENE_TIME	5000
+#define MARIO_INIT_LIFE 3
 
 class CMario : public CGameObject
 {
@@ -134,7 +135,7 @@ public:
 
 	MarioState* state_;
 
-	int life = 3;
+	int life = MARIO_INIT_LIFE;
 	bool switchItem;
 
 	void HandleInput(Input input);
