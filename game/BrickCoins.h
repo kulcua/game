@@ -1,6 +1,7 @@
 #pragma once
 #include "Brick.h"
 #define BRICK_STATE_THROW_ITEM 100
+#define BRICK_STATE_NORMAL 200
 #define BRICK_STATE_NUM_COINS 10
 
 class BrickCoins : public CBrick

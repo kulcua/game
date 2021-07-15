@@ -168,9 +168,11 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (brick->GetLevel() == BRICK_LEVEL_1_ITEM)
 							brick->SetState(BRICK_STATE_DISABLE);
-						else {
+						else 
+						{
 							BrickCoins* brick = dynamic_cast<BrickCoins*>(e->obj);
-							brick->SetState(BRICK_STATE_THROW_ITEM);
+							if (brick->GetState() == BRICK_STATE_NORMAL)
+								brick->SetState(BRICK_STATE_THROW_ITEM);
 						}
 					}
 				}
@@ -208,7 +210,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					PowerReset();
 				}
 				else if (e->ny < 0)
-					isOnGround = true;
+				{
+					level = MARIO_LEVEL_SMALL;
+					LevelDown();
+				}
 			}
 			else if (dynamic_cast<CCamera*>(e->obj))
 			{
@@ -260,6 +265,12 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					SetPoint(100);
 					SetMoney(1);
+					block->die = true;
+				}
+				else if (e->ny > 0)
+				{
+					MarioJumpingState::GetInstance()->isHighJump = false;
+					EffectPool::GetInstance()->CreateDebris(block->x, block->y);
 					block->die = true;
 				}
 			}

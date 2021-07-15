@@ -14,10 +14,18 @@ void CPlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 
+	if (abs(mario->x - x) > PLANT_NEAR_MARIO_DISTANCE)
+		isNearMario = false;
+	else isNearMario = true;
+
 	y += dy;
 
-	if (y > startY && vy > 0)
-		vy = -vy;
+	if (y > startY)
+	{
+		vy = 0;
+		if (isNearMario == false)
+			vy = -PLANT_SPEED;
+	}
 }
 
 void CPlant::SetState(int state)

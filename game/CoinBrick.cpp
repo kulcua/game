@@ -31,18 +31,18 @@ void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
-			vy += ITEM_GRAVITY * dt;
-			y += dy;
+			vy += COIN_DROP_SPEED;	
 		}
 	}
+	y += dy;
 }
 
 void CoinBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + 0;
-	b = y + 0;
+	r = x + 48;
+	b = y + 48;
 }
 
 void CoinBrick::Render()

@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "Game.h"
 #define WORLD_MAP_SCENE 2
+#define MARIO_TIME_DIE 2000
 
 MarioDieState* MarioDieState::__instance = NULL;
 
@@ -36,7 +37,7 @@ void MarioDieState::Update(CMario& mario, DWORD dt)
 {
     mario.y += mario.dy;
 
-    if (dieTimeStart > 0 && GetTickCount64() - dieTimeStart > 2000)
+    if (dieTimeStart > 0 && GetTickCount64() - dieTimeStart > MARIO_TIME_DIE)
     {
         if (mario.life > 0)
         {

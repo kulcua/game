@@ -4,6 +4,7 @@
 BrickCoins::BrickCoins(int type, float x, float y) : CBrick(type, x, y)
 {
 	level = BRICK_LEVEL_MANY_ITEM;
+	state = BRICK_STATE_NORMAL;
 	start_y = y;
 }
 
@@ -24,6 +25,7 @@ void BrickCoins::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			y = start_y;
 			vy = 0;
+			SetState(BRICK_STATE_NORMAL);
 		}
 	}
 }

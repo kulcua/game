@@ -22,6 +22,29 @@ void CFireBall::InitForPlant(VenusFireTrap* venus) {
 	inUse = true;
 	SetPosition(venus->x, venus->y);
 	this->state_.live.type = FIREBALL_FOR_VENUS;
+
+	float x_mario, y_mario, x_plant, y_plant;
+
+	state_.live.mario->GetPosition(x_mario, y_mario);
+
+	state_.live.venus->GetPosition(x_plant, y_plant);
+
+	if (state_.live.venus->createFireball)
+	{
+		nx = state_.live.venus->nx;
+
+		if (state_.live.venus->isUp)
+			vy = -FIREBALL_SPEED;
+		else
+			vy = FIREBALL_SPEED;
+
+		if (abs(x_mario - x_plant) < FIREBALL_CHECK_POS_SHOOT_X)
+			vx = FIREBALL_SPEED * nx;
+		else
+			vx = FIREBALL_SPEED * nx * 2;
+
+		state_.live.venus->createFireball = false;
+	}
 }
 
 void CFireBall::InitForMario()
@@ -116,29 +139,6 @@ void CFireBall::UpdateForPlant(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	x += dx;
 	y += dy;
-
-	float x_mario, y_mario, x_plant, y_plant;
-
-	state_.live.mario->GetPosition(x_mario, y_mario);
-
-	state_.live.venus->GetPosition(x_plant, y_plant);
-
-	if (state_.live.venus->createFireball)
-	{
-		nx = state_.live.venus->nx;
-
-		if (state_.live.venus->isUp)
-			vy = -FIREBALL_SPEED;
-		else
-			vy = FIREBALL_SPEED;
-
-		if (abs(x_mario - x_plant) < FIREBALL_CHECK_POS_SHOOT_X)
-			vx = FIREBALL_SPEED * nx;
-		else
-			vx = FIREBALL_SPEED * nx * 2;
-
-		state_.live.venus->createFireball = false;
-	}
 }
 
 void CFireBall::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
