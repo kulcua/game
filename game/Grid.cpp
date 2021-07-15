@@ -9,46 +9,29 @@
 #include "MiniGoombaPool.h"
 
 Grid::Grid() {
-    // Clear the grid.
     for (int x = 0; x < NUM_CELLS; x++)
     {
         for (int y = 0; y < NUM_CELLS; y++)
         {
-            cells_[x][y] = NULL;
+            cells_[x][y] = new Cell();
         }
-    }
-}
-
-void Grid::Add(CGameObject* obj)
-{
-    // Determine which grid cell it's in.
-    int cellX = (int)(obj->x / CELL_SIZE);
-    int cellY = (int)(obj->y / CELL_SIZE);
-
-    // Add to the front of list for the cell it's in.
-    obj->prev_ = NULL;
-    obj->next_ = cells_[cellX][cellY];
-    cells_[cellX][cellY] = obj;
-
-    if (obj->next_ != NULL)
-    {
-        obj->next_->prev_ = obj;
     }
 }
 
 void Grid::Add(CGameObject* obj, int id)
 {
-    D3DXVECTOR2 cellNumber = objectCells[id];
-    int cellX = (int)cellNumber.x;
-    int cellY = (int)cellNumber.y;
-    // Add to the front of list for the cell it's in.
-    obj->prev_ = NULL;
-    obj->next_ = cells_[cellX][cellY];
-    cells_[cellX][cellY] = obj;
-
-    if (obj->next_ != NULL)
+    D3DXVECTOR4 cellNumber = objectCells[id];
+    int cellStartX = (int)cellNumber[0];
+    int cellStartY = (int)cellNumber[1];
+    int cellEndX = (int)cellNumber[2];
+    int cellEndY = (int)cellNumber[3];
+    
+    for (int i = cellStartX; i < cellEndX + 1; i++)
     {
-        obj->next_->prev_ = obj;
+        for (int j = cellStartY; j < cellEndY + 1; j++)
+        {
+            cells_[i][j]->AddObject(obj);
+        }
     }
 }
 
@@ -63,15 +46,13 @@ void Grid::Update(DWORD dt)
     {
         for (int j = cellStartY; j < cellEndY; j++)
         {
-            CGameObject* obj = cells_[i][j];
-       
-            while (obj != NULL)
+            vector<CGameObject*> objList = cells_[i][j]->GetListObjects();
+            for (int i = 0; i < objList.size(); i++)
             {
-                if (obj->die == false)
+                if (objList[i]->die == false)
                 {
-                    coObject.push_back(obj);
+                    coObject.push_back(objList[i]);
                 }
-                obj = obj->next_;
             }
         }
     }
@@ -85,15 +66,7 @@ void Grid::Update(DWORD dt)
     {
         for (int j = cellStartY; j < cellEndY; j++)
         {
-            CGameObject* obj = cells_[i][j];
-            while (obj != NULL)
-            {
-                if (obj->die == false)
-                {
-                    obj->Update(dt, &coObject);
-                }
-                obj = obj->next_;
-            }
+            cells_[i][j]->Update(dt, coObject);
         }
     }
 
@@ -114,13 +87,7 @@ void Grid::Render()
     {
         for (int j = cellStartY; j < cellEndY; j++)
         {
-            CGameObject* obj = cells_[i][j];
-            while (obj != NULL)
-            {
-                if (obj->die == false)
-                    obj->Render();
-                obj = obj->next_;
-            }
+            cells_[i][j]->Render();
         }
     }
 
@@ -156,24 +123,8 @@ void Grid::Move(CGameObject* obj, float x, float y)
     // If it didn't change cells, we're done.
     if (oldCellX == cellX && oldCellY == cellY) return;
 
-    // Unlink it from the list of its old cell.
-    if (obj->prev_ != NULL)
-    {
-        obj->prev_->next_ = obj->next_;
-    }
-
-    if (obj->next_ != NULL)
-    {
-        obj->next_->prev_ = obj->prev_;
-    }
-    
-    // If it's the head of a list, remove it.
-    if (cells_[oldCellX][oldCellY] == obj)
-    {
-        cells_[oldCellX][oldCellY] = obj->next_;
-    }
-    // Add it back to the grid at its new cell.
-    Add(obj);
+    cells_[oldCellX][oldCellY]->RemoveObject(obj);
+    cells_[cellX][cellY]->AddObject(obj);
 }
 
 void Grid::ReadGridData(const char* filePath)
@@ -193,14 +144,38 @@ void Grid::ReadGridData(const char* filePath)
         element = objectGroup->FirstChildElement(); //id - cell number xy
         while (element)
         {
-            int objectId, cellX, cellY;
+            int objectId, cellX, cellY, endX, endY;
+            string cellEndX, cellEndY; // avoid NaN cases when obj doesn't have width, height
             element->QueryIntAttribute("id", &objectId);
             element->QueryIntAttribute("cellx", &cellX);
             element->QueryIntAttribute("celly", &cellY);
-            objectCells[objectId] = D3DXVECTOR2(cellX, cellY);
+            cellEndX = element->Attribute("xEnd");
+            cellEndY = element->Attribute("yEnd");
+            if (cellEndX.compare("NaN") == 0 && cellEndY.compare("NaN") == 0)
+            {
+                endX = cellX;
+                endY = cellY;
+            }
+            else {
+                endX = atoi(cellEndX.c_str());
+                endY = atoi(cellEndY.c_str());
+            }
+            //DebugOut(L"%d %d %d %d\n", cellX, cellY, endX, endY);
+            objectCells[objectId] = D3DXVECTOR4(cellX, cellY, endX, endY);
 
             element = element->NextSiblingElement();
         }
         objectGroup = objectGroup->NextSiblingElement();
+    }
+}
+
+Grid::~Grid()
+{
+    for (int x = 0; x < NUM_CELLS; x++)
+    {
+        for (int y = 0; y < NUM_CELLS; y++)
+        {
+            delete cells_[x][y];
+        }
     }
 }

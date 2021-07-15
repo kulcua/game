@@ -4,7 +4,6 @@
 #include <vector>
 #include "Animations.h"
 #include "Sprites.h"
-#include "Grid.h"
 
 using namespace std;
 
@@ -39,10 +38,9 @@ struct CCollisonEvent
 class CGameObject
 {
 protected:
+	friend class Grid;
 	Grid* grid_;
 public:
-	CGameObject* prev_;
-	CGameObject* next_;
 	float oldX, oldY;
 
 	float x = 0;
@@ -69,9 +67,8 @@ public:
 public:
 	CGameObject();
 	void SetGrid(Grid* grid, int id);
-	void SetGrid(Grid* grid);
 	bool die = false;
-
+	bool isOnGround;
 	void SetPosition(float x, float y) { this->x = x; this->y = y; }
 	void SetSpeed(float vx, float vy) { this->vx = vx; this->vy = vy; }
 	void GetPosition(float& x, float& y) { x = this->x; y = this->y; }

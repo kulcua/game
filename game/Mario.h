@@ -4,7 +4,7 @@
 #include "Card.h"
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
-#define MARIO_JUMP_SPEED_Y		0.6f
+#define MARIO_JUMP_SPEED_Y		0.7f
 #define MARIO_FLY_SPEED_Y		0.6f
 #define MARIO_JUMP_FLY_SPEED_Y	0.75f
 #define MARIO_DROP_FLY_SPEED_Y	0.02f
@@ -139,7 +139,6 @@ public:
 
 	void HandleInput(Input input);
 
-	bool onGround;
 	bool isPower;
 	bool isHandleShell;
 	bool isUntouchable;

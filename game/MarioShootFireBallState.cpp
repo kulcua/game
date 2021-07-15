@@ -27,7 +27,7 @@ void MarioShootFireBallState::Enter(CMario& mario)
 {
     if (mario.GetLevel() == MARIO_LEVEL_FIRE)
     {
-        if (mario.onGround)
+        if (mario.isOnGround)
             mario.SetAnimation(MARIO_ANI_FIRE_SHOOT_FIREBALL_IDLE);
         else 
             mario.SetAnimation(MARIO_ANI_FIRE_SHOOT_FIREBALL_JUMP);

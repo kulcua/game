@@ -70,7 +70,7 @@ void MarioDroppingState::HandleInput(CMario& mario, Input input)
 
 void MarioDroppingState::Update(CMario& mario, DWORD dt)
 {
-    if (mario.onGround)
+    if (mario.isOnGround)
     {
         if (CGame::GetInstance()->GetCurrentScene()->isFinished)
         {
@@ -80,7 +80,7 @@ void MarioDroppingState::Update(CMario& mario, DWORD dt)
             mario.state_ = MarioState::standing.GetInstance();
         }
     }
-    //DebugOut(L"Dropping %d %d\n", mario.IsAutoMoving(), mario.onGround);
+    //DebugOut(L"Dropping %d %d\n", mario.IsAutoMoving(), mario.isOnGround);
 }
 
 void MarioDroppingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

@@ -130,6 +130,9 @@ powerBlack	99913
 
 [HUD]
 99900
+[GRID]
+#path
+map/Overworld/overworld-1-grid.xml
 [MAP]
 #id	.tmx	r	g	b
 81000	map/Overworld/overworld-1-map.tmx	255	255	255	map/Overworld/

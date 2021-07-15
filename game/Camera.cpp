@@ -34,9 +34,9 @@ void CCamera::FollowMario()
 		marioOnTopCam = false;
 
 	if (dynamic_cast<MarioFlyingState*>(mario->state_) && mario->GetLevel() == MARIO_LEVEL_RACCOON)
-		onGroundMode = false;
+		isOnGroundMode = false;
 
-	if (onGroundMode == false)
+	if (isOnGroundMode == false)
 	{
 		if ((marioOnTopCam == true && mario->vy < 0) // when mario fly
 			|| (marioOnTopCam == false && mario->vy > 0)) // drop
@@ -86,7 +86,7 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (camBound->GetType() == 0)
 					{
 						if (e->ny < 0)
-							onGroundMode = true;
+							isOnGroundMode = true;
 					}
 				}
 				else {

@@ -63,6 +63,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
+
 			if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
@@ -159,7 +160,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				
 				if (e->ny > 0)
 				{
 					MarioJumpingState::GetInstance()->isHighJump = false;
@@ -184,7 +184,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (note->isHidden == false)
 					{
 						state_ = MarioState::jumping.GetInstance();
-						onGround = false;
+						isOnGround = false;
 						if (note->GetType() == MUSICAL_NOTE_TYPE_RED)
 						{
 							vy = -MARIO_DEFLECT_MUSICAL_NOTE * 3;
@@ -207,7 +207,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					PowerReset();
 				}
 				else if (e->ny < 0)
-					onGround = true;
+					isOnGround = true;
 			}
 			else if (dynamic_cast<CCamera*>(e->obj))
 			{
@@ -268,7 +268,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 				{
 					if (e->ny < 0)
-						onGround = true;
+						isOnGround = true;
 					if (port->GetName() == PortalName::in)
 						MarioFrontState::GetInstance()->GetPortal(*this, port, e->ny);
 					else
@@ -298,7 +298,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny < 0)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
-					onGround = true;
+					isOnGround = true;
 				}
 			}
 		}

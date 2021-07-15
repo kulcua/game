@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"
+#include "Grid.h"
 #include "Textures.h"
 
 CGameObject::CGameObject()
@@ -15,17 +16,7 @@ CGameObject::CGameObject()
 void CGameObject::SetGrid(Grid* grid, int id)
 {
 	grid_ = grid;
-	prev_ = NULL;
-	next_ = NULL;
 	grid_->Add(this, id);
-}
-
-void CGameObject::SetGrid(Grid* grid)
-{
-	grid_ = grid;
-	prev_ = NULL;
-	next_ = NULL;
-	grid_->Add(this);
 }
 
 void CGameObject::SetAnimation(int ani)
@@ -154,7 +145,7 @@ void CGameObject::FilterCollision(
 		}
 	}
 
-	// skip collision if obj onGround with A and collise nx with A
+	// skip collision if obj isOnGround with A and collise nx with A
 	if (obj_x != NULL && obj_y != NULL && obj_x->y == obj_y->y)
 	{
 		min_tx = 1;
@@ -165,7 +156,8 @@ void CGameObject::FilterCollision(
 	if (min_iy >= 0) coEventResult.push_back(coEvents[min_iy]);
 
 	x += min_tx * dx + nx * 0.4f;
-	y += min_ty * dy + ny * 0.4f;
+	if (isOnGround == false)
+		y += min_ty * dy + ny * 0.4f;
 
 	if (nx != 0) vx = 0;
 	if (ny != 0) vy = 0;

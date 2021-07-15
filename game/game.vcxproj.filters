@@ -342,6 +342,9 @@
     <ClCompile Include="Enermy.cpp">
       <Filter>Enermies</Filter>
     </ClCompile>
+    <ClCompile Include="Cell.cpp">
+      <Filter>Grid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -592,6 +595,9 @@
     </ClInclude>
     <ClInclude Include="Enermy.h">
       <Filter>Enermies</Filter>
+    </ClInclude>
+    <ClInclude Include="Cell.h">
+      <Filter>Grid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

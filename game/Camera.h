@@ -10,7 +10,7 @@ class CCamera : public CGameObject
 	float xCenter;
 	float yCenter;
 	
-	bool onGroundMode;
+	bool isOnGroundMode;
 
 	bool isMove;
 public:

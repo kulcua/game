@@ -3,6 +3,8 @@
 #include "EffectPool.h"
 #include "BigBox.h"
 #include "CameraBound.h"
+#include "Brick.h"
+#include "BrickBlock.h"
 
 CGoomba::CGoomba()
 {
@@ -46,7 +48,17 @@ void CGoomba::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGround*>(e->obj))
+			if (dynamic_cast<Enermy*>(e->obj))
+			{
+				if (e->nx) {
+					vx = this->nx * GOOMBA_WALKING_SPEED;
+					x += dx;
+				}
+			}
+
+			if (dynamic_cast<CGround*>(e->obj)
+				|| dynamic_cast<BrickBlock*>(e->obj)
+				|| dynamic_cast<CBrick*>(e->obj))
 			{
 				if (e->ny < 0) isOnGround = true;
 				if (e->nx) {

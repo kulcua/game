@@ -95,6 +95,13 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			
+			if (dynamic_cast<Enermy*>(e->obj))
+			{
+				if (e->nx && state == KOOPA_STATE_WALKING) {
+					WalkThrough();
+				}
+			}
+
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);

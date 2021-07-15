@@ -59,11 +59,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			GetInfoElement(element, objectId, x, y, width, height);
-			splitToTile<CGround>(x, y, width, height, grid, objects);
-			//obj = new CGround(width, height);
-			//obj->SetPosition(x, y);
-			//obj->SetGrid(grid, objectId);
-			//objects.push_back(obj);
+			obj = new CGround(width, height);
+			obj->SetPosition(x, y);
+			obj->SetGrid(grid, objectId);
+			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}		
 	}
@@ -74,9 +73,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new BoundOverWorld(width, height);
 			obj->SetPosition(x, y);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
-			//splitToTile<BoundOverWorld>(x, y, width, height, grid, objects);
 			element = element->NextSiblingElement();
 		}
 	}
@@ -149,8 +147,6 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			{
 				vector<CItem*> listItems;
 				BrickCoins* brCoins = new BrickCoins(type, x, y);
-				brCoins->SetGrid(grid, objectId);
-				objects.push_back(brCoins);
 				for (int i = 0; i < 10; i++)
 				{
 					CItem* item = new CoinBrick();
@@ -160,16 +156,18 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 					listItems.push_back(item);
 				}
 				brCoins->SetListItems(listItems);
+				brCoins->SetGrid(grid, objectId);
+				objects.push_back(brCoins);
 				coins = true;
 			}
 			if (coins == false)
 			{
 				item->SetPosition(x, y);
 				br->SetItem(item);
-				br->SetGrid(grid, objectId);
 				item->SetGrid(grid, objectId);
-				objects.push_back(br);
 				objects.push_back(item);
+				br->SetGrid(grid, objectId);
+				objects.push_back(br);
 			}
 			element = element->NextSiblingElement();
 		}
@@ -207,24 +205,10 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			int type;
 			GetInfoElement(element, objectId, x, y, width, height);
 			element->QueryIntAttribute("type", &type);
-			float x_, y_;
-			int cell_x = round(width / TILE_SIZE);
-			int cell_y = round(height / TILE_SIZE);
-			if (cell_x > 0 && cell_y > 0)
-			{
-				for (int i = 0; i < cell_x; i++)
-				{
-					for (int j = 0; j < cell_y; j++)
-					{
-						obj = new CCameraBound(type);
-						x_ = i * TILE_SIZE + x;
-						y_ = j * TILE_SIZE + y;
-						obj->SetPosition(x_, y_);
-						obj->SetGrid(grid);
-						objects.push_back(obj);
-					}
-				}
-			}
+			obj = new CCameraBound(type, width, height);
+			obj->SetPosition(x, y);
+			obj->SetGrid(grid, objectId);
+			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
 	}
@@ -239,7 +223,6 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			CGame::GetInstance()->SetCam(cam);
 			cam->SetPosition(y);
 			cam->SetIsMove(isMove);
-			//cam->SetGrid(grid);
 			objects.push_back(cam);
 			element = element->NextSiblingElement();
 		}
@@ -360,7 +343,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			else type = "node";
 			obj = new CPortal(type);
 			obj->SetPosition(x - PORTAL_WIDTH / 2, y - PORTAL_HEIGHT / 2);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}
@@ -373,7 +356,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			GetInfoElement(element, objectId, x, y, width, height);
 			obj = new Tree();
 			obj->SetPosition(x - TREE_WIDTH / 2, y - TREE_HEIGHT / 2);
-			obj->SetGrid(grid);
+			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

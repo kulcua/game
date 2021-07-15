@@ -52,7 +52,8 @@ void CBrick::SetState(int state)
 	{
 	case BRICK_STATE_DISABLE:
 		vy = -BRICK_JUMP_DEFLECT_Y;
-		item->die = false;
+		if (type != BRICK_TYPE_3)
+			item->die = false;
 		break;
 	}
 }

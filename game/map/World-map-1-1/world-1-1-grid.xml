@@ -3,159 +3,159 @@
   <config cellwidth="400" cellheight="400" width="22" height="5"/>
   <data>
     <group id="13" name="Solid">
-        <object id="1" cellx="0" celly="3"/>
-        <object id="2" cellx="2" celly="2"/>
-        <object id="3" cellx="4" celly="3"/>
-        <object id="4" cellx="8" celly="3"/>
-        <object id="5" cellx="11" celly="3"/>
-        <object id="6" cellx="11" celly="2"/>
-        <object id="7" cellx="11" celly="3"/>
-        <object id="8" cellx="11" celly="2"/>
-        <object id="10" cellx="12" celly="2"/>
-        <object id="11" cellx="12" celly="2"/>
-        <object id="12" cellx="12" celly="3"/>
-        <object id="13" cellx="12" celly="3"/>
-        <object id="14" cellx="13" celly="2"/>
-        <object id="15" cellx="13" celly="2"/>
-        <object id="16" cellx="16" celly="3"/>
-        <object id="17" cellx="16" celly="2"/>
-        <object id="19" cellx="16" celly="1"/>
-        <object id="48" cellx="11" celly="2"/>
-        <object id="107" cellx="14" celly="3"/>
-        <object id="108" cellx="17" celly="3"/>
-        <object id="109" cellx="15" celly="4"/>
-        <object id="111" cellx="16" celly="4"/>
-        <object id="112" cellx="16" celly="4"/>
-        <object id="113" cellx="16" celly="4"/>
-        <object id="114" cellx="16" celly="4"/>
-        <object id="115" cellx="17" celly="4"/>
-        <object id="116" cellx="17" celly="3"/>
-        <object id="117" cellx="15" celly="3"/>
-        <object id="209" cellx="16" celly="2"/>
+        <object id="1" cellx="0" celly="3" xEnd="4" yEnd="3"/>
+        <object id="2" cellx="2" celly="2" xEnd="2" yEnd="3"/>
+        <object id="3" cellx="4" celly="3" xEnd="8" yEnd="3"/>
+        <object id="4" cellx="8" celly="3" xEnd="11" yEnd="3"/>
+        <object id="5" cellx="11" celly="3" xEnd="11" yEnd="3"/>
+        <object id="6" cellx="11" celly="2" xEnd="11" yEnd="3"/>
+        <object id="7" cellx="11" celly="3" xEnd="11" yEnd="3"/>
+        <object id="8" cellx="11" celly="2" xEnd="11" yEnd="3"/>
+        <object id="10" cellx="12" celly="2" xEnd="12" yEnd="3"/>
+        <object id="11" cellx="12" celly="2" xEnd="12" yEnd="3"/>
+        <object id="12" cellx="12" celly="3" xEnd="12" yEnd="3"/>
+        <object id="13" cellx="12" celly="3" xEnd="16" yEnd="3"/>
+        <object id="14" cellx="13" celly="2" xEnd="13" yEnd="3"/>
+        <object id="15" cellx="13" celly="2" xEnd="14" yEnd="3"/>
+        <object id="16" cellx="16" celly="3" xEnd="21" yEnd="3"/>
+        <object id="17" cellx="16" celly="2" xEnd="17" yEnd="3"/>
+        <object id="19" cellx="16" celly="1" xEnd="17" yEnd="2"/>
+        <object id="48" cellx="11" celly="2" xEnd="11" yEnd="2"/>
+        <object id="107" cellx="14" celly="3" xEnd="15" yEnd="4"/>
+        <object id="108" cellx="17" celly="3" xEnd="18" yEnd="5"/>
+        <object id="109" cellx="15" celly="4" xEnd="17" yEnd="4"/>
+        <object id="111" cellx="16" celly="4" xEnd="17" yEnd="4"/>
+        <object id="112" cellx="16" celly="4" xEnd="17" yEnd="4"/>
+        <object id="113" cellx="16" celly="4" xEnd="17" yEnd="4"/>
+        <object id="114" cellx="16" celly="4" xEnd="17" yEnd="4"/>
+        <object id="115" cellx="17" celly="4" xEnd="17" yEnd="4"/>
+        <object id="116" cellx="17" celly="3" xEnd="17" yEnd="4"/>
+        <object id="117" cellx="15" celly="3" xEnd="17" yEnd="3"/>
+        <object id="209" cellx="16" celly="2" xEnd="17" yEnd="2"/>
     </group>
     <group id="14" name="Ghost">
-        <object id="28" cellx="1" celly="2"/>
-        <object id="29" cellx="2" celly="2"/>
-        <object id="30" cellx="3" celly="2"/>
-        <object id="31" cellx="3" celly="2"/>
-        <object id="32" cellx="3" celly="2"/>
-        <object id="33" cellx="3" celly="2"/>
-        <object id="34" cellx="9" celly="1"/>
-        <object id="35" cellx="10" celly="1"/>
-        <object id="36" cellx="11" celly="1"/>
-        <object id="37" cellx="15" celly="2"/>
-        <object id="38" cellx="16" celly="2"/>
-        <object id="39" cellx="9" celly="2"/>
-        <object id="40" cellx="9" celly="2"/>
-        <object id="41" cellx="9" celly="2"/>
+        <object id="28" cellx="1" celly="2" xEnd="2" yEnd="3"/>
+        <object id="29" cellx="2" celly="2" xEnd="2" yEnd="3"/>
+        <object id="30" cellx="3" celly="2" xEnd="3" yEnd="3"/>
+        <object id="31" cellx="3" celly="2" xEnd="3" yEnd="3"/>
+        <object id="32" cellx="3" celly="2" xEnd="4" yEnd="3"/>
+        <object id="33" cellx="3" celly="2" xEnd="4" yEnd="3"/>
+        <object id="34" cellx="9" celly="1" xEnd="10" yEnd="1"/>
+        <object id="35" cellx="10" celly="1" xEnd="10" yEnd="1"/>
+        <object id="36" cellx="11" celly="1" xEnd="12" yEnd="1"/>
+        <object id="37" cellx="15" celly="2" xEnd="16" yEnd="3"/>
+        <object id="38" cellx="16" celly="2" xEnd="16" yEnd="3"/>
+        <object id="39" cellx="9" celly="2" xEnd="10" yEnd="3"/>
+        <object id="40" cellx="9" celly="2" xEnd="10" yEnd="3"/>
+        <object id="41" cellx="9" celly="2" xEnd="10" yEnd="3"/>
     </group>
     <group id="25" name="CameraBound">
-        <object id="229" cellx="0" celly="0"/>
-        <object id="231" cellx="0" celly="3"/>
-        <object id="236" cellx="6" celly="0"/>
-        <object id="237" cellx="21" celly="0"/>
+        <object id="229" cellx="0" celly="0" xEnd="0" yEnd="3"/>
+        <object id="231" cellx="0" celly="3" xEnd="21" yEnd="3"/>
+        <object id="236" cellx="6" celly="0" xEnd="21" yEnd="0"/>
+        <object id="237" cellx="21" celly="0" xEnd="21" yEnd="3"/>
     </group>
     <group id="18" name="QuestionBlocks">
-        <object id="47" cellx="1" celly="2"/>
-        <object id="49" cellx="1" celly="2"/>
-        <object id="50" cellx="1" celly="2"/>
-        <object id="51" cellx="1" celly="2"/>
-        <object id="53" cellx="3" celly="2"/>
-        <object id="104" cellx="4" celly="2"/>
-        <object id="105" cellx="5" celly="2"/>
-        <object id="106" cellx="10" celly="2"/>
-        <object id="213" cellx="10" celly="0"/>
-        <object id="270" cellx="15" celly="2"/>
+        <object id="47" cellx="1" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="49" cellx="1" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="50" cellx="1" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="51" cellx="1" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="53" cellx="3" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="104" cellx="4" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="105" cellx="5" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="106" cellx="10" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="213" cellx="10" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="270" cellx="15" celly="2" xEnd="15" yEnd="2"/>
     </group>
     <group id="15" name="Coin">
-        <object id="59" cellx="8" celly="2"/>
-        <object id="64" cellx="8" celly="2"/>
-        <object id="68" cellx="8" celly="1"/>
-        <object id="69" cellx="8" celly="1"/>
-        <object id="70" cellx="9" celly="1"/>
-        <object id="118" cellx="16" celly="4"/>
-        <object id="119" cellx="16" celly="4"/>
-        <object id="120" cellx="16" celly="4"/>
-        <object id="121" cellx="16" celly="4"/>
-        <object id="122" cellx="16" celly="4"/>
-        <object id="123" cellx="16" celly="4"/>
-        <object id="124" cellx="16" celly="4"/>
-        <object id="125" cellx="16" celly="3"/>
-        <object id="126" cellx="16" celly="3"/>
-        <object id="127" cellx="16" celly="3"/>
-        <object id="128" cellx="16" celly="3"/>
-        <object id="129" cellx="16" celly="3"/>
-        <object id="210" cellx="9" celly="0"/>
-        <object id="211" cellx="10" celly="0"/>
-        <object id="212" cellx="10" celly="0"/>
-        <object id="214" cellx="10" celly="0"/>
-        <object id="215" cellx="11" celly="0"/>
-        <object id="216" cellx="12" celly="0"/>
-        <object id="217" cellx="12" celly="0"/>
-        <object id="218" cellx="12" celly="0"/>
-        <object id="219" cellx="12" celly="0"/>
-        <object id="220" cellx="11" celly="0"/>
-        <object id="221" cellx="11" celly="0"/>
-        <object id="222" cellx="11" celly="0"/>
-        <object id="223" cellx="11" celly="0"/>
-        <object id="224" cellx="12" celly="1"/>
-        <object id="225" cellx="12" celly="0"/>
-        <object id="226" cellx="13" celly="0"/>
-        <object id="227" cellx="13" celly="0"/>
-        <object id="228" cellx="13" celly="0"/>
+        <object id="59" cellx="8" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="64" cellx="8" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="68" cellx="8" celly="1" xEnd="NaN" yEnd="NaN"/>
+        <object id="69" cellx="8" celly="1" xEnd="NaN" yEnd="NaN"/>
+        <object id="70" cellx="9" celly="1" xEnd="NaN" yEnd="NaN"/>
+        <object id="118" cellx="16" celly="4" xEnd="NaN" yEnd="NaN"/>
+        <object id="119" cellx="16" celly="4" xEnd="NaN" yEnd="NaN"/>
+        <object id="120" cellx="16" celly="4" xEnd="NaN" yEnd="NaN"/>
+        <object id="121" cellx="16" celly="4" xEnd="NaN" yEnd="NaN"/>
+        <object id="122" cellx="16" celly="4" xEnd="NaN" yEnd="NaN"/>
+        <object id="123" cellx="16" celly="4" xEnd="NaN" yEnd="NaN"/>
+        <object id="124" cellx="16" celly="4" xEnd="NaN" yEnd="NaN"/>
+        <object id="125" cellx="16" celly="3" xEnd="NaN" yEnd="NaN"/>
+        <object id="126" cellx="16" celly="3" xEnd="NaN" yEnd="NaN"/>
+        <object id="127" cellx="16" celly="3" xEnd="NaN" yEnd="NaN"/>
+        <object id="128" cellx="16" celly="3" xEnd="NaN" yEnd="NaN"/>
+        <object id="129" cellx="16" celly="3" xEnd="NaN" yEnd="NaN"/>
+        <object id="210" cellx="9" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="211" cellx="10" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="212" cellx="10" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="214" cellx="10" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="215" cellx="11" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="216" cellx="12" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="217" cellx="12" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="218" cellx="12" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="219" cellx="12" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="220" cellx="11" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="221" cellx="11" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="222" cellx="11" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="223" cellx="11" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="224" cellx="12" celly="1" xEnd="NaN" yEnd="NaN"/>
+        <object id="225" cellx="12" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="226" cellx="13" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="227" cellx="13" celly="0" xEnd="NaN" yEnd="NaN"/>
+        <object id="228" cellx="13" celly="0" xEnd="NaN" yEnd="NaN"/>
     </group>
     <group id="19" name="Brick">
-        <object id="246" cellx="15" celly="3"/>
-        <object id="248" cellx="15" celly="3"/>
-        <object id="249" cellx="15" celly="2"/>
-        <object id="250" cellx="15" celly="3"/>
-        <object id="251" cellx="15" celly="3"/>
-        <object id="252" cellx="14" celly="3"/>
-        <object id="253" cellx="14" celly="3"/>
-        <object id="254" cellx="14" celly="3"/>
-        <object id="255" cellx="14" celly="3"/>
-        <object id="256" cellx="14" celly="3"/>
-        <object id="257" cellx="15" celly="2"/>
-        <object id="258" cellx="14" celly="2"/>
-        <object id="259" cellx="14" celly="2"/>
-        <object id="260" cellx="14" celly="2"/>
-        <object id="261" cellx="14" celly="2"/>
-        <object id="264" cellx="14" celly="2"/>
-        <object id="265" cellx="14" celly="2"/>
-        <object id="266" cellx="14" celly="2"/>
+        <object id="246" cellx="15" celly="3" xEnd="15" yEnd="3"/>
+        <object id="248" cellx="15" celly="3" xEnd="15" yEnd="3"/>
+        <object id="249" cellx="15" celly="2" xEnd="15" yEnd="2"/>
+        <object id="250" cellx="15" celly="3" xEnd="15" yEnd="3"/>
+        <object id="251" cellx="15" celly="3" xEnd="15" yEnd="3"/>
+        <object id="252" cellx="14" celly="3" xEnd="15" yEnd="3"/>
+        <object id="253" cellx="14" celly="3" xEnd="14" yEnd="3"/>
+        <object id="254" cellx="14" celly="3" xEnd="14" yEnd="3"/>
+        <object id="255" cellx="14" celly="3" xEnd="14" yEnd="3"/>
+        <object id="256" cellx="14" celly="3" xEnd="14" yEnd="3"/>
+        <object id="257" cellx="15" celly="2" xEnd="15" yEnd="2"/>
+        <object id="258" cellx="14" celly="2" xEnd="15" yEnd="2"/>
+        <object id="259" cellx="14" celly="2" xEnd="14" yEnd="2"/>
+        <object id="260" cellx="14" celly="2" xEnd="14" yEnd="2"/>
+        <object id="261" cellx="14" celly="2" xEnd="14" yEnd="2"/>
+        <object id="264" cellx="14" celly="2" xEnd="15" yEnd="2"/>
+        <object id="265" cellx="14" celly="2" xEnd="14" yEnd="2"/>
+        <object id="266" cellx="14" celly="2" xEnd="14" yEnd="2"/>
     </group>
     <group id="15" name="Enemy">
-        <object id="91" cellx="4" celly="2"/>
-        <object id="187" cellx="6" celly="2"/>
-        <object id="98" cellx="2" celly="2"/>
-        <object id="240" cellx="13" celly="2"/>
-        <object id="241" cellx="13" celly="2"/>
-        <object id="242" cellx="7" celly="2"/>
-        <object id="243" cellx="10" celly="2"/>
-        <object id="269" cellx="15" celly="2"/>
-        <object id="314" cellx="10" celly="2"/>
-        <object id="315" cellx="9" celly="2"/>
-        <object id="316" cellx="1" celly="2"/>
-        <object id="318" cellx="6" celly="2"/>
-        <object id="319" cellx="10" celly="2"/>
+        <object id="91" cellx="4" celly="2" xEnd="4" yEnd="2"/>
+        <object id="187" cellx="6" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="98" cellx="2" celly="2" xEnd="2" yEnd="2"/>
+        <object id="240" cellx="13" celly="2" xEnd="13" yEnd="2"/>
+        <object id="241" cellx="13" celly="2" xEnd="13" yEnd="2"/>
+        <object id="242" cellx="7" celly="2" xEnd="7" yEnd="2"/>
+        <object id="243" cellx="10" celly="2" xEnd="10" yEnd="2"/>
+        <object id="269" cellx="15" celly="2" xEnd="15" yEnd="2"/>
+        <object id="314" cellx="10" celly="2" xEnd="10" yEnd="2"/>
+        <object id="315" cellx="9" celly="2" xEnd="9" yEnd="2"/>
+        <object id="316" cellx="1" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="318" cellx="6" celly="2" xEnd="NaN" yEnd="NaN"/>
+        <object id="319" cellx="10" celly="2" xEnd="10" yEnd="2"/>
     </group>
     <group id="27" name="Camera">
-        <object id="239" cellx="0" celly="1"/>
+        <object id="239" cellx="0" celly="1" xEnd="2" yEnd="3"/>
     </group>
     <group id="28" name="KoopaBound">
-        <object id="244" cellx="4" celly="2"/>
-        <object id="245" cellx="3" celly="2"/>
-        <object id="267" cellx="15" celly="2"/>
-        <object id="268" cellx="15" celly="2"/>
+        <object id="244" cellx="4" celly="2" xEnd="4" yEnd="2"/>
+        <object id="245" cellx="3" celly="2" xEnd="3" yEnd="2"/>
+        <object id="267" cellx="15" celly="2" xEnd="15" yEnd="2"/>
+        <object id="268" cellx="15" celly="2" xEnd="15" yEnd="2"/>
     </group>
     <group id="21" name="Portal">
-        <object id="274" cellx="17" celly="2"/>
-        <object id="276" cellx="17" celly="3"/>
-        <object id="275" cellx="15" celly="3"/>
-        <object id="273" cellx="17" celly="2"/>
+        <object id="274" cellx="17" celly="2" xEnd="17" yEnd="3"/>
+        <object id="276" cellx="17" celly="3" xEnd="17" yEnd="3"/>
+        <object id="275" cellx="15" celly="3" xEnd="15" yEnd="3"/>
+        <object id="273" cellx="17" celly="2" xEnd="17" yEnd="3"/>
     </group>
     <group id="24" name="Card">
-        <object id="271" cellx="20" celly="2"/>
+        <object id="271" cellx="20" celly="2" xEnd="20" yEnd="2"/>
     </group>
   </data>
 </grid>
