@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "Sprites.h"
+#include "Grid.h"
 #include "Textures.h"
 
 CGameObject::CGameObject()
@@ -15,17 +16,7 @@ CGameObject::CGameObject()
 void CGameObject::SetGrid(Grid* grid, int id)
 {
 	grid_ = grid;
-	prev_ = NULL;
-	next_ = NULL;
 	grid_->Add(this, id);
-}
-
-void CGameObject::SetGrid(Grid* grid)
-{
-	grid_ = grid;
-	prev_ = NULL;
-	next_ = NULL;
-	grid_->Add(this);
 }
 
 void CGameObject::SetAnimation(int ani)
@@ -115,16 +106,19 @@ void CGameObject::CalcPotentialCollisions(
 void CGameObject::FilterCollision(
 	vector<LPCOLLISIONEVENT>& coEvents,
 	vector<LPCOLLISIONEVENT>& coEventResult,
-	float& min_tx, float& min_ty,
-	float& nx, float& ny, float &rdx, float &rdy)
+	float& nx, float& ny)
 {
-	min_tx = 1.0f;
-	min_ty = 1.0f;
+	float min_tx = 1.0f;
+	float min_ty = 1.0f;
 	int min_ix = -1;
 	int min_iy = -1;
+	float rdx = 0;
+	float rdy = 0;
 
 	nx = 0.0f;
 	ny = 0.0f;
+
+	CGameObject* obj_y = NULL, * obj_x = NULL;
 
 	coEventResult.clear();
 
@@ -132,25 +126,41 @@ void CGameObject::FilterCollision(
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
 
-		if (c->t < min_tx && c->nx != 0)
-		{
-			min_tx = c->t;
-			nx = c->nx;
-			min_ix = i;
-			rdx = c->dx;
-		}
-
 		if (c->t < min_ty && c->ny != 0)
 		{
 			min_ty = c->t;
 			ny = c->ny;
 			min_iy = i;
 			rdy = c->dy;
+			obj_y = c->obj;
+		}
+
+		if (c->t < min_tx && c->nx != 0)
+		{
+			min_tx = c->t;
+			nx = c->nx;
+			min_ix = i;
+			rdx = c->dx;
+			obj_x = c->obj;
 		}
 	}
 
-	if (min_ix >= 0) coEventResult.push_back(coEvents[min_ix]);
+	// skip collision if obj isOnGround with A and collise nx with A
+	if (obj_x != NULL && obj_y != NULL && obj_x->y == obj_y->y)
+	{
+		min_tx = 1;
+		nx = 0;
+	}
+	else if (min_ix >= 0) coEventResult.push_back(coEvents[min_ix]);
+
 	if (min_iy >= 0) coEventResult.push_back(coEvents[min_iy]);
+
+	x += min_tx * dx + nx * 0.4f;
+	if (isOnGround == false)
+		y += min_ty * dy + ny * 0.4f;
+
+	if (nx != 0) vx = 0;
+	if (ny != 0) vy = 0;
 }
 
 void CGameObject::RenderBoundingBox()

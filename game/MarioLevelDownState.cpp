@@ -37,6 +37,7 @@ void MarioLevelDownState::GetBoundingBox(CMario& mario, float& left, float& top,
 
 void MarioLevelDownState::Update(CMario& mario, DWORD dt)
 {
+    mario.vx = 0;
     if (GetTickCount64() - levelDownStartTime > MARIO_LEVEL_UP_TIME)
     {
         levelDownStartTime = 0;

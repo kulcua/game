@@ -76,10 +76,10 @@ void MarioWalkingState::Update(CMario& mario, DWORD dt)
     }
     else if (mario.vy > MARIO_VY_DROP)
     {
-        mario.onGround = false;
+        mario.isOnGround = false;
         mario.state_ = MarioState::dropping.GetInstance();
     }
-    //DebugOut(L"Walking %d\n", mario.onGround);
+    //DebugOut(L"Walking %d\n", mario.isOnGround);
 }
 
 void MarioWalkingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

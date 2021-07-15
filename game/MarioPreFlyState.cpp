@@ -30,7 +30,7 @@ void MarioPreFlyState::HandleInput(CMario& mario, Input input)
                 mario.vy = -MARIO_JUMP_FLY_SPEED_Y;
             }
             mario.state_ = MarioState::flying.GetInstance();
-            mario.onGround = false;
+            mario.isOnGround = false;
         }
     }
 }

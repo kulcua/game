@@ -88,22 +88,20 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		x += min_tx * dx + nx * 0.4f;
-		y += min_ty * dy + ny * 0.4f;
-
-		//if (state != KOOPA_STATE_WALKING)
-		//if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		float nx = 0, ny;
+		FilterCollision(coEvents, coEventsResult, nx, ny);
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
+			
+			if (dynamic_cast<Enermy*>(e->obj))
+			{
+				if (e->nx && state == KOOPA_STATE_WALKING) {
+					WalkThrough();
+				}
+			}
+
 			if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
@@ -160,11 +158,11 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->ny < 0)
 					isOnGround = true;
-				/*if (e->nx != 0) {
+				if (e->nx != 0) {
 					if (state == KOOPA_STATE_BALL)
 						TurnBack(KOOPA_BALL_SPEED);
 					else TurnBack(KOOPA_WALKING_SPEED);
-				}*/
+				}
 			}
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
@@ -175,11 +173,15 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (e->ny != 0) y += dy;
 				}
 				else {
-					if (e->nx != 0 && state == KOOPA_STATE_BALL && block->die == false)
+					if (e->nx != 0)
 					{
-						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
-						block->die = true;
-						TurnBack(KOOPA_BALL_SPEED);
+						if (state == KOOPA_STATE_BALL && block->die == false)
+						{
+							EffectPool::GetInstance()->CreateDebris(block->x, block->y);
+							block->die = true;
+							TurnBack(KOOPA_BALL_SPEED);
+						}
+						else TurnBack(KOOPA_WALKING_SPEED);
 					}
 				}
 			}

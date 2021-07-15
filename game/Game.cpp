@@ -59,7 +59,7 @@ void CGame::Init(HWND hWnd)
 }
 
 //Utility function to wrap LPD3DXSPRITE::Draw 
-void CGame::Draw(float x, float y, int nx, int ny, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+void CGame::Draw(float x, float y, float nx, float ny, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
 	float cam_x, cam_y;
 	GetCam()->GetPosition(cam_x, cam_y);

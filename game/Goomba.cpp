@@ -3,6 +3,8 @@
 #include "EffectPool.h"
 #include "BigBox.h"
 #include "CameraBound.h"
+#include "Brick.h"
+#include "BrickBlock.h"
 
 CGoomba::CGoomba()
 {
@@ -38,28 +40,30 @@ void CGoomba::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
+		float nx = 0, ny;
 
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		x += min_tx * dx + nx * 0.4f;
-		if (isOnGround == false)
-			y += min_ty * dy + ny * 0.4f;
-
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		FilterCollision(coEvents, coEventsResult, nx, ny);
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
-			if (dynamic_cast<CGround*>(e->obj))
+			if (dynamic_cast<Enermy*>(e->obj))
+			{
+				if (e->nx) {
+					vx = this->nx * GOOMBA_WALKING_SPEED;
+					x += dx;
+				}
+			}
+
+			if (dynamic_cast<CGround*>(e->obj)
+				|| dynamic_cast<BrickBlock*>(e->obj)
+				|| dynamic_cast<CBrick*>(e->obj))
 			{
 				if (e->ny < 0) isOnGround = true;
 				if (e->nx) {
-					vx = e->nx * GOOMBA_WALKING_SPEED;
+					this->nx = -this->nx;
+					vx = this->nx * GOOMBA_WALKING_SPEED;
 				}
 			}
 			else if (dynamic_cast<CBigBox*>(e->obj))

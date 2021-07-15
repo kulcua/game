@@ -1,2 +1,2 @@
 #level - point - money - life
-3	18350	31	3
+1	32030	70	3

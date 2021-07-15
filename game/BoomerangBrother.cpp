@@ -37,19 +37,8 @@ void BoomerangBrother::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, nx, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		x += min_tx * dx + nx * 0.4f;
-		if (isOnGround == false)
-			y += min_ty * dy + ny * 0.4f;
-
-		if (state != BOOMERANG_BROTHER_STATE_WALK)
-			if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		float nx, ny;
+		FilterCollision(coEvents, coEventsResult, nx, ny);
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
@@ -103,7 +92,7 @@ void BoomerangBrother::Render()
 
 void BoomerangBrother::ChangeState()
 {
-	int timePassed = GetTickCount64() - timeStart;
+	ULONGLONG timePassed = GetTickCount64() - timeStart;
 	if (timePassed < BOOMERANG_BROTHER_TIME_WALK_START)
 		SetState(BOOMERANG_BROTHER_STATE_WALK);
 	else if (timePassed < BOOMERANG_BROTHER_TIME_THROW_1_START)

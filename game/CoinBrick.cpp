@@ -6,6 +6,7 @@
 CoinBrick::CoinBrick()
 {
 	SetAnimation(COIN_BRICK_ANI_ID);
+	jumpTimeStart = 0;
 }
 
 void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -17,20 +18,31 @@ void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		StartJump();
 		vy = -COIN_JUMP_SPEED;
 	}
-	else if (GetTickCount64() - jumpTimeStart > COIN_TIME)
-	{
-		jumpTimeStart = 0;
-		die = true;
-		CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetMoney(1);
-		Effect* effect = EffectPool::GetInstance()->Create();
-		if (effect != NULL)
-			effect->InitPoint(EffectPoint::p100, x, y);
-	}
 	else
 	{
-		vy += ITEM_GRAVITY * dt;
-		y += dy;
+		if (GetTickCount64() - jumpTimeStart > COIN_TIME)
+		{
+			jumpTimeStart = 0;
+			die = true;
+			CGame::GetInstance()->GetCurrentScene()->GetPlayer()->SetMoney(1);
+			Effect* effect = EffectPool::GetInstance()->Create();
+			if (effect != NULL)
+				effect->InitPoint(EffectPoint::p100, x, y);
+		}
+		else
+		{
+			vy += COIN_DROP_SPEED;	
+		}
 	}
+	y += dy;
+}
+
+void CoinBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x;
+	t = y;
+	r = x + 48;
+	b = y + 48;
 }
 
 void CoinBrick::Render()

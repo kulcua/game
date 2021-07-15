@@ -16,8 +16,8 @@ class MiniGoomba : public CGameObject
 	friend class MiniGoombaPool;
 	CMario* mario;
 	MiniGoomba* next;
-	int animateTimeStart;
-	int timeToDie;
+	ULONGLONG animateTimeStart;
+	ULONGLONG timeToDie;
 	int timeFlip;
 public:
 	MiniGoomba();

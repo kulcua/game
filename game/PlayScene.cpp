@@ -516,8 +516,6 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 	{
 		if (CGame::GetInstance()->GetCurrentScene()->isFinished == false)
 		{
-			if (mario->GetState() == MARIO_STATE_DIE) return;
-
 			input = KEY_STATE;
 		}
 	}

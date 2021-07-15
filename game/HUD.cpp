@@ -24,9 +24,9 @@ HUD::HUD(vector<LPGAMEOBJECT> &objects)
 	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 }
 
-int HUD::CountDownTimer()
+ULONGLONG HUD::CountDownTimer()
 {
-	int calculateTimeLeft = HUD_TIMER - (GetTickCount64() - timeStart) / 1000;
+	ULONGLONG calculateTimeLeft = HUD_TIMER - (GetTickCount64() - timeStart) / 1000;
 	if (CGame::GetInstance()->GetCurrentScene()->isFinished)
 	{
 		if (timeLeft == HUD_TIMER)

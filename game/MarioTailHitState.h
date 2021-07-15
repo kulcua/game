@@ -4,7 +4,7 @@
 class MarioTailHitState : public MarioState
 {
 	static MarioTailHitState* __instance;
-	DWORD hitStartTime;
+	ULONGLONG hitStartTime;
 public:
 	bool tailHitting;
 	static MarioTailHitState* GetInstance();

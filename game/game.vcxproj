@@ -160,6 +160,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBound.cpp" />
     <ClCompile Include="Card.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinBrick.cpp" />
     <ClCompile Include="DataManager.cpp" />
@@ -177,6 +178,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="KoopaBound.cpp" />
     <ClCompile Include="Layer.cpp" />
+    <ClCompile Include="MarioDieState.cpp" />
     <ClCompile Include="MarioDropFlyState.cpp" />
     <ClCompile Include="MarioDroppingState.cpp" />
     <ClCompile Include="MarioLevelDownState.cpp" />
@@ -246,6 +248,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBound.h" />
     <ClInclude Include="Card.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinBrick.h" />
     <ClInclude Include="DataManager.h" />
@@ -263,6 +266,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="KoopaBound.h" />
     <ClInclude Include="Layer.h" />
+    <ClInclude Include="MarioDieState.h" />
     <ClInclude Include="MarioDropFlyState.h" />
     <ClInclude Include="MarioDroppingState.h" />
     <ClInclude Include="MarioLevelDownState.h" />

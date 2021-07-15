@@ -22,8 +22,8 @@ class HUD : public CGameObject
 	float xPower, xPoint;
 	float xMoney, xTime;
 	CMario* mario;
-	int timeStart = GetTickCount64();
-	int timeLeft = HUD_TIMER;
+	ULONGLONG timeStart = GetTickCount64();
+	ULONGLONG timeLeft = HUD_TIMER;
 public:
 	Text* world;
 	Text* life;
@@ -32,7 +32,7 @@ public:
 	Text* money;
 	Text* time;
 	HUD(vector<LPGAMEOBJECT> &objects);
-	int CountDownTimer();
+	ULONGLONG CountDownTimer();
 	void SetPosition(float x, float y);
 	void SetSpriteId(int spriteId) { this->spriteId = spriteId; }
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

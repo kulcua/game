@@ -29,8 +29,8 @@ class CKoopa: public Enermy
 {
 protected:
 	int level;
-	int ballStartTime;
-	int reliveStartTime;
+	ULONGLONG ballStartTime;
+	ULONGLONG reliveStartTime;
 public:
 	bool isKicked;
 	bool isHandled;

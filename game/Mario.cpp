@@ -39,6 +39,7 @@
 #include "Plant.h"
 #include "Boomerang.h"
 #include "BoomerangBrother.h"
+#include "MarioDieState.h"
 #include "MiniGoomba.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
@@ -57,28 +58,13 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float min_tx, min_ty, nx = 0, ny;
-		float rdx = 0;
-		float rdy = 0;
-
-		// TODO: This is a very ugly designed function!!!!
-		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-		// how to push back Mario if collides with a moving objects, what if Mario is pushed this way into another object?
-		//if (rdx != 0 && rdx != dx)
-		//	x += nx * abs(rdx);
-
-		x += min_tx * dx + nx * 0.4f;
-		if (onGround == false)
-			y += min_ty * dy + ny * 0.4f;
-
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		float nx = 0, ny;
+		FilterCollision(coEvents, coEventsResult, nx, ny);
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			
+
 			if (dynamic_cast<CGoomba*>(e->obj))
 			{
 				CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
@@ -118,7 +104,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopaShell = koopa;
 					}
 					else { // kick normally
-						if (koopa->isKicked == false)
+						if (koopa->vx == 0)
 						{
 							koopa->KickByMario();
 							MarioState::kick.GetInstance()->StartKick();
@@ -175,7 +161,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
 				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
-				
 				if (e->ny > 0)
 				{
 					MarioJumpingState::GetInstance()->isHighJump = false;
@@ -183,9 +168,11 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					{
 						if (brick->GetLevel() == BRICK_LEVEL_1_ITEM)
 							brick->SetState(BRICK_STATE_DISABLE);
-						else {
+						else 
+						{
 							BrickCoins* brick = dynamic_cast<BrickCoins*>(e->obj);
-							brick->SetState(BRICK_STATE_THROW_ITEM);
+							if (brick->GetState() == BRICK_STATE_NORMAL)
+								brick->SetState(BRICK_STATE_THROW_ITEM);
 						}
 					}
 				}
@@ -200,7 +187,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (note->isHidden == false)
 					{
 						state_ = MarioState::jumping.GetInstance();
-						onGround = false;
+						isOnGround = false;
 						if (note->GetType() == MUSICAL_NOTE_TYPE_RED)
 						{
 							vy = -MARIO_DEFLECT_MUSICAL_NOTE * 3;
@@ -223,7 +210,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					PowerReset();
 				}
 				else if (e->ny < 0)
-					onGround = true;
+				{
+					level = MARIO_LEVEL_SMALL;
+					LevelDown();
+				}
 			}
 			else if (dynamic_cast<CCamera*>(e->obj))
 			{
@@ -277,6 +267,12 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					SetMoney(1);
 					block->die = true;
 				}
+				else if (e->ny > 0)
+				{
+					MarioJumpingState::GetInstance()->isHighJump = false;
+					EffectPool::GetInstance()->CreateDebris(block->x, block->y);
+					block->die = true;
+				}
 			}
 			else if (dynamic_cast<PortalPipe*>(e->obj))
 			{
@@ -284,7 +280,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny)
 				{
 					if (e->ny < 0)
-						onGround = true;
+						isOnGround = true;
 					if (port->GetName() == PortalName::in)
 						MarioFrontState::GetInstance()->GetPortal(*this, port, e->ny);
 					else
@@ -300,6 +296,12 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				break;
 			}
 
+			if (untouchableStartTime)
+			{
+				if (dynamic_cast<Enermy*>(e->obj))
+					if (nx != 0) x += dx;
+			}
+
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
 				|| dynamic_cast<CBrick*>(e->obj)
@@ -308,7 +310,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->ny < 0)
 				{
 					MarioFrontState::GetInstance()->onPortalPipe = false;
-					onGround = true;
+					isOnGround = true;
 				}
 			}
 		}
@@ -323,44 +325,52 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
 		vy += MARIO_GRAVITY * dt;
 
-	if (isHandleShell)
+	if (dynamic_cast<MarioDieState*>(state_) == false)
 	{
-		if (koopaShell->GetState() != KOOPA_STATE_BALL)
+		HandleCollision(coObjects);
+
+		if (isHandleShell)
 		{
-			isHandleShell = false;
-			koopaShell->isHandled = false;
-			koopaShell = NULL;
+			if (koopaShell->GetState() != KOOPA_STATE_BALL)
+			{
+				isHandleShell = false;
+				koopaShell->isHandled = false;
+				koopaShell = NULL;
+			}
 		}
-	}
 
-	PowerControl();
+		PowerControl();
 
-	HandleCollision(coObjects);
+		HandleBehindScene();
 
+		tail->Update(dt, coObjects);
+
+		ManageAlphaUntouchable();
+	}	
+
+	// put it finally because of switch scene delete all objects
+	state_->Update(*this, dt);
+}
+
+void CMario::HandleBehindScene()
+{
 	if (holdDownStartTime > 0 && GetTickCount64() - holdDownStartTime > MARIO_HOLD_DOWN_TIME)
 	{
 		behindSceneStartTime = GetTickCount64();
 		holdDownStartTime = 0;
-		y += MARIO_Y_DROP_BEHIND_SCENE;
+		y += 0.5f;
 	}
 
 	if (behindSceneStartTime > 0 && GetTickCount64() - behindSceneStartTime > MARIO_BEHIND_SCENE_TIME)
 	{
 		behindSceneStartTime = 0;
 	}
-
-	tail->Update(dt, coObjects);
-
-	ManageAlphaUntouchable();
-
-	// put it finally because of switch scene delete all objects
-	state_->Update(*this, dt);
 }
 
 void CMario::ManageAlphaUntouchable()
 {
 	if (untouchableStartTime > 0) {
-		int timePassed = GetTickCount64() - untouchableStartTime;
+		ULONGLONG timePassed = GetTickCount64() - untouchableStartTime;
 		if (timePassed > MARIO_UNTOUCHABLE_TIME) {
 			untouchableStartTime = 0;
 			alpha = 255;
@@ -393,14 +403,14 @@ void CMario::KickShellAfterHandle()
 	MarioState::kick.GetInstance()->StartKick();
 }
 
-int CalculatePowerTimePassed(int time)
+ULONGLONG CalculatePowerTimePassed(int time)
 {
 	return (GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
 }
 
 void CMario::PowerControl()
 {
-	int timePassed;
+	ULONGLONG timePassed;
 	if (isPower && powerStartTime > 0)
 	{
 		timePassed = CalculatePowerTimePassed(powerStartTime);
@@ -460,7 +470,13 @@ void CMario::LevelDown()
 			state_ = MarioState::levelDown.GetInstance();
 			MarioState::levelDown.GetInstance()->StartLevelDown();
 		}
-		else SetState(MARIO_STATE_DIE);
+		else
+		{
+			vy = -MARIO_DIE_DEFLECT_SPEED;
+			state_ = MarioState::die.GetInstance();
+			MarioState::die.GetInstance()->StartDieTime();
+			//SetState(MARIO_STATE_DIE);
+		}
 	}
 }
 
@@ -488,10 +504,10 @@ void CMario::Render()
 		alpha = 255;
 	else alpha = this->alpha;
 
-	if (state == MARIO_STATE_DIE)
+	/*if (state == MARIO_STATE_DIE)
 		animation = MARIO_ANI_DIE;
-	else 
-		animation = GetAnimation();
+	else */
+	animation = GetAnimation();
 	animation_set->at(animation)->Render(x, y, nx, ny, alpha);
 	//RenderBoundingBox();
 }
@@ -499,12 +515,6 @@ void CMario::Render()
 void CMario::SetState(int state)
 {
 	CGameObject::SetState(state);
-	switch (state)
-	{
-		case MARIO_STATE_DIE:
-		vy = -MARIO_DIE_DEFLECT_SPEED;
-		break;
-	}
 }
 
 void CMario::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -521,6 +531,8 @@ void CMario::Reset()
 	isUntouchable = false;
 	SetLevel(MARIO_LEVEL_SMALL);
 	SetSpeed(0, 0);
+	SetPosition(100, 0);
+	CGame::GetInstance()->GetCam()->ResetPosition();
 }
 
 void CMario::SetTail(MarioTail* tail) { this->tail = tail; }

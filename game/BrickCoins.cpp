@@ -4,6 +4,7 @@
 BrickCoins::BrickCoins(int type, float x, float y) : CBrick(type, x, y)
 {
 	level = BRICK_LEVEL_MANY_ITEM;
+	state = BRICK_STATE_NORMAL;
 	start_y = y;
 }
 
@@ -24,6 +25,7 @@ void BrickCoins::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			y = start_y;
 			vy = 0;
+			SetState(BRICK_STATE_NORMAL);
 		}
 	}
 }
@@ -35,6 +37,7 @@ void BrickCoins::Render()
 		ani = BRICK_ANI_DISABLE;
 	else ani = BRICK_ANI_BLOCK;
 	animation_set->at(ani)->Render(x, y, nx, ny);
+	//RenderBoundingBox();
 }
 
 void BrickCoins::SetState(int state)
@@ -45,10 +48,11 @@ void BrickCoins::SetState(int state)
 	case BRICK_STATE_THROW_ITEM:
 	{
 		vy = -BRICK_JUMP_DEFLECT_Y;
-		numItem--;
 		if (numItem > 0)
+		{
+			numItem--;
 			items[numItem]->die = false;
-		/*DebugOut(L"%d\n", numItem);*/
+		}
 	} break;
 	}
 }

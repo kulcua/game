@@ -1,9 +1,11 @@
 #include "CameraBound.h"
 #include "Utils.h"
 
-CCameraBound::CCameraBound(int type)
+CCameraBound::CCameraBound(int type, float w, float h)
 {
 	this->type = type;
+	this->width = w;
+	this->height = h;
 }
 
 void CCameraBound::Render()
@@ -15,6 +17,6 @@ void CCameraBound::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x;
 	t = y;
-	r = x + CAM_BOUND_SIZE;
-	b = y + CAM_BOUND_SIZE;
+	r = x + width;
+	b = y + height;
 }

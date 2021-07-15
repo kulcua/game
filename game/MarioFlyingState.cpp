@@ -75,7 +75,7 @@ void MarioFlyingState::GetBoundingBox(CMario& mario, float& left, float& top, fl
 
 void MarioFlyingState::Update(CMario& mario, DWORD dt)
 {
-    if (mario.onGround)
+    if (mario.isOnGround)
         mario.state_ = MarioState::standing.GetInstance();
 
     if (mario.isPower == false)

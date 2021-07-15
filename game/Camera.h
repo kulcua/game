@@ -9,8 +9,10 @@ class CCamera : public CGameObject
 
 	float xCenter;
 	float yCenter;
+
+	float startX, startY;
 	
-	bool onGroundMode;
+	bool isOnGroundMode;
 
 	bool isMove;
 public:
@@ -21,5 +23,6 @@ public:
 	virtual void Render();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void SetIsMove(bool isMove) { this->isMove = isMove; }
+	void ResetPosition() { x = 0; y = startY; }
 };
 

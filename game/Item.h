@@ -5,7 +5,7 @@
 #define ITEM_BBOX_WIDTH  48
 #define ITEM_BBOX_HEIGHT 48
 
-#define ITEM_GRAVITY	0.001f
+#define ITEM_GRAVITY	0.002f
 
 #define ITEM_STATE_RED_MUSHROOM	26
 #define ITEM_RED_MR_VY 0.05f

@@ -14,8 +14,9 @@ CCamera::CCamera()
 void CCamera::SetPosition(float y) {
 	x = mario->x - width / 2;
 	if (x < 0) x = 0;
-
 	this->y = y;
+	startX = x;
+	startY = y;
 }
 
 void CCamera::FollowMario()
@@ -34,9 +35,9 @@ void CCamera::FollowMario()
 		marioOnTopCam = false;
 
 	if (dynamic_cast<MarioFlyingState*>(mario->state_) && mario->GetLevel() == MARIO_LEVEL_RACCOON)
-		onGroundMode = false;
+		isOnGroundMode = false;
 
-	if (onGroundMode == false)
+	if (isOnGroundMode == false)
 	{
 		if ((marioOnTopCam == true && mario->vy < 0) // when mario fly
 			|| (marioOnTopCam == false && mario->vy > 0)) // drop
@@ -63,8 +64,7 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		coEvents.clear();
 
-		if (mario->state != MARIO_STATE_DIE)
-			CalcPotentialCollisions(coObjects, coEvents);
+		CalcPotentialCollisions(coObjects, coEvents);
 
 		if (coEvents.size() == 0)
 		{
@@ -73,18 +73,9 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		else
 		{
-			float min_tx, min_ty, nx = 0, ny;
-			float rdx = 0;
-			float rdy = 0;
+			float nx = 0, ny;
+			FilterCollision(coEvents, coEventsResult, nx, ny);
 
-			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-
-			x += min_tx * dx + nx * 0.4f;
-			y += min_ty * dy + ny * 0.4f;
-
-			if (nx != 0) vx = 0;
-			if (ny != 0) vy = 0;
-			
 			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
 				LPCOLLISIONEVENT e = coEventsResult[i];
@@ -95,7 +86,7 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					if (camBound->GetType() == 0)
 					{
 						if (e->ny < 0)
-							onGroundMode = true;
+							isOnGroundMode = true;
 					}
 				}
 				else {
@@ -110,10 +101,6 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-
-		//x = floor(x);
-		//y = floor(y);
-		//CGame::GetInstance()->GetHUD()->SetPosition(x,y);
 	}
 }
 
