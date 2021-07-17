@@ -6,6 +6,10 @@
 #include "Sprites.h"
 #include "Grid.h"
 #include "Textures.h"
+#include "Coin.h"
+#include "BrickBlock.h"
+#include "KoopaBound.h"
+#include "BrotherBound.h"
 
 CGameObject::CGameObject()
 {
@@ -103,6 +107,31 @@ void CGameObject::CalcPotentialCollisions(
 	std::sort(coEvents.begin(), coEvents.end(), CCollisonEvent::compare);
 }
 
+void CheckCollisionWithItem(bool& skipBlockX, bool& skipBlockY, CGameObject* obj_x, CGameObject* obj_y)
+{
+	if (dynamic_cast<Coin*>(obj_x) || dynamic_cast<CItem*>(obj_x))
+	{
+		skipBlockX = true;
+	}
+	if (dynamic_cast<Coin*>(obj_y) || dynamic_cast<CItem*>(obj_y)
+		|| dynamic_cast<KoopaBound*>(obj_y) || dynamic_cast<BrotherBound*>(obj_y))
+	{
+		skipBlockY = true;
+	}
+	if (dynamic_cast<BrickBlock*>(obj_x))
+	{
+		BrickBlock* brickBlock = dynamic_cast<BrickBlock*>(obj_x);
+		if (brickBlock->isCoin)
+			skipBlockX = true;
+	}
+	if (dynamic_cast<BrickBlock*>(obj_y))
+	{
+		BrickBlock* brickBlock = dynamic_cast<BrickBlock*>(obj_y);
+		if (brickBlock->isCoin)
+			skipBlockY = true;
+	}
+}
+
 void CGameObject::FilterCollision(
 	vector<LPCOLLISIONEVENT>& coEvents,
 	vector<LPCOLLISIONEVENT>& coEventResult,
@@ -155,12 +184,22 @@ void CGameObject::FilterCollision(
 
 	if (min_iy >= 0) coEventResult.push_back(coEvents[min_iy]);
 
-	x += min_tx * dx + nx * 0.4f;
-	if (isOnGround == false)
-		y += min_ty * dy + ny * 0.4f;
+	// do not block obj when collision with item
+	bool skipBlockX = false, skipBlockY = false;
+	CheckCollisionWithItem(skipBlockX, skipBlockY, obj_x, obj_y);
 
-	if (nx != 0) vx = 0;
-	if (ny != 0) vy = 0;
+	if (skipBlockX == false)
+	{
+		x += min_tx * dx + nx * 0.4f;
+		if (nx != 0) vx = 0;
+	}
+	
+	if (skipBlockY == false)
+	{
+		if (isOnGround == false)
+			y += min_ty * dy + ny * 0.4f;
+		if (ny != 0) vy = 0;
+	}
 }
 
 void CGameObject::RenderBoundingBox()

@@ -190,7 +190,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						isOnGround = false;
 						if (note->GetType() == MUSICAL_NOTE_TYPE_RED)
 						{
-							vy = -MARIO_DEFLECT_MUSICAL_NOTE * 3;
+							vy = -MARIO_DEFLECT_MUSICAL_NOTE * 2;
 							vx = 0;
 						}
 						else vy = -MARIO_DEFLECT_MUSICAL_NOTE;
@@ -267,11 +267,19 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					SetMoney(1);
 					block->die = true;
 				}
-				else if (e->ny > 0)
+				else
 				{
-					MarioJumpingState::GetInstance()->isHighJump = false;
-					EffectPool::GetInstance()->CreateDebris(block->x, block->y);
-					block->die = true;
+					if (e->ny > 0)
+					{
+						MarioJumpingState::GetInstance()->isHighJump = false;
+						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
+						block->die = true;
+					}
+					else if (e->ny < 0)
+					{
+						MarioFrontState::GetInstance()->onPortalPipe = false;
+						isOnGround = true;
+					}
 				}
 			}
 			else if (dynamic_cast<PortalPipe*>(e->obj))
@@ -304,8 +312,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
-				|| dynamic_cast<CBrick*>(e->obj)
-				|| dynamic_cast<BrickBlock*>(e->obj))
+				|| dynamic_cast<CBrick*>(e->obj))
 			{
 				if (e->ny < 0)
 				{
@@ -343,7 +350,8 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		HandleBehindScene();
 
-		tail->Update(dt, coObjects);
+		if (level == MARIO_LEVEL_RACCOON)
+			tail->Update(dt, coObjects);
 
 		ManageAlphaUntouchable();
 	}	
@@ -475,7 +483,6 @@ void CMario::LevelDown()
 			vy = -MARIO_DIE_DEFLECT_SPEED;
 			state_ = MarioState::die.GetInstance();
 			MarioState::die.GetInstance()->StartDieTime();
-			//SetState(MARIO_STATE_DIE);
 		}
 	}
 }
@@ -504,9 +511,6 @@ void CMario::Render()
 		alpha = 255;
 	else alpha = this->alpha;
 
-	/*if (state == MARIO_STATE_DIE)
-		animation = MARIO_ANI_DIE;
-	else */
 	animation = GetAnimation();
 	animation_set->at(animation)->Render(x, y, nx, ny, alpha);
 	//RenderBoundingBox();
@@ -530,6 +534,7 @@ void CMario::Reset()
 	isHandleShell = false;
 	isUntouchable = false;
 	SetLevel(MARIO_LEVEL_SMALL);
+	nx = 1;
 	SetSpeed(0, 0);
 	SetPosition(100, 0);
 	CGame::GetInstance()->GetCam()->ResetPosition();

@@ -167,12 +167,8 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
 				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
-				if (block->isCoin)
+				if (block->isCoin == false)
 				{
-					if (e->nx != 0) WalkThrough();
-					if (e->ny != 0) y += dy;
-				}
-				else {
 					if (e->nx != 0)
 					{
 						if (state == KOOPA_STATE_BALL && block->die == false)
@@ -334,7 +330,7 @@ void CKoopa::SetState(int state)
 		{
 			Effect* effect = EffectPool::GetInstance()->Create();
 			if (effect != NULL)
-				effect->InitPoint(EffectPoint::p200, x, y);
+				effect->InitPoint(EffectPoint::p100, x, y);
 			vx = 0;
 			StartBallTime();
 		}

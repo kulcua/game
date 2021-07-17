@@ -168,10 +168,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			
 			DebugOut(L"[INFO] Player object created!\n");
 		}
-		else if (id == INTRO_SCENE)
-		{
-			Intro::GetInstance()->SetScenario(objects);
-		}
 	}
 		break;
 	default:
@@ -275,6 +271,7 @@ void CPlayScene::Load()
 {
 	DebugOut(L"[INFO] Start loading scene resources from : %s \n", sceneFilePath);
 	grid = new Grid();
+
 	ifstream f;
 	f.open(sceneFilePath);
 
@@ -340,50 +337,59 @@ void CPlayScene::Load()
 
 	CTextures::GetInstance()->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
-	CreatePool();
-	DebugOut(L"[INFO] Object Pool created!\n");
+	if (id == INTRO_SCENE)
+	{
+		Intro::GetInstance()->SetScenario(objects);
+	}
+	else {
+		CreatePool();
+		DebugOut(L"[INFO] Object Pool created!\n");
+	}
 
 	DebugOut(L"[INFO] Done loading scene resources %s\n", sceneFilePath);
 }
 
 void CPlayScene::Update(DWORD dt)
-{
-	if (player == NULL) return;
-
-	grid->Update(dt);
-		
-	if (id >= PLAY_SCENE)
+{		
+	if (id == INTRO_SCENE)
 	{
+		Intro::GetInstance()->Update(dt);
+	}
+	else {
+		grid->Update(dt);
+
 		FireBallPool::GetInstance()->GetBackToPool();
 		EffectPool::GetInstance()->GetBackToPool();
 		BoomerangPool::GetInstance()->GetBackToPool();
 		MiniGoombaPool::GetInstance()->GetBackToPool();
 	}
-	else if (id == INTRO_SCENE)
-	{
-		Intro::GetInstance()->Update();
-	}
 }
 
 void CPlayScene::Render()
 {
-	if (player == NULL) return;
+	if (id == INTRO_SCENE)
+	{
+		TileMap::GetInstance()->RenderBackground();
+		Intro::GetInstance()->Render();
+	}
+	else
+	{
+		if (player->behindSceneStartTime > 0)
+			player->Render();
 
-	if (player->behindSceneStartTime > 0)
-		player->Render();
+		TileMap::GetInstance()->RenderBackground();
 
-	TileMap::GetInstance()->RenderBackground();
+		grid->Render();
 
-	grid->Render();
+		if (player->behindSceneStartTime == 0)
+			player->Render();
 
-	if (player->behindSceneStartTime == 0)
-		player->Render();
+		TileMap::GetInstance()->RenderForeground();
 
-	TileMap::GetInstance()->RenderForeground();
-
-	HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
-	if (hud != NULL)
-		hud->Render();
+		HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
+		if (hud != NULL)
+			hud->Render();
+	}
 }
 
 void CPlayScene::Unload()
@@ -472,8 +478,8 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 				break;
 			}
 		}
+		mario->HandleInput(input);
 	}
-	mario->HandleInput(input);
 }
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
@@ -503,8 +509,8 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 				break;
 			}	
 		}
+		mario->HandleInput(input);
 	}
-	mario->HandleInput(input);
 }
 
 void CPlaySceneKeyHandler::KeyState(BYTE* states)
@@ -518,7 +524,7 @@ void CPlaySceneKeyHandler::KeyState(BYTE* states)
 		{
 			input = KEY_STATE;
 		}
+		mario->HandleInput(input);
 	}
-	mario->HandleInput(input);
 }
 	

@@ -20,12 +20,27 @@ Grid::Grid() {
 
 void Grid::Add(CGameObject* obj, int id)
 {
-    D3DXVECTOR4 cellNumber = objectCells[id];
-    int cellStartX = (int)cellNumber[0];
-    int cellStartY = (int)cellNumber[1];
-    int cellEndX = (int)cellNumber[2];
-    int cellEndY = (int)cellNumber[3];
-    
+    int cellStartX;
+    int cellStartY;
+    int cellEndX;
+    int cellEndY;
+
+    if (objectCells.find(id) == objectCells.end())
+    {
+        // not found
+        cellStartX = 0;
+        cellStartY = 0;
+        cellEndX = 0;
+        cellEndY = 0;
+    }
+    else {
+        D3DXVECTOR4 cellNumber = objectCells[id];
+        cellStartX = (int)cellNumber[0];
+        cellStartY = (int)cellNumber[1];
+        cellEndX = (int)cellNumber[2];
+        cellEndY = (int)cellNumber[3];
+    }
+  
     for (int i = cellStartX; i < cellEndX + 1; i++)
     {
         for (int j = cellStartY; j < cellEndY + 1; j++)

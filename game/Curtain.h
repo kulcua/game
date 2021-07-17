@@ -1,14 +1,11 @@
 #pragma once
 #include "GameObject.h"
-#define COIN_BBOX_WIDTH  48
-#define COIN_BBOX_HEIGHT 48
-#define COIN_ANI_ID 28
-
-class Coin : public CGameObject
+#define CURTAIN_ANI_ID 60
+class Curtain : public CGameObject
 {
 public:
-	Coin();
+	Curtain();
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };
-

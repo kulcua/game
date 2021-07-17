@@ -348,6 +348,9 @@
     <ClCompile Include="MarioDieState.cpp">
       <Filter>Mario\MarioState</Filter>
     </ClCompile>
+    <ClCompile Include="Curtain.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -604,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="MarioDieState.h">
       <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="Curtain.h">
+      <Filter>Intro</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -42,13 +42,10 @@ void MarioDieState::Update(CMario& mario, DWORD dt)
         if (mario.life > 0)
         {
             mario.life--;
-            mario.Reset();
         }
-        else
-        {
-            mario.life = MARIO_INIT_LIFE;
-            CGame::GetInstance()->SwitchScene(WORLD_MAP_SCENE);
-        }
+        else mario.life = MARIO_INIT_LIFE;
+
+        CGame::GetInstance()->SwitchScene(WORLD_MAP_SCENE);
     }
     //DebugOut(L"MarioDieState %f %f\n", mario.vx, mario.vy);
 }

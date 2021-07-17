@@ -3,6 +3,7 @@
 #include "Mario.h"
 #define CAM_WIDTH 800
 #define CAM_HEIGHT 600
+#define CAM_INIT_BOUND 20
 class CCamera : public CGameObject
 {
 	CMario* mario;
@@ -23,6 +24,6 @@ public:
 	virtual void Render();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void SetIsMove(bool isMove) { this->isMove = isMove; }
-	void ResetPosition() { x = 0; y = startY; }
+	void ResetPosition() { x = CAM_INIT_BOUND; y = startY; }
 };
 

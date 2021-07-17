@@ -13,7 +13,7 @@ CCamera::CCamera()
 
 void CCamera::SetPosition(float y) {
 	x = mario->x - width / 2;
-	if (x < 0) x = 0;
+	if (x < CAM_INIT_BOUND) x = CAM_INIT_BOUND;
 	this->y = y;
 	startX = x;
 	startY = y;

@@ -5,11 +5,6 @@ Coin::Coin()
 	SetAnimation(COIN_ANI_ID);
 }
 
-void Coin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
-{
-	CGameObject::Update(dt);
-}
-
 void Coin::Render()
 {
 	animation_set->at(0)->Render(x, y, nx, ny);

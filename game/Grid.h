@@ -7,7 +7,6 @@
 
 class Grid
 {
-	friend class CGameObject;
 	Cell* cells_[NUM_CELLS][NUM_CELLS];
 	// object_id - cell number x y
 	unordered_map<int, D3DXVECTOR4> objectCells;
