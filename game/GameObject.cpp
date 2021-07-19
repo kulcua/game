@@ -16,6 +16,7 @@ CGameObject::CGameObject()
 {
 	x = y = 0;
 	vx = vy = 0;
+	width = height = 0;
 }
 
 void CGameObject::SetGrid(Grid* grid, int id)

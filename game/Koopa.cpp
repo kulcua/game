@@ -88,7 +88,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float nx = 0, ny;
+		float nx, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
 
 		for (UINT i = 0; i < coEventsResult.size(); i++)
@@ -126,7 +126,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<Coin*>(e->obj))
 			{
-				if (e->nx != 0) WalkThrough();
+				if (e->nx != 0) x += dx;
 				if (e->ny != 0)	y += dx;
 			}
 			else if (dynamic_cast<CGoomba*>(e->obj))

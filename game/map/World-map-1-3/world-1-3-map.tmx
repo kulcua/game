@@ -434,6 +434,32 @@
    </properties>
   </object>
  </objectgroup>
+ <objectgroup id="19" name="Brick">
+  <object id="311" x="1584" y="960.667" width="48" height="48"/>
+  <object id="312" x="1536" y="960.667" width="48" height="48"/>
+  <object id="313" x="1488" y="960.667" width="48" height="48"/>
+  <object id="314" x="1776" y="960.667" width="48" height="48"/>
+  <object id="315" x="1824" y="960.667" width="48" height="48"/>
+  <object id="318" x="1872" y="960.667" width="48" height="48"/>
+  <object id="322" x="1488" y="912.667" width="48" height="48"/>
+  <object id="323" x="1776" y="912.667" width="48" height="48"/>
+  <object id="324" x="1824" y="912.667" width="48" height="48"/>
+  <object id="326" x="1680" y="912.667" width="48" height="48"/>
+  <object id="327" x="1872" y="912.667" width="48" height="48"/>
+  <object id="331" x="1488" y="864" width="48" height="48"/>
+  <object id="334" x="1872" y="816" width="48" height="48"/>
+  <object id="338" x="1584" y="816.083" width="48" height="48"/>
+  <object id="339" x="1536" y="816.083" width="48" height="48"/>
+  <object id="340" x="1488" y="816.083" width="48" height="48"/>
+  <object id="467" x="1535.75" y="863.916" width="48" height="48"/>
+  <object id="361" x="1728.33" y="768.25" width="48" height="48"/>
+  <object id="360" x="1824" y="768.25" width="48" height="48"/>
+  <object id="363" x="1872" y="768.25" width="48" height="48"/>
+  <object id="328" x="1632" y="864" width="48" height="48"/>
+  <object id="335" x="1680" y="864" width="48" height="48"/>
+  <object id="341" x="1775.67" y="816" width="48" height="48"/>
+  <object id="343" x="1728" y="816.417" width="48" height="48"/>
+ </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
   <object id="336" name="coin" type="1" x="1873.33" y="864" width="48" height="48"/>
   <object id="466" name="coin" type="1" x="1536.58" y="912.083" width="48" height="48"/>
@@ -596,32 +622,6 @@
   <object id="478" x="922" y="887.333" width="33.3333" height="118.667"/>
   <object id="488" x="4228.67" y="888" width="33.3333" height="120"/>
   <object id="489" x="4038" y="888.666" width="33.3333" height="118.667"/>
- </objectgroup>
- <objectgroup id="19" name="Brick">
-  <object id="311" x="1584" y="960.667" width="48" height="48"/>
-  <object id="312" x="1536" y="960.667" width="48" height="48"/>
-  <object id="313" x="1488" y="960.667" width="48" height="48"/>
-  <object id="314" x="1776" y="960.667" width="48" height="48"/>
-  <object id="315" x="1824" y="960.667" width="48" height="48"/>
-  <object id="318" x="1872" y="960.667" width="48" height="48"/>
-  <object id="322" x="1488" y="912.667" width="48" height="48"/>
-  <object id="323" x="1776" y="912.667" width="48" height="48"/>
-  <object id="324" x="1824" y="912.667" width="48" height="48"/>
-  <object id="326" x="1680" y="912.667" width="48" height="48"/>
-  <object id="327" x="1872" y="912.667" width="48" height="48"/>
-  <object id="331" x="1488" y="864" width="48" height="48"/>
-  <object id="334" x="1872" y="816" width="48" height="48"/>
-  <object id="338" x="1584" y="816.083" width="48" height="48"/>
-  <object id="339" x="1536" y="816.083" width="48" height="48"/>
-  <object id="340" x="1488" y="816.083" width="48" height="48"/>
-  <object id="467" x="1535.75" y="863.916" width="48" height="48"/>
-  <object id="361" x="1728.33" y="768.25" width="48" height="48"/>
-  <object id="360" x="1824" y="768.25" width="48" height="48"/>
-  <object id="363" x="1872" y="768.25" width="48" height="48"/>
-  <object id="328" x="1632" y="864" width="48" height="48"/>
-  <object id="335" x="1680" y="864" width="48" height="48"/>
-  <object id="341" x="1775.67" y="816" width="48" height="48"/>
-  <object id="343" x="1728" y="816.417" width="48" height="48"/>
  </objectgroup>
  <objectgroup id="27" name="Camera" visible="0">
   <object id="239" type="1" x="26.6667" y="459.061" width="800" height="600.606"/>

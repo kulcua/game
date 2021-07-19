@@ -2,7 +2,7 @@
 #include "Enermy.h"
 #include "Utils.h"
 #define KOOPA_WALKING_SPEED 0.04f
-#define KOOPA_BALL_SPEED 0.4f
+#define KOOPA_BALL_SPEED 0.35f
 #define KOOPA_GRAVITY	0.001f
 #define KOOPA_BBOX_WIDTH 50
 #define KOOPA_BBOX_HEIGHT 82

@@ -57,9 +57,9 @@ void Grid::Update(DWORD dt)
     int cellStartX, cellStartY, cellEndX, cellEndY;
     GetCell(cellStartX, cellStartY, cellEndX, cellEndY);
 
-    for (int i = cellStartX; i < cellEndX; i++)
+    for (int i = cellStartX; i < cellEndX + 1; i++)
     {
-        for (int j = cellStartY; j < cellEndY; j++)
+        for (int j = cellStartY; j < cellEndY + 1; j++)
         {
             vector<CGameObject*> objList = cells_[i][j]->GetListObjects();
             for (int i = 0; i < objList.size(); i++)
@@ -138,6 +138,9 @@ void Grid::Move(CGameObject* obj, float x, float y)
     // If it didn't change cells, we're done.
     if (oldCellX == cellX && oldCellY == cellY) return;
 
+    int cellStartX, cellStartY, cellEndX, cellEndY;
+    GetCell(cellStartX, cellStartY, cellEndX, cellEndY);
+    
     cells_[oldCellX][oldCellY]->RemoveObject(obj);
     cells_[cellX][cellY]->AddObject(obj);
 }
