@@ -3,6 +3,7 @@
 #include "CameraBound.h"
 #include "MarioFlyingState.h"
 #include "HUD.h"
+#include "MarioFrontState.h"
 
 CCamera::CCamera()
 {

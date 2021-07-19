@@ -180,23 +180,13 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<MusicalNote*>(e->obj))
 			{
 				MusicalNote* note = dynamic_cast<MusicalNote*>(e->obj);
-				note->Deflect(e->ny);
-				
-				if (e->ny < 0)
-				{
-					if (note->isHidden == false)
-					{
-						state_ = MarioState::jumping.GetInstance();
-						isOnGround = false;
-						if (note->GetType() == MUSICAL_NOTE_TYPE_RED)
-						{
-							vy = -MARIO_DEFLECT_MUSICAL_NOTE * 2;
-							vx = 0;
-						}
-						else vy = -MARIO_DEFLECT_MUSICAL_NOTE;
-					}
+				if (note->isHidden == false)
+					note->Deflect(e->ny);
+				else {
+					if (e->nx) x += dx;
+					if (e->ny) y += dy;
 				}
-				else if (e->ny > 0) {
+				if (e->ny > 0) {
 					MarioState::jumping.GetInstance()->isHighJump = false;
 					if (note->GetType() == MUSICAL_NOTE_TYPE_RED && note->isHidden)
 						note->isHidden = false;
@@ -489,6 +479,7 @@ void CMario::LevelDown()
 
 void CMario::HandleInput(Input input)
 {
+	this->input = input;
 	state_->HandleInput(*this, input);
 
 	state_->Enter(*this);

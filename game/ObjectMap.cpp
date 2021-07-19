@@ -189,9 +189,15 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			int type;
+			int portIn = 0;
 			GetInfoElement(element, objectId, x, y, width, height);
 			element->QueryIntAttribute("type", &type);
-			obj = new MusicalNote(type, y);
+			MusicalNote* obj = new MusicalNote(type, y);
+			if (type == 2)
+			{
+				element->QueryIntAttribute("name", &portIn);
+			}
+			obj->SetPortIn(portIn);
 			obj->SetPosition(x, y);
 			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);

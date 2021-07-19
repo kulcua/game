@@ -10,6 +10,7 @@
 #include "BrickBlock.h"
 #include "KoopaBound.h"
 #include "BrotherBound.h"
+#include "MusicalNote.h"
 
 CGameObject::CGameObject()
 {
@@ -129,6 +130,14 @@ void CheckCollisionWithItem(bool& skipBlockX, bool& skipBlockY, CGameObject* obj
 		BrickBlock* brickBlock = dynamic_cast<BrickBlock*>(obj_y);
 		if (brickBlock->isCoin)
 			skipBlockY = true;
+	}
+	if (dynamic_cast<MusicalNote*>(obj_x))
+	{
+		MusicalNote* note = dynamic_cast<MusicalNote*>(obj_x);
+		if (note->isHidden)
+		{
+			skipBlockX = true;
+		}
 	}
 }
 

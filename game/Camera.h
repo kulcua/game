@@ -12,11 +12,9 @@ class CCamera : public CGameObject
 	float yCenter;
 
 	float startX, startY;
-	
-	bool isOnGroundMode;
-
 	bool isMove;
 public:
+	bool isOnGroundMode;
 	CCamera();
 	void FollowMario();
 	void SetPosition(float y);

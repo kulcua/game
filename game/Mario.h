@@ -93,7 +93,7 @@
 #define MARIO_LEVEL_UP_TIME	1100
 #define MARIO_KICK_TIME	500
 #define MARIO_HIGH_JUMP_TIME 200
-#define MARIO_DEFLECT_MUSICAL_NOTE 0.8f
+#define MARIO_DEFLECT_MUSICAL_NOTE 0.5f
 #define MARIO_SPIN_TIME	200
 #define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
@@ -127,6 +127,7 @@ class CMario : public CGameObject
 	ULONGLONG untouchableStartTime;
 	ULONGLONG holdDownStartTime;
 public:
+	Input input;
 	bool holdDownKey;
 	ULONGLONG behindSceneStartTime;
 
