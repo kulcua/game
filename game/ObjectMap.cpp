@@ -163,9 +163,9 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			if (coins == false)
 			{
 				item->SetPosition(x, y);
-				br->SetItem(item);
 				item->SetGrid(grid, objectId);
 				objects.push_back(item);
+				br->SetItem(item);
 				br->SetGrid(grid, objectId);
 				objects.push_back(br);
 			}

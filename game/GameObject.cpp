@@ -182,7 +182,6 @@ void CGameObject::FilterCollision(
 			obj_x = c->obj;
 		}
 	}
-
 	// skip collision if obj isOnGround with A and collise nx with A
 	if (obj_x != NULL && obj_y != NULL && obj_x->y == obj_y->y)
 	{
@@ -205,8 +204,9 @@ void CGameObject::FilterCollision(
 	
 	if (skipBlockY == false)
 	{
-		if (isOnGround == false)
+		if (isOnGround == false) {
 			y += min_ty * dy + ny * 0.4f;
+		}
 		if (ny != 0) vy = 0;
 	}
 }

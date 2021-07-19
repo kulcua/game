@@ -60,7 +60,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	{
 		float nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
-
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
@@ -160,9 +159,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
-				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 				if (e->ny > 0)
 				{
+					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 					MarioJumpingState::GetInstance()->isHighJump = false;
 					if (brick->GetState() != BRICK_STATE_DISABLE)
 					{
@@ -170,9 +169,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 							brick->SetState(BRICK_STATE_DISABLE);
 						else 
 						{
-							BrickCoins* brick = dynamic_cast<BrickCoins*>(e->obj);
-							if (brick->GetState() == BRICK_STATE_NORMAL)
-								brick->SetState(BRICK_STATE_THROW_ITEM);
+							BrickCoins* brickcoins = dynamic_cast<BrickCoins*>(e->obj);
+							if (brickcoins->GetState() == BRICK_STATE_NORMAL)
+								brickcoins->SetState(BRICK_STATE_THROW_ITEM);
 						}
 					}
 				}

@@ -409,10 +409,10 @@
  </objectgroup>
  <objectgroup id="25" name="CameraBound">
   <object id="229" x="-56.7273" y="4" width="63.6364" height="1132.85"/>
-  <object id="231" x="0.9697" y="1063.15" width="7619.19" height="127.273"/>
+  <object id="231" type="0" x="0.9697" y="1063.15" width="7619.19" height="127.273"/>
   <object id="236" x="41.9391" y="2.18221" width="7568.48" height="42.4242"/>
   <object id="366" x="7550" y="4.90833" width="63.6364" height="1080.85"/>
-  <object id="499" x="4350" y="1218.42" width="63.6364" height="1126.79"/>
+  <object id="499" type="0" x="4350" y="1218.42" width="63.6364" height="1126.79"/>
   <object id="500" x="7428.79" y="1192.91" width="63.6364" height="1174.79"/>
   <object id="501" x="1696.47" y="2363.64" width="7619.19" height="100"/>
  </objectgroup>

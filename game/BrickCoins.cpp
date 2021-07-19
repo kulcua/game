@@ -5,18 +5,16 @@ BrickCoins::BrickCoins(int type, float x, float y) : CBrick(type, x, y)
 {
 	level = BRICK_LEVEL_MANY_ITEM;
 	state = BRICK_STATE_NORMAL;
-	start_y = y;
 }
 
 void BrickCoins::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-	if (numItem == 0)
-		SetState(BRICK_STATE_DISABLE);
-	else if (GetState() == BRICK_STATE_THROW_ITEM && numItem > 0)
+
+	if (GetState() == BRICK_STATE_THROW_ITEM)
 	{
 		y += dy;
-
+		
 		if (y < start_y)
 		{
 			vy = BRICK_RETURN_START_POS_VY;
@@ -25,7 +23,13 @@ void BrickCoins::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			y = start_y;
 			vy = 0;
-			SetState(BRICK_STATE_NORMAL);
+			if (numItem == 0)
+			{
+				SetState(BRICK_STATE_DISABLE);
+			}
+			else {
+				SetState(BRICK_STATE_NORMAL);
+			}
 		}
 	}
 }
@@ -42,17 +46,18 @@ void BrickCoins::Render()
 
 void BrickCoins::SetState(int state)
 {
-	CGameObject::SetState(state);
+	CBrick::SetState(state);
 	switch (state)
 	{
 	case BRICK_STATE_THROW_ITEM:
 	{
-		vy = -BRICK_JUMP_DEFLECT_Y;
 		if (numItem > 0)
 		{
 			numItem--;
 			items[numItem]->die = false;
+			vy = -BRICK_JUMP_DEFLECT_Y;
 		}
-	} break;
+		break;
+	} 
 	}
 }
