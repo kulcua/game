@@ -59,6 +59,7 @@ void MusicalNote::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->vy = -MARIO_JUMP_SPEED_Y;
 		CGame::GetInstance()->GetCam()->SetPosition(portOut->GetCamY());
 		CGame::GetInstance()->GetCam()->x = portOut->x;
+		CGame::GetInstance()->GetCam()->isScroll = true;
 	}
 }
 

@@ -4,6 +4,7 @@
 #define CAM_WIDTH 800
 #define CAM_HEIGHT 600
 #define CAM_INIT_BOUND 20
+#define CAM_VY_SCROLL 0.08f
 class CCamera : public CGameObject
 {
 	CMario* mario;
@@ -14,7 +15,7 @@ class CCamera : public CGameObject
 	float startX, startY;
 	bool isMove;
 public:
-	bool isOnGroundMode;
+	bool isScroll = false;
 	CCamera();
 	void FollowMario();
 	void SetPosition(float y);
@@ -23,5 +24,6 @@ public:
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void SetIsMove(bool isMove) { this->isMove = isMove; }
 	void ResetPosition() { x = CAM_INIT_BOUND; y = startY; }
+	void ScrollMode();
 };
 

@@ -4,6 +4,7 @@
 #include "MarioFlyingState.h"
 #include "HUD.h"
 #include "MarioFrontState.h"
+#include "MarioWalkingState.h"
 
 CCamera::CCamera()
 {
@@ -22,12 +23,18 @@ void CCamera::SetPosition(float y) {
 
 void CCamera::FollowMario()
 {
-	if ((mario->vx > 0 && mario->x < xCenter) // walk right
-		|| (mario->vx < 0 && mario->x > xCenter))// walk left
+	if (isScroll)
 	{
-		vx = 0.0f;
+		ScrollMode();
 	}
-	else vx = mario->vx;
+	else {
+		if ((mario->vx > 0 && mario->x < xCenter) // walk right
+			|| (mario->vx < 0 && mario->x > xCenter))// walk left
+		{
+			vx = 0.0f;
+		}
+		else vx = mario->vx;
+	}
 	
 	bool marioOnTopCam;
 	if (mario->y < yCenter) // mario on top camera
@@ -36,9 +43,9 @@ void CCamera::FollowMario()
 		marioOnTopCam = false;
 
 	if (dynamic_cast<MarioFlyingState*>(mario->state_) && mario->GetLevel() == MARIO_LEVEL_RACCOON)
-		isOnGroundMode = false;
+		isOnGround = false;
 
-	if (isOnGroundMode == false)
+	if (isOnGround == false)
 	{
 		if ((marioOnTopCam == true && mario->vy < 0) // when mario fly
 			|| (marioOnTopCam == false && mario->vy > 0)) // drop
@@ -46,6 +53,20 @@ void CCamera::FollowMario()
 			vy = mario->vy;
 		}
 		else vy = 0.0f;
+	}
+}
+
+void CCamera::ScrollMode()
+{
+	vx = CAM_VY_SCROLL;
+	if (mario->x < x)
+	{
+		mario->vx = CAM_VY_SCROLL * 2;
+		mario->state_ = MarioState::walking.GetInstance();
+	}
+	else if (mario->x > (x + width) - MARIO_RACCOON_BBOX_WIDTH)
+	{
+		mario->vx = 0;
 	}
 }
 
@@ -82,13 +103,10 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				LPCOLLISIONEVENT e = coEventsResult[i];
 				if (dynamic_cast<CCameraBound*>(e->obj))
 				{
-					CCameraBound* camBound = dynamic_cast<CCameraBound*>(e->obj);
-
-					if (camBound->GetType() == 0)
-					{
-						if (e->ny < 0)
-							isOnGroundMode = true;
-					}
+					if (e->ny < 0)
+						isOnGround = true;
+					if (e->nx < 0)
+						isScroll = false;
 				}
 				else {
 					if (nx != 0)

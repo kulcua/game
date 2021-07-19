@@ -414,11 +414,11 @@
   <object id="41" type="1" x="3936.59" y="960.051" width="333.545" height="288.258"/>
  </objectgroup>
  <objectgroup id="25" name="CameraBound">
-  <object id="229" type="0" x="-56.7273" y="-8" width="63.6364" height="1384.85"/>
-  <object id="231" type="0" x="0.9697" y="1303.15" width="8451.52" height="24.2424"/>
-  <object id="236" type="2" x="2619.03" y="2.0606" width="5848.48" height="42.4242"/>
-  <object id="237" type="0" x="8451.52" y="0" width="42.4242" height="1375.76"/>
-  <object id="320" type="0" x="5628.91" y="1991.88" width="2047.52" height="24.2424"/>
+  <object id="229" x="-56.7273" y="-8" width="63.6364" height="1384.85"/>
+  <object id="231" x="0.9697" y="1303.15" width="8451.52" height="24.2424"/>
+  <object id="236" x="2619.03" y="2.0606" width="5848.48" height="42.4242"/>
+  <object id="237" x="8451.52" y="0" width="42.4242" height="1375.76"/>
+  <object id="320" x="5628.91" y="1991.88" width="2047.52" height="24.2424"/>
  </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
   <object id="47" name="coin" type="1" x="538.667" y="1065.33"/>

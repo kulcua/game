@@ -208,10 +208,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			int type;
 			GetInfoElement(element, objectId, x, y, width, height);
-			element->QueryIntAttribute("type", &type);
-			obj = new CCameraBound(type, width, height);
+			obj = new CCameraBound(width, height);
 			obj->SetPosition(x, y);
 			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
