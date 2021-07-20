@@ -92,30 +92,31 @@ void BoomerangBrother::Render()
 
 void BoomerangBrother::ChangeState()
 {
-	ULONGLONG timePassed = GetTickCount64() - timeStart;
-	if (timePassed < BOOMERANG_BROTHER_TIME_WALK_START)
+	ULONGLONG timeMoving = GetTickCount64() - timeStart;
+	ULONGLONG timeThrowing = GetTickCount64() - timeThrowStart;
+
+	if (timeMoving < BOOMERANG_BROTHER_TIME_WALK_START)
 		SetState(BOOMERANG_BROTHER_STATE_WALK);
-	else if (timePassed < BOOMERANG_BROTHER_TIME_THROW_1_START)
+	else if (timeMoving < BOOMERANG_BROTHER_TIME_THROW_START)
 	{
-		SetState(BOOMERANG_BROTHER_STATE_THROW);
-		if (BoomerangPool::GetInstance()->CheckBoomerangInPool(0) == false && BoomerangPool::GetInstance()->CheckBoomerangInPool(1) == false)
+		if (timeThrowStart == 0)
 		{
+			timeThrowStart = GetTickCount64();
+		}
+		else if (throwTimes > 0 && timeThrowing > BOOMERANG_BROTHER_TIME_THROW) {
+			timeThrowStart = 0;
 			Boomerang* boom = BoomerangPool::GetInstance()->Create();
 			if (boom != NULL)
 			{
 				boom->Init(x, y, nx);
 			}
+			throwTimes--;
+			if (throwTimes == 0)
+				throwTimes = BOOMERANG_BROTHER_THROW_TIMES;
 		}
+		
 	}
-	else if (timePassed < BOOMERANG_BROTHER_TIME_THROW_2_START)
-	{
-		Boomerang* boom = BoomerangPool::GetInstance()->Create();
-		if (boom != NULL)
-		{
-			boom->Init(x, y, nx);
-		}
-	}
-	else if (timePassed < BOOMERANG_BROTHER_TIME_WALK_START*2)
+	else if (timeMoving < BOOMERANG_BROTHER_TIME_WALK_START*2)
 		SetState(BOOMERANG_BROTHER_STATE_WALK);
 	else {
 		timeStart = GetTickCount64();

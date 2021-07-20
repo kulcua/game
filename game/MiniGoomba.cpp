@@ -71,7 +71,7 @@ void MiniGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void MiniGoomba::Render()
 {
-	animation_set->at(0)->Render(x, y, -nx, ny);
+	animation_set->at(0)->Render(x, y, nx, ny);
 }
 
 void MiniGoomba::GetBoundingBox(float& l, float& t, float& r, float& b)
