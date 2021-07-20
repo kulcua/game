@@ -87,7 +87,6 @@ void MiniGoomba::FollowMario()
 	float l, t, r, b;
 	mario->GetBoundingBox(l, t, r, b);
 	b -= MINI_GOOMBA_BBOX_SIZE;
-
 	if (x > r)
 	{
 		vx = -MINI_GOOMBA_SPEED_VX_FL_MARIO;
@@ -98,7 +97,6 @@ void MiniGoomba::FollowMario()
 		vx = MINI_GOOMBA_SPEED_VX_FL_MARIO;
 		x = l;
 	}
-
 	if (y > b)
 	{
 		vy = -MINI_GOOMBA_SPEED_VY_FL_MARIO;

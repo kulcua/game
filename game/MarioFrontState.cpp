@@ -81,6 +81,7 @@ void MarioFrontState::Update(CMario& mario, DWORD dt)
             }
             getOut = false;
         }
+        CGame::GetInstance()->GetCam()->isScroll = false;
         CGame::GetInstance()->GetCam()->isOnGround = false;
     }
     else if ((mario.y > portIn->y && mario.vy > 0) || (mario.y < portIn->y && mario.vy < 0))

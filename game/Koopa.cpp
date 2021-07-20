@@ -141,8 +141,11 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{
 				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-				koopa->SetState(KOOPA_STATE_DIE);
-				this->SetState(KOOPA_STATE_DIE);
+				if (koopa->GetState() != KOOPA_STATE_DIE)
+				{
+					koopa->SetState(KOOPA_STATE_DIE);
+					this->SetState(KOOPA_STATE_DIE);
+				}
 			}
 			else if (dynamic_cast<BoomerangBrother*>(e->obj))
 			{

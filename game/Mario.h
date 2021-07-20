@@ -128,7 +128,6 @@ class CMario : public CGameObject
 	ULONGLONG holdDownStartTime;
 public:
 	Input input;
-	bool holdDownKey;
 	ULONGLONG behindSceneStartTime;
 
 	ULONGLONG powerStartTime;

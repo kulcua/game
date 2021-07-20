@@ -108,11 +108,6 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     {
         if (mario.vx == 0)
             SetPositionGetInSitState(mario);
-        mario.holdDownKey = true;
-    }
-    else if (input == RELEASE_DOWN)
-    { 
-        mario.holdDownKey = false;
     }
     else if (input == PRESS_A)
     {

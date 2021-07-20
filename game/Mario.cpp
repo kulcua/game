@@ -103,14 +103,23 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopaShell = koopa;
 					}
 					else { // kick normally
-						if (koopa->vx == 0)
+						if (koopa->vx == 0 && koopa->isKicked == false)
 						{
 							koopa->KickByMario();
 							MarioState::kick.GetInstance()->StartKick();
 							state_ = MarioState::kick.GetInstance();
 						}
+						// koopa stop when mario push on its shell
+						/*else if (e->ny < 0 && koopa->isKicked == true)
+						{
+							koopa->vx = 0;
+							koopa->isKicked = false;
+							Effect* effect = EffectPool::GetInstance()->Create();
+							if (effect != NULL)
+								effect->InitPoint(EffectPoint::p100, x, y);
+						}*/
 						// mario is pushed
-						else LevelDown();
+						else if (e->nx) LevelDown();
 					}
 				}
 			}
@@ -142,9 +151,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
 				if (e->nx)
 					x += dx;
-				if (e->ny < 0 && holdDownKey && box->GetType() == 2)
+				if (e->ny < 0 && input == PRESS_DOWN && box->GetType() == 2)
 				{
-					holdDownKey = false;
 					StartHoldDown();
 				}
 			}

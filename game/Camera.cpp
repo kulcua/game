@@ -105,8 +105,6 @@ void CCamera::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				{
 					if (e->ny < 0)
 						isOnGround = true;
-					if (e->nx < 0)
-						isScroll = false;
 				}
 				else {
 					if (nx != 0)
