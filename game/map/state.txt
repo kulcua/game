@@ -1,2 +1,2 @@
 #level - point - money - life
-1	54250	174	2
+1	54350	174	0

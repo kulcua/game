@@ -13,6 +13,7 @@
 #define HUD_ALIGN_TIME 376
 #define HUD_ALIGN_TOP 21
 #define HUD_ALIGN_BOTTOM 46
+#define HUD_ALIGN_CARD 491
 #define HUD_TIMER 500
 
 class HUD : public CGameObject
@@ -21,6 +22,7 @@ class HUD : public CGameObject
 	float xWorld, xM;
 	float xPower, xPoint;
 	float xMoney, xTime;
+	float xCard;
 	CMario* mario;
 	ULONGLONG timeStart = GetTickCount64();
 	ULONGLONG timeLeft = HUD_TIMER;
@@ -31,6 +33,7 @@ public:
 	TextPowerSign* power;
 	Text* money;
 	Text* time;
+	vector<TextString*> card;
 	HUD(vector<LPGAMEOBJECT> &objects);
 	ULONGLONG CountDownTimer();
 	void SetPosition(float x, float y);
