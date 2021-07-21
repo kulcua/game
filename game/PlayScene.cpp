@@ -150,7 +150,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			player = new CMario();
 			CGame::GetInstance()->GetCurrentScene()->SetPlayer(player);
 			player->SetPosition(x, y);
-			DataManager::GetInstance()->ReadPlayerData();
 			player->CGameObject::SetAnimation(MARIO_ANI_SET_ID);
 			if (id == 2)
 			{
@@ -343,6 +342,7 @@ void CPlayScene::Load()
 	}
 	else {
 		CreatePool();
+		DataManager::GetInstance()->ReadPlayerData();
 		DebugOut(L"[INFO] Object Pool created!\n");
 	}
 

@@ -14,7 +14,7 @@
 #define HUD_ALIGN_TOP 21
 #define HUD_ALIGN_BOTTOM 46
 #define HUD_ALIGN_CARD 491
-#define HUD_TIMER 500
+#define HUD_TIMER 300
 
 class HUD : public CGameObject
 {
@@ -33,7 +33,7 @@ public:
 	TextPowerSign* power;
 	Text* money;
 	Text* time;
-	vector<TextString*> card;
+	vector<TextCard*> cards;
 	HUD(vector<LPGAMEOBJECT> &objects);
 	ULONGLONG CountDownTimer();
 	void SetPosition(float x, float y);

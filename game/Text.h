@@ -10,7 +10,7 @@
 #define TEXT_NUM_MONEY	2
 #define TEXT_NUM_TIME	3
 #define TEXT_CARD_ANI_ID 53
-#define TEXT_CARD_BBOX_WIDTH 48
+#define TEXT_CARD_BBOX_WIDTH 72
 #define TEXT_CARD_ANI_MUSHROOM_BLINK 0
 #define TEXT_CARD_ANI_MUSHROOM 1
 #define TEXT_CARD_ANI_STAR_BLINK 2
@@ -45,6 +45,7 @@ protected:
 	string content;
 public:
 	void SetContent(string content);
+	string GetContent() { return content; }
 	virtual void Render();
 	void RenderCard(string cardName);
 };

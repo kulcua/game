@@ -159,11 +159,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<Card*>(e->obj))
 			{
 				Card* card = dynamic_cast<Card*>(e->obj);
-				if (e->ny)
-				{
-					SetCardType(card->RandomCard());
-					//CGame::GetInstance()->GetCurrentScene()->isFinished = true;
-				}
+				SetCardType(card->RandomCard());
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{

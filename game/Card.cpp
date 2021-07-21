@@ -36,7 +36,8 @@ void Card::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			TextCard* cardHud = new TextCard();
 			cardHud->SetContent(GetCardName());
 			cardHud->blink = true;
-			CGame::GetInstance()->GetCurrentScene()->GetHUD()->card.push_back(cardHud);
+			CGame::GetInstance()->GetCurrentScene()->GetHUD()->cards.push_back(cardHud);
+			CGame::GetInstance()->GetCurrentScene()->isFinished = true;
 		}
 		vy = -CARD_ACTIVE_SPEED_VY;
 		y += dy;

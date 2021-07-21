@@ -97,9 +97,9 @@ void HUD::SetPosition(float cx, float cy)
 	point->SetPosition(xPoint, yBottom);
 	money->SetPosition(xMoney, yTop);
 	time->SetPosition(xTime, yBottom);
-	for (int i = 0; i < card.size(); i++)
+	for (int i = 0; i < cards.size(); i++)
 	{
-		card[i]->SetPosition(xCard + i * TEXT_CARD_BBOX_WIDTH, yTop);
+		cards[i]->SetPosition(xCard + i * TEXT_CARD_BBOX_WIDTH, yTop);
 	}
 }
 
@@ -144,8 +144,8 @@ void HUD::Render()
 	point->Render();
 	money->Render();
 	time->Render();
-	for (int i = 0; i < card.size(); i++)
+	for (int i = 0; i < cards.size(); i++)
 	{
-		card[i]->Render();
+		cards[i]->Render();
 	}
 }
