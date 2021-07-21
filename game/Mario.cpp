@@ -80,7 +80,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<MiniGoomba*>(e->obj))
 			{
 				MiniGoomba* mGoomba = dynamic_cast<MiniGoomba*>(e->obj);
-				mGoomba->folowMario = true;
+				mGoomba->followMario = true;
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{
@@ -352,7 +352,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		ManageAlphaUntouchable();
 	}	
-
 	// put it finally because of switch scene delete all objects
 	state_->Update(*this, dt);
 }

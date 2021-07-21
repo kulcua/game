@@ -17,6 +17,7 @@ void MiniGoomba::Init(float x, float y)
 	inUse = true;
 	SetPosition(x, y);
 	timeToDie = GetTickCount64();
+	ny = -1;
 }
 
 
@@ -47,9 +48,24 @@ void MiniGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	StartAnimate();
 
-	if (folowMario)
+	if (followMario)
 	{
-		FollowMario();
+		mario->isPower = false;
+		CheckUnfollow();
+		
+		if (unfollowMarioTimeStart > 0) {
+			if (GetTickCount64() - unfollowMarioTimeStart > MINI_GOOMBA_UNFOLLOW_TO_DIE_TIME)
+			{
+				followMario = false;
+				die = true;
+				unfollowMarioTimeStart = 0;
+			}
+			else {
+				vy += MINI_GOOMBA_GRAVITY * dt;
+				x += dx; y += dy;
+			}
+		}
+		else FollowMario();
 	}
 	else {
 		vy = MINI_GOOMBA_SPEED_VY;
@@ -111,4 +127,30 @@ void MiniGoomba::FollowMario()
 	MarioJumpingState::GetInstance()->isHighJump = false;
 	x += dx;
 	y += dy;
+}
+
+void MiniGoomba::CheckUnfollow()
+{
+	if (mario->input == PRESS_S)
+	{
+		if (marioJumpTimeStart == 0)
+		{
+			marioJumpTimeStart = GetTickCount64();
+		}
+		else marioJumpTimes--;
+	}
+
+	if (GetTickCount64() - marioJumpTimeStart > MINI_GOOMBA_UNFOLLOW_JUMP_CHECK_TIME && marioJumpTimeStart > 0)
+	{
+		// reset if over 1000ms
+		marioJumpTimeStart = 0;
+		marioJumpTimes = MINI_GOOMBA_JUMP_TIMES;
+	}
+
+	if (marioJumpTimes == 0 && unfollowMarioTimeStart == 0)
+	{
+		ny = 1;
+		vy = -MINI_GOOMBA_SPEED_VY_DEFLECT;
+		unfollowMarioTimeStart = GetTickCount64();
+	}
 }

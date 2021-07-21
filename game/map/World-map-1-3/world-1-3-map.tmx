@@ -419,7 +419,7 @@
  <objectgroup id="32" name="MusicalNote">
   <object id="468" type="1" x="1488" y="768" width="48" height="48"/>
   <object id="469" type="1" x="1391" y="863" width="48" height="48"/>
-  <object id="470" name="1" type="2" x="1584.25" y="864.25" width="48" height="48"/>
+  <object id="470" name="1" type="2" x="1584" y="864.25" width="48" height="48"/>
  </objectgroup>
  <objectgroup id="36" name="Portal">
   <object id="496" name="out" type="1" x="4445" y="2300.3" width="165" height="53.697">
@@ -451,8 +451,8 @@
   <object id="338" x="1584" y="816.083" width="48" height="48"/>
   <object id="339" x="1536" y="816.083" width="48" height="48"/>
   <object id="340" x="1488" y="816.083" width="48" height="48"/>
-  <object id="467" x="1535.75" y="863.916" width="48" height="48"/>
-  <object id="361" x="1728.33" y="768.25" width="48" height="48"/>
+  <object id="467" x="1536" y="863.916" width="48" height="48"/>
+  <object id="361" x="1728" y="768.25" width="48" height="48"/>
   <object id="360" x="1824" y="768.25" width="48" height="48"/>
   <object id="363" x="1872" y="768.25" width="48" height="48"/>
   <object id="328" x="1632" y="864" width="48" height="48"/>
@@ -461,8 +461,8 @@
   <object id="343" x="1728" y="816.417" width="48" height="48"/>
  </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
-  <object id="336" name="coin" type="1" x="1873.33" y="864" width="48" height="48"/>
-  <object id="466" name="coin" type="1" x="1536.58" y="912.083" width="48" height="48"/>
+  <object id="336" name="coin" type="1" x="1872" y="864" width="48" height="48"/>
+  <object id="466" name="coin" type="1" x="1536" y="912.083" width="48" height="48"/>
   <object id="359" name="coin10" type="2" x="1776" y="768.25" width="48" height="48">
    <properties>
     <property name=" num" value="10"/>

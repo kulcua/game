@@ -6,10 +6,15 @@
 #define MINI_GOOMBA_SPEED_VY 0.1f
 #define MINI_GOOMBA_SPEED_VX_FL_MARIO 0.1f
 #define MINI_GOOMBA_SPEED_VY_FL_MARIO 0.03f
+#define MINI_GOOMBA_SPEED_VY_DEFLECT 0.2f
+#define MINI_GOOMBA_GRAVITY 0.002f
 #define MINI_GOOMBA_BBOX_SIZE 20
 #define MINI_GOOMBA_ANI_ID 33
 #define MINI_GOOMBA_TIME_FLIP 1000
 #define MINI_GOOMBA_TIME_DIE 5500
+#define MINI_GOOMBA_UNFOLLOW_JUMP_CHECK_TIME 1000
+#define MINI_GOOMBA_JUMP_TIMES 3
+#define MINI_GOOMBA_UNFOLLOW_TO_DIE_TIME 3000
 
 class MiniGoomba : public CGameObject
 {
@@ -19,16 +24,19 @@ class MiniGoomba : public CGameObject
 	ULONGLONG animateTimeStart;
 	ULONGLONG timeToDie;
 	int timeFlip;
+	int marioJumpTimes = MINI_GOOMBA_JUMP_TIMES;
+	ULONGLONG marioJumpTimeStart;
+	ULONGLONG unfollowMarioTimeStart;
 public:
 	MiniGoomba();
 
 	bool inUse;
-	bool folowMario;
+	bool followMario;
 
 	void Init(float x, float y);
+	void CheckUnfollow();
 	void StartAnimate();
 	void FollowMario();
-
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
