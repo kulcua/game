@@ -1,7 +1,5 @@
 #pragma once
 #include "MarioState.h"
-#define MARIO_WIDTH 48
-#define MARIO_HEIGHT 48
 #define MARIO_ANI_SMALL_OVERWORLD	0 
 #define MARIO_ANI_BIG_OVERWORLD	1
 #define MARIO_ANI_RACCOON_OVERWORLD	2

@@ -351,6 +351,12 @@
     <ClCompile Include="Curtain.cpp">
       <Filter>Intro</Filter>
     </ClCompile>
+    <ClCompile Include="Three.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -609,6 +615,12 @@
       <Filter>Mario\MarioState</Filter>
     </ClInclude>
     <ClInclude Include="Curtain.h">
+      <Filter>Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="Three.h">
+      <Filter>Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
       <Filter>Intro</Filter>
     </ClInclude>
   </ItemGroup>

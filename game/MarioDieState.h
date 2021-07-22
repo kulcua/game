@@ -1,12 +1,10 @@
 #pragma once
 #include "MarioState.h"
-#define MARIO_WIDTH 48
-#define MARIO_HEIGHT 48
 
 class MarioDieState : public MarioState
 {
 	static MarioDieState* __instance;
-	ULONGLONG dieTimeStart;
+	ULONGLONG dieTimeStart = 0;
 public:
 	static MarioDieState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);

@@ -19,10 +19,10 @@
 class HUD : public CGameObject
 {
 	int spriteId = 0;
-	float xWorld, xM;
-	float xPower, xPoint;
-	float xMoney, xTime;
-	float xCard;
+	float xWorld = 0, xM = 0;
+	float xPower = 0, xPoint = 0;
+	float xMoney = 0, xTime = 0;
+	float xCard = 0;
 	CMario* mario;
 	ULONGLONG timeStart = GetTickCount64();
 	ULONGLONG timeLeft = HUD_TIMER;

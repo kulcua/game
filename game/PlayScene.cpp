@@ -480,6 +480,20 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 		}
 		mario->HandleInput(input);
 	}
+	else {
+		switch (KeyCode)
+		{
+		case DIK_UP:
+			Intro::GetInstance()->ArrowUp();
+			break;
+		case DIK_DOWN:
+			Intro::GetInstance()->ArrowDown();
+			break;
+		case DIK_S:
+			Intro::GetInstance()->SwitchOverWorld();
+			break;
+		}
+	}
 }
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)

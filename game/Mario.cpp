@@ -273,6 +273,10 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						MarioFrontState::GetInstance()->onPortalPipe = false;
 						isOnGround = true;
 					}
+					if (e->nx)
+					{
+						if (isPower) PowerReset();
+					}
 				}
 			}
 			else if (dynamic_cast<PortalPipe*>(e->obj))
@@ -313,6 +317,14 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					isOnGround = true;
 				}
 			}
+			if (dynamic_cast<CGround*>(e->obj)
+				|| dynamic_cast<CBrick*>(e->obj))
+			{
+				if (e->nx)
+				{
+					if (isPower) PowerReset();
+				}
+			}
 		}
 	}
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -321,7 +333,6 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
-
 	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
 		vy += MARIO_GRAVITY * dt;
 
@@ -422,7 +433,6 @@ void CMario::PowerControl()
 			{
 				savePower = power;
 			}
-
 			if (timePassed <= MARIO_MAX_POWER - savePower) {
 				power = savePower + timePassed;
 			}

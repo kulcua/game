@@ -97,7 +97,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			
 			if (dynamic_cast<Enermy*>(e->obj))
 			{
-				if (e->nx && state == KOOPA_STATE_WALKING) {
+				if (e->nx && state != KOOPA_STATE_BALL) {
 					WalkThrough();
 				}
 			}
@@ -141,7 +141,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{
 				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-				if (koopa->GetState() != KOOPA_STATE_DIE)
+				if (koopa->GetState() != KOOPA_STATE_DIE && state == KOOPA_STATE_BALL)
 				{
 					koopa->SetState(KOOPA_STATE_DIE);
 					this->SetState(KOOPA_STATE_DIE);
@@ -182,6 +182,10 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						}
 						else TurnBack(KOOPA_WALKING_SPEED);
 					}
+				}
+				else {
+					if (e->nx) x += dx;
+					if (e->ny) y += dy;
 				}
 			}
 			else if (dynamic_cast<MusicalNote*>(e->obj))

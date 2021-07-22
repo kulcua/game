@@ -1,13 +1,13 @@
 #pragma once
 #include "GameObject.h"
-#define CURTAIN_ANI_ID 60
-#define CURTAIN_ANI_RED 0
-#define CURTAIN_ANI_BROS 1
-class Curtain : public CGameObject
+#include "Curtain.h"
+#define THREE_ANI_ID 63
+class Three : public CGameObject
 {
+	Curtain* curtain;
 public:
-	int ani;
-	Curtain();
+	bool isStop = false;
+	Three(Curtain* curtain);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);

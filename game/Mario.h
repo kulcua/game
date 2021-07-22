@@ -2,7 +2,8 @@
 #include "GameObject.h"
 #include "Utils.h"
 #include "Card.h"
-
+#define MARIO_WIDTH 48
+#define MARIO_HEIGHT 48
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
 #define MARIO_JUMP_SPEED_Y		0.7f

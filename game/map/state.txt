@@ -1,6 +1,6 @@
 [MARIO]
 #level - point - money - life
-3	14840	11	3
+3	19610	34	3
 [CARD]
 #number-card
-1	star
+0

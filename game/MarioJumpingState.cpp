@@ -114,14 +114,6 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
     {
         mario.PowerReset();
     }
-    /*else if (input == PRESS_S)
-    {
-        if (mario.isOnMusicalNote)
-        {
-            mario.isOnMusicalNote = false; 
-            mario.vy = -MARIO_DEFLECT_MUSICAL_NOTE_JUMP;
-        }
-    }*/
 }
 
 void MarioJumpingState::Update(CMario& mario, DWORD dt)
@@ -143,7 +135,6 @@ void MarioJumpingState::Update(CMario& mario, DWORD dt)
     }
     else if (mario.vy > 0)
     {
-         //mario.isOnMusicalNote = false;
          mario.state_ = MarioState::dropping.GetInstance();
     }
 
