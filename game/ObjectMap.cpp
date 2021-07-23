@@ -27,6 +27,7 @@
 #include "MusicalNote.h"
 #include "BrickCoins.h"
 #include "ParaMiniGoomba.h"
+#include "PortalManager.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, Grid* grid)
 {
@@ -345,9 +346,11 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				type = element->Attribute("type");
 			}
 			else type = "node";
-			obj = new CPortal(type);
+			CPortal* obj = new CPortal();
+			obj->SetType(type);
 			obj->SetPosition(x - PORTAL_WIDTH / 2, y - PORTAL_HEIGHT / 2);
 			obj->SetGrid(grid, objectId);
+			PortalManager::GetInstance()->portals.push_back(obj);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

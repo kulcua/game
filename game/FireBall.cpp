@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "KoopaBound.h"
 #include "BrotherBound.h"
+#include "Coin.h"
 
 CFireBall::CFireBall()
 {
@@ -123,7 +124,8 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					effect->Init(EffectName::fireballDestroy, x, y);
 			}
 			else if (dynamic_cast<KoopaBound*>(e->obj)
-				|| dynamic_cast<BrotherBound*>(e->obj))
+				|| dynamic_cast<BrotherBound*>(e->obj)
+				|| dynamic_cast<Coin*>(e->obj))
 			{
 				if (e->nx)
 				{

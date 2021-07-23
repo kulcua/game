@@ -342,9 +342,19 @@ void CPlayScene::Load()
 	{
 		Intro::GetInstance()->SetScenario(objects);
 	}
-	else {
+	else
+	{
+		if (id == WORLD_MAP_SCENE)
+		{
+			int currentPort = PortalManager::GetInstance()->currentPort;
+			CPortal* port = PortalManager::GetInstance()->GetPortById(currentPort);
+			player->SetPosition(port->x, port->y);
+		}
+		else PortalManager::GetInstance()->currentPort = GetSceneId();
+
 		CreatePool();
 		DataManager::GetInstance()->ReadPlayerData();
+
 		DebugOut(L"[INFO] Object Pool created!\n");
 	}
 

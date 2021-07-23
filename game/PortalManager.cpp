@@ -10,3 +10,13 @@ PortalManager* PortalManager::GetInstance()
 	}
 	return __instance;
 }
+
+CPortal* PortalManager::GetPortById(int id)
+{
+	for (size_t i = 0; i < portals.size(); i++)
+	{
+		if (portals[i]->GetSceneId() == id)
+			return portals[i];
+	}
+	return nullptr;
+}
