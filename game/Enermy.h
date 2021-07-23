@@ -6,8 +6,8 @@
 class Enermy : public CGameObject
 {
 protected:
-	CMario* mario;
-	ULONGLONG dieTimeStart;
+	CMario* mario = NULL;
+	ULONGLONG dieTimeStart = 0;
 public:
 	void BeingKicked();
 	void StartDieTime() { dieTimeStart = GetTickCount64(); }

@@ -14,12 +14,16 @@
 
 CGameObject::CGameObject()
 {
+	grid_ = NULL;
+	isOnGround = false;
 	x = y = 0;
 	vx = vy = 0;
 	width = height = 0;
 	oldX = oldY = 0;
 	dx = dy = 0;
 	state = 0;
+	dt = 0;
+	animation_set = 0;
 }
 
 void CGameObject::SetGrid(Grid* grid, int id)
@@ -99,7 +103,7 @@ void CGameObject::CalcPotentialCollisions(
 	vector<LPGAMEOBJECT>* coObjects,
 	vector<LPCOLLISIONEVENT>& coEvents)
 {
-	for (UINT i = 0; i < coObjects->size(); i++)
+	for (size_t i = 0; i < coObjects->size(); i++)
 	{
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
@@ -164,7 +168,7 @@ void CGameObject::FilterCollision(
 
 	coEventResult.clear();
 
-	for (UINT i = 0; i < coEvents.size(); i++)
+	for (size_t i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
 

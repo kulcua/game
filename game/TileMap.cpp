@@ -48,7 +48,7 @@ void TileMap::ReadFileTmx(const char* pathTmx, int id, D3DCOLOR transColor, vect
 
 void TileMap::RenderBackground()
 {
-	for (int i = 0; i < layers.size(); i++)
+	for (size_t i = 0; i < layers.size(); i++)
 	{
 		if (layers[i]->GetName().compare("Foreground") != 0)
 			layers[i]->Render();
@@ -67,7 +67,7 @@ void TileMap::Clear()
 	objectMap = NULL;
 	tileSet = NULL;
 
-	for (int i = 0; i < layers.size(); i++)
+	for (size_t i = 0; i < layers.size(); i++)
 	{
 		delete layers[i];
 	}

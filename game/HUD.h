@@ -18,14 +18,14 @@
 
 class HUD : public CGameObject
 {
-	int spriteId = 0;
-	float xWorld = 0, xM = 0;
-	float xPower = 0, xPoint = 0;
-	float xMoney = 0, xTime = 0;
-	float xCard = 0;
+	int spriteId;
+	float xWorld, xM;
+	float xPower, xPoint;
+	float xMoney, xTime;
+	float xCard;
 	CMario* mario;
-	ULONGLONG timeStart = GetTickCount64();
-	ULONGLONG timeLeft = HUD_TIMER;
+	ULONGLONG timeStart;
+	ULONGLONG timeLeft;
 public:
 	Text* world;
 	Text* life;

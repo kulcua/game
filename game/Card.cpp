@@ -6,6 +6,9 @@
 
 Card::Card()
 {
+	card = CardType::num_card;
+	active = false;
+	textCard = false;
 	SetAnimation(CARD_ANI_ID);
 	courseClear = new TextString();
 	courseClear->SetContent("course clear");
@@ -17,7 +20,7 @@ CardType Card::RandomCard() {
 	active = true;
 	// random 0-2 CardType
 	int divisor = static_cast<int>(CardType::num_card);
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	card = static_cast<CardType>(rand() % divisor);
 	return card;
 }

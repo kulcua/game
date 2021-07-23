@@ -1,4 +1,6 @@
 #pragma once
+#define DIRECTINPUT_VERSION 0x0800
+
 #include <Windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -10,8 +12,6 @@
 #include "Mario.h"
 
 using namespace std;
-
-#define DIRECTINPUT_VERSION 0x0800
 
 #define KEYBOARD_BUFFER_SIZE 1024
 
@@ -57,7 +57,7 @@ public:
 	void InitKeyBoard();
 	void SetKeyHandler(LPKEYEVENTHANDLER handler) { keyHandler = handler; }
 	void Init(HWND hWnd);
-	void Draw(float x, float y, float nx, float ny, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
+	void Draw(float x, float y, int nx, int ny, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
 
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyBoard();

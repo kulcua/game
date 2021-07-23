@@ -40,7 +40,7 @@ void BoomerangBrother::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		float nx, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		for (size_t i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			if (dynamic_cast<BrotherBound*>(e->obj))
@@ -57,7 +57,7 @@ void BoomerangBrother::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (size_t i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void BoomerangBrother::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

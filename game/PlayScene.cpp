@@ -43,6 +43,8 @@ using namespace std;
 
 CPlayScene::CPlayScene(int id, LPCWSTR filePath) : CScene(id, filePath)
 {
+	player = NULL;
+	grid = NULL;
 	keyHandler = new CPlaySceneKeyHandler(this);
 }
 
@@ -92,7 +94,7 @@ void CPlayScene::_ParseSection_ANIMATIONS(string line)
 	LPANIMATION ani = new CAnimation();
 
 	int ani_id = atoi(tokens[0].c_str());
-	for (int i = 1; i < tokens.size(); i += 2)
+	for (size_t i = 1; i < tokens.size(); i += 2)
 	{
 		int sprite_id = atoi(tokens[i].c_str());
 		int frame_time = atoi(tokens[i+1].c_str());
@@ -114,7 +116,7 @@ void CPlayScene::_ParseSection_ANIMATION_SETS(string line)
 
 	CAnimations* animations = CAnimations::GetInstance();
 
-	for (int i = 1; i < tokens.size(); i++)
+	for (size_t i = 1; i < tokens.size(); i++)
 	{
 		int ani_id = atoi(tokens[i].c_str());
 
@@ -132,8 +134,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	if (tokens.size() < 3) return;
 
 	int object_type = atoi(tokens[0].c_str());
-	float x = atof(tokens[1].c_str());
-	float y = atof(tokens[2].c_str());
+	float x = (float)atof(tokens[1].c_str());
+	float y = (float)atof(tokens[2].c_str());
 
 	switch (object_type)
 	{
@@ -398,7 +400,7 @@ void CPlayScene::Unload()
 		DataManager::GetInstance()->SavePlayerData();
 	player = NULL;
 
-	for (int i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		delete objects[i];
 	}
@@ -415,7 +417,7 @@ void CPlayScene::Unload()
 
 void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 {
-	Input input = NO_INPUT;
+	Input input = Input::NO_INPUT;
 	CMario* mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	int sceneId = ((CPlayScene*)scene)->GetSceneId();
 	if (sceneId != INTRO_SCENE)
@@ -425,7 +427,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 			switch (KeyCode)
 			{
 			case DIK_S:
-				input = PRESS_S;
+				input = Input::PRESS_S;
 				break;
 			case DIK_F1:
 				if (sceneId >= PLAY_SCENE)
@@ -462,19 +464,19 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 				mario->isUntouchable = true;
 				break;
 			case DIK_DOWN:
-				input = PRESS_DOWN;
+				input = Input::PRESS_DOWN;
 				break;
 			case DIK_A:
-				input = PRESS_A;
+				input = Input::PRESS_A;
 				break;
 			case DIK_LEFT:
-				input = PRESS_LEFT;
+				input = Input::PRESS_LEFT;
 				break;
 			case DIK_RIGHT:
-				input = PRESS_RIGHT;
+				input = Input::PRESS_RIGHT;
 				break;
 			case DIK_UP:
-				input = PRESS_UP;
+				input = Input::PRESS_UP;
 				break;
 			}
 		}
@@ -498,7 +500,7 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 
 void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 {
-	Input input = NO_INPUT;
+	Input input = Input::NO_INPUT;
 	CMario* mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
@@ -507,19 +509,19 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 			switch (KeyCode)
 			{
 			case DIK_DOWN:
-				input = RELEASE_DOWN;
+				input = Input::RELEASE_DOWN;
 				break;
 			case DIK_A:
-				input = RELEASE_A;
+				input = Input::RELEASE_A;
 				break;
 			case DIK_S:
-				input = RELEASE_S;
+				input = Input::RELEASE_S;
 				break;
 			case DIK_LEFT:
-				input = RELEASE_LEFT;
+				input = Input::RELEASE_LEFT;
 				break;
 			case DIK_RIGHT:
-				input = RELEASE_RIGHT;
+				input = Input::RELEASE_RIGHT;
 				break;
 			}	
 		}
@@ -529,14 +531,14 @@ void CPlaySceneKeyHandler::OnKeyUp(int KeyCode)
 
 void CPlaySceneKeyHandler::KeyState(BYTE* states)
 {
-	Input input = NO_INPUT;
+	Input input = Input::NO_INPUT;
 	CMario* mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
 
 	if (((CPlayScene*)scene)->GetSceneId() != INTRO_SCENE)
 	{
 		if (CGame::GetInstance()->GetCurrentScene()->isFinished == false)
 		{
-			input = KEY_STATE;
+			input = Input::KEY_STATE;
 		}
 		mario->HandleInput(input);
 	}

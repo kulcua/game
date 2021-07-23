@@ -6,6 +6,15 @@
 
 MiniGoomba::MiniGoomba()
 {
+	next = NULL;
+	animateTimeStart = 0;
+	timeToDie = 0;
+	timeFlip = 0;
+	marioJumpTimes = MINI_GOOMBA_JUMP_TIMES;
+	marioJumpTimeStart = 0;
+	unfollowMarioTimeStart = 0;
+	inUse = false;
+	followMario = false;
 	SetAnimation(MINI_GOOMBA_ANI_ID);
 	die = true;
 	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
@@ -131,7 +140,7 @@ void MiniGoomba::FollowMario()
 
 void MiniGoomba::CheckUnfollow()
 {
-	if (mario->input == PRESS_S)
+	if (mario->input == Input::PRESS_S)
 	{
 		if (marioJumpTimeStart == 0)
 		{

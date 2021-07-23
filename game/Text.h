@@ -21,9 +21,9 @@
 class Text : public CGameObject
 {
 protected:
-	int content;
-	int characterRender;
-	int length;
+	int content = 0;
+	int characterRender = 0;
+	int length = 0;
 public:
 	void SetLength(int length) { this->length = length; }
 	void SetContent(int content) { this->content = content; characterRender = content; }
@@ -33,7 +33,7 @@ public:
 
 class TextPowerSign : public Text
 {
-	int power;
+	int power = 0;
 public:
 	void SetPower(int power) { this->power = power; }
 	virtual void Render();

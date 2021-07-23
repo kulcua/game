@@ -17,7 +17,7 @@
 class ParaGoomba : public CGoomba
 {
 	int jumpTimes;
-	DWORD walkingTimeStart;
+	ULONGLONG walkingTimeStart;
 public:
 	ParaGoomba();
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);

@@ -17,23 +17,23 @@ MarioOverWorldState* MarioOverWorldState::GetInstance()
 
 void MarioOverWorldState::HandleInput(CMario& mario, Input input)
 {
-    if (input == PRESS_LEFT)
+    if (input == Input::PRESS_LEFT)
     {
         mario.vx = -MARIO_OVERWORLD_SPEED;
     }
-    else if (input == PRESS_RIGHT)
+    else if (input == Input::PRESS_RIGHT)
     {
         mario.vx = MARIO_OVERWORLD_SPEED;
     }
-    else if (input == PRESS_DOWN)
+    else if (input == Input::PRESS_DOWN)
     {
         mario.vy = MARIO_OVERWORLD_SPEED;
     }
-    else if (input == PRESS_UP)
+    else if (input == Input::PRESS_UP)
     {
         mario.vy = -MARIO_OVERWORLD_SPEED;
     }
-    else if (input == PRESS_S)
+    else if (input == Input::PRESS_S)
     {
         if (sceneId != 0 && mario.vx == 0 && mario.vy == 0)
         {

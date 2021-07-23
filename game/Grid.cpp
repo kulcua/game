@@ -62,7 +62,7 @@ void Grid::Update(DWORD dt)
         for (int j = cellStartY; j < cellEndY + 1; j++)
         {
             vector<CGameObject*> objList = cells_[i][j]->GetListObjects();
-            for (int i = 0; i < objList.size(); i++)
+            for (size_t i = 0; i < objList.size(); i++)
             {
                 if (objList[i]->die == false)
                 {
@@ -162,11 +162,12 @@ void Grid::ReadGridData(const char* filePath)
         element = objectGroup->FirstChildElement(); //id - cell number xy
         while (element)
         {
-            int objectId, cellX, cellY, endX, endY;
+            int objectId;
+            float cellX, cellY, endX, endY;
             string cellEndX, cellEndY; // avoid NaN cases when obj doesn't have width, height
             element->QueryIntAttribute("id", &objectId);
-            element->QueryIntAttribute("cellx", &cellX);
-            element->QueryIntAttribute("celly", &cellY);
+            element->QueryFloatAttribute("cellx", &cellX);
+            element->QueryFloatAttribute("celly", &cellY);
             cellEndX = element->Attribute("xEnd");
             cellEndY = element->Attribute("yEnd");
             if (cellEndX.compare("NaN") == 0 && cellEndY.compare("NaN") == 0)
@@ -175,8 +176,8 @@ void Grid::ReadGridData(const char* filePath)
                 endY = cellY;
             }
             else {
-                endX = atoi(cellEndX.c_str());
-                endY = atoi(cellEndY.c_str());
+                endX = (float)atof(cellEndX.c_str());
+                endY = (float)atof(cellEndY.c_str());
             }
             //DebugOut(L"%d %d %d %d\n", cellX, cellY, endX, endY);
             objectCells[objectId] = D3DXVECTOR4(cellX, cellY, endX, endY);

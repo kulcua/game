@@ -52,15 +52,15 @@ public:
 	float vx;
 	float vy;
 
-	float nx = -1;
-	float ny = -1;
+	int nx = -1;
+	int ny = -1;
 
 	int state;
 
 	DWORD dt;
 
-	int width;
-	int height;
+	float width;
+	float height;
 
 	LPANIMATION_SET animation_set;
 	void SetAnimation(int ani);

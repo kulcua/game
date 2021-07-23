@@ -17,7 +17,7 @@ MarioShootFireBallState* MarioShootFireBallState::GetInstance()
 
 void MarioShootFireBallState::HandleInput(CMario& mario, Input input)
 {
-    if (input == RELEASE_A)
+    if (input == Input::RELEASE_A)
     {
         mario.PowerReset();
     }

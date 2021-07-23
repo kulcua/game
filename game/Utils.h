@@ -10,7 +10,7 @@
 #include <vector>
 #include <d3dx9.h>
 
-enum Input {
+enum class Input {
 	NO_INPUT,
 	KEY_STATE,
 	PRESS_DOWN,

@@ -23,8 +23,8 @@ class MiniGoomba : public CGameObject
 	MiniGoomba* next;
 	ULONGLONG animateTimeStart;
 	ULONGLONG timeToDie;
-	int timeFlip;
-	int marioJumpTimes = MINI_GOOMBA_JUMP_TIMES;
+	ULONGLONG timeFlip;
+	int marioJumpTimes;
 	ULONGLONG marioJumpTimeStart;
 	ULONGLONG unfollowMarioTimeStart;
 public:

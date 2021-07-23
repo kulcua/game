@@ -13,9 +13,9 @@ class PowerUpItem : public CItem
 {
 	friend class CMario;
 	CMario* mario;
-	PowerUp setItem = PowerUp::none;
-	float startY = 0;
-	bool outBrick = false;
+	PowerUp setItem;
+	float startY;
+	bool outBrick;
 	void UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void UpdateLeaf(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 public:

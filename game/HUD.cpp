@@ -8,6 +8,15 @@
 
 HUD::HUD(vector<LPGAMEOBJECT> &objects)
 {
+	spriteId = 0;
+	xWorld = xM = 0;
+	xPower = xPoint = 0;
+	xMoney =  xTime = 0;
+	xCard = 0;
+
+	timeStart = GetTickCount64();
+	timeLeft = HUD_TIMER;
+
 	world = new Text();
 	life = new Text();
 	point = new Text();
@@ -60,7 +69,7 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	int timer = 0;
 	if (CGame::GetInstance()->GetCurrentScene()->GetSceneId() != WORLD_MAP_SCENE)
-		timer = CountDownTimer();
+		timer = (int)CountDownTimer();
 
 	world->SetContent(1);
 	life->SetContent(mario->GetLife());
@@ -97,7 +106,7 @@ void HUD::SetPosition(float cx, float cy)
 	point->SetPosition(xPoint, yBottom);
 	money->SetPosition(xMoney, yTop);
 	time->SetPosition(xTime, yBottom);
-	for (int i = 0; i < cards.size(); i++)
+	for (size_t i = 0; i < cards.size(); i++)
 	{
 		cards[i]->SetPosition(xCard + i * TEXT_CARD_BBOX_WIDTH, yTop);
 	}
@@ -144,7 +153,7 @@ void HUD::Render()
 	point->Render();
 	money->Render();
 	time->Render();
-	for (int i = 0; i < cards.size(); i++)
+	for (size_t i = 0; i < cards.size(); i++)
 	{
 		cards[i]->Render();
 	}

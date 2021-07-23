@@ -91,7 +91,7 @@ void DataManager::SavePlayerData() {
 	MyFile << "#number-card" << endl;
 	MyFile << cardList.size();
 
-	for (int i = 0; i < cardList.size(); i++)
+	for (size_t i = 0; i < cardList.size(); i++)
 	{
 		MyFile << "\t" << cardList[i]->GetContent();
 	}

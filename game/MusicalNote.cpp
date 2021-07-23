@@ -25,7 +25,7 @@ void MusicalNote::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if ((y < startY && nDeflect > 0) || (y > startY && nDeflect < 0)) // take to start_y after deflect cause disable
 	{
 		vy += nDeflect * MUSICAL_NOTE_VY_RETURN;
-		if (mario->input == PRESS_S)
+		if (mario->input == Input::PRESS_S)
 		{
 			if (GetType() == MUSICAL_NOTE_TYPE_RED)
 			{
@@ -40,7 +40,7 @@ void MusicalNote::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	else if (nDeflect != 0)
 	{
 		mario->isOnGround = false;
-		if (mario->input != PRESS_S)
+		if (mario->input != Input::PRESS_S)
 		{
 			mario->vy = nDeflect * MUSICAL_NOTE_DEFLECT_MARIO_DEFAULT;
 		}

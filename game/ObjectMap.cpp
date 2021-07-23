@@ -147,7 +147,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			{
 				vector<CItem*> listItems;
 				BrickCoins* brCoins = new BrickCoins(type, x, y);
-				for (int i = 0; i < BRICK_STATE_NUM_COINS; i++)
+				for (size_t i = 0; i < BRICK_STATE_NUM_COINS; i++)
 				{
 					CItem* item = new CoinBrick();
 					item->SetPosition(x, y);

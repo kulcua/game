@@ -19,7 +19,7 @@ void Cell::RemoveObject(CGameObject* obj)
 void Cell::Update(DWORD dt, vector<LPGAMEOBJECT> coObjects)
 {
 	vector<CGameObject*> objList = GetListObjects();
-	for (int i = 0; i < objList.size(); i++)
+	for (size_t i = 0; i < objList.size(); i++)
 	{
 		objList[i]->Update(dt, &coObjects);
 	}
@@ -28,7 +28,7 @@ void Cell::Update(DWORD dt, vector<LPGAMEOBJECT> coObjects)
 void Cell::Render()
 {
 	vector<CGameObject*> objList = GetListObjects();
-	for (int i = 0; i < objList.size(); i++)
+	for (size_t i = 0; i < objList.size(); i++)
 	{
 		objList[i]->Render();
 	}

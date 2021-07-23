@@ -6,8 +6,8 @@
 class MarioOverWorldState : public MarioState
 {
 	static MarioOverWorldState* __instance;
-	int sceneId;
-	bool isSwitchScene;
+	int sceneId = 0;
+	bool isSwitchScene = false;
 public:
 	static MarioOverWorldState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);

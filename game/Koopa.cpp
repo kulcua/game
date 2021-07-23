@@ -91,7 +91,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 		float nx, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		for (size_t i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			
@@ -226,7 +226,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (size_t i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void CKoopa::TurnBack(float vx)

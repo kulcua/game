@@ -57,7 +57,7 @@ void TextString::Render()
 {
 	CCamera* cam = CGame::GetInstance()->GetCam();
 	float xCenter = cam->x + CAM_WIDTH /2 - (content.size() * TEXT_WIDTH)/2;
-	for (int i = 0; i < content.size(); i++) {
+	for (size_t i = 0; i < content.size(); i++) {
 		float xPostition = xCenter + TEXT_WIDTH * i;
 		string c(1, content[i]);
 		FontManager::GetInstance()->Render(c, xPostition, y);
@@ -69,7 +69,7 @@ void TextString::RenderCard(string cardName)
 	int length = (content.size() + 2) * TEXT_WIDTH;
 	CCamera* cam = CGame::GetInstance()->GetCam();
 	float xCenter = (cam->x + CAM_WIDTH / 2) - length / 2;
-	for (int i = 0; i < content.size(); i++) {
+	for (size_t i = 0; i < content.size(); i++) {
 		float xPostition = xCenter + TEXT_WIDTH * i;
 		string c(1, content[i]);
 		FontManager::GetInstance()->Render(c, xPostition, y);
@@ -81,6 +81,7 @@ void TextString::RenderCard(string cardName)
 
 TextCard::TextCard()
 {
+	blink = false;
 	SetAnimation(TEXT_CARD_ANI_ID);
 }
 

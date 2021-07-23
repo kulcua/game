@@ -152,12 +152,12 @@ void Intro::Update(DWORD dt)
 
 	vector<CGameObject*> coObjects;
 
-	for (int i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->die == false)
 			coObjects.push_back(objects[i]);
 	}
-	for (int i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->die == false)
 			objects[i]->Update(dt, &coObjects);
@@ -166,7 +166,7 @@ void Intro::Update(DWORD dt)
 
 void Intro::Render()
 {
-	for (int i = 0; i < objects.size(); i++)
+	for (size_t i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->die == false)
 			objects[i]->Render();

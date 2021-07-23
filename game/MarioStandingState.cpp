@@ -16,7 +16,7 @@ MarioStandingState* MarioStandingState::GetInstance()
 
 void MarioStandingState::HandleInput(CMario& mario, Input input)
 {
-    if (input == PRESS_DOWN && MarioFrontState::GetInstance()->onPortalPipe)
+    if (input == Input::PRESS_DOWN && MarioFrontState::GetInstance()->onPortalPipe)
     {
         mario.state_ = MarioState::front.GetInstance();
     }

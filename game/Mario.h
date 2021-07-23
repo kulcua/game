@@ -113,40 +113,31 @@ class CMario : public CGameObject
 	friend class MarioTail;
 
 	MarioTail* tail;
-
 	CKoopa* koopaShell;
 	int level;
 	int ani;
-
 	CardType cardType;
-
 	int power;
 	int savePower;
-	int point = 0;
-	int money = 0;
-	int alpha = 255;
+	int point;
+	int money;
+	int alpha;
 	ULONGLONG untouchableStartTime;
 	ULONGLONG holdDownStartTime;
 public:
 	Input input;
 	ULONGLONG behindSceneStartTime;
-
 	ULONGLONG powerStartTime;
 	ULONGLONG powerEndTime;
-
 	MarioState* state_;
-
-	int life = MARIO_INIT_LIFE;
+	int life;
 	bool switchItem;
-
-	void HandleInput(Input input);
-
 	bool isPower;
 	bool isHandleShell;
 	bool isUntouchable;
-
+	
 	CMario();
-
+	void HandleInput(Input input);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();
 	void SetState(int state);

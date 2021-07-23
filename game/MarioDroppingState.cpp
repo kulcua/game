@@ -60,7 +60,7 @@ void MarioDroppingState::Enter(CMario& mario)
 
 void MarioDroppingState::HandleInput(CMario& mario, Input input)
 {
-    if (input == PRESS_S && mario.GetLevel() == MARIO_LEVEL_RACCOON)
+    if (input == Input::PRESS_S && mario.GetLevel() == MARIO_LEVEL_RACCOON)
     {
         mario.state_ = MarioState::dropFly.GetInstance();
         mario.vy = -MARIO_DROP_FLY_SPEED_Y;

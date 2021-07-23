@@ -98,7 +98,7 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		for (size_t i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 

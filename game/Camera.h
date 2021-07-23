@@ -15,7 +15,7 @@ class CCamera : public CGameObject
 	float startX, startY;
 	bool isMove;
 public:
-	bool isScroll = false;
+	bool isScroll;
 	CCamera();
 	void FollowMario();
 	void SetPosition(float y);

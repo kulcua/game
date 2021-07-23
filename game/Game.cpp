@@ -59,7 +59,7 @@ void CGame::Init(HWND hWnd)
 }
 
 //Utility function to wrap LPD3DXSPRITE::Draw 
-void CGame::Draw(float x, float y, float nx, float ny, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+void CGame::Draw(float x, float y, int nx, int ny, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
 	float cam_x, cam_y;
 	GetCam()->GetPosition(cam_x, cam_y);
@@ -75,7 +75,7 @@ void CGame::Draw(float x, float y, float nx, float ny, LPDIRECT3DTEXTURE9 textur
 	D3DXMATRIX newtrans;
 	D3DXVECTOR2 rotation;
 
-	rotation = D3DXVECTOR2(-nx, -ny);
+	rotation = D3DXVECTOR2((float)-nx, (float)-ny);
 
 	D3DXVECTOR2 center = D3DXVECTOR2(p.x + (right - left) / 2, p.y + (bottom - top) / 2);
 

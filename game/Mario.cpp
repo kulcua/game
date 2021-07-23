@@ -60,7 +60,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	{
 		float nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		for (size_t i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
@@ -151,7 +151,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
 				if (e->nx)
 					x += dx;
-				if (e->ny < 0 && input == PRESS_DOWN && box->GetType() == 2)
+				if (e->ny < 0 && input == Input::PRESS_DOWN && box->GetType() == 2)
 				{
 					StartHoldDown();
 				}
@@ -327,7 +327,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (size_t i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -414,14 +414,14 @@ void CMario::KickShellAfterHandle()
 	MarioState::kick.GetInstance()->StartKick();
 }
 
-ULONGLONG CalculatePowerTimePassed(int time)
+int CalculatePowerTimePassed(ULONGLONG time)
 {
-	return (GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
+	return (int)(GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
 }
 
 void CMario::PowerControl()
 {
-	ULONGLONG timePassed;
+	int timePassed;
 	if (isPower && powerStartTime > 0)
 	{
 		timePassed = CalculatePowerTimePassed(powerStartTime);
@@ -499,6 +499,27 @@ void CMario::HandleInput(Input input)
 
 CMario::CMario() : CGameObject()
 {
+	tail = NULL;
+	koopaShell = NULL;
+	input = Input::NO_INPUT;
+
+	ani = 0;
+	power = 0;
+	savePower = 0;
+	point = 0;
+	money = 0;
+	alpha = 255;
+	untouchableStartTime = 0;
+	holdDownStartTime = 0;
+	behindSceneStartTime = 0;
+	powerStartTime = 0;
+	powerEndTime = 0;
+	life = MARIO_INIT_LIFE;
+	switchItem = false;
+	isPower = false;
+	isHandleShell = false;
+	isUntouchable = false;
+
 	level = MARIO_LEVEL_SMALL;
 	state_ = MarioState::standing.GetInstance();
 	nx = 1;

@@ -26,7 +26,7 @@ void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
 	if (MarioTailHitState::GetInstance()->tailHitting)
 	{
-		for (int i = 0; i < coObjects->size(); i++)
+		for (size_t i = 0; i < coObjects->size(); i++)
 		{
 			if (AABB(coObjects->at(i)))
 			{
