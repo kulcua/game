@@ -27,6 +27,7 @@
 #include "MusicalNote.h"
 #include "BrickCoins.h"
 #include "ParaMiniGoomba.h"
+#include "BrickWood.h"
 #include "PortalManager.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, Grid* grid)
@@ -170,6 +171,29 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				item->SetGrid(grid, objectId);
 				objects.push_back(item);
 			}
+			element = element->NextSiblingElement();
+		}
+	}
+	if (name.compare("BrickWood") == 0)
+	{
+		while (element)
+		{
+			string typeName;
+			GetInfoElement(element, objectId, x, y, width, height);
+			typeName = element->Attribute("name");
+			BrickWood* br = new BrickWood(x);
+			PowerUpItem* item = NULL;
+			if (typeName.compare("powerup") == 0)
+			{
+				item = new PowerUpItem();
+			}
+			br->SetItem(item);
+			br->SetPosition(x, y);
+			br->SetGrid(grid, objectId);
+			objects.push_back(br);
+			item->SetPosition(x, y);
+			item->SetGrid(grid, objectId);
+			objects.push_back(item);
 			element = element->NextSiblingElement();
 		}
 	}

@@ -360,6 +360,9 @@
     <ClCompile Include="DialogOverWorld.cpp">
       <Filter>Overworld</Filter>
     </ClCompile>
+    <ClCompile Include="BrickWood.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -628,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="DialogOverWorld.h">
       <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickWood.h">
+      <Filter>Brick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

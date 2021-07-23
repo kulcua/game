@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="158" height="50" tilewidth="48" tileheight="48" infinite="0" nextlayerid="37" nextobjectid="502">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="158" height="50" tilewidth="48" tileheight="48" infinite="0" nextlayerid="38" nextobjectid="502">
  <editorsettings>
   <export target="world-1-1-map.xml" format="tmx"/>
  </editorsettings>
@@ -470,9 +470,11 @@
   </object>
   <object id="325" name="powerup" type="2" x="1728" y="912" width="48" height="48"/>
   <object id="475" name="1upMushroom" type="2" x="6334.67" y="1582.67" width="48" height="48"/>
-  <object id="480" name="powerup" type="3" x="2831" y="865" width="48" height="48">
+ </objectgroup>
+ <objectgroup id="37" name="BrickWood">
+  <object id="480" name="powerup" x="2831" y="865" width="48" height="48">
    <properties>
-    <property name="ani_id" value="22"/>
+    <property name="ani_id" value="43"/>
    </properties>
   </object>
  </objectgroup>

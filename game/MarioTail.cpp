@@ -60,7 +60,7 @@ void MarioTail::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					if (effect != NULL)
 						effect->Init(EffectName::marioTailAttack, koopa->x, koopa->y);
 					koopa->BeingKicked();
-					koopa->SetState(KOOPA_STATE_BALL);
+					koopa->DowngradeLevel();
 				}
 				else if (dynamic_cast<CPlant*>(coObjects->at(i)))
 				{

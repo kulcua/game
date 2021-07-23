@@ -8,6 +8,7 @@
 
 MusicalNote::MusicalNote(int type, float startY)
 {
+	switchPortTimeStart = 0;
 	SetAnimation(MUSICAL_NOTE_ANI_ID);
 	this->type = type;
 	if (type == 1)

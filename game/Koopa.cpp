@@ -248,7 +248,6 @@ void CKoopa::WalkThrough()
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-
 	if (state == KOOPA_STATE_DIE)
 	{
 		if (GetTickCount64() - dieTimeStart > ENERMY_DIE_TIME)

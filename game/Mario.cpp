@@ -41,6 +41,7 @@
 #include "BoomerangBrother.h"
 #include "MarioDieState.h"
 #include "MiniGoomba.h"
+#include "BrickWood.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -94,7 +95,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					else if (koopa->GetState() != KOOPA_STATE_DIE)
 						LevelDown();
 				}
-				else
+				else if(koopa->GetState() != KOOPA_STATE_DIE)
 				{
 					if (isPower && e->nx != 0) //handleShell
 					{
@@ -103,21 +104,12 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						koopaShell = koopa;
 					}
 					else { // kick normally
-						if (koopa->vx == 0 && koopa->isKicked == false)
+						if (koopa->vx == 0)
 						{
 							koopa->KickByMario();
 							MarioState::kick.GetInstance()->StartKick();
 							state_ = MarioState::kick.GetInstance();
 						}
-						// koopa stop when mario push on its shell
-						/*else if (e->ny < 0 && koopa->isKicked == true)
-						{
-							koopa->vx = 0;
-							koopa->isKicked = false;
-							Effect* effect = EffectPool::GetInstance()->Create();
-							if (effect != NULL)
-								effect->InitPoint(EffectPoint::p100, x, y);
-						}*/
 						// mario is pushed
 						else if (e->nx) LevelDown();
 					}
@@ -160,6 +152,14 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				Card* card = dynamic_cast<Card*>(e->obj);
 				SetCardType(card->RandomCard());
+			}
+			else if (dynamic_cast<BrickWood*>(e->obj))
+			{
+				BrickWood* brick = dynamic_cast<BrickWood*>(e->obj);
+				if (e->nx != 0)
+				{
+					brick->Deflect(e->nx);
+				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
@@ -309,7 +309,8 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
-				|| dynamic_cast<CBrick*>(e->obj))
+				|| dynamic_cast<CBrick*>(e->obj)
+				|| dynamic_cast<BrickWood*>(e->obj))
 			{
 				if (e->ny < 0)
 				{

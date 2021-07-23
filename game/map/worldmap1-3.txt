@@ -583,7 +583,7 @@
 #brick block coin
 421	50004	100
 
-#brick3
+#brickwood
 431	43001	100
 
 # ==== COIN =========
@@ -692,7 +692,10 @@
 33	330
 
 # QUESTION BRICK 
-22	401	420	402	431
+22	401	420	402
+
+#brickwood
+43	431	402
 
 #block brick
 23	420	421

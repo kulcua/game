@@ -35,9 +35,7 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CBrick::Render()
 {
 	int ani = 0;
-	if (type == BRICK_TYPE_3)
-		ani = BRICK_ANI_BRICK_3;
-	else if (state == BRICK_STATE_DISABLE)
+	if (state == BRICK_STATE_DISABLE)
 		ani = BRICK_ANI_DISABLE;	
 	else if (type == BRICK_TYPE_QUESTION)
 		ani = BRICK_ANI_QUESTION;

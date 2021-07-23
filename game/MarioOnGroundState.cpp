@@ -83,6 +83,9 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
             }
             else SetStateWalk_Run_PreFly(mario);
         }
+        else if (game->IsKeyDown(DIK_A)) {
+
+        }
     }
     
     if (input == Input::PRESS_S)
