@@ -41,6 +41,7 @@
 #include "BoomerangBrother.h"
 #include "MarioDieState.h"
 #include "MiniGoomba.h"
+#include "BrickWood.h"
 
 void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 {
@@ -60,8 +61,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	{
 		float nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
-
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		for (size_t i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
@@ -81,7 +81,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<MiniGoomba*>(e->obj))
 			{
 				MiniGoomba* mGoomba = dynamic_cast<MiniGoomba*>(e->obj);
-				mGoomba->folowMario = true;
+				mGoomba->followMario = true;
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{
@@ -95,7 +95,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					else if (koopa->GetState() != KOOPA_STATE_DIE)
 						LevelDown();
 				}
-				else
+				else if(koopa->GetState() != KOOPA_STATE_DIE)
 				{
 					if (isPower && e->nx != 0) //handleShell
 					{
@@ -111,7 +111,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 							state_ = MarioState::kick.GetInstance();
 						}
 						// mario is pushed
-						else LevelDown();
+						else if (e->nx) LevelDown();
 					}
 				}
 			}
@@ -143,26 +143,29 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				CBigBox* box = dynamic_cast<CBigBox*>(e->obj);
 				if (e->nx)
 					x += dx;
-				if (e->ny < 0 && holdDownKey && box->GetType() == 2)
+				if (e->ny < 0 && input == Input::PRESS_DOWN && box->GetType() == 2)
 				{
-					holdDownKey = false;
 					StartHoldDown();
 				}
 			}
 			else if (dynamic_cast<Card*>(e->obj))
 			{
 				Card* card = dynamic_cast<Card*>(e->obj);
-				if (e->ny)
+				SetCardType(card->RandomCard());
+			}
+			else if (dynamic_cast<BrickWood*>(e->obj))
+			{
+				BrickWood* brick = dynamic_cast<BrickWood*>(e->obj);
+				if (e->nx != 0)
 				{
-					SetCardType(card->RandomCard());
-					CGame::GetInstance()->GetCurrentScene()->isFinished = true;
+					brick->Deflect(e->nx);
 				}
 			}
 			else if (dynamic_cast<CBrick*>(e->obj))
 			{
-				CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 				if (e->ny > 0)
 				{
+					CBrick* brick = dynamic_cast<CBrick*>(e->obj);
 					MarioJumpingState::GetInstance()->isHighJump = false;
 					if (brick->GetState() != BRICK_STATE_DISABLE)
 					{
@@ -170,9 +173,9 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 							brick->SetState(BRICK_STATE_DISABLE);
 						else 
 						{
-							BrickCoins* brick = dynamic_cast<BrickCoins*>(e->obj);
-							if (brick->GetState() == BRICK_STATE_NORMAL)
-								brick->SetState(BRICK_STATE_THROW_ITEM);
+							BrickCoins* brickcoins = dynamic_cast<BrickCoins*>(e->obj);
+							if (brickcoins->GetState() == BRICK_STATE_NORMAL)
+								brickcoins->SetState(BRICK_STATE_THROW_ITEM);
 						}
 					}
 				}
@@ -180,23 +183,13 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<MusicalNote*>(e->obj))
 			{
 				MusicalNote* note = dynamic_cast<MusicalNote*>(e->obj);
-				note->Deflect(e->ny);
-				
-				if (e->ny < 0)
-				{
-					if (note->isHidden == false)
-					{
-						state_ = MarioState::jumping.GetInstance();
-						isOnGround = false;
-						if (note->GetType() == MUSICAL_NOTE_TYPE_RED)
-						{
-							vy = -MARIO_DEFLECT_MUSICAL_NOTE * 3;
-							vx = 0;
-						}
-						else vy = -MARIO_DEFLECT_MUSICAL_NOTE;
-					}
+				if (note->isHidden == false)
+					note->Deflect(e->ny);
+				else {
+					if (e->nx) x += dx;
+					if (e->ny) y += dy;
 				}
-				else if (e->ny > 0) {
+				if (e->ny > 0) {
 					MarioState::jumping.GetInstance()->isHighJump = false;
 					if (note->GetType() == MUSICAL_NOTE_TYPE_RED && note->isHidden)
 						note->isHidden = false;
@@ -267,11 +260,23 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					SetMoney(1);
 					block->die = true;
 				}
-				else if (e->ny > 0)
+				else
 				{
-					MarioJumpingState::GetInstance()->isHighJump = false;
-					EffectPool::GetInstance()->CreateDebris(block->x, block->y);
-					block->die = true;
+					if (e->ny > 0)
+					{
+						MarioJumpingState::GetInstance()->isHighJump = false;
+						EffectPool::GetInstance()->CreateDebris(block->x, block->y);
+						block->die = true;
+					}
+					else if (e->ny < 0)
+					{
+						MarioFrontState::GetInstance()->onPortalPipe = false;
+						isOnGround = true;
+					}
+					if (e->nx)
+					{
+						if (isPower) PowerReset();
+					}
 				}
 			}
 			else if (dynamic_cast<PortalPipe*>(e->obj))
@@ -305,7 +310,7 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CGround*>(e->obj)
 				|| dynamic_cast<CBigBox*>(e->obj)
 				|| dynamic_cast<CBrick*>(e->obj)
-				|| dynamic_cast<BrickBlock*>(e->obj))
+				|| dynamic_cast<BrickWood*>(e->obj))
 			{
 				if (e->ny < 0)
 				{
@@ -313,15 +318,22 @@ void CMario::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 					isOnGround = true;
 				}
 			}
+			if (dynamic_cast<CGround*>(e->obj)
+				|| dynamic_cast<CBrick*>(e->obj))
+			{
+				if (e->nx)
+				{
+					if (isPower) PowerReset();
+				}
+			}
 		}
 	}
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (size_t i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {	
 	CGameObject::Update(dt);
-
 	if (dynamic_cast<MarioOverWorldState*>(state_) == false)
 		vy += MARIO_GRAVITY * dt;
 
@@ -343,11 +355,11 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		HandleBehindScene();
 
-		tail->Update(dt, coObjects);
+		if (level == MARIO_LEVEL_RACCOON)
+			tail->Update(dt, coObjects);
 
 		ManageAlphaUntouchable();
 	}	
-
 	// put it finally because of switch scene delete all objects
 	state_->Update(*this, dt);
 }
@@ -403,14 +415,14 @@ void CMario::KickShellAfterHandle()
 	MarioState::kick.GetInstance()->StartKick();
 }
 
-ULONGLONG CalculatePowerTimePassed(int time)
+int CalculatePowerTimePassed(ULONGLONG time)
 {
-	return (GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
+	return (int)(GetTickCount64() - time) / MARIO_POWERUP_PER_SECOND;
 }
 
 void CMario::PowerControl()
 {
-	ULONGLONG timePassed;
+	int timePassed;
 	if (isPower && powerStartTime > 0)
 	{
 		timePassed = CalculatePowerTimePassed(powerStartTime);
@@ -422,7 +434,6 @@ void CMario::PowerControl()
 			{
 				savePower = power;
 			}
-
 			if (timePassed <= MARIO_MAX_POWER - savePower) {
 				power = savePower + timePassed;
 			}
@@ -475,13 +486,13 @@ void CMario::LevelDown()
 			vy = -MARIO_DIE_DEFLECT_SPEED;
 			state_ = MarioState::die.GetInstance();
 			MarioState::die.GetInstance()->StartDieTime();
-			//SetState(MARIO_STATE_DIE);
 		}
 	}
 }
 
 void CMario::HandleInput(Input input)
 {
+	this->input = input;
 	state_->HandleInput(*this, input);
 
 	state_->Enter(*this);
@@ -489,6 +500,27 @@ void CMario::HandleInput(Input input)
 
 CMario::CMario() : CGameObject()
 {
+	tail = NULL;
+	koopaShell = NULL;
+	input = Input::NO_INPUT;
+
+	ani = 0;
+	power = 0;
+	savePower = 0;
+	point = 0;
+	money = 0;
+	alpha = 255;
+	untouchableStartTime = 0;
+	holdDownStartTime = 0;
+	behindSceneStartTime = 0;
+	powerStartTime = 0;
+	powerEndTime = 0;
+	life = MARIO_INIT_LIFE;
+	switchItem = false;
+	isPower = false;
+	isHandleShell = false;
+	isUntouchable = false;
+
 	level = MARIO_LEVEL_SMALL;
 	state_ = MarioState::standing.GetInstance();
 	nx = 1;
@@ -504,9 +536,6 @@ void CMario::Render()
 		alpha = 255;
 	else alpha = this->alpha;
 
-	/*if (state == MARIO_STATE_DIE)
-		animation = MARIO_ANI_DIE;
-	else */
 	animation = GetAnimation();
 	animation_set->at(animation)->Render(x, y, nx, ny, alpha);
 	//RenderBoundingBox();
@@ -530,9 +559,8 @@ void CMario::Reset()
 	isHandleShell = false;
 	isUntouchable = false;
 	SetLevel(MARIO_LEVEL_SMALL);
+	nx = 1;
 	SetSpeed(0, 0);
-	SetPosition(100, 0);
-	CGame::GetInstance()->GetCam()->ResetPosition();
 }
 
 void CMario::SetTail(MarioTail* tail) { this->tail = tail; }

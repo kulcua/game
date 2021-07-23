@@ -4,7 +4,7 @@
 class MarioLevelDownState : public MarioState
 {
 	static MarioLevelDownState* __instance;
-	DWORD levelDownStartTime;
+	ULONGLONG levelDownStartTime;
 public:
 	static MarioLevelDownState* GetInstance();
 	virtual void HandleInput(CMario& mario, Input input);

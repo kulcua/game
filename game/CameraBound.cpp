@@ -1,9 +1,8 @@
 #include "CameraBound.h"
 #include "Utils.h"
 
-CCameraBound::CCameraBound(int type, float w, float h)
+CCameraBound::CCameraBound(float w, float h)
 {
-	this->type = type;
 	this->width = w;
 	this->height = h;
 }

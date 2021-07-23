@@ -6,7 +6,6 @@
         <object id="1" cellx="0" celly="2" xEnd="9" yEnd="2"/>
         <object id="5" cellx="9" celly="2" xEnd="10" yEnd="2"/>
         <object id="13" cellx="11" celly="2" xEnd="18" yEnd="2"/>
-        <object id="295" cellx="17" celly="5" xEnd="17" yEnd="5"/>
         <object id="296" cellx="6" celly="2" xEnd="6" yEnd="2"/>
         <object id="297" cellx="9" celly="2" xEnd="9" yEnd="2"/>
         <object id="298" cellx="8" celly="2" xEnd="8" yEnd="2"/>
@@ -31,6 +30,19 @@
         <object id="231" cellx="0" celly="2" xEnd="19" yEnd="2"/>
         <object id="236" cellx="0" celly="0" xEnd="19" yEnd="0"/>
         <object id="366" cellx="18" celly="0" xEnd="19" yEnd="2"/>
+        <object id="499" cellx="10" celly="3" xEnd="11" yEnd="5"/>
+        <object id="500" cellx="18" celly="2" xEnd="18" yEnd="5"/>
+        <object id="501" cellx="4" celly="5" xEnd="23" yEnd="6"/>
+    </group>
+    <group id="32" name="MusicalNote">
+        <object id="468" cellx="3" celly="1" xEnd="3" yEnd="2"/>
+        <object id="469" cellx="3" celly="2" xEnd="3" yEnd="2"/>
+        <object id="470" cellx="3" celly="2" xEnd="4" yEnd="2"/>
+    </group>
+    <group id="36" name="Portal">
+        <object id="496" cellx="11" celly="5" xEnd="11" yEnd="5"/>
+        <object id="497" cellx="17" celly="5" xEnd="17" yEnd="5"/>
+        <object id="498" cellx="15" celly="0" xEnd="15" yEnd="0"/>
     </group>
     <group id="18" name="QuestionBlocks">
         <object id="336" cellx="4" celly="2" xEnd="4" yEnd="2"/>
@@ -39,11 +51,6 @@
         <object id="325" cellx="4" celly="2" xEnd="4" yEnd="2"/>
         <object id="475" cellx="15" celly="3" xEnd="15" yEnd="4"/>
         <object id="480" cellx="7" celly="2" xEnd="7" yEnd="2"/>
-    </group>
-    <group id="32" name="MusicalNote">
-        <object id="468" cellx="3" celly="1" xEnd="3" yEnd="2"/>
-        <object id="469" cellx="3" celly="2" xEnd="3" yEnd="2"/>
-        <object id="470" cellx="3" celly="2" xEnd="4" yEnd="2"/>
     </group>
     <group id="15" name="Enemy">
         <object id="471" cellx="4" celly="1" xEnd="4" yEnd="1"/>

@@ -16,7 +16,7 @@ void FireBallPool::InitPool(vector<LPGAMEOBJECT>& objects)
     fireBall_[0] = new CFireBall();
     firstAvailable_ = fireBall_[0];
 
-    for (int i = 0; i < POOL_SIZE - 1; i++)
+    for (size_t i = 0; i < POOL_SIZE - 1; i++)
     {
         fireBall_[i + 1] = new CFireBall();
 
@@ -40,7 +40,7 @@ CFireBall* FireBallPool::Create() {
 
 void FireBallPool::GetBackToPool()
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (fireBall_[i]->GetBackToPool())
         {        
@@ -52,7 +52,7 @@ void FireBallPool::GetBackToPool()
 
 void FireBallPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (fireBall_[i]->inUse)
         {
@@ -63,7 +63,7 @@ void FireBallPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void FireBallPool::Render()
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (fireBall_[i]->inUse)
         {

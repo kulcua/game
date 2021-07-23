@@ -16,7 +16,7 @@ void EffectPool::InitPool(vector<LPGAMEOBJECT>& objects)
     effect[0] = new Effect();
     firstAvailable_ = effect[0];
 
-    for (int i = 0; i < POOL_SIZE - 1; i++)
+    for (size_t i = 0; i < POOL_SIZE - 1; i++)
     {
         effect[i + 1] = new Effect();
 
@@ -55,7 +55,7 @@ void EffectPool::CreateDebris(float x, float y)
 
 void EffectPool::GetBackToPool()
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (effect[i]->GetBackToPool())
         {
@@ -67,7 +67,7 @@ void EffectPool::GetBackToPool()
 
 void EffectPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (effect[i]->inUse)
         {
@@ -78,7 +78,7 @@ void EffectPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void EffectPool::Render()
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (effect[i]->inUse)
         {

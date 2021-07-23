@@ -15,6 +15,7 @@
 #include "BrotherBound.h"
 #include "Coin.h"
 #include "CameraBound.h"
+#include "Boomerang.h"
 
 CKoopa::CKoopa()
 {
@@ -88,17 +89,18 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 	{
-		float nx = 0, ny;
+		float nx, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		for (size_t i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			
 			if (dynamic_cast<Enermy*>(e->obj))
 			{
-				if (e->nx && state == KOOPA_STATE_WALKING) {
-					WalkThrough();
+				if(state != KOOPA_STATE_BALL) {
+					if (e->nx) x += dx; WalkThrough();
+					if (e->ny) y += dy;
 				}
 			}
 
@@ -124,9 +126,9 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->nx != 0) WalkThrough();
 			}
-			else if (dynamic_cast<Coin*>(e->obj))
+			else if (dynamic_cast<Coin*>(e->obj) || dynamic_cast<Boomerang*>(e->obj))
 			{
-				if (e->nx != 0) WalkThrough();
+				if (e->nx != 0) x += dx;
 				if (e->ny != 0)	y += dx;
 			}
 			else if (dynamic_cast<CGoomba*>(e->obj))
@@ -136,13 +138,17 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					goomba->SetState(GOOMBA_STATE_DIE);
 					goomba->BeingKicked();
+					WalkThrough();
 				}
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
 			{
 				CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-				koopa->SetState(KOOPA_STATE_DIE);
-				this->SetState(KOOPA_STATE_DIE);
+				if (koopa->GetState() != KOOPA_STATE_DIE && state == KOOPA_STATE_BALL)
+				{
+					koopa->SetState(KOOPA_STATE_DIE);
+					this->SetState(KOOPA_STATE_DIE);
+				}
 			}
 			else if (dynamic_cast<BoomerangBrother*>(e->obj))
 			{
@@ -167,12 +173,8 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			else if (dynamic_cast<BrickBlock*>(e->obj))
 			{
 				BrickBlock* block = dynamic_cast<BrickBlock*>(e->obj);
-				if (block->isCoin)
+				if (block->isCoin == false)
 				{
-					if (e->nx != 0) WalkThrough();
-					if (e->ny != 0) y += dy;
-				}
-				else {
 					if (e->nx != 0)
 					{
 						if (state == KOOPA_STATE_BALL && block->die == false)
@@ -183,6 +185,10 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 						}
 						else TurnBack(KOOPA_WALKING_SPEED);
 					}
+				}
+				else {
+					if (e->nx) x += dx;
+					if (e->ny) y += dy;
 				}
 			}
 			else if (dynamic_cast<MusicalNote*>(e->obj))
@@ -223,7 +229,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 	}
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (size_t i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void CKoopa::TurnBack(float vx)
@@ -244,7 +250,6 @@ void CKoopa::WalkThrough()
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-
 	if (state == KOOPA_STATE_DIE)
 	{
 		if (GetTickCount64() - dieTimeStart > ENERMY_DIE_TIME)
@@ -334,7 +339,7 @@ void CKoopa::SetState(int state)
 		{
 			Effect* effect = EffectPool::GetInstance()->Create();
 			if (effect != NULL)
-				effect->InitPoint(EffectPoint::p200, x, y);
+				effect->InitPoint(EffectPoint::p100, x, y);
 			vx = 0;
 			StartBallTime();
 		}

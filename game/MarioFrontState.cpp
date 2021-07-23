@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "MarioStandingState.h"
 #include "MarioJumpingState.h"
+#include "MarioDroppingState.h"
 #include "Game.h"
 
 MarioFrontState* MarioFrontState::__instance = NULL;
@@ -57,22 +58,31 @@ void MarioFrontState::Update(CMario& mario, DWORD dt)
 
     if (getOut)
     {
-       /* getOut = false;
-        mario.state_ = MarioState::jumping.GetInstance();
-        mario.vy = -MARIO_DEFLECT_MUSICAL_NOTE;*/
         if (mario.GetLevel() == MARIO_LEVEL_SMALL)
         {
             if ((mario.y > portOut->y + MARIO_SMALL_BBOX_HEIGHT) || (mario.y < portOut->y - MARIO_SMALL_BBOX_HEIGHT))
             {
-                mario.state_ = MarioState::standing.GetInstance();
+                if (eny > 0) mario.state_ = MarioState::standing.GetInstance();
+                else
+                {
+                    mario.isOnGround = false;
+                    mario.state_ = MarioState::dropping.GetInstance();
+                }
                 getOut = false;
             }
         }
         else if ((mario.y > portOut->y + MARIO_RACCOON_BBOX_HEIGHT) || (mario.y < portOut->y - MARIO_RACCOON_BBOX_HEIGHT))
         {
-            mario.state_ = MarioState::standing.GetInstance();
+            if (eny > 0) mario.state_ = MarioState::standing.GetInstance();
+            else
+            {
+                mario.isOnGround = false;
+                mario.state_ = MarioState::dropping.GetInstance();
+            }
             getOut = false;
         }
+        CGame::GetInstance()->GetCam()->isScroll = false;
+        CGame::GetInstance()->GetCam()->isOnGround = false;
     }
     else if ((mario.y > portIn->y && mario.vy > 0) || (mario.y < portIn->y && mario.vy < 0))
     {

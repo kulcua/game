@@ -13,7 +13,7 @@ class PowerUpItem : public CItem
 {
 	friend class CMario;
 	CMario* mario;
-	PowerUp setItem = PowerUp::none;
+	PowerUp setItem;
 	float startY;
 	bool outBrick;
 	void UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects);

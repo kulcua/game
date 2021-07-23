@@ -8,9 +8,9 @@ class CPortal :public CGameObject
 	int scene_id; // target scene to switch to 
 	string type;
 public:
-	CPortal(string type);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 	int GetSceneId() { return scene_id; }
+	void SetType(string type);
 };
 

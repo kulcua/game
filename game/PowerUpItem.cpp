@@ -7,6 +7,9 @@
 PowerUpItem::PowerUpItem()
 {
 	mario = CGame::GetInstance()->GetCurrentScene()->GetPlayer();
+	setItem = PowerUp::none;
+	startY = 0;
+	outBrick = false;
 }
 
 void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -35,7 +38,7 @@ void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, nx, ny);
 
-		for (UINT i = 0; i < coEventsResult.size(); i++)
+		for (size_t i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 
@@ -57,7 +60,7 @@ void PowerUpItem::UpdateMushroom(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	for (size_t i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
 void PowerUpItem::UpdateLeaf(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

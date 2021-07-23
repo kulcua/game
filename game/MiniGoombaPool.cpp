@@ -16,7 +16,7 @@ void MiniGoombaPool::InitPool(vector<LPGAMEOBJECT>& objects)
     miniGoomba[0] = new MiniGoomba();
     firstAvailable_ = miniGoomba[0];
 
-    for (int i = 0; i < POOL_SIZE - 1; i++)
+    for (size_t i = 0; i < POOL_SIZE - 1; i++)
     {
         miniGoomba[i + 1] = new MiniGoomba();
 
@@ -40,7 +40,7 @@ MiniGoomba* MiniGoombaPool::Create() {
 
 void MiniGoombaPool::GetBackToPool()
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         //DebugOut(L"GetBackToPool %d %d\n",i, miniGoomba[i]->inUse);
         if (miniGoomba[i]->GetBackToPool())
@@ -54,7 +54,7 @@ void MiniGoombaPool::GetBackToPool()
 int MiniGoombaPool::CheckNumberInPool()
 {
     int n = 0;
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (miniGoomba[i]->inUse == false)
         {
@@ -67,7 +67,7 @@ int MiniGoombaPool::CheckNumberInPool()
 
 void MiniGoombaPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (miniGoomba[i]->inUse)
         {
@@ -78,7 +78,7 @@ void MiniGoombaPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void MiniGoombaPool::Render()
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (miniGoomba[i]->inUse)
         {

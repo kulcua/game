@@ -44,18 +44,18 @@ void MarioSittingState::HandleInput(CMario& mario, Input input)
 {
     CGame* game = CGame::GetInstance();
     MarioOnGroundState::HandleInput(mario, input);
-    if (input == KEY_STATE)
+    if (input == Input::KEY_STATE)
     {
         if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))
         {
             SetPositionGetOutSitState(mario);
         }
     }
-    if (input == RELEASE_S)
+    if (input == Input::RELEASE_S)
     {
         MarioJumpingState::GetInstance()->isHighJump = false;
     }
-    else if (input == RELEASE_DOWN && mario.vx == 0)
+    else if (input == Input::RELEASE_DOWN && mario.vx == 0)
     {
         mario.state_ = MarioState::standing.GetInstance();
         SetPositionGetOutSitState(mario);

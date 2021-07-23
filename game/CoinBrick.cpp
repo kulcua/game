@@ -13,10 +13,12 @@ void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 
+	y += dy;
+
 	if (jumpTimeStart == 0)
 	{
-		StartJump();
 		vy = -COIN_JUMP_SPEED;
+		StartJump();
 	}
 	else
 	{
@@ -34,15 +36,6 @@ void CoinBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			vy += COIN_DROP_SPEED;	
 		}
 	}
-	y += dy;
-}
-
-void CoinBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
-{
-	l = x;
-	t = y;
-	r = x + 48;
-	b = y + 48;
 }
 
 void CoinBrick::Render()

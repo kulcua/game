@@ -6,11 +6,24 @@
 #include "Sprites.h"
 #include "Grid.h"
 #include "Textures.h"
+#include "Coin.h"
+#include "BrickBlock.h"
+#include "KoopaBound.h"
+#include "BrotherBound.h"
+#include "MusicalNote.h"
 
 CGameObject::CGameObject()
 {
+	grid_ = NULL;
+	isOnGround = false;
 	x = y = 0;
 	vx = vy = 0;
+	width = height = 0;
+	oldX = oldY = 0;
+	dx = dy = 0;
+	state = 0;
+	dt = 0;
+	animation_set = 0;
 }
 
 void CGameObject::SetGrid(Grid* grid, int id)
@@ -90,7 +103,7 @@ void CGameObject::CalcPotentialCollisions(
 	vector<LPGAMEOBJECT>* coObjects,
 	vector<LPCOLLISIONEVENT>& coEvents)
 {
-	for (UINT i = 0; i < coObjects->size(); i++)
+	for (size_t i = 0; i < coObjects->size(); i++)
 	{
 		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
 
@@ -101,6 +114,39 @@ void CGameObject::CalcPotentialCollisions(
 	}
 
 	std::sort(coEvents.begin(), coEvents.end(), CCollisonEvent::compare);
+}
+
+void CheckCollisionWithItem(bool& skipBlockX, bool& skipBlockY, CGameObject* obj_x, CGameObject* obj_y)
+{
+	if (dynamic_cast<Coin*>(obj_x) || dynamic_cast<CItem*>(obj_x))
+	{
+		skipBlockX = true;
+	}
+	if (dynamic_cast<Coin*>(obj_y) || dynamic_cast<CItem*>(obj_y)
+		|| dynamic_cast<KoopaBound*>(obj_y) || dynamic_cast<BrotherBound*>(obj_y))
+	{
+		skipBlockY = true;
+	}
+	if (dynamic_cast<BrickBlock*>(obj_x))
+	{
+		BrickBlock* brickBlock = dynamic_cast<BrickBlock*>(obj_x);
+		if (brickBlock->isCoin)
+			skipBlockX = true;
+	}
+	if (dynamic_cast<BrickBlock*>(obj_y))
+	{
+		BrickBlock* brickBlock = dynamic_cast<BrickBlock*>(obj_y);
+		if (brickBlock->isCoin)
+			skipBlockY = true;
+	}
+	if (dynamic_cast<MusicalNote*>(obj_x))
+	{
+		MusicalNote* note = dynamic_cast<MusicalNote*>(obj_x);
+		if (note->isHidden)
+		{
+			skipBlockX = true;
+		}
+	}
 }
 
 void CGameObject::FilterCollision(
@@ -122,7 +168,7 @@ void CGameObject::FilterCollision(
 
 	coEventResult.clear();
 
-	for (UINT i = 0; i < coEvents.size(); i++)
+	for (size_t i = 0; i < coEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT c = coEvents[i];
 
@@ -135,16 +181,20 @@ void CGameObject::FilterCollision(
 			obj_y = c->obj;
 		}
 
-		if (c->t < min_tx && c->nx != 0)
+		if (c->nx != 0)
 		{
-			min_tx = c->t;
-			nx = c->nx;
-			min_ix = i;
-			rdx = c->dx;
-			obj_x = c->obj;
+			if ((c->t == min_tx && obj_x != NULL && c->obj->y < obj_x->y)
+			|| c->t < min_tx)
+			{
+				min_tx = c->t;
+				nx = c->nx;
+				min_ix = i;
+				rdx = c->dx;
+				obj_x = c->obj;
+			}
 		}
+		
 	}
-
 	// skip collision if obj isOnGround with A and collise nx with A
 	if (obj_x != NULL && obj_y != NULL && obj_x->y == obj_y->y)
 	{
@@ -155,12 +205,23 @@ void CGameObject::FilterCollision(
 
 	if (min_iy >= 0) coEventResult.push_back(coEvents[min_iy]);
 
-	x += min_tx * dx + nx * 0.4f;
-	if (isOnGround == false)
-		y += min_ty * dy + ny * 0.4f;
+	// do not block obj when collision with item
+	bool skipBlockX = false, skipBlockY = false;
+	CheckCollisionWithItem(skipBlockX, skipBlockY, obj_x, obj_y);
 
-	if (nx != 0) vx = 0;
-	if (ny != 0) vy = 0;
+	if (skipBlockX == false)
+	{
+		x += min_tx * dx + nx * 0.4f;
+		if (nx != 0) vx = 0;
+	}
+	
+	if (skipBlockY == false)
+	{
+		if (isOnGround == false) {
+			y += min_ty * dy + ny * 0.4f;
+		}
+		if (ny != 0) vy = 0;
+	}
 }
 
 void CGameObject::RenderBoundingBox()

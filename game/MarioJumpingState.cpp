@@ -7,6 +7,8 @@
 #include "MarioShootFireBallState.h"
 #include "MarioFrontState.h"
 
+#define MARIO_DEFLECT_MUSICAL_NOTE_JUMP 0.7f
+
 MarioJumpingState* MarioJumpingState::__instance = NULL;
 
 MarioJumpingState* MarioJumpingState::GetInstance()
@@ -66,7 +68,7 @@ void MarioJumpingState::Enter(CMario& mario)
 void MarioJumpingState::HandleInput(CMario& mario, Input input)
 {
     CGame* game = CGame::GetInstance();
-    if (input == KEY_STATE)
+    if (input == Input::KEY_STATE)
     {
         if (game->IsKeyDown(DIK_RIGHT))
         {
@@ -79,17 +81,17 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
             mario.vx = -MARIO_WALKING_SPEED;
         }
     }
-    else if (input == RELEASE_A)
+    else if (input == Input::RELEASE_A)
     {
         mario.PowerReset();
         if (mario.isHandleShell)
             mario.KickShellAfterHandle();
     }
-    else if (input == RELEASE_S)
+    else if (input == Input::RELEASE_S)
     {
         isHighJump = false;
     }
-    else if (input == PRESS_A)
+    else if (input == Input::PRESS_A)
     {
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
@@ -108,7 +110,7 @@ void MarioJumpingState::HandleInput(CMario& mario, Input input)
             }
         }
     }
-    else if (input == RELEASE_LEFT || input == RELEASE_RIGHT)
+    else if (input == Input::RELEASE_LEFT || input == Input::RELEASE_RIGHT)
     {
         mario.PowerReset();
     }

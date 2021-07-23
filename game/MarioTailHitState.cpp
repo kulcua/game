@@ -19,14 +19,14 @@ MarioTailHitState* MarioTailHitState::GetInstance()
 void MarioTailHitState::HandleInput(CMario& mario, Input input)
 {
     CGame* game = CGame::GetInstance();
-    if (input == KEY_STATE)
+    if (input == Input::KEY_STATE)
     {
         if (game->IsKeyDown(DIK_RIGHT) || game->IsKeyDown(DIK_LEFT))
         {
             mario.vx = 0;
         }
     }
-    else if (input == RELEASE_A)
+    else if (input == Input::RELEASE_A)
     {
         mario.PowerReset();
     }

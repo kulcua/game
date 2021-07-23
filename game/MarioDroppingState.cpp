@@ -60,7 +60,7 @@ void MarioDroppingState::Enter(CMario& mario)
 
 void MarioDroppingState::HandleInput(CMario& mario, Input input)
 {
-    if (input == PRESS_S && mario.GetLevel() == MARIO_LEVEL_RACCOON)
+    if (input == Input::PRESS_S && mario.GetLevel() == MARIO_LEVEL_RACCOON)
     {
         mario.state_ = MarioState::dropFly.GetInstance();
         mario.vy = -MARIO_DROP_FLY_SPEED_Y;
@@ -80,7 +80,7 @@ void MarioDroppingState::Update(CMario& mario, DWORD dt)
             mario.state_ = MarioState::standing.GetInstance();
         }
     }
-    //DebugOut(L"Dropping %d %d\n", mario.IsAutoMoving(), mario.isOnGround);
+    //DebugOut(L"Dropping\n");
 }
 
 void MarioDroppingState::GetBoundingBox(CMario& mario, float& left, float& top, float& right, float& bottom)

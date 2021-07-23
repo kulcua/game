@@ -63,7 +63,7 @@ void SetStopStateWhenHandleShell(CMario& mario)
 void MarioOnGroundState::HandleInput(CMario& mario, Input input)
 {
     CGame* game = CGame::GetInstance();
-    if (input == KEY_STATE)
+    if (input == Input::KEY_STATE)
     {
         if (game->IsKeyDown(DIK_RIGHT))
         {
@@ -83,9 +83,12 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
             }
             else SetStateWalk_Run_PreFly(mario);
         }
+        else if (game->IsKeyDown(DIK_A)) {
+
+        }
     }
     
-    if (input == PRESS_S)
+    if (input == Input::PRESS_S)
     {
         if (mario.isOnGround) // check isOnGround to jump again
         {
@@ -104,17 +107,12 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
     }
     // Mario is walking can't duck
     // mario.vx == 0: prevent multiple key when walk and sit
-    else if (input == PRESS_DOWN)
+    else if (input == Input::PRESS_DOWN)
     {
         if (mario.vx == 0)
             SetPositionGetInSitState(mario);
-        mario.holdDownKey = true;
     }
-    else if (input == RELEASE_DOWN)
-    { 
-        mario.holdDownKey = false;
-    }
-    else if (input == PRESS_A)
+    else if (input == Input::PRESS_A)
     {
         mario.isPower = true;
         if (mario.GetLevel() == MARIO_LEVEL_RACCOON)
@@ -134,17 +132,17 @@ void MarioOnGroundState::HandleInput(CMario& mario, Input input)
             }
         }
     }
-    else if (input == RELEASE_A)
+    else if (input == Input::RELEASE_A)
     {
         mario.PowerReset();
         if (mario.isHandleShell)
             mario.KickShellAfterHandle();
     }
-    else if (input == RELEASE_LEFT || input == RELEASE_RIGHT)
+    else if (input == Input::RELEASE_LEFT || input == Input::RELEASE_RIGHT)
     {
         mario.PowerReset();
     }
-    else if (input == PRESS_LEFT || input == PRESS_RIGHT)
+    else if (input == Input::PRESS_LEFT || input == Input::PRESS_RIGHT)
     {
         if (mario.isPower)
         {

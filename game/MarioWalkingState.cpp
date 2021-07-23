@@ -60,7 +60,7 @@ void MarioWalkingState::Enter(CMario& mario)
 void MarioWalkingState::HandleInput(CMario& mario, Input input)
 {
     MarioOnGroundState::HandleInput(mario, input);
-    if (input == PRESS_A)
+    if (input == Input::PRESS_A)
     {
         mario.isPower = true;
         mario.PowerUp();

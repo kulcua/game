@@ -3,16 +3,6 @@
 #define PORT_HELP_ANI_ID 2
 #define PORT_HELP_ALIGN 50
 
-CPortal::CPortal(string type)
-{
-	this->type = type;
-	if (type.compare("node") == 0)
-		scene_id = 0;
-	else if (type.compare("boss-castle") == 0)
-		SetAnimation(PORT_HELP_ANI_ID);
-	else this->scene_id = PortalManager::GetInstance()->portScene[type];
-}
-
 void CPortal::Render()
 {
 	if (type.compare("boss-castle") == 0)
@@ -34,4 +24,14 @@ void CPortal::GetBoundingBox(float& l, float &t, float& r, float& b)
 	t = y;
 	r = x + PORTAL_WIDTH;
 	b = y + PORTAL_HEIGHT;
+}
+
+void CPortal::SetType(string type)
+{
+	this->type = type;
+	if (type.compare("node") == 0)
+		scene_id = 0;
+	else if (type.compare("boss-castle") == 0)
+		SetAnimation(PORT_HELP_ANI_ID);
+	else this->scene_id = PortalManager::GetInstance()->portScene[type];
 }

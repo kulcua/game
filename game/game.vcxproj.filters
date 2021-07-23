@@ -348,6 +348,21 @@
     <ClCompile Include="MarioDieState.cpp">
       <Filter>Mario\MarioState</Filter>
     </ClCompile>
+    <ClCompile Include="Curtain.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="Three.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="Arrow.cpp">
+      <Filter>Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogOverWorld.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickWood.cpp">
+      <Filter>Brick</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -604,6 +619,21 @@
     </ClInclude>
     <ClInclude Include="MarioDieState.h">
       <Filter>Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="Curtain.h">
+      <Filter>Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="Three.h">
+      <Filter>Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="Arrow.h">
+      <Filter>Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogOverWorld.h">
+      <Filter>Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickWood.h">
+      <Filter>Brick</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

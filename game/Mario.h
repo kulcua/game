@@ -2,7 +2,8 @@
 #include "GameObject.h"
 #include "Utils.h"
 #include "Card.h"
-
+#define MARIO_WIDTH 48
+#define MARIO_HEIGHT 48
 #define MARIO_WALKING_SPEED		0.2f 
 #define MARIO_RUN_SPEED			0.4f 
 #define MARIO_JUMP_SPEED_Y		0.7f
@@ -39,7 +40,7 @@
 #define MARIO_ANI_RACCOON_SIT		22
 #define MARIO_ANI_RACCOON_JUMP		23
 #define MARIO_ANI_RACCOON_RUN		24
-#define MARIO_ANI_RACCOON_DROP		25
+#define MARIO_ANI_RACCOON_DROP		31
 #define MARIO_ANI_RACCOON_PRE_FLY	26
 #define MARIO_ANI_RACCOON_FLY		27
 #define MARIO_ANI_RACCOON_STOP		28
@@ -93,7 +94,7 @@
 #define MARIO_LEVEL_UP_TIME	1100
 #define MARIO_KICK_TIME	500
 #define MARIO_HIGH_JUMP_TIME 200
-#define MARIO_DEFLECT_MUSICAL_NOTE 0.8f
+#define MARIO_DEFLECT_MUSICAL_NOTE 0.5f
 #define MARIO_SPIN_TIME	200
 #define MARIO_MAX_POWER	7
 #define MARIO_POWERUP_PER_SECOND	200
@@ -102,7 +103,7 @@
 #define MARIO_UNTOUCHABLE_TIME	5000
 #define MARIO_HOLD_DOWN_TIME	3000
 #define MARIO_BEHIND_SCENE_TIME	5000
-#define MARIO_INIT_LIFE 3
+#define MARIO_INIT_LIFE 7
 
 class CMario : public CGameObject
 {
@@ -112,40 +113,31 @@ class CMario : public CGameObject
 	friend class MarioTail;
 
 	MarioTail* tail;
-
 	CKoopa* koopaShell;
 	int level;
 	int ani;
-
 	CardType cardType;
-
 	int power;
 	int savePower;
-	int point = 0;
-	int money = 0;
-	int alpha = 255;
+	int point;
+	int money;
+	int alpha;
 	ULONGLONG untouchableStartTime;
 	ULONGLONG holdDownStartTime;
 public:
-	bool holdDownKey;
+	Input input;
 	ULONGLONG behindSceneStartTime;
-
 	ULONGLONG powerStartTime;
 	ULONGLONG powerEndTime;
-
 	MarioState* state_;
-
-	int life = MARIO_INIT_LIFE;
+	int life;
 	bool switchItem;
-
-	void HandleInput(Input input);
-
 	bool isPower;
 	bool isHandleShell;
 	bool isUntouchable;
-
+	
 	CMario();
-
+	void HandleInput(Input input);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* colliable_object = NULL);
 	virtual void Render();
 	void SetState(int state);

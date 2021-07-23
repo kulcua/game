@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animations.cpp" />
+    <ClCompile Include="Arrow.cpp" />
     <ClCompile Include="BigBox.cpp" />
     <ClCompile Include="Boomerang.cpp" />
     <ClCompile Include="BoomerangBrother.cpp" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="BrickBlock.cpp" />
     <ClCompile Include="BrickCoins.cpp" />
+    <ClCompile Include="BrickWood.cpp" />
     <ClCompile Include="BrotherBound.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraBound.cpp" />
@@ -163,7 +165,9 @@
     <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinBrick.cpp" />
+    <ClCompile Include="Curtain.cpp" />
     <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="DialogOverWorld.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectPool.cpp" />
     <ClCompile Include="Enermy.cpp" />
@@ -213,6 +217,7 @@
     <ClCompile Include="PowerUpItem.cpp" />
     <ClCompile Include="SwitchItem.cpp" />
     <ClCompile Include="Text.cpp" />
+    <ClCompile Include="Three.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="Tileset.cpp" />
     <ClCompile Include="tinystr.cpp" />
@@ -236,6 +241,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
+    <ClInclude Include="Arrow.h" />
     <ClInclude Include="BigBox.h" />
     <ClInclude Include="Boomerang.h" />
     <ClInclude Include="BoomerangBrother.h" />
@@ -244,6 +250,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="BrickBlock.h" />
     <ClInclude Include="BrickCoins.h" />
+    <ClInclude Include="BrickWood.h" />
     <ClInclude Include="BrotherBound.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraBound.h" />
@@ -251,7 +258,9 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinBrick.h" />
+    <ClInclude Include="Curtain.h" />
     <ClInclude Include="DataManager.h" />
+    <ClInclude Include="DialogOverWorld.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectPool.h" />
     <ClInclude Include="Enermy.h" />
@@ -302,6 +311,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="SwitchItem.h" />
     <ClInclude Include="Text.h" />
+    <ClInclude Include="Three.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="Tileset.h" />
     <ClInclude Include="tinystr.h" />

@@ -27,6 +27,8 @@
 #include "MusicalNote.h"
 #include "BrickCoins.h"
 #include "ParaMiniGoomba.h"
+#include "BrickWood.h"
+#include "PortalManager.h"
 
 ObjectMap::ObjectMap(TiXmlElement* objectGroupElement, vector<LPGAMEOBJECT> &objects, Grid* grid)
 {
@@ -147,7 +149,7 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			{
 				vector<CItem*> listItems;
 				BrickCoins* brCoins = new BrickCoins(type, x, y);
-				for (int i = 0; i < BRICK_STATE_NUM_COINS; i++)
+				for (size_t i = 0; i < BRICK_STATE_NUM_COINS; i++)
 				{
 					CItem* item = new CoinBrick();
 					item->SetPosition(x, y);
@@ -162,13 +164,36 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 			}
 			if (coins == false)
 			{
-				item->SetPosition(x, y);
 				br->SetItem(item);
-				item->SetGrid(grid, objectId);
-				objects.push_back(item);
 				br->SetGrid(grid, objectId);
 				objects.push_back(br);
+				item->SetPosition(x, y);
+				item->SetGrid(grid, objectId);
+				objects.push_back(item);
 			}
+			element = element->NextSiblingElement();
+		}
+	}
+	if (name.compare("BrickWood") == 0)
+	{
+		while (element)
+		{
+			string typeName;
+			GetInfoElement(element, objectId, x, y, width, height);
+			typeName = element->Attribute("name");
+			BrickWood* br = new BrickWood(x);
+			PowerUpItem* item = NULL;
+			if (typeName.compare("powerup") == 0)
+			{
+				item = new PowerUpItem();
+			}
+			br->SetItem(item);
+			br->SetPosition(x, y);
+			br->SetGrid(grid, objectId);
+			objects.push_back(br);
+			item->SetPosition(x, y);
+			item->SetGrid(grid, objectId);
+			objects.push_back(item);
 			element = element->NextSiblingElement();
 		}
 	}
@@ -189,9 +214,15 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 		while (element)
 		{
 			int type;
+			int portIn = 0;
 			GetInfoElement(element, objectId, x, y, width, height);
 			element->QueryIntAttribute("type", &type);
-			obj = new MusicalNote(type, y);
+			MusicalNote* obj = new MusicalNote(type, y);
+			if (type == 2)
+			{
+				element->QueryIntAttribute("name", &portIn);
+			}
+			obj->SetPortIn(portIn);
 			obj->SetPosition(x, y);
 			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
@@ -202,10 +233,8 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 	{
 		while (element)
 		{
-			int type;
 			GetInfoElement(element, objectId, x, y, width, height);
-			element->QueryIntAttribute("type", &type);
-			obj = new CCameraBound(type, width, height);
+			obj = new CCameraBound(width, height);
 			obj->SetPosition(x, y);
 			obj->SetGrid(grid, objectId);
 			objects.push_back(obj);
@@ -341,9 +370,11 @@ void ObjectMap::ImportData(vector<LPGAMEOBJECT>& objects)
 				type = element->Attribute("type");
 			}
 			else type = "node";
-			obj = new CPortal(type);
+			CPortal* obj = new CPortal();
+			obj->SetType(type);
 			obj->SetPosition(x - PORTAL_WIDTH / 2, y - PORTAL_HEIGHT / 2);
 			obj->SetGrid(grid, objectId);
+			PortalManager::GetInstance()->portals.push_back(obj);
 			objects.push_back(obj);
 			element = element->NextSiblingElement();
 		}

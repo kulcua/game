@@ -6,7 +6,7 @@
 10	textures\enemy.png	200	200	200
 40	textures\misc.png	225	255	255
 50	textures\effect.png	0	0	0
-100	textures\intro.png	255	255	255
+100	textures\intro.png	25	25	25
 
 [SPRITES]
 # SMALL MARIO 
@@ -200,6 +200,20 @@
 20004	305	1364	433	1488	100
 20005	446	1364	574	1488	100
 20006	584	1364	712	1488	100
+#super mario bros					
+20007	30	1057	862	1355	100
+#tree-left					
+20008	1008	390	1211	686	100
+#tree-right					
+20009	991	969	1193	1167	100
+#cloud-big					
+20010	687	817	793	875	100
+#cloud-small					
+20011	901	829	961	861	100
+#player game					
+20012	216	744	531	867	100
+#arrow					
+20013	190	741	214	769	100
 
 [ANIMATIONS]
 # ==== MARIO =========
@@ -366,6 +380,14 @@
 713	71006	100
 714	71006	100	71007	100	71008	100
 
+#curtain
+601	20001	100
+604	20007	100
+#three
+603	20003	100	20004	100	20005	100	20006	100
+#arrow
+605	20013	100
+
 # id	ani1	ani2	ani3
 [ANIMATION_SETS]
 # MARIO
@@ -382,9 +404,12 @@
 #PARA KOOPAS
 71	711	712	713	714
 
-[OBJECTS]
-# MARIO
-0	500	400	1
+#CURTAIN
+60	601	604
+#three
+63	603
+#arrow
+65	605
 
 [MAP]
 #id	.tmx	r	g	b

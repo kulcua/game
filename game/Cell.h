@@ -3,7 +3,6 @@
 #include <unordered_set>
 class Cell
 {
-	int x, y;
 	unordered_set<LPGAMEOBJECT> objects;
 public:
 	void AddObject(CGameObject* obj);

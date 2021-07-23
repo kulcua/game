@@ -8,12 +8,28 @@
 
 HUD::HUD(vector<LPGAMEOBJECT> &objects)
 {
-	world = new Text(TEXT_NUM_WORLD);
-	life = new Text(TEXT_NUM_LIFE);
-	point = new Text(TEXT_NUM_POINT);
-	power = new TextPowerSign(TEXT_NUM_POWER);
-	money = new Text(TEXT_NUM_MONEY);
-	time = new Text(TEXT_NUM_TIME);
+	spriteId = 0;
+	xWorld = xM = 0;
+	xPower = xPoint = 0;
+	xMoney =  xTime = 0;
+	xCard = 0;
+
+	timeStart = GetTickCount64();
+	timeLeft = HUD_TIMER;
+
+	world = new Text();
+	life = new Text();
+	point = new Text();
+	power = new TextPowerSign();
+	money = new Text();
+	time = new Text();
+
+	world->SetLength(TEXT_NUM_WORLD);
+	life->SetLength(TEXT_NUM_LIFE);
+	point->SetLength(TEXT_NUM_POINT);
+	power->SetLength(TEXT_NUM_POWER);
+	money->SetLength(TEXT_NUM_MONEY);
+	time->SetLength(TEXT_NUM_TIME);
 
 	objects.push_back(world);
 	objects.push_back(life);
@@ -53,7 +69,7 @@ void HUD::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	int timer = 0;
 	if (CGame::GetInstance()->GetCurrentScene()->GetSceneId() != WORLD_MAP_SCENE)
-		timer = CountDownTimer();
+		timer = (int)CountDownTimer();
 
 	world->SetContent(1);
 	life->SetContent(mario->GetLife());
@@ -80,6 +96,7 @@ void HUD::SetPosition(float cx, float cy)
 	xPower = xPoint = x + HUD_ALIGN_CENTER;
 	xMoney = x + HUD_ALIGN_MONEY;
 	xTime = x + HUD_ALIGN_TIME;
+	xCard = x + HUD_ALIGN_CARD;
 	float yTop = y + HUD_ALIGN_TOP;
 	float yBottom = y + HUD_ALIGN_BOTTOM;
 
@@ -89,6 +106,10 @@ void HUD::SetPosition(float cx, float cy)
 	point->SetPosition(xPoint, yBottom);
 	money->SetPosition(xMoney, yTop);
 	time->SetPosition(xTime, yBottom);
+	for (size_t i = 0; i < cards.size(); i++)
+	{
+		cards[i]->SetPosition(xCard + i * TEXT_CARD_BBOX_WIDTH, yTop);
+	}
 }
 
 void HUD::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -132,4 +153,8 @@ void HUD::Render()
 	point->Render();
 	money->Render();
 	time->Render();
+	for (size_t i = 0; i < cards.size(); i++)
+	{
+		cards[i]->Render();
+	}
 }

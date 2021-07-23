@@ -6,6 +6,7 @@ CBrick::CBrick(int type, float x, float y)
 	this->x = x;
 	this->y = y;
 	start_y = y;
+	item = NULL;
 	this->type = type;
 	SetAnimation(BRICK_ANI_ID);
 	level = BRICK_LEVEL_1_ITEM;
@@ -34,9 +35,7 @@ void CBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CBrick::Render()
 {
 	int ani = 0;
-	if (type == BRICK_TYPE_3)
-		ani = BRICK_ANI_BRICK_3;
-	else if (state == BRICK_STATE_DISABLE)
+	if (state == BRICK_STATE_DISABLE)
 		ani = BRICK_ANI_DISABLE;	
 	else if (type == BRICK_TYPE_QUESTION)
 		ani = BRICK_ANI_QUESTION;
@@ -51,9 +50,11 @@ void CBrick::SetState(int state)
 	switch (state)
 	{
 	case BRICK_STATE_DISABLE:
-		vy = -BRICK_JUMP_DEFLECT_Y;
-		if (type != BRICK_TYPE_3)
+		if (level != BRICK_LEVEL_MANY_ITEM)
+		{
+			vy = -BRICK_JUMP_DEFLECT_Y;
 			item->die = false;
+		}
 		break;
 	}
 }

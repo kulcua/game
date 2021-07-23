@@ -17,7 +17,7 @@ void MarioPreFlyState::HandleInput(CMario& mario, Input input)
 {
     MarioOnGroundState::HandleInput(mario, input);
 
-    if (input == PRESS_S)
+    if (input == Input::PRESS_S)
     {
         if (mario.GetPower() == MARIO_MAX_POWER)
         { // if can Fly

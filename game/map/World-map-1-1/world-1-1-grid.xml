@@ -54,6 +54,7 @@
         <object id="231" cellx="0" celly="3" xEnd="21" yEnd="3"/>
         <object id="236" cellx="6" celly="0" xEnd="21" yEnd="0"/>
         <object id="237" cellx="21" celly="0" xEnd="21" yEnd="3"/>
+        <object id="320" cellx="14" celly="4" xEnd="19" yEnd="5"/>
     </group>
     <group id="18" name="QuestionBlocks">
         <object id="47" cellx="1" celly="2" xEnd="NaN" yEnd="NaN"/>
@@ -153,6 +154,7 @@
         <object id="276" cellx="17" celly="3" xEnd="17" yEnd="3"/>
         <object id="275" cellx="15" celly="3" xEnd="15" yEnd="3"/>
         <object id="273" cellx="17" celly="2" xEnd="17" yEnd="3"/>
+        <object id="321" cellx="16" celly="1" xEnd="17" yEnd="1"/>
     </group>
     <group id="24" name="Card">
         <object id="271" cellx="20" celly="2" xEnd="20" yEnd="2"/>

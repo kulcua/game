@@ -16,7 +16,7 @@ void BoomerangPool::InitPool(vector<LPGAMEOBJECT>& objects)
     boomerang[0] = new Boomerang();
     firstAvailable_ = boomerang[0];
 
-    for (int i = 0; i < POOL_SIZE - 1; i++)
+    for (size_t i = 0; i < POOL_SIZE - 1; i++)
     {
         boomerang[i + 1] = new Boomerang();
 
@@ -40,7 +40,7 @@ Boomerang* BoomerangPool::Create() {
 
 void BoomerangPool::GetBackToPool()
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         //DebugOut(L"GetBackToPool %d %d\n",i, boomerang[i]->inUse);
         if (boomerang[i]->GetBackToPool())
@@ -58,7 +58,7 @@ bool BoomerangPool::CheckBoomerangInPool(int index)
 
 void BoomerangPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (boomerang[i]->inUse)
         {
@@ -69,7 +69,7 @@ void BoomerangPool::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void BoomerangPool::Render()
 {
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (size_t i = 0; i < POOL_SIZE; i++)
     {
         if (boomerang[i]->inUse)
         {

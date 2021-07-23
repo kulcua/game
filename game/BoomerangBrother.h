@@ -15,13 +15,16 @@
 #define BOOMERANG_BROTHER_ANI_WALK 0
 #define BOOMERANG_BROTHER_ANI_THROW 1
 #define BOOMERANG_BROTHER_TIME_WALK_START 3000
-#define BOOMERANG_BROTHER_TIME_THROW_1_START 4000
-#define BOOMERANG_BROTHER_TIME_THROW_2_START 4500
+#define BOOMERANG_BROTHER_TIME_THROW_START 4000
+#define BOOMERANG_BROTHER_TIME_THROW 500
+#define BOOMERANG_BROTHER_THROW_TIMES 2
 
 class BoomerangBrother : public Enermy
 {
 	int moveDirect;
 	ULONGLONG timeStart;
+	ULONGLONG timeThrowStart;
+	int throwTimes = BOOMERANG_BROTHER_THROW_TIMES;
 public:
 	BoomerangBrother();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);

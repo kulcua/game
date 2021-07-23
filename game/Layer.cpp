@@ -38,10 +38,10 @@ void Layer::Render()
 {	
 	float cx, cy;
 	CGame::GetInstance()->GetCam()->GetPosition(cx, cy);
-	int tileStartX = cx / TILE_SIZE;
-	int tileStartY = cy / TILE_SIZE;
-	int tileEndX = (cx + CAM_WIDTH) / TILE_SIZE + 1;
-	int tileEndY = (cy + CAM_HEIGHT) / TILE_SIZE + 1;
+	int tileStartX = (int)cx / TILE_SIZE;
+	int tileStartY = (int)cy / TILE_SIZE;
+	int tileEndX = (int)(cx + CAM_WIDTH) / TILE_SIZE + 1;
+	int tileEndY = (int)(cy + CAM_HEIGHT) / TILE_SIZE + 1;
 
 	if (tileStartX < 0) tileStartX = 0;
 	if (tileStartY < 0) tileStartY = 0;
@@ -54,7 +54,7 @@ void Layer::Render()
 			{
 				if (tile[i][j] != 0)
 				{
-					CSprites::GetInstance()->Get(tile[i][j])->Draw(j * TILE_SIZE, i * TILE_SIZE, -1, -1);
+					CSprites::GetInstance()->Get(tile[i][j])->Draw((float)j * TILE_SIZE, (float)i * TILE_SIZE, -1, -1);
 				}
 			}
 		}

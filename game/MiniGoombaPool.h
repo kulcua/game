@@ -5,7 +5,7 @@
 class MiniGoombaPool
 {
 	static MiniGoombaPool* __instance;
-	static const int POOL_SIZE = 4;
+	static const int POOL_SIZE = 10;
 	MiniGoomba* miniGoomba[POOL_SIZE];
 	MiniGoomba* firstAvailable_;
 	Grid* grid;

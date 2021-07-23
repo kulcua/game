@@ -5,6 +5,8 @@
 0	textures\mario.png	255	255	255
 10	textures\overworld.png	255	255	255
 20	textures\hud.png	25	25	25
+70	textures\reward.png	255	255	255
+110	textures\dialogs.png	25	25	25
 
 [SPRITES]
 #mario					
@@ -66,6 +68,18 @@
 99997	485	71	511	94	20
 99998	536	71	562	94	20
 99999	590	71	616	94	20
+#dialog game over					
+21014	0	0	385	192	110
+#dialog world					
+21015	396	0	781	166	110
+
+#card hud					
+#mushroom					
+93001	75	142	127	193	70
+#star					
+93002	130	142	181	193	70
+#white-flower					
+93003	21	142	73	193	70
 
 [ANIMATIONS]
 # ==== MARIO =========
@@ -82,6 +96,17 @@
 #M
 211	20010	100
 
+#cardhud
+531	93001	300	0	300
+532	93001	100
+533	93002	300	0	300
+534	93002	100
+535	93003	300	0	300
+536	93003	100
+
+#dialog
+214	21014	100
+215	21015	100
 # id	ani1	ani2	ani3
 [ANIMATION_SETS]
 # MARIO
@@ -93,6 +118,11 @@
 3	202
 #enemy
 4	203
+#card hud
+53	531	532	533	534	535	536
+
+#dialog
+21	214	215
 
 [PORTAL]
 #type - spriteId - sceneId

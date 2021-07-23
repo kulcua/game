@@ -59,8 +59,8 @@ public:
 
 	DWORD dt;
 
-	int width;
-	int height;
+	float width;
+	float height;
 
 	LPANIMATION_SET animation_set;
 	void SetAnimation(int ani);

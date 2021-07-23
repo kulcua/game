@@ -8,7 +8,6 @@ class Coin : public CGameObject
 {
 public:
 	Coin();
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
 	virtual void GetBoundingBox(float& l, float& t, float& r, float& b);
 };

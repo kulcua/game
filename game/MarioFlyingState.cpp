@@ -17,7 +17,7 @@ MarioFlyingState* MarioFlyingState::GetInstance()
 void MarioFlyingState::HandleInput(CMario& mario, Input input)
 {
     MarioJumpingState::HandleInput(mario, input);
-    if (input == PRESS_S)
+    if (input == Input::PRESS_S)
     {
         if (mario.GetPower() == MARIO_MAX_POWER && mario.GetLevel() == MARIO_LEVEL_RACCOON)
         {
