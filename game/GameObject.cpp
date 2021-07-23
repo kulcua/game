@@ -181,14 +181,19 @@ void CGameObject::FilterCollision(
 			obj_y = c->obj;
 		}
 
-		if (c->t < min_tx && c->nx != 0)
+		if (c->nx != 0)
 		{
-			min_tx = c->t;
-			nx = c->nx;
-			min_ix = i;
-			rdx = c->dx;
-			obj_x = c->obj;
+			if ((c->t == min_tx && obj_x != NULL && c->obj->y < obj_x->y)
+			|| c->t < min_tx)
+			{
+				min_tx = c->t;
+				nx = c->nx;
+				min_ix = i;
+				rdx = c->dx;
+				obj_x = c->obj;
+			}
 		}
+		
 	}
 	// skip collision if obj isOnGround with A and collise nx with A
 	if (obj_x != NULL && obj_y != NULL && obj_x->y == obj_y->y)

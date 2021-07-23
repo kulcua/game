@@ -1,6 +1,7 @@
 #include "MarioOverWorldState.h"
 #include "Mario.h"
 #include "Game.h"
+#include "PortalManager.h"
 
 #define MARIO_OVERWORLD_SPEED 0.3f
 

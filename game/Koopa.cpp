@@ -100,6 +100,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				if (e->nx && state != KOOPA_STATE_BALL) {
 					WalkThrough();
 				}
+				if (e->ny) y += dy;
 			}
 
 			if (dynamic_cast<CBrick*>(e->obj))

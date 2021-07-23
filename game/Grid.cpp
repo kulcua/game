@@ -7,6 +7,7 @@
 #include "BoomerangPool.h"
 #include "FireBallPool.h"
 #include "MiniGoombaPool.h"
+#include "DialogOverWorld.h"
 
 Grid::Grid() {
     for (int x = 0; x < NUM_CELLS; x++)

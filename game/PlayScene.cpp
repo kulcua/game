@@ -6,6 +6,7 @@
 #include "Portal.h"
 #include "BigBox.h"
 #include "Ground.h"
+#include "DialogOverWorld.h"
 #include "Item.h"
 #include "Plant.h"
 #include "FireBall.h"
@@ -344,17 +345,19 @@ void CPlayScene::Load()
 	}
 	else
 	{
+		DataManager::GetInstance()->ReadPlayerData();
+
 		if (id == WORLD_MAP_SCENE)
 		{
 			int currentPort = PortalManager::GetInstance()->currentPort;
 			CPortal* port = PortalManager::GetInstance()->GetPortById(currentPort);
 			player->SetPosition(port->x, port->y);
+
+			DialogOverWorld::GetInstance()->CheckShowDialog();
 		}
 		else PortalManager::GetInstance()->currentPort = GetSceneId();
 
 		CreatePool();
-		DataManager::GetInstance()->ReadPlayerData();
-
 		DebugOut(L"[INFO] Object Pool created!\n");
 	}
 
@@ -368,6 +371,11 @@ void CPlayScene::Update(DWORD dt)
 		Intro::GetInstance()->Update(dt);
 	}
 	else {
+		if (id == WORLD_MAP_SCENE)
+		{
+			DialogOverWorld::GetInstance()->Update();
+		}
+
 		grid->Update(dt);
 
 		FireBallPool::GetInstance()->GetBackToPool();
@@ -401,6 +409,11 @@ void CPlayScene::Render()
 		HUD* hud = CGame::GetInstance()->GetCurrentScene()->GetHUD();
 		if (hud != NULL)
 			hud->Render();
+
+		if (id == WORLD_MAP_SCENE)
+		{
+			DialogOverWorld::GetInstance()->Render();
+		}
 	}
 }
 
@@ -421,6 +434,8 @@ void CPlayScene::Unload()
 	CGame::GetInstance()->GetCurrentScene()->isFinished = false;
 
 	delete grid;
+
+	PortalManager::GetInstance()->ClearPortal();
 
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }

@@ -103,7 +103,7 @@
 #define MARIO_UNTOUCHABLE_TIME	5000
 #define MARIO_HOLD_DOWN_TIME	3000
 #define MARIO_BEHIND_SCENE_TIME	5000
-#define MARIO_INIT_LIFE 3
+#define MARIO_INIT_LIFE 7
 
 class CMario : public CGameObject
 {

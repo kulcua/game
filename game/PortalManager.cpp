@@ -20,3 +20,8 @@ CPortal* PortalManager::GetPortById(int id)
 	}
 	return nullptr;
 }
+
+void PortalManager::ClearPortal()
+{
+	portals.clear();
+}

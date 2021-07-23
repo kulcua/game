@@ -29,6 +29,7 @@ void CCamera::ResetPosition() {
 	x = mario->x - width / 2;
 	if (x < CAM_INIT_BOUND) x = CAM_INIT_BOUND;
 	y = mario->y - height / 2 - MARIO_BIG_BBOX_HEIGHT;
+	isScroll = false;
 }
 
 void CCamera::FollowMario()

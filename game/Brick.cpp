@@ -6,6 +6,7 @@ CBrick::CBrick(int type, float x, float y)
 	this->x = x;
 	this->y = y;
 	start_y = y;
+	item = NULL;
 	this->type = type;
 	SetAnimation(BRICK_ANI_ID);
 	level = BRICK_LEVEL_1_ITEM;

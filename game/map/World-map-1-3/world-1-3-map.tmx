@@ -419,7 +419,7 @@
  <objectgroup id="32" name="MusicalNote">
   <object id="468" type="1" x="1488" y="768" width="48" height="48"/>
   <object id="469" type="1" x="1391" y="863" width="48" height="48"/>
-  <object id="470" name="1" type="2" x="1584" y="864.25" width="48" height="48"/>
+  <object id="470" name="1" type="2" x="1584" y="864" width="48" height="48"/>
  </objectgroup>
  <objectgroup id="36" name="Portal">
   <object id="496" name="out" type="1" x="4445" y="2300.3" width="165" height="53.697">
@@ -435,40 +435,40 @@
   </object>
  </objectgroup>
  <objectgroup id="19" name="Brick">
-  <object id="311" x="1584" y="960.667" width="48" height="48"/>
-  <object id="312" x="1536" y="960.667" width="48" height="48"/>
-  <object id="313" x="1488" y="960.667" width="48" height="48"/>
-  <object id="314" x="1776" y="960.667" width="48" height="48"/>
-  <object id="315" x="1824" y="960.667" width="48" height="48"/>
-  <object id="318" x="1872" y="960.667" width="48" height="48"/>
-  <object id="322" x="1488" y="912.667" width="48" height="48"/>
-  <object id="323" x="1776" y="912.667" width="48" height="48"/>
-  <object id="324" x="1824" y="912.667" width="48" height="48"/>
-  <object id="326" x="1680" y="912.667" width="48" height="48"/>
-  <object id="327" x="1872" y="912.667" width="48" height="48"/>
+  <object id="311" x="1584" y="960" width="48" height="48"/>
+  <object id="312" x="1536" y="960" width="48" height="48"/>
+  <object id="313" x="1488" y="960" width="48" height="48"/>
+  <object id="314" x="1776" y="960" width="48" height="48"/>
+  <object id="315" x="1824" y="960" width="48" height="48"/>
+  <object id="318" x="1872" y="960" width="48" height="48"/>
+  <object id="322" x="1488" y="912" width="48" height="48"/>
+  <object id="323" x="1776" y="912" width="48" height="48"/>
+  <object id="324" x="1824" y="912" width="48" height="48"/>
+  <object id="326" x="1680" y="912" width="48" height="48"/>
+  <object id="327" x="1872" y="912" width="48" height="48"/>
   <object id="331" x="1488" y="864" width="48" height="48"/>
   <object id="334" x="1872" y="816" width="48" height="48"/>
-  <object id="338" x="1584" y="816.083" width="48" height="48"/>
-  <object id="339" x="1536" y="816.083" width="48" height="48"/>
-  <object id="340" x="1488" y="816.083" width="48" height="48"/>
-  <object id="467" x="1536" y="863.916" width="48" height="48"/>
-  <object id="361" x="1728" y="768.25" width="48" height="48"/>
-  <object id="360" x="1824" y="768.25" width="48" height="48"/>
-  <object id="363" x="1872" y="768.25" width="48" height="48"/>
+  <object id="338" x="1584" y="816" width="48" height="48"/>
+  <object id="339" x="1536" y="816" width="48" height="48"/>
+  <object id="340" x="1488" y="816" width="48" height="48"/>
+  <object id="467" x="1536" y="864" width="48" height="48"/>
+  <object id="361" x="1728" y="768" width="48" height="48"/>
+  <object id="360" x="1824" y="768" width="48" height="48"/>
+  <object id="363" x="1872" y="768" width="48" height="48"/>
   <object id="328" x="1632" y="864" width="48" height="48"/>
   <object id="335" x="1680" y="864" width="48" height="48"/>
   <object id="341" x="1775.67" y="816" width="48" height="48"/>
-  <object id="343" x="1728" y="816.417" width="48" height="48"/>
+  <object id="343" x="1728" y="816" width="48" height="48"/>
  </objectgroup>
  <objectgroup id="18" name="QuestionBlocks">
   <object id="336" name="coin" type="1" x="1872" y="864" width="48" height="48"/>
-  <object id="466" name="coin" type="1" x="1536" y="912.083" width="48" height="48"/>
-  <object id="359" name="coin10" type="2" x="1776" y="768.25" width="48" height="48">
+  <object id="466" name="coin" type="1" x="1536" y="912" width="48" height="48"/>
+  <object id="359" name="coin10" type="2" x="1776" y="768" width="48" height="48">
    <properties>
     <property name=" num" value="10"/>
    </properties>
   </object>
-  <object id="325" name="powerup" type="2" x="1728" y="912.667" width="48" height="48"/>
+  <object id="325" name="powerup" type="2" x="1728" y="912" width="48" height="48"/>
   <object id="475" name="1upMushroom" type="2" x="6334.67" y="1582.67" width="48" height="48"/>
   <object id="480" name="powerup" type="3" x="2831" y="865" width="48" height="48">
    <properties>

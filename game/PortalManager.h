@@ -7,6 +7,7 @@ class PortalManager
 {
 	static PortalManager* __instance;
 public:
+	static PortalManager* GetInstance();
 	// portType - spriteId
 	unordered_map<string, int> portSprite;
 
@@ -14,11 +15,8 @@ public:
 	unordered_map<string, int> portScene;
 
 	int currentPort = 0;
-
 	vector<CPortal*> portals;
-
-	static PortalManager* GetInstance();
-
 	CPortal* GetPortById(int id);
+	void ClearPortal();
 };
 

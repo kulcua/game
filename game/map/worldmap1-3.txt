@@ -751,7 +751,7 @@
 [OBJECTS]
 # type	x	y	ani_set_id	extra_settings per object type
 # MARIO
-0	6300	700	1
+0	100	700	1
 
 [FONT]
 0	99990

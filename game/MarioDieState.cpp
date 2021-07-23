@@ -43,7 +43,6 @@ void MarioDieState::Update(CMario& mario, DWORD dt)
         {
             mario.life--;
         }
-        else mario.life = MARIO_INIT_LIFE;
 
         CGame::GetInstance()->SwitchScene(WORLD_MAP_SCENE);
     }

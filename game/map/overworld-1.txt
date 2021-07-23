@@ -6,7 +6,7 @@
 10	textures\overworld.png	255	255	255
 20	textures\hud.png	25	25	25
 70	textures\reward.png	255	255	255
-110	textures\dialog.png	255	255	255
+110	textures\dialogs.png	25	25	25
 
 [SPRITES]
 #mario					
@@ -69,9 +69,9 @@
 99998	536	71	562	94	20
 99999	590	71	616	94	20
 #dialog game over					
-20014	0	0	385	192	110
+21014	0	0	385	192	110
 #dialog world					
-20015	396	0	781	166	110
+21015	396	0	781	166	110
 
 #card hud					
 #mushroom					
@@ -105,8 +105,8 @@
 536	93003	100
 
 #dialog
-214	20014	100
-215	20015	100
+214	21014	100
+215	21015	100
 # id	ani1	ani2	ani3
 [ANIMATION_SETS]
 # MARIO
