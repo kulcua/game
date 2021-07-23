@@ -13,7 +13,6 @@
 class BrickWood : public CGameObject
 {
 	friend class CMario;
-	int type;
 	float startX;
 	float nDeflect;
 	CMario* mario;

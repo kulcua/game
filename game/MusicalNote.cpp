@@ -8,6 +8,7 @@
 
 MusicalNote::MusicalNote(int type, float startY)
 {
+	nDeflect = 0;
 	switchPortTimeStart = 0;
 	SetAnimation(MUSICAL_NOTE_ANI_ID);
 	this->type = type;
