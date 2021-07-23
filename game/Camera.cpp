@@ -65,6 +65,8 @@ void CCamera::FollowMario()
 		}
 		else vy = 0.0f;
 	}
+
+	if (x < 0) x = 0;
 }
 
 void CCamera::ScrollMode()

@@ -15,6 +15,7 @@
 #include "BrotherBound.h"
 #include "Coin.h"
 #include "CameraBound.h"
+#include "Boomerang.h"
 
 CKoopa::CKoopa()
 {
@@ -97,10 +98,10 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			
 			if (dynamic_cast<Enermy*>(e->obj))
 			{
-				if (e->nx && state != KOOPA_STATE_BALL) {
-					WalkThrough();
+				if(state != KOOPA_STATE_BALL) {
+					if (e->nx) x += dx; WalkThrough();
+					if (e->ny) y += dy;
 				}
-				if (e->ny) y += dy;
 			}
 
 			if (dynamic_cast<CBrick*>(e->obj))
@@ -125,7 +126,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 			{
 				if (e->nx != 0) WalkThrough();
 			}
-			else if (dynamic_cast<Coin*>(e->obj))
+			else if (dynamic_cast<Coin*>(e->obj) || dynamic_cast<Boomerang*>(e->obj))
 			{
 				if (e->nx != 0) x += dx;
 				if (e->ny != 0)	y += dx;
@@ -137,6 +138,7 @@ void CKoopa::HandleCollision(vector<LPGAMEOBJECT>* coObjects)
 				{
 					goomba->SetState(GOOMBA_STATE_DIE);
 					goomba->BeingKicked();
+					WalkThrough();
 				}
 			}
 			else if (dynamic_cast<CKoopa*>(e->obj))
