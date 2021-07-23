@@ -23,7 +23,7 @@ public:
 	virtual void Render();
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	void SetIsMove(bool isMove) { this->isMove = isMove; }
-	void ResetPosition() { x = CAM_INIT_BOUND; y = startY; }
+	void ResetPosition();
 	void ScrollMode();
 };
 

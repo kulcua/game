@@ -3,10 +3,10 @@
 #include "Animations.h"
 #include "BigBox.h"
 #include "Camera.h"
-#include "Goomba.h"
-#include "Koopa.h"
 #include "EffectPool.h"
 #include "Game.h"
+#include "KoopaBound.h"
+#include "BrotherBound.h"
 
 CFireBall::CFireBall()
 {
@@ -56,9 +56,11 @@ void CFireBall::InitForMario()
 	this->state_.live.type = FIREBALL_FOR_MARIO;
 
 	if (state_.live.mario->nx > 0)
-		vx = FIREBALL_VELOCITY_X;
+		nx = 1;
 	else
-		vx = -FIREBALL_VELOCITY_X;
+		nx = -1;
+
+	vx = nx * FIREBALL_VELOCITY_X;
 }
 
 void CFireBall::SetAnimationFireBall()
@@ -105,18 +107,33 @@ void CFireBall::UpdateForMario(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			if (dynamic_cast<CBigBox*>(e->obj))
 			{
 				if (e->nx)
+				{
+					vx = this->nx * FIREBALL_VELOCITY_X;
 					x += dx;
+				}
 				else if (e->ny)
 					vy = -FIREBALL_DEFLECT_Y;
 			}
-			else if (dynamic_cast<CGoomba*>(e->obj)
-				|| dynamic_cast<CKoopa*>(e->obj))
+			else if (dynamic_cast<Enermy*>(e->obj))
 			{
 				e->obj->die = true;
 				die = true;
 				Effect* effect = EffectPool::GetInstance()->Create();
 				if (effect != NULL)
 					effect->Init(EffectName::fireballDestroy, x, y);
+			}
+			else if (dynamic_cast<KoopaBound*>(e->obj)
+				|| dynamic_cast<BrotherBound*>(e->obj))
+			{
+				if (e->nx)
+				{
+					vx = this->nx * FIREBALL_VELOCITY_X;
+					x += dx;
+				}
+				if (e->ny)
+				{
+					y += dy;
+				}
 			}
 			else
 			{

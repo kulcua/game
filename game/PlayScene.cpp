@@ -429,39 +429,63 @@ void CPlaySceneKeyHandler::OnKeyDown(int KeyCode)
 			case DIK_S:
 				input = Input::PRESS_S;
 				break;
-			case DIK_F1:
+			case DIK_1:
 				if (sceneId >= PLAY_SCENE)
 					mario->Reset();
 				else mario->SetLevel(MARIO_LEVEL_SMALL);
 				break;
-			case DIK_F2:
+			case DIK_2:
 				mario->SetLevel(MARIO_LEVEL_BIG);
 				if (sceneId >= PLAY_SCENE)
 				{
 					mario->y -= MARIO_BIG_BBOX_HEIGHT;
-					mario->isUntouchable = false;
 				}
 				break;
-			case DIK_F3:
+			case DIK_3:
 				mario->SetLevel(MARIO_LEVEL_RACCOON);
 				if (sceneId >= PLAY_SCENE)
 				{
 					mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
-					mario->isUntouchable = false;
 				}
 				break;
-			case DIK_F4:
+			case DIK_4:
 				mario->SetLevel(MARIO_LEVEL_FIRE);
 				if (sceneId >= PLAY_SCENE)
 				{
 					mario->y -= MARIO_BIG_BBOX_HEIGHT;
-					mario->isUntouchable = false;
 				}
 				break;
-			case DIK_F5:
-				mario->SetLevel(MARIO_LEVEL_RACCOON);
-				mario->y -= MARIO_RACCOON_BBOX_HEIGHT;
-				mario->isUntouchable = true;
+			case DIK_5:
+				if (sceneId == PLAY_SCENE)
+				{
+					mario->x = 2212;
+					mario->y = 1055;
+					CGame::GetInstance()->GetCam()->ResetPosition();
+				}
+				break;
+			case DIK_6:
+				if (sceneId == PLAY_SCENE)
+				{
+					mario->x = 6744;
+					mario->y = 335;
+					CGame::GetInstance()->GetCam()->ResetPosition();
+				}
+				break;
+			case DIK_7:
+				if (sceneId > PLAY_SCENE)
+				{
+					mario->x = 1247;
+					mario->y = 850;
+					CGame::GetInstance()->GetCam()->ResetPosition();
+				}
+				break;
+			case DIK_8:
+				if (sceneId > PLAY_SCENE)
+				{
+					mario->x = 3883;
+					mario->y = 850;
+					CGame::GetInstance()->GetCam()->ResetPosition();
+				}
 				break;
 			case DIK_DOWN:
 				input = Input::PRESS_DOWN;

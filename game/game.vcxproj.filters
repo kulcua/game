@@ -357,6 +357,9 @@
     <ClCompile Include="Arrow.cpp">
       <Filter>Intro</Filter>
     </ClCompile>
+    <ClCompile Include="DialogOverWorld.cpp">
+      <Filter>Overworld</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -622,6 +625,9 @@
     </ClInclude>
     <ClInclude Include="Arrow.h">
       <Filter>Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogOverWorld.h">
+      <Filter>Overworld</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -560,8 +560,6 @@ void CMario::Reset()
 	SetLevel(MARIO_LEVEL_SMALL);
 	nx = 1;
 	SetSpeed(0, 0);
-	SetPosition(100, 0);
-	CGame::GetInstance()->GetCam()->ResetPosition();
 }
 
 void CMario::SetTail(MarioTail* tail) { this->tail = tail; }

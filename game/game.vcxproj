@@ -166,6 +166,7 @@
     <ClCompile Include="CoinBrick.cpp" />
     <ClCompile Include="Curtain.cpp" />
     <ClCompile Include="DataManager.cpp" />
+    <ClCompile Include="DialogOverWorld.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectPool.cpp" />
     <ClCompile Include="Enermy.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="CoinBrick.h" />
     <ClInclude Include="Curtain.h" />
     <ClInclude Include="DataManager.h" />
+    <ClInclude Include="DialogOverWorld.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectPool.h" />
     <ClInclude Include="Enermy.h" />
