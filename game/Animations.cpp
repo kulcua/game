@@ -56,8 +56,8 @@ void CAnimations::Add(int id, LPANIMATION ani)
 LPANIMATION CAnimations::Get(int id)
 {
 	LPANIMATION ani = animations[id];
-	if (ani == NULL)
-		DebugOut(L"[ERROR] Failed to find animation id: %d\n", id);
+	//if (ani == NULL)
+	//	DebugOut(L"[ERROR] Failed to find animation id: %d\n", id);
 	return ani;
 }
 

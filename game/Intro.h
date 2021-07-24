@@ -1,6 +1,11 @@
 #pragma once
 #define WORLD_MAP_SCENE 2
-
+#define INTRO_PLAYER_GAME 20012
+#define INTRO_CURTAIN 20002
+#define INTRO_TREE_LEFT 20008
+#define INTRO_TREE_RIGHT 20009
+#define INTRO_CLOUD_BIG 20010
+#define INTRO_CLOUD_SMALL 20011
 #include "Mario.h"
 #include "PlayScene.h"
 #include "Camera.h"
@@ -19,9 +24,6 @@ class Intro
 	CCamera* cam;
 	Three* three;
 	Arrow* arrow;
-	//CKoopa* koopa1;
-	//CKoopa* koopa2;
-	//CKoopa* koopa3;
 	vector<CGameObject*> objects;
 	bool luigi_jump_mario = false;
 	bool luigi_high_jump = false;
