@@ -43,24 +43,6 @@ void Intro::SetScenario(vector<LPGAMEOBJECT> &objects)
 	arrow = new Arrow();
 	arrow->SetPosition(210, 428);
 	this->objects.push_back(arrow);
-
-	/*koopa1 = new CKoopa();
-	koopa1->SetState(KOOPA_STATE_BALL);
-	koopa1->SetPosition(50, 200);
-	koopa1->die = true;
-	this->objects.push_back(koopa1);
-
-	koopa2 = new CKoopa();
-	koopa2->SetState(KOOPA_STATE_BALL);
-	koopa2->SetPosition(300, 200);
-	koopa2->die = true;
-	this->objects.push_back(koopa2);
-
-	koopa3 = new CKoopa();
-	koopa3->SetState(KOOPA_STATE_BALL);
-	koopa3->SetPosition(400, 200);
-	koopa3->die = true;
-	this->objects.push_back(koopa3);*/
 }
 
 void Intro::PhaseIntro()
@@ -118,8 +100,6 @@ void Intro::PhaseIntro()
 		{
 			luigi->die = true;
 			mario->die = true;
-			/*mario->y -= MARIO_BIG_BBOX_HEIGHT;
-			mario->state_ = MarioState::standing.GetInstance();*/
 			curtain->ani = CURTAIN_ANI_BROS;
 			curtain->SetPosition(0, -500);
 			curtain->vy = 0.2f;
@@ -144,9 +124,6 @@ void Intro::Update(DWORD dt)
 	if (three->isStop && turnOnBG == false) {
 		turnOnBG = true;
 		arrow->die = false;
-		/*koopa1->die = false;
-		koopa2->die = false;
-		koopa3->die = false;*/
 		CGame::GetInstance()->SetBackgroundColor(D3DCOLOR_XRGB(255, 216, 154));
 	}
 
@@ -174,13 +151,13 @@ void Intro::Render()
 
 	if (turnOnBG)
 	{
-		CSprites::GetInstance()->Get(20012)->Draw(250, 430, -1, -1, 255);
-		CSprites::GetInstance()->Get(20002)->Draw(0, 0, -1, -1, 255);
-		CSprites::GetInstance()->Get(20008)->Draw(600, 260, -1, -1, 255);
-		CSprites::GetInstance()->Get(20009)->Draw(0, 360, -1, -1, 255);
-		CSprites::GetInstance()->Get(20010)->Draw(100, 100, -1, -1, 255);
-		CSprites::GetInstance()->Get(20011)->Draw(0, 280, -1, -1, 255);
-		CSprites::GetInstance()->Get(20010)->Draw(600, 80, -1, -1, 255);
+		CSprites::GetInstance()->Get(INTRO_PLAYER_GAME)->Draw(250, 430, -1, -1, 255);
+		CSprites::GetInstance()->Get(INTRO_CURTAIN)->Draw(0, 0, -1, -1, 255);
+		CSprites::GetInstance()->Get(INTRO_TREE_LEFT)->Draw(600, 260, -1, -1, 255);
+		CSprites::GetInstance()->Get(INTRO_TREE_RIGHT)->Draw(0, 360, -1, -1, 255);
+		CSprites::GetInstance()->Get(INTRO_CLOUD_BIG)->Draw(100, 100, -1, -1, 255);
+		CSprites::GetInstance()->Get(INTRO_CLOUD_SMALL)->Draw(0, 280, -1, -1, 255);
+		CSprites::GetInstance()->Get(INTRO_CLOUD_BIG)->Draw(600, 80, -1, -1, 255);
 	}
 }
 
