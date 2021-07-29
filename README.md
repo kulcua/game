@@ -1,7 +1,7 @@
 # Super Mario Bros 3
 
 ## Introduction:
-This is a DirectX game made by C++. This game is included:
+This is a DirectX game made by C++. This game included:
 - Intro
 - World 1 world map
 - World map 1-1
